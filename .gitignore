@@ -1,3 +1,4 @@
+site
 dist
 cabal-dev
 *.o
@@ -5,3 +6,4 @@ cabal-dev
 *.chi
 *.chs.h
 .virthualenv
+_cache
