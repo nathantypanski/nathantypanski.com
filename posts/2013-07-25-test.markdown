@@ -1,0 +1,9 @@
+---
+title: test
+---
+
+```Haskell
+fibonacci :: Integer -> Integer
+fibonacci = fibo !!
+    where fibo = 0 : 1 : zipWith (+) fibo (tail fibo)
+```

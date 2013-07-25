@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>nathan typanski - Custom Linux Kernel</title>
+        <link rel="stylesheet" type="text/css" href="../css/default.css" />
+        <link rel="stylesheet" type="text/css" href="../css/syntax.css" />
+    </head>
+    <body>
+        <div id="header">
+            <div id="logo">
+                <a href="../">Custom Linux Kernel</a>
+            </div>
+            <div id="navigation">
+                <a href="../">Home</a>
+                <a href="../about.html">About</a>
+                <a href="../contact.html">Contact</a>
+                <a href="../archive.html">Archive</a>
+            </div>
+        </div>
+        <div id="content">
+            <h1>Custom Linux Kernel</h1>
+            <div class="info">
+    Posted on November 14, 2012
+    
+</div>
+
+<p>I compiled a custom version of the Linux kernel for my machine yesterday. It’s based on kernel version 3.6.6-1 (Arch distro), and, like any custom kernel, includes a variety of tweaks customized for my hardware.</p>
+<p>The <a href="https://wiki.archlinux.org/index.php/Arch_Build_System">Arch Build System</a> makes it really simple to compile packages from source. It includes a tree of <a href="https://wiki.archlinux.org/index.php/PKGBUILD">PKGBUILDS</a> that you can copy to your home directory (building as root is strongly unadvised) to compile software for your system.</p>
+<p>Why would you want to do this? Mostly, it’s for distribution and architecture-specific optimizations that are only available in packages compiled from source. In the case of the Linux kernel, there are literally hundreds of modules that go unused on my machine. For a pre-compiled kernel, it would scan through all of my hardware on every boot and check it against these modules to be sure that it shouldn’t load them.</p>
+<p>In addition, there are a number of cool tweaks in the config for people to play with.</p>
+<p>I also <a href="https://wiki.archlinux.org/index.php/Systemd">migrated to systemd</a> a few weeks ago. I remember a post or e-mail somewhere in which systemd caught a lot of flak for being untested, running against the tried-and-true sysvinit, but can’t seem to find it. <a href="https://www.archlinux.org/news/end-of-initscripts-support/">Arch Linux just made systemd official</a>, and honestly, I trust the devs on their decision.</p>
+<p>My boot time has nearly tripled, about which you’ll hear no complaints from me.</p>
+<p>Finally, I <a href="http://en.wikipedia.org/wiki/Zsh">switched from bash to zsh</a>. I haven’t come close to taking full advantage of it yet, but the ability to tab-complete filenames has to be the best thing in the world.</p>
+
+        </div>
+        <div id="footer">
+            Site thanks to
+<a href="http://jaspervdj.be/hakyll">Hakyll</a>. Content © 2013 Nathan Typanski.
+<img src="../images/ccbysa.png" />
+
+        </div>
+    </body>
+</html>
