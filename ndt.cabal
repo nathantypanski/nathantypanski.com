@@ -14,7 +14,8 @@ cabal-version: >=1.8
 executable site
   main-is: site.hs
   hs-source-dirs: src/
-  ghc-options: -O2 -Wall -threaded
+  ghc-options: -O2 -Wall -threaded -o site
   -- other-modules:
   build-depends: base,
-                       hakyll >= 4.2.2.0 && < 5
+                       hakyll >= 4.2.2.0 && < 5,
+                       pandoc >= 1.10.0 && < 2

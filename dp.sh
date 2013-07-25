@@ -5,7 +5,7 @@ build () {
 }
 
 show () {
-    ./site clean
+    ./site rebuild
     ./site preview
 }
 

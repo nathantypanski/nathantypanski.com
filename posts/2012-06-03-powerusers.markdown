@@ -1,6 +1,7 @@
 ---
 title: Powerusers
 keywords: linux
+tags: awesome
 ---
 
 <a href="http://i.imgur.com/RSwNK.png"><img src="http://i.imgur.com/RSwNKl.png" title="Hosted by imgur.com" alt="" /></a>

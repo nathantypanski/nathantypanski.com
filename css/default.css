@@ -1,8 +1,15 @@
+/* reset */
+*  { vertical-align: baseline; font-family: inherit;font-style: inherit;font-size: 100%;border: none;padding: 0;margin: 0; }
+h1, h2, h3, h4, h5, h6, p, pre, blockquote, form, ul, ol, dl { margin: 0 0 20px 0; }
+li, dd, blockquote { margin-left: 0px; }
+table { border-collapse: collapse; border-spacing: 0; }
+
 body {
     color: black;
+    background: #F8F8FF;
     font-size: 16px;
     margin: 0px auto 0px auto;
-    width: 600px;
+    width: 700px;
 }
 
 div#header {
@@ -38,7 +45,7 @@ div#footer {
     font-size: 12px;
     margin-top: 30px;
     padding: 12px 0px 12px 0px;
-    text-align: right;
+    text-align: center;
 }
 
 h1 {
@@ -53,4 +60,19 @@ div.info {
     color: #555;
     font-size: 14px;
     font-style: italic;
+}
+
+a
+{
+    color: slategray;
+}
+
+a:visited
+{
+    color: darkslategray;
+}
+
+a:hover
+{
+    color: #ba0b00;
 }
