@@ -1,6 +1,6 @@
 ---
 title: Ad blocking done right
-keywords: privacy
+tags: privacy, privoxy, proxy
 ---
 
 If you're like me, you've probably been running [adblock plus](https://adblockplus.org/en/firefox) in Firefox for years. It's not because you don't want to support the sites you visit: maybe you specifically unblock domains that you know use unintrusive ads, like [reddit](www.reddit.com). Rather, it is usually the implementation of most web ads that is problematic. Maybe they:

@@ -2,8 +2,19 @@
 {-# LANGUAGE OverloadedStrings #-}
 import           Data.Monoid (mappend)
 import           Hakyll
+import           Text.Pandoc.Options as Pandoc.Options
 
 --------------------------------------------------------------------------------
+
+pandocWriterOptions :: Pandoc.Options.WriterOptions
+pandocWriterOptions = defaultHakyllWriterOptions
+                        { Pandoc.Options.writerHtml5 = True
+                        , Pandoc.Options.writerHtmlQTags = True
+                        --, Pandoc.Options.writerNumberSections = True
+                        --, Pandoc.Options.writerNumberOffset = [1]
+                        , Pandoc.Options.writerSectionDivs = True
+                        , Pandoc.Options.writerTableOfContents = True
+                    }
 
 --------------------------------------------------------------------------------
 main :: IO ()
@@ -11,19 +22,31 @@ main = hakyll $ do
     -- Build tags
     tags <- buildTags "posts/*" (fromCapture "tags/*.html")
 
+    -- put all the images in /images
     match "images/*" $ do
         route   idRoute
+        compile copyFileCompiler
+
+    -- copy site icon to `favicon.ico`
+    match "images/favicon.ico" $ do
+        route   (constRoute "favicon.ico")
         compile copyFileCompiler
 
     match "font/*" $ do
         route   idRoute
         compile copyFileCompiler
 
-    match "css/*" $ do
-        route   idRoute
-        compile compressCssCompiler
+--    match "css/*" $ do
+--        route   idRoute
+--        compile compressCssCompiler
         --    getResourceString
         --        >>= withItemBody (unixFilter "sass" ["-s", "--scss"])
+
+    match "scss/*" $do
+        route $ gsubRoute "scss/" (const "css/") `composeRoutes` setExtension "css"
+        compile $ getResourceString
+            >>= withItemBody (unixFilter "sass" ["-s", "--scss", "--style", "compressed"])
+            >>= return . fmap compressCss
 
     match (fromList ["index.markdown"
                     ,"about.markdown"
@@ -36,7 +59,7 @@ main = hakyll $ do
 
     match "posts/*" $ do
         route $ setExtension "html"
-        compile $ pandocCompiler
+        compile $ pandocCompilerWith defaultHakyllReaderOptions pandocWriterOptions
             >>= loadAndApplyTemplate "templates/post.html" (tagsCtx tags)
             >>= loadAndApplyTemplate "templates/default.html" (tagsCtx tags)
             >>= relativizeUrls
@@ -47,15 +70,19 @@ main = hakyll $ do
         compile $ do
             makeItem ""
                 >>= loadAndApplyTemplate "templates/post.html"
-                        (constField "title" title `mappend`
-                            constField "body" "" `mappend`
-                            constField "date" "" `mappend`
-                            constField "prettytags" "" `mappend`
-                            constField "posts" "" `mappend`
-                            defaultContext)
+                    (
+                    constField "title"      title `mappend`
+                    constField "body"       ""    `mappend`
+                    constField "date"       ""    `mappend`
+                    constField "prettytags" ""    `mappend`
+                    constField "posts"      ""    `mappend`
+                    defaultContext
+                    )
                 >>= loadAndApplyTemplate "templates/default.html"
-                        (constField "title" title `mappend`
-                            defaultContext)
+                    (
+                    constField "title" title `mappend`
+                    defaultContext
+                    )
                 >>= relativizeUrls
 
     create ["archive.html"] $ do
@@ -63,15 +90,14 @@ main = hakyll $ do
         compile $ do
             posts <- recentFirst =<< loadAll "posts/*"
             let archiveCtx =
-                    listField "posts" postCtx (return posts) `mappend`
-                    constField "title" "Archives"            `mappend`
+                    listField      "posts" postCtx (return posts) `mappend`
+                    constField     "title" "Archives"             `mappend`
                     defaultContext
 
             makeItem ""
                 >>= loadAndApplyTemplate "templates/archive.html" archiveCtx
                 >>= loadAndApplyTemplate "templates/default.html" archiveCtx
                 >>= relativizeUrls
-
 
     match "index.html" $ do
         route idRoute
@@ -101,3 +127,5 @@ tagsCtx :: Tags -> Context String
 tagsCtx tags =
     tagsField "prettytags" tags `mappend`
     postCtx
+
+--------------------------------------------------------------------------------

@@ -1,11 +1,12 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<!DOCTYPE html>
+<html>
+    <meta charset="UTF-8">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <title>nathan typanski - Returning to i3</title>
         <link rel="stylesheet" type="text/css" href="../css/default.css" />
         <link rel="stylesheet" type="text/css" href="../css/syntax.css" />
+        <link rel="stylesheet" type="text/css" href="../css/font-awesome.css" />
     </head>
     <body>
         <div id="header">
@@ -13,27 +14,31 @@
                 <a href="../">Returning to i3</a>
             </div>
             <div id="navigation">
-                <a href="../">Home</a>
-                <a href="../about.html">About</a>
-                <a href="../contact.html">Contact</a>
-                <a href="../archive.html">Archive</a>
+                <a href="../"><i class="icon-coffee"></i>Home</a>
+                <a href="../about.html"><i class="icon-heart"></i>About</a>
+                <a href="../contact.html"><i class="icon-envelope"></i>Contact</a>
+                <a href="../archive.html"><i class="icon-archive"></i>Archive</a>
             </div>
         </div>
         <div id="content">
             <h1>Returning to i3</h1>
             <div class="info">
-    Posted on July 24, 2013
+    <i class="icon-calendar"></i> July 24, 2013
+    <i class="icon-tags"></i> <span itemprop="keywords"><a href="../tags/linux.html">linux</a>, <a href="../tags/window%20managers.html">window managers</a></span></div>
     
 </div>
 
 <p>After nearly a month using <a href="http://xmonad.org/">xmonad</a>, I’m back to using the <a href="http://i3wm.org/">i3 window manager</a>. Still, this is the longest stretch of tiling wm usage I have ever managed. It might be that I have finally migrated from <a href="http://openbox.org/">openbox</a>, which is by far my all-time favorite floating window manager.</p>
-<h2 id="what-i-liked-about-xmonad">What I liked about xmonad</h2>
+<section id="what-i-liked-about-xmonad" class="level2">
+<h2><a href="#what-i-liked-about-xmonad">What I liked about xmonad</a></h2>
 <ul>
 <li>Fully customizable in ways you wouldn’t even think a window manager could manage.</li>
 <li>Huge, excellent <a href="http://xmonad.org/xmonad-docs/xmonad-contrib/">community extensions library</a>.</li>
 <li>Reminiscent of <a href="http://dwm.suckless.org/">dwm</a>, the code is your configuration.</li>
 </ul>
-<h2 id="what-i-didnt-like-about-xmonad">What I didn’t like about xmonad</h2>
+</section>
+<section id="what-i-didnt-like-about-xmonad" class="level2">
+<h2><a href="#what-i-didnt-like-about-xmonad">What I didn’t like about xmonad</a></h2>
 <ul>
 <li>I still don’t know Haskell.</li>
 </ul>
@@ -42,12 +47,12 @@
 <p>Using xmonad made me better appreciate i3.</p>
 <p>When I switched back today, I noticed that the Arch Wiki page had an interesting link to <a href="https://github.com/yiuin/i3-wm-scripts">i3-wm-scripts</a>, a set of Python scripts for manipulating i3. They add vim-esque mark and goto functions to i3, as well as window searching by name (with dmenu) and similar awesome features. Installation was simple: I just cloned the scripts into my <em>~/bin</em> directory and added keybindings from the <em>README</em>.</p>
 <p>It’s a bittersweet reunion. I really, <em>really</em> wanted to like xmonad. But the learning curve for programming it just proved too high.</p>
+</section>
 
         </div>
         <div id="footer">
-            Site thanks to
-<a href="http://jaspervdj.be/hakyll">Hakyll</a>. Content © 2013 Nathan Typanski.
-<img src="../images/ccbysa.png" />
+            <img src="../images/ccbysa.png" />
+<br />Content © 2013 Nathan Typanski.
 
         </div>
     </body>

@@ -1,6 +1,6 @@
 ----
 title: Custom Linux Kernel
-keywords: linux
+tags: linux
 ----
 
 I compiled a custom version of the Linux kernel for my machine yesterday. It's based on kernel version 3.6.6-1 (Arch distro), and, like any custom kernel, includes a variety of tweaks customized for my hardware.

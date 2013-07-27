@@ -1,5 +1,6 @@
 ---
 title: Ubuntu Forums Down for Maintenance
+tags: linux
 ---
 
 

@@ -31,7 +31,7 @@ div#header #navigation {
 }
 
 div#header #navigation a {
-    color: black;
+//    color: black;
     font-size: 18px;
     font-weight: bold;
     margin-left: 12px;
@@ -64,15 +64,25 @@ div.info {
 
 a
 {
-    color: slategray;
+    color: #2A75A9;
 }
 
 a:visited
 {
-    color: darkslategray;
+    color: #274257;
 }
 
 a:hover
 {
-    color: #ba0b00;
+    color: #7EB5D6;
+}
+
+.home a
+{
+    color: #5F819D !important;
+}
+
+.code
+{
+    font-family monospace;
 }

@@ -1,5 +1,6 @@
 ---
 title: Returning to i3
+tags: linux, window managers
 ---
 
 After nearly a month using [xmonad](http://xmonad.org/), I'm back to using the [i3 window manager](http://i3wm.org/). Still, this is the longest stretch of tiling wm usage I have ever managed. It might be that I have finally migrated from [openbox](http://openbox.org/), which is by far my all-time favorite floating window manager.
