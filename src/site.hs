@@ -36,16 +36,22 @@ main = hakyll $ do
         route   idRoute
         compile copyFileCompiler
 
---    match "css/*" $ do
---        route   idRoute
---        compile compressCssCompiler
-        --    getResourceString
-        --        >>= withItemBody (unixFilter "sass" ["-s", "--scss"])
+    match "css/*" $ do
+        route   idRoute
+        compile compressCssCompiler
 
     match "scss/*" $do
-        route $ gsubRoute "scss/" (const "css/") `composeRoutes` setExtension "css"
+        route $ gsubRoute "scss/" (const "css/") `composeRoutes`
+            setExtension "css"
         compile $ getResourceString
-            >>= withItemBody (unixFilter "sass" ["-s", "--scss", "--style", "compressed"])
+            >>= withItemBody (unixFilter "sass"
+                [
+                  "-s"
+                , "--scss"
+                , "--style"
+                , "compressed"
+                ]
+                )
             >>= return . fmap compressCss
 
     match (fromList ["index.markdown"

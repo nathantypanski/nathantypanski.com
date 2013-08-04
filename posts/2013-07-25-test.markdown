@@ -3,6 +3,8 @@ title: test
 tags: test, code
 ---
 
+This is a test code block in `hakyll`:
+
 ```Haskell
 fibonacci :: Integer -> Integer
 fibonacci = fibo !!
