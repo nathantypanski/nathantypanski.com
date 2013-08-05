@@ -35,11 +35,15 @@ Privoxy is completely customizable, in all of these areas, from both simple and 
 
 To use it, you just start the service, then change your browser's proxy settings to point HTTP and HTTPS traffic to
 
-     localhost:8118
+````{.bash}
+localhost:8118
+````
 
 Then you will want to edit the configuration files. Then, to configure blocking, you can use [privoxy-blocklist.sh](http://andrwe.org/scripting/bash/privoxy-blocklist) and set it as a cronjob if you want regular updates. Otherwise, Privoxy provides great defaults at the medium level of filtering, and user customizations can be added in the file
 
-    /etc/privoxy/user.action
+````{.bash}
+/etc/privoxy/user.action
+````
 
 in the form of regex + actions as documented in the default action file. Ideas can be found in the various adblocking filterlists out there, but the final decisions are yours.
 

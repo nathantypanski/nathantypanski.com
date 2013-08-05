@@ -5,8 +5,8 @@ tags: test, code
 
 This is a test code block in `hakyll`:
 
-```Haskell
+~~~~{.haskell}
 fibonacci :: Integer -> Integer
 fibonacci = fibo !!
     where fibo = 0 : 1 : zipWith (+) fibo (tail fibo)
-```
+~~~~

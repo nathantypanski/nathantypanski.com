@@ -19,9 +19,6 @@ pandocWriterOptions = defaultHakyllWriterOptions
 --------------------------------------------------------------------------------
 main :: IO ()
 main = hakyll $ do
-    -- Build tags
-    tags <- buildTags "posts/*" (fromCapture "tags/*.html")
-
     -- put all the images in /images
     match "images/*" $ do
         route   idRoute
@@ -54,42 +51,23 @@ main = hakyll $ do
                 )
             >>= return . fmap compressCss
 
-    match (fromList ["index.markdown"
-                    ,"about.markdown"
-                    ,"contact.markdown"]
+    match (fromList ["pages/index.markdown"
+                    ,"pages/about.markdown"
+                    ,"pages/contact.markdown"]
           ) $ do
-        route $ setExtension "html"
+        route $ gsubRoute "pages/" (const "") `composeRoutes`
+            setExtension "html"
         compile $ pandocCompiler
             >>= loadAndApplyTemplate "templates/default.html" defaultContext
             >>= relativizeUrls
 
     match "posts/*" $ do
         route $ setExtension "html"
-        compile $ pandocCompilerWith defaultHakyllReaderOptions pandocWriterOptions
-            >>= loadAndApplyTemplate "templates/post.html" (tagsCtx tags)
-            >>= loadAndApplyTemplate "templates/default.html" (tagsCtx tags)
-            >>= relativizeUrls
-
-    tagsRules tags $ \tag pattern -> do
-        let title = "Posts tagged " ++ tag
-        route idRoute
         compile $ do
-            makeItem ""
-                >>= loadAndApplyTemplate "templates/post.html"
-                    (
-                    constField "title"      title `mappend`
-                    constField "body"       ""    `mappend`
-                    constField "date"       ""    `mappend`
-                    constField "prettytags" ""    `mappend`
-                    constField "posts"      ""    `mappend`
-                    defaultContext
-                    )
-                >>= loadAndApplyTemplate "templates/default.html"
-                    (
-                    constField "title" title `mappend`
-                    defaultContext
-                    )
-                >>= relativizeUrls
+            pandocCompilerWith defaultHakyllReaderOptions pandocWriterOptions
+            >>= loadAndApplyTemplate "templates/post.html" postCtx
+            >>= loadAndApplyTemplate "templates/default.html" postCtx
+            >>= relativizeUrls
 
     create ["archive.html"] $ do
         route idRoute
@@ -105,8 +83,19 @@ main = hakyll $ do
                 >>= loadAndApplyTemplate "templates/default.html" archiveCtx
                 >>= relativizeUrls
 
-    match "index.html" $ do
+    create ["404.html"] $ do
         route idRoute
+        compile $ do
+            let notFoundCtx =
+                    constField "title" "404 you're lost" `mappend`
+                    defaultContext
+
+            makeItem ""
+                >>= loadAndApplyTemplate "templates/default.html" notFoundCtx
+
+
+    match "pages/index.html" $ do
+        route $ gsubRoute "pages/" (const "") `composeRoutes` idRoute
         compile $ do
             posts <- recentFirst =<< loadAll "posts/*"
             let indexCtx =
@@ -128,10 +117,3 @@ postCtx :: Context String
 postCtx =
     dateField "date" "%B %e, %Y" `mappend`
     defaultContext
-
-tagsCtx :: Tags -> Context String
-tagsCtx tags =
-    tagsField "prettytags" tags `mappend`
-    postCtx
-
---------------------------------------------------------------------------------
