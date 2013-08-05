@@ -12,6 +12,13 @@ body {
     width: 700px;
 }
 
+#toc {
+    background: #ccc;
+}
+#toc li {
+    list-style-type: lower-greek;
+}
+
 div#header {
     border-bottom: 2px solid black;
     margin-bottom: 30px;
