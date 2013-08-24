@@ -2,7 +2,6 @@
 title: Powerusers
 tags: linux
 ---
-
 <a href="http://i.imgur.com/RSwNK.png"><img src="http://i.imgur.com/RSwNKl.png" title="Hosted by imgur.com" alt="" /></a>
 
 See that? That's one of my ten [Openbox 3](http://openbox.org/) desktops running [vim](http://www.vim.org/) fullscreen in [rxvt unicode](http://software.schmorp.de/pkg/rxvt-unicode.html) with the [Tmux terminal multiplexer](http://tmux.sourceforge.net/). It's styled using the [Solarized color scheme](http://ethanschoonover.com/solarized) by Ethan Schoover and uses the beautiful [Terminus](http://en.wikipedia.org/wiki/Terminus_%28typeface%29) typeface.

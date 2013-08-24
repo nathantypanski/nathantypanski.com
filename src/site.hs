@@ -88,7 +88,7 @@ main = hakyll $ do
             >>= relativizeUrls
 
 
-    match "posts/*" $ do
+    match "blog/*" $ do
         route $ setExtension "html"
         compile $ do
             pandocCompilerWith defaultHakyllReaderOptions tocWriterOptions
@@ -100,7 +100,7 @@ main = hakyll $ do
     create ["archive.html"] $ do
         route idRoute
         compile $ do
-            posts <- recentFirst =<< loadAll "posts/*"
+            posts <- recentFirst =<< loadAll "blog/*"
             let archiveCtx =
                     listField      "posts" postCtx (return posts) `mappend`
                     constField     "title" "Archives"             `mappend`
@@ -124,7 +124,7 @@ main = hakyll $ do
     match "pages/index.html" $ do
         route $ gsubRoute "pages/" (const "") `composeRoutes` idRoute
         compile $ do
-            posts <- recentFirst =<< loadAll "posts/*"
+            posts <- recentFirst =<< loadAll "blog/*"
             let indexCtx =
                     listField "posts" postCtx (return posts) `mappend`
                     constField "title" "Home"                `mappend`
