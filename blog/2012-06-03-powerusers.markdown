@@ -6,7 +6,7 @@ tags: linux
 
 See that? That's one of my ten [Openbox 3](http://openbox.org/) desktops running [vim](http://www.vim.org/) fullscreen in [rxvt unicode](http://software.schmorp.de/pkg/rxvt-unicode.html) with the [Tmux terminal multiplexer](http://tmux.sourceforge.net/). It's styled using the [Solarized color scheme](http://ethanschoonover.com/solarized) by Ethan Schoover and uses the beautiful [Terminus](http://en.wikipedia.org/wiki/Terminus_%28typeface%29) typeface.
 
-These are all things I care about. They are all things I've hand-picked for my [Arch Linux](http://www.archlinux.org/) system, which boots into an ugly low reolution terminal by default. I type *xinit* after the login prompt to start the GUI because this eliminates the overhead of a regular login manager.
+These are all things I care about. They are all things I've hand-picked for my [Arch Linux](http://www.archlinux.org/) system, which boots into an ugly low reolution terminal by default. I type `xinit` after the login prompt to start the GUI because this eliminates the overhead of a regular login manager.
 
 Because of the stability this system offers, I don't have to reboot and type that very often. Maybe twice a month. When I do, my desktop looks something like this:
 
@@ -39,7 +39,7 @@ When I'm busy, like during finals week last semester, my desktop looks like this
 
 Yeah, that's my calendar. Those events all send custom notifications to my cell phone and desktop, with frequency proportional to their importance.
 
-I'm a poweruser, and it's a cycle that gains and never decreases in complexity. Once you start tweaking a particular part of your system you never go back and think "oh, well, I suppose the defaults were *just good enough*." If they were good enough, you never would have changed them in the first place.
+I'm a poweruser, and it's a cycle that gains and never decreases in complexity. Once you start tweaking a particular part of your system you never go back and think "oh, well, I suppose the defaults were `just good enough`." If they were good enough, you never would have changed them in the first place.
 
 Some of these things are really boring, like configuration files that tell my computer exactly which programs to place on which desktops and how to scale them and when to run them.
 
