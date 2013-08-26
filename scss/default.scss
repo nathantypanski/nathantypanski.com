@@ -1,8 +1,27 @@
-/* reset */
-*  { vertical-align: baseline; font-family: inherit;font-style: inherit;font-size: 100%;border: none;padding: 0;margin: 0; }
-h1, h2, h3, h4, h5, h6, p, pre, blockquote, form, ul, ol, dl { margin: 0 0 20px 0; }
-li, dd, blockquote { margin-left: 0px; }
-table { border-collapse: collapse; border-spacing: 0; }
+/* STYLE RESET */
+* { 
+    vertical-align: baseline;
+    font-family: inherit;
+    font-style: inherit;
+    font-size: 100%;
+    border: none;
+    padding: 0;
+    margin: 0;
+}
+
+h1, h2, h3, h4, h5, h6, p, pre, blockquote, form, ul, ol, dl {
+    margin: 0 0 20px 0;
+}
+
+li, dd, blockquote {
+    margin-left: 0px;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+/* END RESET */
 
 body {
     color: black;
@@ -16,39 +35,43 @@ body {
     background: #ccc;
 }
 #toc li {
-    list-style-type: lower-greek;
+    list-style-type: lower-roman;
 }
 
 div#header {
     border-bottom: 1px solid #5F819D;
     margin-bottom: 30px;
     padding: 12px 0px 12px 0px;
-}
-
-div#logo a {
-    color: black;
-    float: left;
-    font-size: 18px;
-    font-weight: bold;
-    text-decoration: none;
-}
-
-div#logo img {
-    float: right;
-    display:inline-block;
-}
-
-div#header #navigation {
     text-align: right;
 }
 
-div#header #navigation a {
-//    color: black;
-    font-size: 16px;
-    font-weight: bold;
-    margin-left: 12px;
-    text-decoration: none;
-    text-transform: lowercase;
+div#logo {
+    a {
+        color: black;
+        float: left;
+        font: {
+            size: 18px;
+            weight: bold;
+        }
+        text-decoration: none;
+    }
+    img {
+        float: right;
+        display:inline-block;
+    }
+}
+
+div#navigation {
+    text-align: right;
+    a {
+        font: {
+            size: 16px;
+            weight: bold;
+        }
+        margin-left: 12px;
+        text-decoration: none;
+        text-transform: lowercase;
+    }
 }
 
 div#footer {
@@ -77,16 +100,12 @@ div.info {
 a
 {
     color: #2A75A9;
-}
-
-a:visited
-{
-    color: #274257;
-}
-
-a:hover
-{
-    color: #7EB5D6;
+    :visited {
+        color: #274257;
+    }
+    :hover {
+        color: #7EB5D6;
+    }
 }
 
 .home a
