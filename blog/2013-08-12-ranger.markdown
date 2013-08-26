@@ -1,3 +1,7 @@
+---
+title: Ranger: speedy file management
+---
+
 Background
 -----
 
@@ -7,7 +11,9 @@ Then some change happened. I started experimenting with [tiling window managers]
 
 At the risk of being mistaken for a [Gentoo ricer](http://funroll-loops.info/), I will say this: file managers are too slow. My terminal starts instantly. I can open one and type 
 
-    la | grep zsh
+```` {.sourceCode .bash}
+la | grep zsh
+````
 
 before Thunar can even start up. Copying or moving files is still mouse-driven, unless I want to fumble around with modifiers and arrow keys for half an hour. It's just not efficient.
 

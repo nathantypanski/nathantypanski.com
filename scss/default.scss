@@ -1,3 +1,6 @@
+$background: #fff;
+$toc-background: #eee;
+
 /* STYLE RESET */
 * { 
     vertical-align: baseline;
@@ -25,17 +28,17 @@ table {
 
 body {
     color: black;
-    background: #F8F8FF;
+    background: $background;
     font-size: 16px;
     margin: 0px auto 0px auto;
     width: 700px;
 }
 
 #toc {
-    background: #ccc;
-}
-#toc li {
-    list-style-type: lower-roman;
+    background: $toc-background;
+    li {
+        list-style-type: lower-roman;
+    }
 }
 
 div#header {
