@@ -2,7 +2,7 @@
 title: About
 ---
 
-Hi, I'm Nathan, a hobbyist with interests in artwork, typesetting, web and graphic design. I'm also studying [computer engineering](http://www.cnu.edu/pcs/academics/ce.asp)</a> at Christopher Newport University, and am hard at work earning a minor in leadership studies in the [President's Leadership Program](http://presidentsleadership.cnu.edu/).
+I am hobbyist with interests in artwork, typesetting, web and graphic design. I'm also studying [computer engineering](http://www.cnu.edu/pcs/academics/ce.asp)</a> at Christopher Newport University, and am hard at work earning a minor in leadership studies in the [President's Leadership Program](http://presidentsleadership.cnu.edu/).
 
 
 Personality
