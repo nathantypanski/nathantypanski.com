@@ -26,7 +26,7 @@ tocWriterOptions :: Pandoc.Options.WriterOptions
 tocWriterOptions = pandocWriterOptions
     { writerTableOfContents = True
     , writerTemplate =
-        "$if(toc)$<div id=\"toc\"><h2>Table of contents</h2>\n$toc$</div>\n$endif$$body$"
+        "$if(toc)$<div id=\"toc\"><h2>Contents</h2>\n$toc$</div>\n$endif$$body$"
     , writerStandalone = True
     }
 

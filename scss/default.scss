@@ -1,5 +1,7 @@
+$defaultColor: #202020;
 $background: #fff;
-$toc-background: #eee;
+$tocBackground: #f8f8f8;
+$tocBorder: #eee;
 
 /* STYLE RESET */
 * { 
@@ -13,7 +15,13 @@ $toc-background: #eee;
 }
 
 h1, h2, h3, h4, h5, h6, p, pre, blockquote, form, ul, ol, dl {
-    margin: 0 0 20px 0;
+    margin: 0 0 16px 0;
+}
+
+h2 {
+    margin: {
+        top: 8px;
+    }
 }
 
 li, dd, blockquote {
@@ -27,7 +35,7 @@ table {
 /* END RESET */
 
 body {
-    color: black;
+    color: $defaultColor;
     background: $background;
     font-size: 16px;
     margin: 0px auto 0px auto;
@@ -35,7 +43,35 @@ body {
 }
 
 #toc {
-    background: $toc-background;
+    float: right;
+    border: 1px solid $tocBorder;
+    h2 {
+        font: {
+            style: normal;
+            weight: bold;
+            size: 12pt;
+        }
+        text: {
+            align: center;
+        }
+        margin-bottom: 8px;
+    }
+    font: {
+        size:10pt;
+    }
+    li {
+        margin: {
+            left: 36px;
+            right: 36px;
+        }
+    }
+    margin: {
+        top: -70px;
+        left: 30px;
+        right: 0px;
+        bottom: 30px;
+    }
+    background: $tocBackground;
     li {
         list-style-type: lower-roman;
     }
@@ -71,9 +107,18 @@ div#navigation {
             size: 16px;
             weight: bold;
         }
-        margin-left: 12px;
+        margin-left: 16px;
         text-decoration: none;
         text-transform: lowercase;
+    }
+    i {
+        margin-right: 2px;
+    }
+}
+
+.snippets {
+    i {
+        margin-right: 2px;
     }
 }
 
@@ -91,7 +136,10 @@ h1 {
 }
 
 h2 {
-    font-size: 20px;
+    font-size: 16px;
+    margin: {
+        bottom: 0px;
+    }
 }
 
 div.info {
