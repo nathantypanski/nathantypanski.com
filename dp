@@ -25,7 +25,6 @@ show () {
 deploy () {
     cabal configure;
     cabal build;
-    #git push ephesus master;
     git push origin master;
 }
 
