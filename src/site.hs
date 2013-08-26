@@ -63,6 +63,10 @@ main = hakyll $ do
         route   idRoute
         compile compressCssCompiler
 
+    -- robots
+    match "robots.txt" $ do
+        route idRoute
+        compile copyFileCompiler
 
     -- compile the scss and put it in _site/css/
     match "scss/*" $ do
