@@ -5,4 +5,6 @@ cabal-dev
 *.chi
 *.chs.h
 .virthualenv
-_cache
+_cache/
+_site/
+site
