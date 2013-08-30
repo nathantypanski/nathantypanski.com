@@ -1,0 +1,404 @@
+/*
+	Verti 1.0 by HTML5 Up!
+	html5up.net | @n33co
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+*/
+
+/*********************************************************************************/
+/* Basic                                                                         */
+/*********************************************************************************/
+
+	body
+	{
+		min-width: 1200px;
+		line-height: 2em;
+		min-height: 100%;
+	}
+
+	.scrollbox
+	{
+		padding: 5px 10px 5px 10px;
+	}
+
+	.scrollboxObserver
+	{
+		height:205px;
+		margin-left:40px;
+	}
+
+	h1, h2, h3, h4, h5, h6
+	{
+		color: #444;
+		font-weight: 800;
+	}
+
+	h2
+	{
+		font-size: 2.25em;
+		margin: 0 0 .5em 0;
+		line-height: 1em;
+	}
+	
+	h3
+	{
+		font-size: 1.35em;
+		margin: 0 0 0 0;
+	}
+
+	.pad-right
+	{
+		margin-right: 1.5em;
+	}
+
+	.pad-left
+	{
+		margin-left: 1.5em;
+	}
+	
+	body.left-sidebard,
+	body.right-sidebard,
+	body.homepaged
+	{
+	background: #9AC2B3;
+	}
+
+	body.left-sidebar,
+	body.homepage
+	{
+	}
+
+		body.left-sidebar #content,
+		body.homepage #content
+		{
+			padding-left: 1.75em;
+		}
+
+	body.right-sidebar
+	{
+	}
+
+		body.right-sidebar #content
+		{
+			padding-right: 1.75em;
+		}
+	
+	.button
+	{
+		font-size: 1.35em;
+		padding: 0.8em 1.5em 0.8em 1.5em;
+	}
+
+		.button-big
+		{
+			font-size: 2.25em;
+			padding: 0.8em 0.9em 0.8em 0.9em;
+		}
+
+		.button-icon
+		{
+			padding-left: 20px;
+		}
+		
+	
+	.box
+	{
+		padding: 2em;
+	}
+		
+	.box-feature
+	{
+		padding: 0;
+	}
+		
+		.box-feature .inner
+		{
+			padding: 2em 2em 2em 2em;
+		}
+		
+		.box-feature h2
+		{
+			font-size: 1.35em;
+		}
+
+		.box-feature p
+		{
+			margin: 0;
+		}
+
+		.box-feature header
+		{
+			margin: 0 0 2em 0;
+		}
+
+		.box-feature .image
+		{
+			width: auto;
+			height: auto;
+			position: relative;
+			margin: 0;
+		}
+
+			.box-feature .image img
+			{
+				border-bottom-left-radius: 0;
+				border-bottom-right-radius: 0;
+			}
+
+	.largish
+	{
+		margin: 0 0 25px 0;
+	}
+
+/*********************************************************************************/
+/* Widgets                                                                       */
+/*********************************************************************************/
+
+	.widget-thumbnails
+	{
+	}
+
+		.widget-thumbnails .image
+		{
+			margin: 0;
+		}
+	
+		.widget-thumbnails .x
+		{
+			padding: 1em 0.5em 0 0;
+		}
+	
+		.widget-thumbnails .y
+		{
+			padding: 1em 0 0 0.5em;
+		}
+
+		.widget-thumbnails .row:first-child .x,
+		{
+			padding-top: 0;
+		}	
+
+/*********************************************************************************/
+/* Wrappers                                                                      */
+/*********************************************************************************/
+
+	#header-wrapper
+	{
+		padding: .75em 0 .75em 0;
+	}
+	
+	#features-wrapper
+	{
+		padding: 2em 0 3em 0;
+	}
+	
+	#main-wrapper
+	{
+		padding: 1.5em 0 0 0;
+	}
+	
+	#footer-wrapper
+	{
+		padding: 0 0 1em 0;
+	}
+
+/*********************************************************************************/
+/* Logo                                                                          */
+/*********************************************************************************/
+
+	#logo
+	{
+	}
+
+		#logo h1
+		{
+			float: left;
+			margin: 0 0.35em 0 0;
+			padding: 0.25em 0.2em 0.25em 0;
+			font-size: 3.25em;
+			letter-spacing: 0.05em;
+		}
+
+		#logo span
+		{
+			line-height: 4.5em;
+			letter-spacing: 0.025em;
+			font-size: 0.9em;
+		}
+
+/*********************************************************************************/
+/* Nav                                                                           */
+/*********************************************************************************/
+
+	#nav
+	{
+		position: absolute;
+		right: 0;
+		top: 0;
+		font-size: 0.9em;
+	}
+	
+		#nav ul
+		{
+		}
+			
+			#nav ul li
+			{
+				float: left;
+				line-height: 4.5em;
+				padding-left: 1.5em;
+			}
+
+				#nav ul li a
+				{
+					font-weight: 800;
+					letter-spacing: 0.025em;
+					color: #696969;
+					text-decoration: none;
+					border-radius: 6px;
+					padding: 0.5em 1em 0.5em 1em;
+					-moz-transition: background-color .25s ease-in-out;
+					-webkit-transition: background-color .25s ease-in-out;
+					-o-transition: background-color .25s ease-in-out;
+					-ms-transition: background-color .25s ease-in-out;
+					transition: background-color .25s ease-in-out;
+				}
+
+			#nav ul li:hover
+			{
+			}
+
+				#nav ul li:hover a
+				{
+					background: rgba(255,255,255,0.5);
+				}
+
+			#nav ul li.current_page_item
+			{
+			}
+
+				#nav ul li.current_page_item a
+				{
+					background: #444;
+					color: #fff;
+				}
+
+/*********************************************************************************/
+/* Banner                                                                        */
+/*********************************************************************************/
+
+	#banner
+	{
+		padding: 6.25% 6.25% 3.5% 6.25%;
+	}
+
+		#banner h2
+		{
+			font-size: 3.5em;
+			margin: 0.1em 0 0.35em 0;
+		}
+
+		#banner p
+		{
+			font-size: 1.0em;
+			line-height: 1.35em;
+			margin: 0;
+		}
+		
+		#banner .button
+		{
+			font-size: 2em;
+			width: 100%;
+			padding-left: 70px;
+			margin-bottom: 0.5em;
+		}
+
+		#banner .button-alt
+		{
+			margin-bottom: 0;
+		}
+		
+		#banner ul
+		{
+			margin-left: 2em;
+		}
+
+/*********************************************************************************/
+/* Content                                                                       */
+/*********************************************************************************/
+
+	#content
+	{
+	}
+
+		#content h2
+		{
+			margin-top: 20px;
+		}
+
+		#content .button
+		{
+			font-size: 30px;
+			width: 100%;
+			text-align:center;
+			min-height: 80px;
+			line-height:25px;
+			margin-bottom: 20px;
+			margin-right: 0;
+			max-width: 350px;
+			padding-top: 25px;
+			padding-bottom: 25px;
+			}
+
+		#content .buttondemo
+		{
+			font-size: 18pt;
+			width: 100%;
+			text-align:center;
+			min-height: 80px;
+			line-height:25px;
+			margin-bottom: 20px;
+			margin-right: 0;
+			max-width: 320px;
+			padding-top: 25px;
+			padding-bottom: 25px;
+			}
+
+		.ui-controlgroup .ui-radio .ui-btn
+		{
+			border-right:1px solid #ccc;
+			margin-left: 1px;
+		}
+		
+
+/*********************************************************************************/
+/* Footer and Header                                                                      */
+/*********************************************************************************/
+
+	#header
+	{
+	}
+	
+		#header h2
+		{
+			float:left;
+		}
+
+		#header h3
+		{
+			float:right;
+		}
+
+	#footer
+	{
+	}
+	
+		#footer h2
+		{
+			font-size: 1.35em;
+		}
+
+	#copyright
+	{
+		padding: 1em 0 0 0;
+		text-align: center;
+	}

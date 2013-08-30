@@ -57,6 +57,10 @@ main = hakyll $ do
         route   idRoute
         compile copyFileCompiler
 
+    -- route the fonts
+    match "files/**" $ do
+        route   idRoute
+        compile copyFileCompiler
 
     -- route the css
     match "css/*" $ do
