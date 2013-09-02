@@ -37,7 +37,7 @@ Then I found [Ranger](https://wiki.archlinux.org/index.php/Ranger).
 
 It's a text-based file manager with a vim-like interface written in Python. It is fast and keyboard-driven. Bound to a key, it opens instantly. But most importantly, it does some things better than its GUI-based cousins.
 
-Ranger is, what I like to call a "modern" terminal application, like [Vim](https://en.wikipedia.org/wiki/Vim_%28text_editor%29) or [tmux](https://en.wikipedia.org/wiki/Tmux) or [mutt](http://www.mutt.org/). To outsiders, these kinds of programs look severely dated, like an ancient printing press that requires custom-made blocks for each page. When a Windows user sees you use this software, they often mistake you for working with one hand tied behind your back.
+Ranger is what I like to call a "modern" terminal application, like [Vim](https://en.wikipedia.org/wiki/Vim_%28text_editor%29) or [tmux](https://en.wikipedia.org/wiki/Tmux) or [mutt](http://www.mutt.org/). To outsiders, these kinds of programs look severely dated, like an ancient printing press that requires custom-made blocks for each page. When a Windows user sees you use this software, they often mistake you for working with one hand tied behind your back.
 
 Behind the scenes, however, you're just using the best tool for the job. What these programs lack in user interface, they make up for in automation and hackability.
 
