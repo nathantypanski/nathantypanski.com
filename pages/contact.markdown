@@ -3,6 +3,7 @@ title: Contact
 ---
 
 You can get in touch with me using email and my
+<i class="icon-key"></i>
 [PGP key](http://pgp.mit.edu:11371/pks/lookup?op=get&search=0x5FE593CBD7302B8D).
 
 ```` {.sourceCode}
