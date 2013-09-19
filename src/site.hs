@@ -1,11 +1,12 @@
---------------------------------------------------------------------------------
-
-
 {-# LANGUAGE OverloadedStrings #-}
 import           Data.Monoid (mappend)
 import           Hakyll
 import           Text.Pandoc.Options as Pandoc.Options
-
+import Control.Applicative ((<$>))
+import Data.Char           (isSpace)
+import Data.List           (dropWhileEnd)
+import Data.Monoid         ((<>))
+import System.Process      (readProcess)
 
 --------------------------------------------------------------------------------
 -- Pandoc
@@ -95,30 +96,33 @@ main = hakyll $ do
 
     -- make top-level pages
     match "pages/*" $ do
+        let versionContext = versionField "versionInfo" <> defaultContext
         route $ gsubRoute "pages/" (const "") `composeRoutes`
             setExtension "html"
         compile $ pandocCompiler
-            >>= loadAndApplyTemplate "templates/default.html" defaultContext
+            >>= loadAndApplyTemplate "templates/default.html" versionContext
             >>= relativizeUrls
 
 
     match "blog/*" $ do
         route $ setExtension "html"
+        let versionContext = versionField "versionInfo" <> postCtx
         compile $ do
             pandocCompilerWith defaultHakyllReaderOptions tocWriterOptions
-            >>= loadAndApplyTemplate "templates/post.html" postCtx
-            >>= loadAndApplyTemplate "templates/default.html" postCtx
+            >>= loadAndApplyTemplate "templates/post.html" versionContext
+            >>= loadAndApplyTemplate "templates/default.html" versionContext
             >>= relativizeUrls
 
 
     create ["blog.html"] $ do
         route idRoute
         compile $ do
+            let versionContext = versionField "versionInfo" <> defaultContext
             posts <- recentFirst =<< loadAll "blog/*"
             let archiveCtx =
                     listField      "posts" postCtx (return posts) `mappend`
                     constField     "title" "Blog"                 `mappend`
-                    defaultContext
+                    versionContext
             makeItem ""
                 >>= loadAndApplyTemplate "templates/blog.html" archiveCtx
                 >>= loadAndApplyTemplate "templates/default.html" archiveCtx
@@ -138,11 +142,12 @@ main = hakyll $ do
     match "pages/index.html" $ do
         route $ gsubRoute "pages/" (const "") `composeRoutes` idRoute
         compile $ do
+            let versionContext = versionField "versionInfo" <> defaultContext
             posts <- recentFirst =<< loadAll "blog/*"
             let indexCtx =
                     listField "posts" postCtx (return posts) `mappend`
                     constField "title" "Home"                `mappend`
-                    defaultContext
+                    versionContext
 
             getResourceBody
                 >>= applyAsTemplate indexCtx
@@ -164,3 +169,21 @@ postCtx =
 
 
 --------------------------------------------------------------------------------
+-- Git (http://vapaus.org/text/hakyll-configuration.html)
+--------------------------------------------------------------------------------
+
+getGitVersion :: FilePath -> IO String
+getGitVersion path = shorten <$> readProcess "git" ["log", "-1", "--format=%h (%ai) %s", "--", path] ""
+  where
+    shorten = dropWhileEnd isSpace
+
+-- Field that contains the latest commit hash that hash touched the current item.
+versionField :: String -> Context String
+versionField name = field name $ \item -> unsafeCompiler $ do
+    let path = toFilePath $ itemIdentifier item
+    putStrLn path
+    getGitVersion path
+
+-- Field that contains the commit hash of HEAD.
+headVersionField :: String -> Context String
+headVersionField name = field name $ \_ -> unsafeCompiler $ getGitVersion ""
