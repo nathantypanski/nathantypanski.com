@@ -2,13 +2,19 @@
 title: About
 ---
 
-I am hobbyist with interests in artwork, typesetting, web and graphic design. I'm also studying [computer engineering](http://www.cnu.edu/pcs/academics/ce.asp)</a> at Christopher Newport University, and am hard at work earning a minor in leadership studies in the [President's Leadership Program](http://presidentsleadership.cnu.edu/).
-
+I am computer engineering student at 
+[CNU](http://www.cnu.edu/pcs/academics/ce.asp),
+[contributor to the Arch Linux wiki](https://wiki.archlinux.org/index.php/Special:Contributions/Ndt),
+[programmer](https://github.com/nathantypanski),
+[armchair mathematician](tex.html),
+and founder of a
+[Linux user group](http://cnulug.org/).
 
 Personality
 ----
 
-I am still regularly taking personality tests and adding results as I encounter them.
+Sometimes I take personality tests. If I like the results, I also sometimes
+post about them here.
 
 I have taken the [Meyers-Briggs Type Indicator](http://en.wikipedia.org/wiki/Myers-Briggs_Type_Indicator) (MBTI) once in 2011 and show [INTP](http://en.wikipedia.org/wiki/INTP) preferences.
 
