@@ -2,9 +2,12 @@ $defaultColor: #202020;
 $background: #fff;
 $tocBackground: #f8f8f8;
 $tocBorder: #eee;
+$normalFontSize: 12pt;
+$footnoteFontSize: 8pt;
+$headerOffset: -4px;
 
 /* STYLE RESET */
-* { 
+* {
     vertical-align: baseline;
     font-family: inherit;
     font-style: inherit;
@@ -25,7 +28,10 @@ h2 {
 }
 
 li, dd, blockquote {
-    margin-left: 0px;
+    margin: {
+        left: 80px;
+        right: 80px;
+    }
 }
 
 table {
@@ -37,7 +43,7 @@ table {
 body {
     color: $defaultColor;
     background: $background;
-    font-size: 16px;
+    font-size: $normalFontSize;
     margin: 0px auto 0px auto;
     width: 700px;
 }
@@ -77,27 +83,49 @@ body {
     }
 }
 
+a.footnoteRef {
+    font-size: $footnoteFontSize;
+    vertical-align: super
+}
+
+img + p.caption {
+    :before {
+        content: "Fig: ";
+        font: {
+             size: 8px;
+             style: normal;
+        }
+        padding-right: 0.3em;
+    }
+//    border-bottom: 1px solid #5F819D;
+    font: {
+        size: 10px;
+        style: normal;
+    }
+    padding: {
+         top: 16px;
+         bottom: 1px;
+         left: 0px;
+         right: 0px;
+    }
+}
+
+div.figure {
+    width: 60%;
+    text: {
+        align: center;
+    }
+    margin: {
+        left: auto;
+        right: auto;
+    }
+}
+
 div#header {
     border-bottom: 1px solid #5F819D;
     margin-bottom: 30px;
     padding: 12px 0px 12px 0px;
     text-align: right;
-}
-
-div#logo {
-    a {
-        color: black;
-        float: left;
-        font: {
-            size: 18px;
-            weight: bold;
-        }
-        text-decoration: none;
-    }
-    img {
-        float: right;
-        display:inline-block;
-    }
 }
 
 div#navigation {
@@ -133,12 +161,16 @@ div#footer {
 
 h1 {
     font-size: 24px;
+    margin: {
+        left: $headerOffset;
+    }
 }
 
 h2 {
     font-size: 16px;
     margin: {
-        bottom: 0px;
+        left: $headerOffset;
+        bottom: 2px;
     }
 }
 

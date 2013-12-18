@@ -17,6 +17,7 @@ pandocWriterOptions :: Pandoc.Options.WriterOptions
 pandocWriterOptions = defaultHakyllWriterOptions
     { Pandoc.Options.writerHtml5 = True
     , Pandoc.Options.writerHtmlQTags = True
+    , Pandoc.Options.writerReferenceLinks = True
     --, Pandoc.Options.writerNumberSections = True
     --, Pandoc.Options.writerNumberOffset = [1]
     , Pandoc.Options.writerSectionDivs = True
