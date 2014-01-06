@@ -3,24 +3,22 @@ title: Home
 ---
 ![Logo](/images/logo.png)
 
->"But I like the inconveniences."
->
->"We don't," said the Controller. "We prefer to do things comfortably."
->
->"But I don't want comfort. I want God, I want poetry, I want real danger, I
->want freedom, I want goodness. I want sin."
->
->"In fact," said Mustapha Mond, "you're claiming the right to be unhappy."
->
->"All right then," said the Savage defiantly, "I'm claiming the right to be
->unhappy."
->
->"Not to mention the right to grow old and ugly and impotent; the right to
->have syphilis and cancer; the right to have too little to eat; the right to
->be lousy; the right to live in constant apprehension of what may happen
->to-morrow; the right to catch typhoid; the right to be tortured by
->unspeakable pains of every kind." There was a long silence.
->
->"I claim them all," said the Savage at last.[^bravenew]
+I am computer engineering student at 
+[CNU](http://www.cnu.edu/pcs/academics/ce.asp),
+[contributor to the Arch Linux wiki](https://wiki.archlinux.org/index.php/Special:Contributions/Ndt),
+[programmer](https://github.com/nathantypanski),
+[armchair mathematician](tex.html),
+and founder of a
+[Linux user group](http://cnulug.org/).
 
-[^bravenew]: [Brave New World](https://en.wikipedia.org/wiki/Brave_New_World)
+Personality
+----
+
+Sometimes I take personality tests. If I like the results, I also sometimes
+post about them here.
+
+I have taken the [Meyers-Briggs Type Indicator](http://en.wikipedia.org/wiki/Myers-Briggs_Type_Indicator) (MBTI) once in 2011 and show [INTP](http://en.wikipedia.org/wiki/INTP) preferences.
+
+1. [Big Five personality traits short form](files/2012-yourmorals/bigfive_process.php.htm)</a> ([description](http://en.wikipedia.org/wiki/Big_Five_personality_traits)).
+2. [Moral Foundations Sacredness Scale](files/2012-yourmorals/sacredness_process.php.htm)
+3. [The Disgust Scale](files/2013-yourmorals/Disgust_scale.htm)
