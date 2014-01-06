@@ -1,11 +1,11 @@
 name: ndt
 version: 1.0
-synopsis: Personal Site
+synopsis: My personal website
 -- description:
 homepage: http://nathantypanski.com
 license-file: LICENSE
 author: Nathan D. Typanski
-maintainer: ntypanski@gmail.com
+maintainer: mail@nathantypanski.com
 -- copyright:
 category: Web
 build-type: Simple
