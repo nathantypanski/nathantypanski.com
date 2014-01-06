@@ -1,4 +1,4 @@
 nathantypanski.github.io
 ========================
 
-This is my work-in-progress site rewrite using [hakyll](http://jaspervdj.be/hakyll/)
+This is the source code used to generate my personal website with [hakyll](http://jaspervdj.be/hakyll/).

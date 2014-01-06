@@ -1,11 +1,10 @@
 {-# LANGUAGE OverloadedStrings #-}
-import           Data.Monoid (mappend)
+import           Data.Monoid (mappend, (<>))
 import           Hakyll
 import           Text.Pandoc.Options as Pandoc.Options
 import Control.Applicative ((<$>))
 import Data.Char           (isSpace)
 import Data.List           (dropWhileEnd)
-import Data.Monoid         ((<>))
 import System.Process      (readProcess)
 
 --------------------------------------------------------------------------------
