@@ -5,6 +5,9 @@ title: Contact
 You can get in touch with me using email and my
 <i class="icon-key"></i>
 [PGP key](http://pgp.mit.edu:11371/pks/lookup?op=get&search=0x5FE593CBD7302B8D).
+Alternatively, you can shoot an email over to `mail` at *this website*.com to
+get in touch. You could also contact me via my 
+[Google+ profile](https://plus.google.com/116296025851282616355/about/).
 
 ```` {.sourceCode}
 -----BEGIN PGP PUBLIC KEY BLOCK-----
