@@ -2,6 +2,8 @@ $defaultColor: #202020;
 $background: #fff;
 $tocBackground: #f8f8f8;
 $tocBorder: #eee;
+$quoteBorder: #FEFEFE;
+$quoteBackground: #FDFDFD;
 $normalFontSize: 12pt;
 $footnoteFontSize: 8pt;
 $headerOffset: -4px;
@@ -27,10 +29,28 @@ h2 {
     }
 }
 
-li, dd, blockquote {
+li, dd {
     margin: {
         left: 80px;
         right: 80px;
+    }
+}
+
+blockquote {
+    background: $quoteBackground;
+    border: 1px solid $quoteBorder;
+    margin: {
+        left: 80px;
+        right: 80px;
+    }
+    li {
+        padding: {
+            left: 10px;
+            }
+        margin: {
+            left: 20px;
+            right: 5px;
+        }
     }
 }
 
