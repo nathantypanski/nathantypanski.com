@@ -1,7 +1,7 @@
 ---
 title: Home
 ---
-![Logo](/images/logo.png)
+![](/images/logo-noprojector.png)
 
 I am computer engineering student at 
 [CNU](http://www.cnu.edu/pcs/academics/ce.asp),
