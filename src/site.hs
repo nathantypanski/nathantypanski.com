@@ -5,6 +5,7 @@ import           Text.Pandoc.Options as Pandoc.Options
 import Control.Applicative ((<$>))
 import Data.Char           (isSpace)
 import Data.List           (dropWhileEnd)
+import Data.Map            (member)
 import System.Process      (readProcess)
 
 --------------------------------------------------------------------------------
@@ -29,6 +30,7 @@ tocWriterOptions = pandocWriterOptions
     , writerTemplate =
         "$if(toc)$<div id=\"toc\"><h2>Contents</h2>\n$toc$</div>\n$endif$$body$"
     , writerStandalone = True
+    , writerHTMLMathMethod = MathJax ""
     }
 
 
@@ -106,8 +108,8 @@ main = hakyll $ do
 
     match "blog/*" $ do
         route $ setExtension "html"
-        let versionContext = versionField "versionInfo" <> postCtx
-        compile $ do
+        let versionContext = versionField "versionInfo" <> mathCtx <> postCtx
+        compile $
             pandocCompilerWith defaultHakyllReaderOptions tocWriterOptions
             >>= loadAndApplyTemplate "templates/post.html" versionContext
             >>= loadAndApplyTemplate "templates/default.html" versionContext
@@ -159,7 +161,12 @@ main = hakyll $ do
 
 
 --------------------------------------------------------------------------------
-
+mathCtx :: Context a
+mathCtx = field "mathjax" $ \item -> do
+    metadata <- getMetadata $ itemIdentifier item
+    return $ if "mathjax" `member` metadata
+                  then "<script type=\"text/javascript\" src=\"http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML\"></script>"
+                  else ""
 
 postCtx :: Context String
 postCtx =
