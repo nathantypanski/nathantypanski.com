@@ -1,12 +1,17 @@
-$defaultColor: #202020;
+$body_width: 800px;
+$default_color: #202020;
 $background: #fff;
-$tocBackground: #f8f8f8;
-$tocBorder: #eee;
-$quoteBorder: #FEFEFE;
-$quoteBackground: #FDFDFD;
-$normalFontSize: 12pt;
-$footnoteFontSize: 8pt;
-$headerOffset: -4px;
+$toc_background: #f8f8f8;
+$toc_border: #eee;
+$quote_border: #eee;
+$quote_background: #f8f8f8;
+$normal_font_size: 12pt;
+$footnote_font_size: 8pt;
+$header_offset: -6px;
+$link: #2A75A9;
+$link_visited: #274257;
+$link_hover: #7EB5D6;
+$link_home: #5F819D !important;
 
 /* STYLE RESET */
 * {
@@ -23,12 +28,6 @@ h1, h2, h3, h4, h5, h6, p, pre, blockquote, form, ul, ol, dl {
     margin: 0 0 16px 0;
 }
 
-h2 {
-    margin: {
-        top: 8px;
-    }
-}
-
 li, dd {
     margin: {
         left: 80px;
@@ -37,11 +36,11 @@ li, dd {
 }
 
 blockquote {
-    background: $quoteBackground;
-    border: 1px solid $quoteBorder;
+    background: $quote_background;
+    border: 1px solid $quote_border;
     margin: {
-        left: 80px;
-        right: 80px;
+        left: 60px;
+        right: 60px;
     }
     li {
         padding: {
@@ -61,16 +60,16 @@ table {
 /* END RESET */
 
 body {
-    color: $defaultColor;
+    color: $default_color;
     background: $background;
-    font-size: $normalFontSize;
+    font-size: $normal_font_size;
     margin: 0px auto 0px auto;
-    width: 700px;
+    width: $body_width;
 }
 
 #toc {
     float: right;
-    border: 1px solid $tocBorder;
+    border: 1px solid $toc_border;
     h2 {
         font: {
             style: normal;
@@ -97,15 +96,10 @@ body {
         right: 0px;
         bottom: 30px;
     }
-    background: $tocBackground;
+    background: $toc_background;
     li {
-        list-style-type: lower-roman;
+        list-style-type: lower;
     }
-}
-
-a.footnoteRef {
-    font-size: $footnoteFontSize;
-    vertical-align: super
 }
 
 img + p.caption {
@@ -117,7 +111,6 @@ img + p.caption {
         }
         padding-right: 0.3em;
     }
-//    border-bottom: 1px solid #5F819D;
     font: {
         size: 10px;
         style: normal;
@@ -130,14 +123,16 @@ img + p.caption {
     }
 }
 
-div.figure {
-    width: 60%;
-    text: {
-        align: center;
-    }
-    margin: {
-        left: auto;
-        right: auto;
+div {
+    div.figure {
+        width: 60%;
+        text: {
+            align: center;
+        }
+        margin: {
+            left: auto;
+            right: auto;
+        }
     }
 }
 
@@ -168,6 +163,10 @@ div#navigation {
     i {
         margin-right: 2px;
     }
+    margin: {
+        bottom: 16px;
+        top:8px;
+    }
 }
 
 div#footer {
@@ -182,15 +181,23 @@ div#footer {
 h1 {
     font-size: 24px;
     margin: {
-        left: $headerOffset;
+        left: $header_offset;
     }
 }
 
 h2 {
-    font-size: 16px;
+    font-size: 20px;
+    color: #111;
+    a {
+        color: #274257;
+        text-decoration: None;
+    }
     margin: {
-        left: $headerOffset;
-        bottom: 2px;
+        left: $header_offset;
+        bottom: 12px;
+    }
+    margin: {
+        top: 18px;
     }
 }
 
@@ -202,19 +209,23 @@ div.info {
 
 a
 {
-    color: #2A75A9;
+    color: $link;
     :visited {
-        color: #274257;
+        color: $link_visited;
     }
     :hover {
-        color: #7EB5D6;
+        color: $link_hover;
+    }
+    .home {
+        color: $link_home;
+    }
+
+    .footnoteRef {
+        font-size: $footnote_font_size;
+        vertical-align: super
     }
 }
 
-.home a
-{
-    color: #5F819D !important;
-}
 
 .code
 {
