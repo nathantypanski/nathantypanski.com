@@ -5,29 +5,67 @@ title: Ranger: speedy file management
 Background
 -----
 
-I've been using Linux as my primary OS for about six years now. When I started out I used [Nautilus](https://en.wikipedia.org/wiki/Nautilus_%28file_manager%29), which came with [Ubuntu](http://www.ubuntu.com/). Then I moved to [Xubuntu](http://xubuntu.org/) and found [Thunar](https://en.wikipedia.org/wiki/Thunar), which was better (read: faster). After switching to [Arch](https://www.archlinux.org/) and using [Openbox](http://openbox.org/) exclusively for years I mostly stuck with Thunar, but experimented with [Dolphin](https://en.wikipedia.org/wiki/Dolphin_%28file_manager%29), which was feature-packed, and later [PcManFM](https://en.wikipedia.org/wiki/PCManFM), which was basically an even lighter Thunar.
+I've been using Linux as my primary OS for about six years now. When I
+started out I used
+[Nautilus](https://en.wikipedia.org/wiki/Nautilus_%28file_manager%29),
+which came with [Ubuntu](http://www.ubuntu.com/). Then I moved to
+[Xubuntu](http://xubuntu.org/) and found
+[Thunar](https://en.wikipedia.org/wiki/Thunar), which was better
+(read: faster). After switching to [Arch](https://www.archlinux.org/)
+and using [Openbox](http://openbox.org/) exclusively for years I
+mostly stuck with Thunar, but experimented with
+[Dolphin](https://en.wikipedia.org/wiki/Dolphin_%28file_manager%29),
+which was feature-packed, and later
+[PcManFM](https://en.wikipedia.org/wiki/PCManFM), which was basically
+an even lighter Thunar.
 
-Then some change happened. I started experimenting with [tiling window managers](https://en.wikipedia.org/wiki/Tiling_window_manager) and striving for a more keyboard-driven desktop. As a natural consequence of this, I began to rely on file managers less and less. I would open one, browse to the files or directory I needed, and then hit <code>F4</code> and jam out in the terminal for my real work.
+Then some change happened. I started experimenting with
+[tiling window managers](https://en.wikipedia.org/wiki/Tiling_window_manager)
+and striving for a more keyboard-driven desktop. As a natural
+consequence of this, I began to rely on file managers less and less. I
+would open one, browse to the files or directory I needed, and then
+hit <code>F4</code> and jam out in the terminal for my real work.
 
-At the risk of being mistaken for a [Gentoo ricer](http://funroll-loops.info/), I will say this: file managers are too slow. My terminal starts instantly. I can open one and type 
+File managers are too slow. Partially for the user (clicking with a mouse
+is slower than typing for me), and partially because of the system time
+wasted drawing pictures of your files.
+My terminal starts instantly. I can open one
+and type
 
 ```` {.sourceCode .bash}
 la | grep zsh
 ````
 
-before Thunar can even start up. Copying or moving files is still mouse-driven, unless I want to fumble around with modifiers and arrow keys for half an hour. It's just not efficient.
+before Thunar can even start up. Copying or moving files is still
+mouse-driven, unless I want to fumble around with modifiers and arrow
+keys for half an hour. It's just not efficient.
 
 And besides, it's hardly hackable.
 
 Back to the TTY
 ----
-My CentOS servers don't have file managers. When I <code>adb shell</code> into my [Nexus 10](http://www.google.com/nexus/10/), I don't have a file manager. My [Beaglebone Black](http://beagleboard.org/Products/BeagleBone%20Black) doesn't have a file manager. Why does my laptop need one?
+My CentOS servers don't have file managers. When I <code>adb
+shell</code> into my [Nexus 10](http://www.google.com/nexus/10/), I
+don't have a file manager. My
+[Beaglebone Black](http://beagleboard.org/Products/BeagleBone%20Black)
+doesn't have a file manager. Why does my laptop need one?
 
-I never understood the draw of console-based file managers. I once had a friend, who was a relative newbie to Arch, tell me he was trying to do everything with the console. "To learn more" was his reasoning. I wrote the idea off as silly.
+I never understood the draw of console-based file managers. I once had
+a friend, who was a relative newbie to Arch, tell me he was trying to
+do everything with the console. "To learn more" was his reasoning. I
+wrote the idea off as silly.
 
-"Just use <code>ls</code>, <code>mv</code>, <code>cp</code>, etc. in a Bourne shell," I told him. "You'll learn more using fundamental Unix commands than crippling yourself with 80's anachronisms like <code>mc</code>."
+"Just use <code>ls</code>, <code>mv</code>, <code>cp</code>, etc. in a
+Bourne shell," I told him. "You'll learn more using fundamental Unix
+commands than crippling yourself with 80's anachronisms like
+<code>mc</code>."
 
-File managers, like photo editors, were just one of those areas where a GUI was the right tool for the job. You couldn't possibly convince me the horrific fluorescent blue of [Midnight Commander](https://en.wikipedia.org/wiki/Midnight_Commander) was superior to a program with fancy modern features like tabs, file previews, and drag-and-drop. 
+File managers, like photo editors, were just one of those areas where
+a GUI was the right tool for the job. You couldn't possibly convince
+me the horrific fluorescent blue of
+[Midnight Commander](https://en.wikipedia.org/wiki/Midnight_Commander)
+was superior to a program with fancy modern features like tabs, file
+previews, and drag-and-drop.
 
 Case closed. Or so I thought.
 
@@ -35,22 +73,60 @@ Ranger, Scope and Rifle
 ----
 Then I found [Ranger](https://wiki.archlinux.org/index.php/Ranger).
 
-It's a text-based file manager with a vim-like interface written in Python. It is fast and keyboard-driven. Bound to a key, it opens instantly. But most importantly, it does some things better than its GUI-based cousins.
+It's a text-based file manager with a vim-like interface written in
+Python. It is fast and keyboard-driven. Bound to a key, it opens
+instantly. But most importantly, it does some things better than its
+GUI-based cousins.
 
-Ranger is what I like to call a "modern" terminal application, like [Vim](https://en.wikipedia.org/wiki/Vim_%28text_editor%29) or [tmux](https://en.wikipedia.org/wiki/Tmux) or [mutt](http://www.mutt.org/). To outsiders, these kinds of programs look severely dated, like an ancient printing press that requires custom-made blocks for each page. When a Windows user sees you use this software, they often mistake you for working with one hand tied behind your back.
+Ranger is what I like to call a "modern" terminal application, like
+[Vim](https://en.wikipedia.org/wiki/Vim_%28text_editor%29) or
+[tmux](https://en.wikipedia.org/wiki/Tmux) or
+[mutt](http://www.mutt.org/). To outsiders, these kinds of programs
+look severely dated, like an ancient printing press that requires
+custom-made blocks for each page. When a Windows user sees you use
+this software, they often mistake you for working with one hand tied
+behind your back.
 
-Behind the scenes, however, you're just using the best tool for the job. What these programs lack in user interface, they make up for in automation and hackability.
+Behind the scenes, however, you're just using the best tool for the
+job. What these programs lack in user interface, they make up for in
+automation and hackability.
 
-The first thing that struck me about Ranger was the [file previews](http://download.savannah.gnu.org/releases-noredirect/ranger/screenshot2.png). When you highlight a text file, it actually shows some of its contents immediately beside it. For html files, it uses a terminal-based renderer to preview the finished page. PDFs get text-based previews, as well. Even images have a hacky full-color ASCII art preview on display.
+The first thing that struck me about Ranger was the
+[file previews](http://download.savannah.gnu.org/releases-noredirect/ranger/screenshot2.png).
+When you highlight a text file, it actually shows some of its contents
+immediately beside it. For html files, it uses a terminal-based
+renderer to preview the finished page. PDFs get text-based previews,
+as well. Even images have a hacky full-color ASCII art preview on
+display.
 
-Pressing <code>l</code> opens the file in its default program as defined in <code>~/.config/ranger/rifle.conf</code>, the config file for Ranger's custom file opener. No mimetypes or <code>.desktop</code> files to worry about, just one simple, powerful mapping from filetypes to commands.
+Pressing <code>l</code> opens the file in its default program as
+defined in <code>~/.config/ranger/rifle.conf</code>, the config file
+for Ranger's custom file opener. No mimetypes or <code>.desktop</code>
+files to worry about, just one simple, powerful mapping from filetypes
+to commands.
 
-Scope, Ranger's built-in file previewer, has a similar ethos. It's just an 80-ish-line Bourne script that attempts some sensible defaults for text-rendering filetypes. It has its problems, like trying to render <code>text/gpg</code> files in all their encrypted glory, but this is forgiven for but one reason:
+Scope, Ranger's built-in file previewer, has a similar ethos. It's
+just an 80-ish-line Bourne script that attempts some sensible defaults
+for text-rendering filetypes. It has its problems, like trying to
+render <code>text/gpg</code> files in all their encrypted glory, but
+this is forgiven for but one reason:
 
 All of this can be easily changed.
 
-That's the beauty of this kind of design philosophy. Nearly everyone can hack out a few lines of Python or Bash nowadays, and it's much faster to do so than digging around in C source files, recompiling, and then dorking around in <code>valgrind</code> for a few hours to figure out what you just broke. In the words of Eric S. Raymond (Whether you love the guy or hate him, I can generally trust him to make good points):
+That's the beauty of this kind of design philosophy. Nearly everyone
+can hack out a few lines of Python or Bash nowadays, and it's much
+faster to do so than digging around in C source files, recompiling,
+and then dorking around in <code>valgrind</code> for a few hours to
+figure out what you just broke. In the words of Eric S. Raymond
+(Whether you love the guy or hate him, I can generally trust him to
+make good points):
 
-> With today's machines as powerful as they are, this is usually a bad tradeoff — it's smarter to use a language that uses the machine's time less efficiently, but your time much more efficiently.
+> With today's machines as powerful as they are, this is usually a bad
+> tradeoff — it's smarter to use a language that uses the machine's
+> time less efficiently, but your time much more efficiently.
 
-Ranger embodies this attitude. It runs fast, but not [suckless](http://suckless.org/) fast and it doesn't try to. Ranger is user-fast. Opening it and moving files around is fast. Teaching it new tricks is fast. It's my kind of application—it does its job when I need it, and then it gets the hell out of my way.
+Ranger embodies this attitude. It runs fast, but not
+[suckless](http://suckless.org/) fast and it doesn't try to. Ranger is
+user-fast. Opening it and moving files around is fast. Teaching it new
+tricks is fast. It's my kind of application—it does its job when I
+need it, and then it gets the hell out of my way.
