@@ -130,6 +130,28 @@ main = hakyll $ do
                 >>= loadAndApplyTemplate "templates/default.html" archiveCtx
                 >>= relativizeUrls
 
+    create ["essays.html"] $ do
+        route idRoute
+        compile $ do
+            let versionContext = versionField "versionInfo" <> defaultCtx
+            posts <- recentFirst =<< loadAll "essays/*"
+            let archiveCtx =
+                    listField      "posts" postCtx (return posts) <>
+                    constField     "title" "Essays"               <>
+                    versionContext
+            makeItem ""
+                >>= loadAndApplyTemplate "templates/blog.html" archiveCtx
+                >>= loadAndApplyTemplate "templates/default.html" archiveCtx
+                >>= relativizeUrls
+
+    match "essays/*" $ do
+        route $ setExtension "html"
+        let versionContext = versionField "versionInfo" <> mathCtx <> postCtx
+        compile $
+            pandocCompilerWith defaultHakyllReaderOptions tocWriterOptions
+            >>= loadAndApplyTemplate "templates/post.html" versionContext
+            >>= loadAndApplyTemplate "templates/default.html" versionContext
+            >>= relativizeUrls
 
     create ["404.html"] $ do
         route idRoute

@@ -8,6 +8,7 @@ $quote_background: #f8f8f8;
 $normal_font_size: 12pt;
 $footnote_font_size: 8pt;
 $header_offset: -6px;
+$icon_color: #B0B0B0;
 $link: #2A75A9;
 $link_visited: #274257;
 $link_hover: #7EB5D6;
@@ -142,6 +143,11 @@ em {
     font-style: italic;
 }
 
+.footnoteRef {
+    vertical-align: super;
+    font-size: 10px;
+}
+
 #toc {
     float: right;
     border: 1px solid $toc_border;
@@ -187,6 +193,13 @@ em {
     }
     background: $toc_background;
 }
+img {
+    align: center;
+    margin: {
+        left: auto;
+        right: auto;
+        }
+    }
 
 img + p.caption {
     :before {
@@ -207,11 +220,11 @@ img + p.caption {
          left: 0px;
          right: 0px;
     }
+    text-align: center;
 }
 
 div {
     div.figure {
-        width: 60%;
         text: {
             align: center;
         }
@@ -241,6 +254,7 @@ div#navigation {
         text-transform: lowercase;
     }
     i {
+        color: $icon_color;
         margin-right: 2px;
     }
 }

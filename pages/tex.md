@@ -1,9 +1,18 @@
-I publish 
+---
+title: Math notes
+---
+
+I publish
 [my mathematics notes](/files/notes.pdf)
-for free online under a license that 
+for free online under a license that
 [permits creative sharing](http://creativecommons.org/licenses/by-nc-sa/3.0/).
 
-The 
+Here are some sample images:
+
+![Trigonometry](/images/mathnotes_tiny.png)
+![Sequences](/images/mathnotes_2_tiny.png)
+
+The
 [full LaTeX source and all images](https://github.com/nathantypanski/texnotes)
 are available for download, editing, and version control on GitHub.
 This often has more recent updates than the pdf version here, since I have not
