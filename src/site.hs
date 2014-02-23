@@ -98,7 +98,7 @@ main = hakyll $ do
 
     -- make top-level pages
     match "pages/*" $ do
-        let versionContext = versionField "versionInfo" <> defaultContext
+        let versionContext = versionField "versionInfo" <> defaultCtx
         route $ gsubRoute "pages/" (const "") `composeRoutes`
             setExtension "html"
         compile $ pandocCompiler
@@ -119,7 +119,7 @@ main = hakyll $ do
     create ["blog.html"] $ do
         route idRoute
         compile $ do
-            let versionContext = versionField "versionInfo" <> defaultContext
+            let versionContext = versionField "versionInfo" <> defaultCtx
             posts <- recentFirst =<< loadAll "blog/*"
             let archiveCtx =
                     listField      "posts" postCtx (return posts) `mappend`
@@ -136,7 +136,7 @@ main = hakyll $ do
         compile $ do
             let notFoundCtx =
                     constField "title" "404 you're lost" `mappend`
-                    defaultContext
+                    defaultCtx
             makeItem ""
                 >>= loadAndApplyTemplate "templates/default.html" notFoundCtx
 
@@ -144,7 +144,7 @@ main = hakyll $ do
     match "pages/index.html" $ do
         route $ gsubRoute "pages/" (const "") `composeRoutes` idRoute
         compile $ do
-            let versionContext = versionField "versionInfo" <> defaultContext
+            let versionContext = versionField "versionInfo" <> defaultCtx
             posts <- recentFirst =<< loadAll "blog/*"
             let indexCtx =
                     listField "posts" postCtx (return posts) `mappend`
@@ -172,8 +172,9 @@ postCtx :: Context String
 postCtx =
     modificationTimeField "modified" "%B %e, %Y" `mappend`
     dateField "date" "%B %e, %Y" `mappend`
-    defaultContext
+    defaultCtx
 
+defaultCtx = defaultContext `mappend` mathCtx
 
 --------------------------------------------------------------------------------
 -- Git (http://vapaus.org/text/hakyll-configuration.html)
