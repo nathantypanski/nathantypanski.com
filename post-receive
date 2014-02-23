@@ -2,6 +2,7 @@
 export LANG='en_US.UTF-8'
 cd '/home/athen/nathantypanski.com'
 LANG="en_US.UTF-8" /usr/bin/git checkout -f
+LANG="en_US.UTF-8" /home/athen/.cabal/bin/cabal configure
 LANG="en_US.UTF-8" /home/athen/.cabal/bin/cabal build
 LANG="en_US.UTF-8" ./site clean
 LANG="en_US.UTF-8" ./site rebuild
