@@ -236,12 +236,7 @@ getRevision path = do
     url -> return $ "<a href=\"" ++ url ++ "\">" ++ (revParse r) ++ "</a>"
 
 getGitVersion :: FilePath -> IO String
-getGitVersion path = do
-    print path
-    rev <- catch (getRevision path)
-                 (\NotFound -> return "")
-    print revision
-    return rev
+getGitVersion path = catch (getRevision path) (\NotFound -> return "")
 
 -- Field that contains the latest commit hash that hash touched the current item.
 versionField :: String -> Context String
