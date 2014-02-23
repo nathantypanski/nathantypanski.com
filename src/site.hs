@@ -9,8 +9,11 @@ import Data.Map            (member)
 import System.Process      (readProcess)
 import System.Directory  (getCurrentDirectory, canonicalizePath)
 import Control.Exception
-import Data.FileStore (FileStoreError(NotFound), Revision(..), revision, gitFileStore, latest,
-                       searchRevisions)
+import Data.Either
+import Github.Repos.Commits (commit)
+import Github.Data.Definitions (Commit(..), Error(..))
+import Data.FileStore (FileStoreError(NotFound), Revision(..), revision,
+                       gitFileStore, latest)
 
 --------------------------------------------------------------------------------
 -- Pandoc
@@ -203,8 +206,21 @@ defaultCtx = defaultContext `mappend` mathCtx
 --------------------------------------------------------------------------------
 -- Git (http://vapaus.org/text/hakyll-configuration.html)
 --------------------------------------------------------------------------------
+
+getUrl :: String -> IO String
+getUrl hash = do
+  c <- commit "nathantypanski" "nathantypanski.com" hash
+  return $ resultParse c
+  where resultParse (Left _) = ""
+        resultParse (Right (Commit _ _ _ _ _ _ _ _)) =
+          "https://github.com/nathantypanski/nathantypanski.com/commit/"
+          ++ hash
+
+commitHash :: Revision -> String
+commitHash (Revision id _ _ _ _) = id
+
 revParse :: Revision -> String
-revParse (Revision id _ _ desc _) = (shorten id) ++ " " ++ desc
+revParse (Revision id _ _ _ _) = shorten id
   where
     shorten = take 8
 
@@ -214,7 +230,10 @@ getRevision path = do
   let git = gitFileStore gitdir
   l <- latest git path
   r <- revision git l
-  return $ revParse r
+  url <- getUrl $ commitHash r
+  case url of
+    "" -> return $ revParse r
+    url -> return $ "<a href=\"" ++ url ++ "\">" ++ (revParse r) ++ "</a>"
 
 getGitVersion :: FilePath -> IO String
 getGitVersion path = do
