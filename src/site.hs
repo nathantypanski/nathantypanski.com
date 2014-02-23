@@ -7,6 +7,8 @@ import Data.Char           (isSpace)
 import Data.List           (dropWhileEnd)
 import Data.Map            (member)
 import System.Process      (readProcess)
+import System.Directory  (getCurrentDirectory, canonicalizePath)
+import Data.FileStore (Revision(..), revision, gitFileStore, latest)
 
 --------------------------------------------------------------------------------
 -- Pandoc
@@ -201,11 +203,23 @@ defaultCtx = defaultContext `mappend` mathCtx
 --------------------------------------------------------------------------------
 -- Git (http://vapaus.org/text/hakyll-configuration.html)
 --------------------------------------------------------------------------------
+revParse :: Revision -> String
+revParse (Revision id date author desc changes) = desc
+
+getRevision :: FilePath -> IO String
+getRevision path = do
+  gitdir <- getCurrentDirectory
+  let git = gitFileStore gitdir
+  l <- latest git "test.hs"
+  r <- revision git l
+  return $ revParse r
 
 getGitVersion :: FilePath -> IO String
-getGitVersion path = shorten <$> readProcess "git" ["log", "-1", "--format=%h (%ai) %s", "--", path] ""
-  where
-    shorten = dropWhileEnd isSpace
+getGitVersion path = do
+    let shorten = dropWhileEnd isSpace
+    let cpath = canonicalizePath path
+    revinfo <- cpath >>= getRevision
+    return $ shorten revinfo
 
 -- Field that contains the latest commit hash that hash touched the current item.
 versionField :: String -> Context String
