@@ -1,8 +1,10 @@
 $codebg: #f8f8f8;
 $codeborder: #eee;
+$src_font: "Lucidia Console", monospace;
+$src_font_size: 14px;
+$src_line_height: 24px;
 table.sourceCode
 {
-    border: 1px solid $codeborder;
 }
 tr.sourceCode, td.lineNumbers, td.sourceCode, table.sourceCode pre
 {
@@ -26,13 +28,26 @@ td.sourceCode
 }
 code
 {
-    font-family: "Lucidia Console", monospace;
-    font-size: 10pt;
+    margin: 0;
+    font-family: $src_font;
+    font-size: $src_font_size;
     background: $codebg;
+    border: 1px solid $codeborder;
 }
 pre.sourceCode
 {
-    border: 1px solid $codeborder;
+    code {
+        // Code blocks shouldn't have a border on each line.
+        border: 0px;
+    }
+    border: {
+        top: 0px solid $codeborder;
+        bottom: 6px solid $codeborder;
+        left: 0px solid $codeborder;
+        right: 0px solid $codeborder;
+    }
+    //border: 1px solid $codeborder;
+    line-height: $src_line_height;
     background: $codebg;
     padding-left: 0px;
 }

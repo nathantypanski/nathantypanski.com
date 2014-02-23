@@ -4,6 +4,12 @@ cabal-dev
 *.hi
 *.chi
 *.chs.h
+*.scssc
+*.css
+wordir/*
+*/.sass-cache/
+.#*
+*.xcf
 .virthualenv
 _cache/
 _site/

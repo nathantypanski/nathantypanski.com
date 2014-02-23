@@ -4,7 +4,7 @@ $background: #fff;
 $toc_background: #f8f8f8;
 $toc_border: #eee;
 $quote_border: #eee;
-$quote_background: #f8f8f8;
+$quote_background: #f0f0f0;
 $normal_font_size: 12pt;
 $footnote_font_size: 8pt;
 $header_offset: -6px;
@@ -48,6 +48,8 @@ h1 {
     font-size: 24px;
     border-bottom: 1px solid $toc_border;
     margin: {
+        top: -32px;
+        bottom: 32px;
         left: $header_offset;
     }
 }
@@ -135,6 +137,7 @@ body {
     color: $default_color;
     background: $background;
     font-size: $normal_font_size;
+    line-height: 1.6;
     margin: 0px auto 0px auto;
     width: $body_width;
 }
@@ -236,7 +239,7 @@ div {
 }
 
 div#header {
-    border-bottom: 1px solid #5F819D;
+    border-bottom: 0px solid #5F819D;
     margin-bottom: 30px;
     padding: 12px 0px 12px 0px;
     text-align: right;
@@ -306,5 +309,7 @@ a
 
 .code
 {
+    font-size: $normal_font_size;
+    line-height: 0;
     font-family: monospace;
 }
