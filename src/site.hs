@@ -8,7 +8,9 @@ import Data.List           (dropWhileEnd)
 import Data.Map            (member)
 import System.Process      (readProcess)
 import System.Directory  (getCurrentDirectory, canonicalizePath)
-import Data.FileStore (Revision(..), revision, gitFileStore, latest)
+import Control.Exception
+import Data.FileStore (FileStoreError(NotFound), Revision(..), revision, gitFileStore, latest,
+                       searchRevisions)
 
 --------------------------------------------------------------------------------
 -- Pandoc
@@ -20,8 +22,6 @@ pandocWriterOptions = defaultHakyllWriterOptions
     { Pandoc.Options.writerHtml5 = True
     , Pandoc.Options.writerHtmlQTags = True
     , Pandoc.Options.writerReferenceLinks = True
-    --, Pandoc.Options.writerNumberSections = True
-    --, Pandoc.Options.writerNumberOffset = [1]
     , Pandoc.Options.writerSectionDivs = True
     }
 
@@ -66,7 +66,7 @@ main = hakyll $ do
     match "files/**" $ do
         route   idRoute
         compile copyFileCompiler
-    
+
     -- javascript
     match "js/**" $ do
         route   idRoute
@@ -204,22 +204,25 @@ defaultCtx = defaultContext `mappend` mathCtx
 -- Git (http://vapaus.org/text/hakyll-configuration.html)
 --------------------------------------------------------------------------------
 revParse :: Revision -> String
-revParse (Revision id date author desc changes) = desc
+revParse (Revision id _ _ desc _) = (shorten id) ++ " " ++ desc
+  where
+    shorten = take 8
 
 getRevision :: FilePath -> IO String
 getRevision path = do
   gitdir <- getCurrentDirectory
   let git = gitFileStore gitdir
-  l <- latest git "test.hs"
+  l <- latest git path
   r <- revision git l
   return $ revParse r
 
 getGitVersion :: FilePath -> IO String
 getGitVersion path = do
-    let shorten = dropWhileEnd isSpace
-    let cpath = canonicalizePath path
-    revinfo <- cpath >>= getRevision
-    return $ shorten revinfo
+    print path
+    rev <- catch (getRevision path)
+                 (\NotFound -> return "")
+    print revision
+    return rev
 
 -- Field that contains the latest commit hash that hash touched the current item.
 versionField :: String -> Context String
