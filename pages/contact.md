@@ -6,8 +6,27 @@ You can get in touch with me using email and my
 <i class="icon-key"></i>
 [PGP key](http://pgp.mit.edu:11371/pks/lookup?op=get&search=0x5FE593CBD7302B8D).
 Alternatively, you can shoot an email over to `mail` at *this website*.com to
-get in touch. You could also contact me via my 
+get in touch. You could also contact me via my
 [Google+ profile](https://plus.google.com/116296025851282616355/about/).
+
+I have a public [Keybase profile](https://keybase.io/nathantypanski). It hosts
+a profile that is verified based on signatures posted on my GitHub and Twitter
+accounts. You can find the signed messages here:
+
+- [GitHub](https://gist.github.com/nathantypanski/9541592)
+- [Twitter](https://twitter.com/nathantypanski/status/444313176591831040)
+
+The idea is this: if you know me from GitHub or Twitter, you can use this to
+confirm my identity based on that. This might not confirm identities in general
+(i.e. it is not the same as verifying me based on my driver's license), you
+can at least confirm that my public online identity is the same throughout these
+accounts. If you know me personally, then this serves as a verification of my
+online presence, and when I sign messages, you can be sure that they came from
+me.
+
+You don't have trust Keybase itself for you to verify this. If you download the
+messages and verify them with a GPG implementation against my public key,
+everything will check out just the same.
 
 ```` {.sourceCode}
 -----BEGIN PGP PUBLIC KEY BLOCK-----
