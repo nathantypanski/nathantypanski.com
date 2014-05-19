@@ -6,7 +6,6 @@ import Control.Applicative ((<$>))
 import Data.Char           (isSpace)
 import Data.List           (dropWhileEnd)
 import Data.Map            (member)
-import System.Process      (readProcess)
 import System.Directory  (getCurrentDirectory, canonicalizePath)
 import Control.Exception
 import Data.Either

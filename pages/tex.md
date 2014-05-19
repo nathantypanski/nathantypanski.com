@@ -10,6 +10,7 @@ for free online under a license that
 Here are some sample images:
 
 ![Trigonometry](/images/mathnotes_tiny.png)
+
 ![Sequences](/images/mathnotes_2_tiny.png)
 
 The
