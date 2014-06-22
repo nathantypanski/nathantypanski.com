@@ -13,6 +13,8 @@ $link: #2A75A9;
 $link_visited: #274257;
 $link_hover: #7EB5D6;
 $link_home: #5F819D !important;
+$footnoteborder: 1px solid $toc_border;
+$h2_color: #303030;
 
 /* STYLE RESET */
 * {
@@ -25,8 +27,8 @@ $link_home: #5F819D !important;
     margin: 0;
 }
 
-h1, h2, h3, h4, h5, h6, p, pre, blockquote, form, ul, ol, dl {
-    margin: 0 0 16px 0;
+h1, h2, h3, h4, h5, h6, p, pre, form, ul, ol, dl {
+    margin: 0 0 12px 0;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -55,8 +57,8 @@ h1 {
 }
 
 h2 {
-    font-size: 20px;
-    border-bottom: 1px solid $toc_border;
+    font-size: 22px;
+    color: $h2_color;
     a {
         text-decoration: None;
     }
@@ -116,6 +118,8 @@ blockquote {
     margin: {
         left: 60px;
         right: 60px;
+        bottom: 10px;
+        top: 10px;
     }
     li {
         padding: {
@@ -144,6 +148,10 @@ body {
 
 em {
     font-style: italic;
+}
+
+.footnotes {
+    border-top: $footnoteborder;
 }
 
 .footnoteRef {
