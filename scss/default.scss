@@ -89,7 +89,7 @@ h4 {
     font: {
         weight: normal;
         style: italic;
-        size: 16px;
+        size: 18px;
     }
     color: #303030;
     a {
@@ -105,8 +105,8 @@ h4 {
 
 li, dd {
     margin: {
-        left: 80px;
-        right: 80px;
+        left: 20px;
+        right: 20px;
     }
 }
 
@@ -149,6 +149,22 @@ em {
 .footnoteRef {
     vertical-align: super;
     font-size: 10px;
+}
+
+.float {
+    float: left;
+    margin {
+        left: 16px;
+        right: 16px;
+        bottom: 16px;
+        top: 16px;
+    }
+    padding {
+        left: 16px;
+        right: 16px;
+        bottom: 16px;
+        top: 16px;
+    }
 }
 
 #toc {
@@ -196,12 +212,13 @@ em {
     background: $toc_background;
 }
 img {
-    align: center;
+    align: right;
     margin: {
         left: auto;
         right: auto;
-        }
     }
+}
+
 
 img + p.caption {
     :before {

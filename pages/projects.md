@@ -2,6 +2,8 @@
 title: Projects
 ---
 
+This page details some of the projects I've worked on. I also detail some smaller efforts, works-in-progress, and notes on community contributions at my [worklog](/worklog.html).
+
 ### Dotfiles
 *Fall 2012*. [GitHub](https://github.com/nathantypanski/dotfiles)
 

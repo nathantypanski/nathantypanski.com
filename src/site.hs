@@ -37,7 +37,6 @@ tocWriterOptions = pandocWriterOptions
     , writerHTMLMathMethod = MathJax ""
     }
 
-
 --------------------------------------------------------------------------------
 -- Site building
 --------------------------------------------------------------------------------
@@ -105,7 +104,7 @@ main = hakyll $ do
         let versionContext = versionField "versionInfo" <> defaultCtx
         route $ gsubRoute "pages/" (const "") `composeRoutes`
             setExtension "html"
-        compile $ pandocCompiler
+        compile $ pandocCompilerWith defaultHakyllReaderOptions tocWriterOptions
             >>= loadAndApplyTemplate "templates/default.html" versionContext
             >>= relativizeUrls
 
