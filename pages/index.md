@@ -23,3 +23,4 @@ I'm a student, currently in my fourth year studying computer engineering at [CNU
 * [Reddit](http://www.reddit.com/user/euid)
 * [ArchWiki](https://wiki.archlinux.org/index.php/Special:Contributions/Ndt)
 * [HackerNews](https://news.ycombinator.com/user?id=euid)
+* [StackOverflow](http://stackoverflow.com/users/1828408/ndt)
