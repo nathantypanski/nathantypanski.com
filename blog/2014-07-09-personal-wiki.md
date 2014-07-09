@@ -25,7 +25,7 @@ Oh wait. I've seen this before.
 
 ### Installing
 
-I could've installed it with `cabal` like a good Haskeller, but it was in the Debian repos and I don't need it on multiple servers yet. So I did (on Debian):
+I could've installed it with `cabal` like a good Haskeller, but it was in the Debian repos and I don't need it on multiple servers yet. So I did:
 
 ```{.bash}
 $ sudo aptitude install gitit
