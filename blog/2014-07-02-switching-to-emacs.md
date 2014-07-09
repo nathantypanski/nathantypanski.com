@@ -68,5 +68,3 @@ So Emacs has some features that Vim's codebase would (and should!) scoff at incl
 The end result is something that feels much closer to a complete programming *environment* rather than just a text editor. Since this is something many people try to mod Vim into, I think if you're part of that group then you should take a long, hard look at the Dark Side before trying too hard at making Vim do everything.
 
 Or don't. Vim has a large and incredibly dedicated group of programmers writing plugins for it: you'll find plenty of awesome plugins on either side of the fence.
-
-
