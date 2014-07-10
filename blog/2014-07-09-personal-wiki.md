@@ -100,7 +100,7 @@ In my first couple of days with Gitit, I've started collecting useful bits of no
 
 I made a lot of edits to the Arch Wiki last year, so I know that they're a format that I appreciate. Interlinking documents is an awesome feature.
 
-As much as I love Org, but I'm still learning to cope with its complexity and it's nowhere near as portable as having a markdown wiki in my home folder.
+As much as I love Org-mode, I'm still learning to cope with its complexity and it's nowhere near as portable as having a markdown wiki in my home folder.
 
 ## Moving forward
 
