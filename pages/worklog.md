@@ -37,10 +37,7 @@ Overall it was a wild experience. From using a completely new language to me, to
 
 ## Rust
 
-Rust is a super-cool [programming language from Mozilla](http://www.rust-lang.org/). I used Rust quite a bit in Spring 2014, and managed to sneak in a couple of compiler updates.
-
-* [Dead code removal](https://github.com/rust-lang/rust/pull/14956)
-* [Documentation code update](https://github.com/rust-lang/rust/pull/14992)
+I've been getting involved with [Rust](http://www.rust-lang.org/) development to help facilitate the move to 1.0. Mostly in the vein of helping with documentation, but I'm studying the compiler internals and familiarizing myself with the issues (~1500 at time of writing) as I look to get more involved.
 
 ## NASA
 
