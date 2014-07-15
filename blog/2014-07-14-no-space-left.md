@@ -53,22 +53,6 @@ By some magic, I happened upon [this btrfs wiki page](https://btrfs.wiki.kernel.
 
 ``` {.pre .sourceCode}
 root@dionysus:/# btrfs filesystem show
-Label: 'root'  uuid: 6bfe98d9-ce82-4309-a022-bc61b3a788d4
-	Total devices 1 FS bytes used 350.60MiB
-	devid    1 size 14.90GiB used 14.04GiB path /dev/dm-0
-
-Label: 'var'  uuid: 1a90b42c-0fc5-4990-98bf-7954a66d22b7
-	Total devices 1 FS bytes used 2.84GiB
-	devid    1 size 7.45GiB used 7.45GiB path /dev/mapper/linux-var
-
-Label: 'usr'  uuid: 95f160d6-990e-421d-97f6-42a7c65fd77c
-	Total devices 1 FS bytes used 10.27GiB
-	devid    1 size 14.90GiB used 14.90GiB path /dev/mapper/linux-usr
-
-Label: 'opt'  uuid: 24bde185-80b7-4350-9e78-39e3023a8ecb
-	Total devices 1 FS bytes used 18.24MiB
-	devid    1 size 14.90GiB used 3.04GiB path /dev/mapper/linux-opt
-
 Label: 'home'  uuid: 4216df47-7fb8-442f-b432-5e732ab24166
 	Total devices 1 FS bytes used 147.94GiB
 	devid    1 size 298.02GiB used 298.02GiB path /dev/mapper/linux-home
