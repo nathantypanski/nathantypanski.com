@@ -2,69 +2,75 @@
 title: Worklog
 ---
 
-These are my minor efforts to make the world better. Sometimes they're staging for things in my [projects list](/projects.html), other times they're just one-offs for projects I've helped out with.
+These are my efforts to make the world better.
 
-The point of this is to keep some sort of record of the things that I've helped out with online, so that I can reference them later and don't forget about my efforts.
+The point of this is to keep some sort of record of the things that I've helped out with online, and organizations I participate in, so that I can reference them later and don't forget about my efforts.
 
-## CNULUG
+## Rust
 
-I founded the [Linux user group](http://cnulug.org/) at [CNU](http://www.cnu.edu/pcs/academics/ce.asp). It's still getting on its feet, but I run the mailing lists and do a static site for it. We had weekly meetings all through Spring 2014.
+[Rust](http://www.rust-lang.org/) is a systems programming language from Mozilla with a heavy community focus.
 
-## CNU UAV Lab
-
-I volunteer hosting the [mailing lists](http://lists.cnulug.org/mailman/listinfo/uav-lab_lists.cnulug.org) for CNU's unmanned aerial vehicle lab.
-
-## CNU Math HPC project
-
-CNU's math department is getting their feet wet with high-performance computing. I volunteer as the sysadmin for their server, a ProLiant SL250s Gen8. Mostly this means I installed RHEL on it, found drivers for the Tesla GPU, and configured a dev environment for CUDA and whatnot.
-
-I'll hopefully be doing more wrt coding on it soon; my scratchpad [is on GitHub](https://github.com/nathantypanski/PDEs).
-
-## Rust class
+### Rust class
 
 I took David Evans' [operating systems class](http://rust-class.org/) in Spring 2014 as an "open student", part of his project letting anyone worldwide register. Informally, I think I was the only open student to actually finish all of the projects. I collaborated on the last three remotely on teams with UVa students - who were actually taking the course for credit, and graded on the projects. I was on Google Hangouts [in one of the presentations](http://rust-class.org/presentations.html) for the final projects at the end, but didn't get the chance to talk (I'm not bothered).
 
 Overall it was a wild experience. From using a completely new language to me, to doing systems and kernel programming for the first time, it's really one of the most positive experiences I've had programming.
 
-### Projects
+#### Projects
 
-* [ps0](https://github.com/nathantypanski/cs4414-ps0): getting familiar with Rust
-* [ps1](https://github.com/nathantypanski/cs4414-ps1): really simple webserver
-* [ps2](https://github.com/nathantypanski/cs4414-ps2): writing a shell
-* ps3 (currently private): parallelized webserver
-* [ps4](https://github.com/lenary/cs4414-ps4): hacking [ironkernel](https://github.com/wbthomason/ironkernel)
-* [final project](https://github.com/lenary/cs4414-project): [Raft](http://raftconsensus.github.io/) in Rust
+Team projects are labeled explicitly. Others were completed solely by me.
 
-## Rust
+* [ps0](https://github.com/nathantypanski/cs4414-ps0): getting familiar with Rust.
+* [ps1](https://github.com/nathantypanski/cs4414-ps1): really simple webserver.
+* [ps2](https://github.com/nathantypanski/cs4414-ps2): writing a shell.
+* ps3 (currently private): parallelized webserver (*team project*).
+* [ps4](https://github.com/lenary/cs4414-ps4): hacking [ironkernel](https://github.com/wbthomason/ironkernel) (*team project*).
+* [final project](https://github.com/lenary/cs4414-project): [Raft](http://raftconsensus.github.io/) in Rust (*team project*). Incomplete.
 
-I've been getting involved with [Rust](http://www.rust-lang.org/) development to help facilitate the move to 1.0. Mostly in the vein of helping with documentation, but I'm studying the compiler internals and familiarizing myself with the issues (~1500 at time of writing) as I look to get more involved.
+It's worth noting that all of these were written to a very old version of rust (0.7 or so, slightly later for the more recent ones). Rust has changed very significantly since then; none of them even still compile.
 
-## NASA
+### rust-lang/rust
 
-From my [Reddit post](http://www.reddit.com/r/cscareerquestions/comments/27umgk/anyone_here_work_in_machine_learning_big_data/ci4q5ws):
+The [Rust reference implementation](https://github.com/rust-lang/rust).
 
-> Data scientists call this process [data wrangling](http://en.wikipedia.org/wiki/Data_wrangling), and my job is making it automatic.
->
-> This means writing parsers for things that no sane person would write parsers for (a human-writable data "standard") and automatically sanitizing/cleaning that input data so normal people can actually write parsers for data that's in the standard format. Then I apply machine learning techniques to (fuzzy) match the metadata for those files to a database of known metadata, thereby automatically standardizing things like variable naming, descriptions, and notation used to write their units.
->
-> I have yet to receive my undergrad degree in computer engineering. The main skills involved in my work are
->
-> - a deep understanding of Python (my main language),
-> - knowledge of parsers (compilers can teach you about this),
-> - fuzzy matching algorithms.
+* [Dead code removal](https://github.com/rust-lang/rust/pull/14956)
+* [Documentation code update](https://github.com/rust-lang/rust/pull/14992)
 
-* Hopefully will get GPL'd someday. I've been pushing for this, but it's not really in my control.
-* We have a short conference paper in [ICAI](http://www.worldacademyofscience.org/worldcomp14/ws/conferences/icai14) discussing the work.
+### Guidelines
+
+The [Rust guidelines](https://github.com/rust-lang/rust-guidelines/) are a project documenting "[c]onventions, principles, patterns, and best practices for Rust code".
+
+* [features/modules: clarification & updates ](https://github.com/rust-lang/rust-guidelines/commit/4c208773d48d7512302a0cf01380401edceea354)
+* [features/modules: Expand modules section](https://github.com/rust-lang/rust-guidelines/commit/bdbf206894f86670511c50bebcc7cf8e340f8e41)
+* [style/comments: fix typo](https://github.com/rust-lang/rust-guidelines/commit/efec52d0053b0241a6417424c5300b94c486fb68)
+* [expand comments doc ](https://github.com/rust-lang/rust-guidelines/commit/e976db8bc739c7851e8e03970cc327c1a78b4617)
+* [style/imports: add example for import ordering ](https://github.com/rust-lang/rust-guidelines/commit/11267f3b90372ae3b3d8ec7daa1030039a920048)
+
+### quickcheck
+
+BurntSushi's [quickcheck](https://github.com/BurntSushi/quickcheck) is a [QuickCheck](http://en.wikipedia.org/wiki/QuickCheck) implementation for Rust.
+
+* [fix Travis CI and Cargo builds](https://github.com/BurntSushi/quickcheck/pull/17)
+
+### bors
+
+[bors](https://github.com/graydon/bors) is Mozilla's buildbot for Rust.
+
+* [allow hyphens in usernames](https://github.com/graydon/bors/pull/39)
+
+### rust-nightly-archlinux
+
+A [rust-nightly-archlinux](https://github.com/michaelsproul/rust-nightly-archlinux/) is a [PKGBUILD](https://wiki.archlinux.org/index.php/PKGBUILD) generator for [Arch Linux](https://wiki.archlinux.org/index.php/Arch_Linux).
+
+* [use argparse to parse cli arguments](https://github.com/michaelsproul/rust-nightly-archlinux/pull/2). Somewhat daft, but I improved the CLI interface for this script, since I use it sometimes and seeing manual argument parsing in Python bothers me.
 
 ## Arch Linux
 
-I made a lot of wiki contributions for Arch in 2013. I'm quite proud of them. If I mention a page here, then don't take it "I singlehandedly wrote this" - wiki pages are community efforts, and no one person gets credit for them.
+I make a [lot of wiki contributions](https://wiki.archlinux.org/index.php/Special:Contributions/Ndt) for Arch. Still, if I mention a page here, it's not to say "I singlehandedly wrote this" - wiki pages are community efforts, and no one person gets credit for them.
 
-There were some cases where I made significant contributions to pages, though, and watched them grow into awesome resources where others could take over. One of the dynamics you see on wikis is that people don't help out with the stub pages, since they don't visit them without useful information. Having good information on a page attracts visitors, however, which in turn garners contributions from people who otherwise would never help out.
+There were some cases where I made significant contributions to pages, and watched them grow into awesome resources where others could take over. One of the dynamics you see on wikis is that people don't help out with the stub pages, since they don't visit them without useful information. Having good information on a page attracts visitors, however, which in turn garners contributions from people who otherwise would never help out.
 
-The pages I mention here are listed because I saw them go from [bitrot](http://en.wikipedia.org/wiki/Software_rot) to useful as I worked on them, along with the efforts of everyone else who contributed.
-
-### DisplayLink for Linux
+### DisplayLink
 
 * When I got a USB DisplayLink monitor back in 2013, there weren't really any resources on how to set it up on a modern Linux machine. There were kernel drivers for it (`udlfb` and the - at the time - staging driver `udl`) but nothing on how to make them work with X. Supposedly Fedora could do it, but that turned out to be a dead end: nobody ever wrote something about it.
 * I started [this forum thread](https://bbs.archlinux.org/viewtopic.php?id=164385) about DisplayLink, in hopes of some solutions. Once I figured out to do [`--setprovideroutputsource`](https://bbs.archlinux.org/viewtopic.php?pid=1298516#p1298516) we started to make progress.
@@ -89,19 +95,114 @@ I rewrote the then-dwindling ArchWiki page for [iptables](https://wiki.archlinux
 * I spent a lot of time poring over the verbage in the "basic concepts" section. For these things to be useful, the language had to be *exact*, providing a quick overview of what exactly these words like "chains", "tables", and "rules" meant.
 * Now the 8th link on Google for `iptables`, just below Debian's [much more spartan competition](https://wiki.debian.org/iptables).
 
-## Ranger
+## Python
+
+### ZombieRL
+
+*My project*. *2011*. [GitHub](https://github.com/nathantypanski/zombierl).
+
+As a senior in high school I got the chance to take my fourth and final computer science class as effectively an independent study. It was taught in C++, but I blew through the course material and started exploring other languages and projects to work on. I did the first couple chapters of [SICP](http://mitpress.mit.edu/sicp/), which I have yet to get back to, and picked up Python in my free time.
+
+The culmination of all this effort was a zombie-themed roguelike in Python. It uses [The Doryen Library](http://doryen.eptalys.net/) to draw graphics to the screen. After working on it for a while I ported it to Python 3, but it hasn't seen much activity since then.
+
+This was my first real intro to ideas like blitting graphics to a screen or having a main loop that had to respond to user input. It was also probably my first project where version control would have helped me.
+
+### Ranger
 
 [Ranger](http://ranger.nongnu.org/) is a text-based file manager.
 
 * [Fixed a crash](https://github.com/hut/ranger/pull/139) in previews of non-previewable files.
 
+### python-mode
 
-## python-mode
+[python-mode](https://launchpad.net/python-mode/) is a [major mode for Emacs](https://answers.launchpad.net/python-mode/+question/250108).
 
-`python-mode` is a [major mode for Emacs](https://answers.launchpad.net/python-mode/+question/250108).
+* [Bug report regarding virtualenv](https://answers.launchpad.net/python-mode/+question/250108), with some code for a potential workaround. My code got improved by one of the contributors, and a real workaround is supplied further down.
 
-* [Bug report regarding virtualenv](https://answers.launchpad.net/python-mode/+question/250108), with some code for a potential workaround. Definitely shouldn't make it into the codebase, however.
+### Pandas
 
-## LaTeX WikiBook
+[Pandas](https://github.com/pydata/pandas) is a Python data analysis library.
+
+- [CI: fix typos in readme](https://github.com/pydata/pandas/pull/7831)
+
+## My projects
+
+### This website
+
+See [About this site](website.html).
+
+### CNULUG
+
+*Summer 2013 - present*. [Website](http://cnulug.org/).
+
+I founded the Linux user group at [CNU](http://www.cnu.edu/pcs/academics/ce.asp). It's still getting on its feet, but I run the mailing lists and do a static site for it. We had weekly meetings all through Spring 2014.
+
+### Dotfiles
+
+*Fall 2012*. [GitHub](https://github.com/nathantypanski/dotfiles).
+
+One of the cool things Linux users do is they post their user-level configuration files on the internet for other people to grab. We often have useful scripts, vim configurations, and creative ways of setting our environment variables tucked away in our dotfiles for nobody to see. Now, with sites like GitHub, you can search the vast repositories of user configuration for just the settings you need.
+
+I post mine, too. There's a short writeup with some extra photos about my most recent configuration [over at Imgur](http://imgur.com/a/vPhbb).
+
+### Math notebook
+
+*Spring 2011*. [Webpage](/tex.html). [GitHub](https://github.com/nathantypanski/texnotes).
+
+Once college-level integral calculus hit me I started searching for a better solution to managing my notes. One of the nice things about computerized documents is that you can search them, but math always seemed out of that domain. [LaTeX](http://en.wikipedia.org/wiki/LaTeX) turned out to be the solution to that problem - I started learning it early into my second semester of college, and ended up writing over 200 pages of notes. Some on discrete math, some on calculus, and a little bit of random tidbits thrown in there. It covers more than just that one class, but the bulk of describes tricky integration, sequences, and series - standard Calc II material.
+
+It's something I'm really proud of, and I still reference them whenever I need a bit of that math knowledge.
+
+The experience as a whole gave me the chance to explore mathematics a little deeper, and to gain some grasp on technical writing. I haven't feared any technical writing projects since then, and I gained an awesome new skill (technical typesetting) for any time I've had to write papers.
+
+### SmartsGarden Visualizer
+
+*Spring 2011*. [GitHub](https://github.com/nathantypanski/SGVisualizer).
+
+I joined a capstone project to build generative music and artwork from network data. It was a team project with two others (although we each built specialized components) and my first serious effort using Git.
+
+I made the music visualizer. Even though it was generated from music, and not visualizing live network data, the results had to *look* like they were coming from a network. I experimented with creating nodes onscreen and drawing them like network graphs, then got them working in resposne to thresholds from a [FFT](http://en.wikipedia.org/wiki/Fast_Fourier_transform) of the audio.
+
+We won [CNU](http://cnu.edu/pcs)'s information systems capstone competition that year.
+The result was visually impressive, and the others had produced good music from their traffic analysis. My code is written in [Processing](https://www.processing.org/), a sort of Java-lite for the computer graphics and artwork community. As far as I know, only the visualizer component is open-source.
+
+### MGMT
+
+*2010*. [GitHub](https://github.com/nathantypanski/MGMT).
+
+I took [IB Computer Science](http://www.ibo.org/diploma/curriculum/group5/ComputerScience.cfm) as a Junior in high school. This was my "dossier", a massive final project that makes up half of the curriculum.
+
+It managed customer contacts, but only had a CLI interface. The real beauty of the project was that it forced you to go through a sort of software engineering life cycle that lasted more than a week or two. I had to make diagrams, describe the class interfaces and the way the objects interacted, and all that fun stuff before I could even get started *coding*.
+
+## Other
+
+### NASA
+
+From my [Reddit post](http://www.reddit.com/r/cscareerquestions/comments/27umgk/anyone_here_work_in_machine_learning_big_data/ci4q5ws):
+
+> Data scientists call this process [data wrangling](http://en.wikipedia.org/wiki/Data_wrangling), and my job is making it automatic.
+>
+> This means writing parsers for things that no sane person would write parsers for (a human-writable data "standard") and automatically sanitizing/cleaning that input data so normal people can actually write parsers for data that's in the standard format. Then I apply machine learning techniques to (fuzzy) match the metadata for those files to a database of known metadata, thereby automatically standardizing things like variable naming, descriptions, and notation used to write their units.
+>
+> I have yet to receive my undergrad degree in computer engineering. The main skills involved in my work are
+>
+> - a deep understanding of Python (my main language),
+> - knowledge of parsers (compilers can teach you about this),
+> - fuzzy matching algorithms.
+
+* Hopefully will get GPL'd someday. I've been pushing for this, but it's not really in my control.
+* We have a short conference paper in [ICAI](http://www.worldacademyofscience.org/worldcomp14/ws/conferences/icai14) discussing the work.
+
+### LaTeX WikiBook
 
 * Added a section on [color in mathematics](http://en.wikibooks.org/wiki/LaTeX/Mathematics#Color).
+
+### CNU UAV Lab
+
+I volunteer hosting the [mailing lists](http://lists.cnulug.org/mailman/listinfo/uav-lab_lists.cnulug.org) for CNU's unmanned aerial vehicle lab.
+
+### CNU Math HPC project
+
+CNU's math department is getting their feet wet with high-performance computing. I volunteer as the sysadmin for their server, a ProLiant SL250s Gen8. Mostly this means I installed RHEL on it, found drivers for the Tesla GPU, and configured a dev environment for CUDA and whatnot.
+
+I'll hopefully be doing more wrt coding on it soon; my scratchpad [is on GitHub](https://github.com/nathantypanski/PDEs).
