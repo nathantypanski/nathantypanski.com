@@ -53,10 +53,12 @@ main = hakyllWith config $ do
         route   idRoute
         compile copyFileCompiler
 
+
     -- route my extra files
     match "files/**" $ do
         route   idRoute
         compile copyFileCompiler
+
 
     -- javascript
     match "js/**" $ do
@@ -69,10 +71,12 @@ main = hakyllWith config $ do
         route   idRoute
         compile compressCssCompiler
 
+
     -- robots
     match "robots.txt" $ do
         route idRoute
         compile copyFileCompiler
+
 
     -- compile the scss and put it in _site/css/
     match "scss/*" $ do
@@ -100,7 +104,7 @@ main = hakyllWith config $ do
 
     match "blog/*" $ do
         route $ setExtension "html"
-        let context = mathCtx <> postCtx <> defaultCtx
+        let context = postCtx <> defaultCtx
         compile $
             pandocCompilerWith defaultHakyllReaderOptions tocWriterOptions
             >>= loadAndApplyTemplate "templates/post.html" context
@@ -121,6 +125,7 @@ main = hakyllWith config $ do
                 >>= loadAndApplyTemplate "templates/blog.html" archiveCtx
                 >>= loadAndApplyTemplate "templates/default.html" archiveCtx
                 >>= relativizeUrls
+
 
     create ["404.html"] $ do
         route idRoute
