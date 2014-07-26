@@ -1,25 +1,28 @@
 $body_width: 800px;
-$default_color: #202020;
-$background: #fff;
+$default_color: #101010;
+$background: #fefefe;
 $toc_background: #f8f8f8;
 $toc_border: #eee;
 $quote_border: #eee;
 $quote_background: #f0f0f0;
 $normal_font_size: 12pt;
-$footnote_font_size: 8pt;
-$header_offset: -6px;
+$header_offset: -0.3em;
 $icon_color: #B0B0B0;
 $link: #2A75A9;
 $link_visited: #274257;
 $link_hover: #7EB5D6;
 $link_home: #5F819D !important;
-$footnoteborder: 1px solid $toc_border;
+$footnote_font_size: 8pt;
+$footnote_border: 1px solid $toc_border;
+$footnote_top_margin: 2em;
 $h2_color: #303030;
+$title_family: serif;
+$body_family: serif;
 
 /* STYLE RESET */
 * {
     vertical-align: baseline;
-    font-family: inherit;
+    font-family: serif;
     font-style: inherit;
     font-size: 100%;
     border: none;
@@ -32,13 +35,13 @@ h1, h2, h3, h4, h5, h6, p, pre, form, ul, ol, dl {
 }
 
 h1, h2, h3, h4, h5, h6 {
+    font-family: $title_family;
     color: #111;
     a {
         color: #274257;
         text-decoration: None;
     }
     margin: {
-        left: $header_offset;
         bottom: 12px;
     }
     margin: {
@@ -52,7 +55,14 @@ h1 {
     margin: {
         top: -32px;
         bottom: 32px;
+    }
+}
+
+h2, h3, h4, h5, h6 {
+    font-family: $title_family;
+    margin {
         left: $header_offset;
+        bottom: 12px;
     }
 }
 
@@ -114,12 +124,23 @@ li, dd {
 
 blockquote {
     background: $quote_background;
-    border: 1px solid $quote_border;
+    border: {
+        left:   8px solid $quote_border;
+        right:  0px solid $quote_border;
+        top:    0px solid $quote_border;
+        bottom: 0px solid $quote_border;
+    }
+    padding: {
+        left:   10px;
+        right:  10px;
+        bottom: 0px;
+        top:    2px;
+    }
     margin: {
-        left: 60px;
-        right: 60px;
-        bottom: 10px;
-        top: 10px;
+        left:   0px;
+        right:  0px;
+        bottom: 0px;
+        top:    0px;
     }
     li {
         padding: {
@@ -141,6 +162,7 @@ body {
     color: $default_color;
     background: $background;
     font-size: $normal_font_size;
+    font-family: $body_family;
     line-height: 1.6;
     margin: 0px auto 0px auto;
     width: $body_width;
@@ -151,7 +173,8 @@ em {
 }
 
 .footnotes {
-    border-top: $footnoteborder;
+    border-top: $footnote_border;
+    margin-top: $footnote_top_margin;
 }
 
 .footnoteRef {
