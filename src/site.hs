@@ -2,17 +2,7 @@
 import           Data.Monoid (mappend, (<>))
 import           Hakyll
 import           Text.Pandoc.Options as Pandoc.Options
-import Control.Applicative ((<$>))
-import Data.Char           (isSpace)
-import Data.List           (dropWhileEnd)
 import Data.Map            (member)
-import System.Directory  (getCurrentDirectory, canonicalizePath)
-import Control.Exception
-import Data.Either
-import Github.Repos.Commits (commit)
-import Github.Data.Definitions (Commit(..), Error(..))
-import Data.FileStore (FileStoreError(NotFound), Revision(..), revision,
-                       gitFileStore, latest)
 
 --------------------------------------------------------------------------------
 -- Pandoc
@@ -43,7 +33,7 @@ tocWriterOptions = pandocWriterOptions
 
 
 main :: IO ()
-main = hakyll $ do
+main = hakyllWith config $ do
 
 
     -- put all the images in /images
@@ -101,34 +91,33 @@ main = hakyll $ do
 
     -- make top-level pages
     match "pages/*" $ do
-        let versionContext = versionField "versionInfo" <> defaultCtx
         route $ gsubRoute "pages/" (const "") `composeRoutes`
             setExtension "html"
         compile $ pandocCompilerWith defaultHakyllReaderOptions tocWriterOptions
-            >>= loadAndApplyTemplate "templates/default.html" versionContext
+            >>= loadAndApplyTemplate "templates/default.html" defaultCtx
             >>= relativizeUrls
 
 
     match "blog/*" $ do
         route $ setExtension "html"
-        let versionContext = versionField "versionInfo" <> mathCtx <> postCtx
+        let context = mathCtx <> postCtx <> defaultCtx
         compile $
             pandocCompilerWith defaultHakyllReaderOptions tocWriterOptions
-            >>= loadAndApplyTemplate "templates/post.html" versionContext
-            >>= loadAndApplyTemplate "templates/default.html" versionContext
+            >>= loadAndApplyTemplate "templates/post.html" context
+            >>= loadAndApplyTemplate "templates/default.html" context
             >>= relativizeUrls
 
 
     create ["blog.html"] $ do
         route idRoute
         compile $ do
-            let versionContext = versionField "versionInfo" <> defaultCtx
             posts <- recentFirst =<< loadAll "blog/*"
             let archiveCtx =
                     listField      "posts" postCtx (return posts) `mappend`
-                    constField     "title" "Blog"                 `mappend`
-                    versionContext
-            makeItem ""
+                    constField     "title" "Blog" `mappend`
+                    defaultCtx
+
+            makeItem ("" :: String)
                 >>= loadAndApplyTemplate "templates/blog.html" archiveCtx
                 >>= loadAndApplyTemplate "templates/default.html" archiveCtx
                 >>= relativizeUrls
@@ -146,12 +135,11 @@ main = hakyll $ do
     match "pages/index.html" $ do
         route $ gsubRoute "pages/" (const "") `composeRoutes` idRoute
         compile $ do
-            let versionContext = versionField "versionInfo" <> defaultCtx
             posts <- recentFirst =<< loadAll "blog/*"
             let indexCtx =
                     listField "posts" postCtx (return posts) `mappend`
                     constField "title" "Home"                `mappend`
-                    versionContext
+                    defaultCtx
 
             getResourceBody
                 >>= applyAsTemplate indexCtx
@@ -163,6 +151,16 @@ main = hakyll $ do
 
 
 --------------------------------------------------------------------------------
+
+config :: Configuration
+config = defaultConfiguration
+    {   deployCommand = "rsync --checksum -ave 'ssh' _site/* "
+                        ++ "athen@ephesus:/srv/http/nathantypanski.com"
+      , inMemoryCache = True
+      , previewPort = 8080
+    }
+--------------------------------------------------------------------------------
+
 mathCtx :: Context a
 mathCtx = field "mathjax" $ \item -> do
     metadata <- getMetadata $ itemIdentifier item
@@ -176,50 +174,5 @@ postCtx =
     dateField "date" "%B %e, %Y" `mappend`
     defaultCtx
 
+defaultCtx :: Context String
 defaultCtx = defaultContext `mappend` mathCtx
-
---------------------------------------------------------------------------------
--- Git (http://vapaus.org/text/hakyll-configuration.html)
---------------------------------------------------------------------------------
-
-getUrl :: String -> IO String
-getUrl hash = do
-  c <- commit "nathantypanski" "nathantypanski.com" hash
-  return $ resultParse c
-  where resultParse (Left _) = ""
-        resultParse (Right (Commit _ _ _ _ _ _ _ _)) =
-          "https://github.com/nathantypanski/nathantypanski.com/commit/"
-          ++ hash
-
-commitHash :: Revision -> String
-commitHash (Revision id _ _ _ _) = id
-
-revParse :: Revision -> String
-revParse (Revision id _ _ _ _) = shorten id
-  where
-    shorten = take 8
-
-getRevision :: FilePath -> IO String
-getRevision path = do
-  gitdir <- getCurrentDirectory
-  let git = gitFileStore gitdir
-  l <- latest git path
-  r <- revision git l
-  url <- getUrl $ commitHash r
-  case url of
-    "" -> return $ revParse r
-    url -> return $ "<a href=\"" ++ url ++ "\">" ++ (revParse r) ++ "</a>"
-
-getGitVersion :: FilePath -> IO String
-getGitVersion path = catch (getRevision path) (\NotFound -> return "")
-
--- Field that contains the latest commit hash that hash touched the current item.
-versionField :: String -> Context String
-versionField name = field name $ \item -> unsafeCompiler $ do
-    let path = toFilePath $ itemIdentifier item
-    putStrLn path
-    getGitVersion path
-
--- Field that contains the commit hash of HEAD.
-headVersionField :: String -> Context String
-headVersionField name = field name $ \_ -> unsafeCompiler $ getGitVersion ""

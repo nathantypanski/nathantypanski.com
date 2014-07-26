@@ -17,9 +17,7 @@ executable site
   ghc-options: -O2 -Wall -threaded -o site
   -- other-modules:
   build-depends: base,
-                       hakyll >= 4.5.1.0 && < 5,
-                       pandoc >= 1.12.3.3 && < 2,
-                       containers >= 0.5.5.1 && < 1.0,
-                       directory >= 1.2.1 && < 1.3,
-                       filestore >= 0.6.0.1 && < 1.0,
-                       github >= 0.7.4 && < 1.0
+                       hakyll >= 4.5.1.0,
+                       pandoc >= 1.12.3.3,
+                       containers >= 0.5.5.1,
+                       directory >= 1.2.1
