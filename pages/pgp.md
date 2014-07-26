@@ -1,0 +1,121 @@
+---
+title: PGP
+---
+
+## Key
+
+<i class="icon-key"></i> [MIT keyserver ](http://pgp.mit.edu:11371/pks/lookup?op=get&search=0x5FE593CBD7302B8D).
+
+```` {.sourceCode}
+-----BEGIN PGP PUBLIC KEY BLOCK-----
+Version: GnuPG v1
+
+mQINBFHt2bQBEADYerpLGHDqivhcZXBwtWZsMgDaW9lEw4Wc0JP1Znd3tM7dqYfB
+o8ztQt4L2CI98DLhu9/iGpzZKULh21mn6A7Kqlchf2mNB4is37cruvUAVClMXJEZ
+cqlhQuI3D7ohrx6vcGUqkmjL9+uge2XMndu84Cm9fYq2sKLx2v2+fjU5XUrH/ipz
+VC/01w4GqkSOBDc5m4bATJWEXyiHdY8RCn2QYeQQNoBroYgn3JbgdPh0GtLwGogW
+s9ze/pkJHZR+e8L2tb+0CbTBxiw2XpDGZHrI2Ohd3X8I+8tbh7z1WB5mxwXFzLsq
+9rj9pFposBWeb8sdWBf4LsHYOZCAawmvHb4iAK48Zj0A3yv8QnTnfB6HBrJY56+z
+3kBGAPpA6ZJ3CG2Bo4kwpF54w+KJwsEw6UYB0y/c4m9la1jizE9V/+b4t1Afnocn
+yzYQbYYkhCPXx5omnjYSKdLDfJ8IFpWakL+hyUXZvPwjTH4qYPLMkDWrha7y49gt
+xLa6heNlJlcL05tYNE92ioADTQGABJ1P3HQG29bnQ99kONughkSyhzNeQMyrTwo+
+4wKynqIMMl0Tdvcy2xuWCheLBOkW2P98mWt9ZerGt9SwZzsUrmQc+1t30XxE1PSq
+UQnaWm9qu5MFaKmWIpyZj2BbimdeG9vDHdTMfUjCDT4YsZyuAmC3mAw0twARAQAB
+tCxOYXRoYW4gVHlwYW5za2kgPG5hdGhhbi50eXBhbnNraS4xMUBjbnUuZWR1PokC
+PwQTAQIAKQUCUlCsGgIbAwUJEswDAAcLCQgHAwIBBhUIAgkKCwQWAgMBAh4BAheA
+AAoJEF/lk8vXMCuNVgQP/03wGh2M3xBMo4uAHoJPW0KtIjHehlDlQVPA5wV4yyUA
+DTysXiJtfjPJkwL/KB+dgRw+15nJxbCwtUoVDDaXsRHTDO5l7Z0Xv0I5kFN1xleK
+ZorsH33hKKzpEXDxY8//fszdTiL6EyQurV++l75Y5VvI3iOtzTPhjP6tLfG7JTxL
+GMmR01Imb47GzR1VDK+iAU4cjTliWP+vL+PJ75rkqTD152nIEORysRWfwmZx+SI4
+Jjekem3riws8V0SxvgjWosQdrBpp243yRgMv0mxJCqFhTD3g03A1d0JY1B83y/bN
+yrGS5w55d6g/f/bLveX8Cnx1NJGkuggxUQJi43xg4oediLJSLJw3dKuVt4vQzbZq
+Ndws05KXi0gtZ3cC/ZLIxyi8fPffa5WxaamzrB+AF9KHzmSJOSyZqhawAd5hG4Pu
+sItMkBtIQ1T1oCrixBpktHnmXwprv+0qdfGNpOT/NvfOJIMHD4e8b/xyd9c+Yj6e
+YczRUIgHSXk8l9CLnaAF6E+r36AcwsqEFfUoGpaSu/QwxW4rnM2hU1EJUIcUlZI3
+lhavYF1LJaHQXoR8u+7Jx7dhHvBGIAVllzXCufwZP3HnqqBa1vbkUfVb6DEMtnVQ
+Snl/ikBk+ndNoHpnTX5FxvyCOczncTBy29GG2gFM1Q6Q1uvBc7vcFHlNYDaxNsZT
+tClOYXRoYW4gVHlwYW5za2kgPG1haWxAbmF0aGFudHlwYW5za2kuY29tPokCPwQT
+AQIAKQUCUe3ZtAIbAwUJEswDAAcLCQgHAwIBBhUIAgkKCwQWAgMBAh4BAheAAAoJ
+EF/lk8vXMCuND5cQAKakO3sSBXvCCE2ub+iFS6BDHECMaXjJhdyV7ClVRH40duG7
+kA4N0f6OhwzjTrooVNvHI7yY6AaaJ1KDn6WFmHCS0JZ53U5UXsz634Tw6+oAyX1s
+0UYIgn3zEwIQ+9IE6oAyjNc+CZh3BTePGwUnxqPHrdqV6loznL497D0PXZfyzc+a
+btu2LDN57q2yjadjszB1fDWkD143kMPq6l8IJzwgw3HC/pepLs5JF08GbddMxQnY
+aaZZ3vO3qFEc1yV8dU61XTFVrjRZJIvWu0ebgFosDkXo/5jfgUIiYvw+XXwfmPDi
+H7Yt4TrN92k+UkTbudAlk7IrukJKvcsdFb1k69fgzluOLaEhPUM+rIM4tUpxLKpm
+vBCHCfU44fk70VUQW6Wxsi4Sj7P0/PDfnxKguDbiaXiQmsWg45Tx1yqtatEAgmgl
+8QEHGnf+nbYMBKGP3jLaWtj+u7efW9W0nfxD89pttQh5oC5GxEcszZCogF3v6SjE
+C5tsdEXzCuoId/peBN8dpKyfe/XMQOCbztmUrWqdGdVALgxL/Di7qs7+uXVO+IRN
+tfgVEQCinSg2iqeeDrnwln94QA1yg/cf1bvsyJu7Yb9EUPcEGUO3uetvCH+wUq5J
+pdAr7wM2ZifTv5WH74E9pxrUfPstmL+P4AGqNm6JeRsyPH/uzBqGcB6jkLNJiQIc
+BBABAgAGBQJR7dsaAAoJEPiBwA8KBd5+xgIP/j6/M7ou2L2N3G85baot7JLDSX2F
+sjHTICvujfsNnD6l0eUUG04erztU2ijc6EKSm1SJNelO+SujsgHR161bUY0UaJFA
+cXxUSAeUrdEi+4MUqxqNkS6FNgCFG+kEmF7LD9+MfF85TGjNC0TfLr81m3/3phJx
+lCsVn378L3pT3IuDlXRqjw4Il0MQ2Eqlm0J73GR8S50hE6jIUJVkbaFnW/sqLraT
+i4L67O9BW53uK9An/YUnXkcb8EbYDlf56QmhrzZeTN2vo0b8Np1SEfxdNCOPRAAN
+Geo8kCsFU9ZFPlFnspnZ8ObU6xuCRgnI9pNnSnAsijFk0/gfITITH0PkuRCpw22g
+7Cdh0UC6Ui4V7BOtIxtWBV3NfkpYZM7K2ibaRG67C5hAh4rhGg/KloA9jLmMWXlG
+1J7zai2YT0bbbyiH6rm5VlpZjcVfH/ojdd1x7HuuCgjPJ61JKJbdRH6QHtBMkJfb
+9C5PoUruUJ0DAh5AdFrRe8CnqQcfU5GffsZQgrvjVmshRUYguVsRp0sbiqu243L0
+l8PCPGKzouZPLznO9HvI4gV1dgDwvKiTg3fkQPPnGTbST6nMGSLaIXsLsdlWd7+e
+FANzvKwAgX2909DLVzg+3097qeLbxJCj/l3GDli+4NKYWkAOAXEzxWmkV7Rcm3IX
+BipMWHCtaxPmAoswtCVOYXRoYW4gVHlwYW5za2kgPG50eXBhbnNraUBnbWFpbC5j
+b20+iQI/BBMBAgApBQJSViEqAhsDBQkSzAMABwsJCAcDAgEGFQgCCQoLBBYCAwEC
+HgECF4AACgkQX+WTy9cwK42XjBAA1YNe3LrOTNEzv+iW3kHX797/9vI60c1Nxn1G
+Ks5rR9ps3N1lVGkuHjtheTjFsl6f5c8fnZ8aT9UZ7bq10DWascOZmnMggJ92QWI+
+bkTpa6/NfxgR9BcwSUK5eEpCpcNw2myVKjrrngHtAE1+hPSzkoCg8RmyfsyLEYaz
+7ET3KZ5bBMLxnzj8GtcczqqtFo4ylDI+AVj9wgWnlLC8sI+nZ63Rn7DJQloVp1Km
+RjY3dWP3AXt9fejGJxb0iOqFGt2g6TCxyX7dZWECYbbbFG3AVmwl+UwJwM19wgC+
+z1hV2gseHvgoX1G1RrjeL1WCThzLNfJgfstTVnnLeMEML324njgPrI2FN0EESaqh
+bmeJgdUJX+h8EauFuIQ5hp4jm9Esv7TIdXdVrjK3WXWZD9kBrN5cd4GqLemqUQAS
+ee5m78SwQqjUK+LGr2RtYVblokEah5L2ttmvT4g0FaObtclgtzFPy8afL9B8yWz4
+rq/9ALHoZnnvfrElFW58nDo/QIfSc7DnZbkNwY/yoVQBtJ4Yk9eUNglrusuv8xOU
+2L0Ai7UnejMNeEiy1EV1L38XA3b1gowG8AN0y/QBgLaxKlHJKaKFtKPopxP0EavW
+sbwEaTbHwmWek36Zppoc9dpDLnP+PXL1nKeqINXwW6n+bbAWa8lJchPfB66ncUnG
+regJ97O5Ag0EUgM1hQEQAMnIljeuLnK5fXIl0gvKEcEtS/5oAKhO3388xrxGEOXy
+eDziDVqGtMZaGQEPlpfZD8DvHpcATbnYQ6MG71/ZKSag/Kjpb3xCLXMw1vr41mze
+ZP12kDkrDwtDO07761G37WW45gaOT80iOlM+eNcTZWMMhIktYZtwvwgGBZs9nzCs
+sDdk09a8oaZzLqiTVpH/KYefZSiWxPSJdp/CpYSu4J/EtlPaOhCgt4A4owTvx7HU
+2ljAKlQcmqvqFOADMIcLB57XlqbCJg2n83XDxZX8AP/aldE8a1YiRcYmfk66Crm3
+x5kLKsnvR+4w+a9J/n8VCwQ7U5QtQIzc42zpu0UmjsSBXaO8Hw23pmZeMVOaNcmA
+cLijjret5rRGPEOH7XiFadQqKRT5k2Y7lrGRZePjYgm0QTKyjYV8QhTW61sCOY7E
+kEf1fOLFnet5l6z055WM8GITVXw/9DsP8mMkfA9dlBWBDmFCjPIg7KT6UuwsTjX6
+SO0csbeOH2BEUlk6xBhsTetHn8QOnaVFrfi5dK2+R5w94try6/CM1nMDEh0XVsNb
+gbkt6naFRQCdthyK9uY2UpEGdhVEVVhxeqmz+wQdXpvrhl/OrgQwSCt0pUSlxguK
+mkyNbyGdBmeFJ571abB7LLDcy12kSEZsHROq3rXqkke3SRj2uuuIjbhUwA5OE/jz
+ABEBAAGJAiUEGAECAA8FAlIDNYUCGwwFCQeEzgAACgkQX+WTy9cwK40LGBAA1sBM
+LHXR4+2p5q1LtJ54rNGs836eCcGvIodAuX+JaQe7yHLbdJhlvKThHRHEB9nDzUpB
+Wu1xA8Plum9oZfY7LYEyXcQz/uOa535YK5H0qrr36qOkMjYYuq0kyajGmhxbv7dc
+/FUkDllnYDuVnXPYadJDnyBWj0g0abe2bhQA3fiW0Frv60I8fs7gurdtpJycaeQz
+K/+XrSrLXonGJy0nv+eyJWr7dmsDvKXA8Fwy/ICJ0hF/sZDVOxHBQ5/3HVA7t+BE
+U52ADUKp/IQpJgOtWS72UaLaw1Zz+r5kaH7LfsfM5yVh5nCXRsdKzJIIIf5f/3jY
+1QIAMiHAViHr4BlfrtuplxywIEGUSX882wa/lSL+jQNGN6rAhDWMit6p8W0k2rWR
+v5qE4vYgPhsrVXAla6uGOzyzeBmQ+oftg3H7gi+QBhE5Z7jfZGeLnBzBvOPUYfSD
+BUlE97r22P6CfazWPTM2WFLT9Hihf8g7lGfJq8oLs68HKPMWdc5yaX220MRxzQhX
+QR28X06pzDe/xRAlZcvUDcLcRGnj2dhHojEqRXn+vIiRtnyHtaJJcYM/HtEMXqFL
+9bF/LGV0a7T6G54Mn4tINqDDYqwMdle7xxEULSH8PTyClEIwCYNZbxsZNEPecBvL
+rK96R4sPCCKL7Bvb4Rojex3qgv4alNJZOU7Wqmg=
+=RaBm
+-----END PGP PUBLIC KEY BLOCK-----
+````
+
+## Verification
+
+I have a public [Keybase profile](https://keybase.io/nathantypanski). It hosts
+a profile that is verified based on signatures posted on my GitHub and Twitter
+accounts. You can find the signed messages here:
+
+- [GitHub](https://gist.github.com/nathantypanski/9541592)
+- [Twitter](https://twitter.com/nathantypanski/status/444313176591831040)
+
+The idea is this: if you know me from GitHub (used often) or Twitter
+(not used often), you can use Keybase to confirm my identity based on that.
+While this might not confirm identities in general (i.e. it is not the
+same as verifying me based on my driver's license), you can at least
+confirm that my public online identity is the same throughout these
+accounts. If you know me personally, then this serves as a
+verification of my online presence, and when I sign messages, you can
+be sure that they came from me.
+
+You don't have trust Keybase itself for you to be sure of this. If you
+download the messages and verify them with a GPG implementation
+against my public key, everything will check out just the same.
