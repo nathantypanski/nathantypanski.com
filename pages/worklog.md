@@ -97,16 +97,6 @@ I rewrote the then-dwindling ArchWiki page for [iptables](https://wiki.archlinux
 
 ## Python
 
-### ZombieRL
-
-*My project*. *2011*. [GitHub](https://github.com/nathantypanski/zombierl).
-
-As a senior in high school I got the chance to take my fourth and final computer science class as effectively an independent study. It was taught in C++, but I blew through the course material and started exploring other languages and projects to work on. I did the first couple chapters of [SICP](http://mitpress.mit.edu/sicp/), which I have yet to get back to, and picked up Python in my free time.
-
-The culmination of all this effort was a zombie-themed roguelike in Python. It uses [The Doryen Library](http://doryen.eptalys.net/) to draw graphics to the screen. After working on it for a while I ported it to Python 3, but it hasn't seen much activity since then.
-
-This was my first real intro to ideas like blitting graphics to a screen or having a main loop that had to respond to user input. It was also probably my first project where version control would have helped me.
-
 ### Ranger
 
 [Ranger](http://ranger.nongnu.org/) is a text-based file manager.
@@ -165,6 +155,16 @@ I made the music visualizer. Even though it was generated from music, and not vi
 
 We won [CNU](http://cnu.edu/pcs)'s information systems capstone competition that year.
 The result was visually impressive, and the others had produced good music from their traffic analysis. My code is written in [Processing](https://www.processing.org/), a sort of Java-lite for the computer graphics and artwork community. As far as I know, only the visualizer component is open-source.
+
+### ZombieRL
+
+*My project*. *2011*. [GitHub](https://github.com/nathantypanski/zombierl).
+
+As a senior in high school I got the chance to take my fourth and final computer science class as effectively an independent study. It was taught in C++, but I blew through the course material and started exploring other languages and projects to work on. I did the first couple chapters of [SICP](http://mitpress.mit.edu/sicp/), which I have yet to get back to, and picked up Python in my free time.
+
+The culmination of all this effort was a zombie-themed roguelike in Python. It uses [The Doryen Library](http://doryen.eptalys.net/) to draw graphics to the screen. After working on it for a while I ported it to Python 3, but it hasn't seen much activity since then.
+
+This was my first real intro to ideas like blitting graphics to a screen or having a main loop that had to respond to user input. It was also probably my first project where version control would have helped me.
 
 ### MGMT
 
