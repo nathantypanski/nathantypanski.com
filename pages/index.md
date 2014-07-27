@@ -8,6 +8,8 @@ I'm a student, currently in my fourth year studying computer engineering at [CNU
 
 You can find some of what I've been doing over at my [worklog](worklog.html). My [blog](blog.html) is about Linux and software development. I also publish my [math notes](tex.html) here, covering basic calculus and discrete mathematics.
 
+I also host some notes about [software I use](software-choice.html).
+
 ## Profiles
 
 * [Google+](https://plus.google.com/+NathanTypanski/about)
