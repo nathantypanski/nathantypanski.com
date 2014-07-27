@@ -178,6 +178,8 @@ It managed customer contacts, but only had a CLI interface. The real beauty of t
 
 ### NASA
 
+I've worked at NASA since September 2013. My big project has been standardizing this huge volume of data files, where a team and I have built an expert system that uses fuzzy matching against our knowledgebase to standardize (meta)data.
+
 From my [Reddit post](http://www.reddit.com/r/cscareerquestions/comments/27umgk/anyone_here_work_in_machine_learning_big_data/ci4q5ws):
 
 > Data scientists call this process [data wrangling](http://en.wikipedia.org/wiki/Data_wrangling), and my job is making it automatic.
@@ -192,6 +194,8 @@ From my [Reddit post](http://www.reddit.com/r/cscareerquestions/comments/27umgk/
 
 * Hopefully will get GPL'd someday. I've been pushing for this, but it's not really in my control.
 * We have a short conference paper in [ICAI](http://www.worldacademyofscience.org/worldcomp14/ws/conferences/icai14) discussing the work.
+
+I also gave a [talk about Git](http://nathantypanski.github.io/git-talk/) to the software developers and managers there. It was accompanied by a live demo with some branching/rebasing bits. We're building momentum and there's now plans for some teams to start migrating projects away from Subversion.
 
 ### LaTeX WikiBook
 
