@@ -18,6 +18,10 @@ $footnote_top_margin: 2em;
 $h2_color: #303030;
 $title_family: serif;
 $body_family: serif;
+$rss_color: #ff6600;
+$rss_hover_color: #ee5500;
+$title_top_margin: -32px;
+$title_bottom_margin: 32px;
 
 /* STYLE RESET */
 * {
@@ -53,8 +57,8 @@ h1 {
     font-size: 24px;
     border-bottom: 1px solid $toc_border;
     margin: {
-        top: -32px;
-        bottom: 32px;
+        top: $title_top_margin;
+        bottom: $title_bottom_margin;
     }
 }
 
@@ -167,6 +171,7 @@ body {
     margin: 0px auto 0px auto;
     width: $body_width;
 }
+
 
 em {
     font-style: italic;
@@ -334,8 +339,7 @@ div.info {
     font-style: italic;
 }
 
-a
-{
+a {
     color: $link;
     :visited {
         color: $link_visited;
@@ -353,10 +357,17 @@ a
     }
 }
 
-
 .code
 {
     font-size: $normal_font_size;
     line-height: 0;
     font-family: monospace;
+}
+
+.rss {
+    float: right;
+    color: $rss_color;
+    text-decoration: none;
+    :visited { color: $rss_color;       }
+    :hover   { color: $rss_hover_color; }
 }

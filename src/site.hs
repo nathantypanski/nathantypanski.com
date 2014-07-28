@@ -118,6 +118,7 @@ main = hakyllWith config $ do
         compile $ do
             posts <- recentFirst =<< loadAll "blog/*"
             let archiveCtx =
+                    constField     "rssblog" "" `mappend`
                     listField      "posts" postCtx (return posts) `mappend`
                     constField     "title" "Blog" `mappend`
                     defaultCtx

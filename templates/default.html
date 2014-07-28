@@ -13,7 +13,9 @@
           $partial("templates/links.html")$
         </div>
         <div id="content">
-            <h1>$title$</h1>
+            <h1>$title$$if(rssblog)$
+              <a href="atom.xml" class="rss"><i class="icon-rss"></i></a>
+            $endif$</h1>
             $body$
         </div>
         <div id="footer">
