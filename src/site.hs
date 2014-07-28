@@ -108,6 +108,7 @@ main = hakyllWith config $ do
         compile $
             pandocCompilerWith defaultHakyllReaderOptions tocWriterOptions
             >>= loadAndApplyTemplate "templates/post.html" context
+            >>= saveSnapshot "content"
             >>= loadAndApplyTemplate "templates/default.html" context
             >>= relativizeUrls
 
@@ -126,6 +127,13 @@ main = hakyllWith config $ do
                 >>= loadAndApplyTemplate "templates/default.html" archiveCtx
                 >>= relativizeUrls
 
+    create ["atom.xml"] $ do
+        route idRoute
+        compile $ do
+            let feedCtx = postCtx `mappend` bodyField "description"
+            posts <- fmap (take 10) . recentFirst =<<
+                loadAllSnapshots "blog/*" "content"
+            renderAtom myFeedConfiguration feedCtx posts
 
     create ["404.html"] $ do
         route idRoute
@@ -165,6 +173,16 @@ config = defaultConfiguration
       , previewPort = 8080
     }
 --------------------------------------------------------------------------------
+
+
+myFeedConfiguration :: FeedConfiguration
+myFeedConfiguration = FeedConfiguration
+    { feedTitle       = "Nathan's Blog"
+    , feedDescription = "Linux and software development"
+    , feedAuthorName  = "Nathan Typanski"
+    , feedAuthorEmail = "feed@nathantypanski.com"
+    , feedRoot        = "http://www.nathantypanski.com"
+    }
 
 mathCtx :: Context a
 mathCtx = field "mathjax" $ \item -> do
