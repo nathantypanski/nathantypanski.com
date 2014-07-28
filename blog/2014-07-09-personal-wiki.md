@@ -108,12 +108,12 @@ This is a new personal project for me, so there's still a lot of goals. If it be
 
 - Write every day, whether it's blog posts or notes in my wiki.
     - Keeping a database of personal notes should open me up to writing just for myself. I don't do that enough as is, and it's pretty often I wish I had a record of my old unfinished thoughts so I could build on them and review them.
-- Keep improving my daemonizing script.
-    - Stop grepping `ps aux`; use pidfiles or something normal.
+- <strike>Keep improving my daemonizing script.</strike> No longer necessary; I [switched to systemd user sessions](2014-07-25-all-your-daemons.html).
+    - <strike>Stop grepping `ps aux`; use pidfiles or something normal.</strike>
 - Find a nice way to link pages from my wiki to my website, so they're ultimately just the same thing.
     - This'll be hard, since they're both separate Git repos. Maybe using submodules can get the job done, or just writing a script to do the rollover when contents change?
 - Start hacking at Gitit and learning its internals.
-    - Move to cabal version instead of Debian package.
+    - <strike>Move to cabal version instead of Debian package.</strike>
 
 [^haskell]: Like Pandoc and [Hakyll](http://jaspervdj.be/hakyll/), which I use for this website.
 [^features]: There was one feature it was missing when I tried it out last time. I can't remember it anymore. It must not have mattered much.
