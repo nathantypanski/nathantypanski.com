@@ -6,7 +6,7 @@ I've wanted a personal wiki for a while now. The problem is there wasn't any goo
 
 My favorite production wiki software is MediaWiki. You've seen it, and probably even heard about it: it runs Wikipedia, the fantastic Arch Linux Wiki, and a billion other great wiki websites out there. But it's enterprise-grade wiki software, if you know what I mean. I've deployed it before with LDAP authentication. It runs on PHP. There's a SQL backend. I don't want that on my laptop.
 
-[MoinMoin](http://moinmo.in/) is the runner-up in wiki software. [Kernel Newbies](http://kernelnewbies.org/) uses this. So do [Ubuntu](https://wiki.ubuntu.com/) and [Freedesktop.org](http://www.freedesktop.org/wiki/). It's written in Python, so I can hack at it without feeling like I'm playing with fire. But it uses Apache's webserver and the ugly common wiki markup that anyone who's worked with WikiMedia or similar are used to.
+[MoinMoin](http://moinmo.in/) is the runner-up in wiki software. [Kernel Newbies](http://kernelnewbies.org/) uses this. So do [Ubuntu](https://wiki.ubuntu.com/) and [Freedesktop.org](http://www.freedesktop.org/wiki/). It's written in Python, so I can hack at it without feeling like I'm playing with fire. But it uses Apache's webserver and the ugly common wiki markup that anyone who's worked with MediaWiki or similar are used to.
 
 ## What I want
 
