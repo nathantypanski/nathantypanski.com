@@ -7,7 +7,7 @@ title: Software Choices
 I have a certain philosophy to the software that I use. I strive to do more than just describe one program as "better" or "worse" than another, but to actually analyze the details behind those gut feelings:
 
 - What makes me prefer one program over another?
-- What would I describe something as "better"? What is the underlying philosophy or design goal that makes me like the software?
+- Why would I describe something as "better"? What is the underlying philosophy or design goal that makes me like the software?
 
 As such, I try to codify my values into a coherent view of the software world. I do this not only so that I *know what I want*, but also how to build things that I would like to use.
 
