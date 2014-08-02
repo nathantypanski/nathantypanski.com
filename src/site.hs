@@ -128,6 +128,7 @@ main = hakyllWith config $ do
                 >>= loadAndApplyTemplate "templates/default.html" archiveCtx
                 >>= relativizeUrls
 
+
     create ["atom.xml"] $ do
         route idRoute
         compile $ do
@@ -135,6 +136,7 @@ main = hakyllWith config $ do
             posts <- fmap (take 10) . recentFirst =<<
                 loadAllSnapshots "blog/*" "content"
             renderAtom myFeedConfiguration feedCtx posts
+
 
     create ["404.html"] $ do
         route idRoute
@@ -199,4 +201,5 @@ postCtx =
     defaultCtx
 
 defaultCtx :: Context String
-defaultCtx = defaultContext `mappend` mathCtx
+defaultCtx = defaultContext `mappend`
+             mathCtx `mappend`
