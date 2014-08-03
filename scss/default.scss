@@ -1,4 +1,5 @@
 @import url(http://fonts.googleapis.com/css?family=Lora:400,400italic);
+@import url(http://fonts.googleapis.com/css?family=Droid+Serif:700,700italic,400,400italic);
 
 $body_width: 40em;
 $default_color: #101010;
@@ -8,28 +9,36 @@ $toc_border: #eee;
 $quote_border: #eee;
 $quote_background: #f0f0f0;
 $normal_font_size: 13pt;
+
+$h2_color: #303030;
+
 $header_offset: -0.3em;
+$title_top_margin: 1em;
+$title_bottom_margin: 1em;
+
 $icon_color: #B0B0B0;
 $link: #2A75A9;
 $link_visited: #274257;
 $link_hover: #7EB5D6;
 $link_home: #5F819D !important;
+
 $footnote_font_size: 8pt;
 $footnote_border: 1px solid $toc_border;
 $footnote_top_margin: 2em;
-$h2_color: #303030;
-$title_family: serif;
+
+$title_family: 'Droid Serif', serif;
 $body_family: 'Lora', serif;
 $rss_color: #ff6600;
 $rss_hover_color: #ee5500;
-$title_top_margin: 32px;
-$title_bottom_margin: 32px;
 $sidebar_width: 10em;
 $header_top_pad: 1.2em;
 
 @mixin breakpoint($point) {
+  @if $point == desktop {
+     @media (min-width: 70em) { @content ; }
+  }
   @if $point == laptop {
-     @media (min-width: 80em) { @content ; }
+     @media (min-width: $body_width + $sidebar_width * 4) { @content ; }
   }
   @else if $point == tablet {
     @media (min-width: $body_width + 6em) { @content ; }
@@ -40,7 +49,7 @@ $header_top_pad: 1.2em;
 /* STYLE RESET */
 * {
     vertical-align: baseline;
-    font-family: serif;
+    font-family: 'Lora', serif;
     font-style: inherit;
     font-size: 100%;
     border: none;
@@ -76,66 +85,69 @@ body {
 }
 
 h1, h2, h3, h4, h5, h6 {
-    font-family: $title_family;
+    text-align: center;
+    font: {
+        family: $title_family;
+        weight: normal;
+    }
     color: #111;
     a {
         color: #274257;
         text-decoration: None;
     }
     margin: {
-        bottom: 12px;
+        top: 1.4em;
+        bottom: 0.8em;;
     }
-    margin: {
-        top: 18px;
+    @include breakpoint(tablet) {
+        text-align: left;
+        margin: {
+            left: $header_offset;
+        }
     }
 }
 
 h1 {
-    font-size: 24px;
-    @include breakpoint(tablet) { font-size: 34px; }
+    font-size: $normal_font_size * 1.8;
+    @include breakpoint(tablet) {
+        font-size: $normal_font_size * 2.0;
+    }
+    @include breakpoint(laptop) {
+        font-size: $normal_font_size * 2.2;
+    }
+    font-weight: bold;
     border-bottom: 1px solid $toc_border;
+    align: center;
+    width: 100%;
     margin: {
         top: $title_top_margin;
         bottom: $title_bottom_margin;
     }
 }
 
-h2, h3, h4, h5, h6 {
-    font-family: $title_family;
-    margin {
-        left: $header_offset;
-        bottom: 12px;
-    }
-}
-
 h2 {
-    font-size: 22px;
+    font-size: $normal_font_size * 1.4;
+    @include breakpoint(tablet) {
+        font-size: $normal_font_size * 1.5;
+    }
+    @include breakpoint(laptop) {
+        font-size: $normal_font_size * 1.6;
+    }
     color: $h2_color;
-    a {
-        text-decoration: None;
-    }
-    margin: {
-        left: $header_offset;
-        bottom: 24px;
-    }
-    margin: {
-        top: 32px;
-    }
+    font-weight: bold;
 }
 
 h3 {
-    font-size: 18px;
+    font-size: $normal_font_size * 1.2;
+    @include breakpoint(tablet) {
+        font-size: $normal_font_size * 1.3;
+    }
+    @include breakpoint(laptop) {
+        font-size: $normal_font_size * 1.4;
+    }
     color: #303030;
     a {
         color: #404040;
-        text-decoration: None;
-    }
-    margin: {
-        left: $header_offset;
-        bottom: 10px;
-    }
-    margin: {
-        top: 16px;
     }
 }
 
@@ -149,11 +161,6 @@ h4 {
     a {
         color: #606060;
         text-decoration: None;
-    }
-    margin: {
-        left: $header_offset;
-        top: 18px;
-        bottom: 8px;
     }
 }
 
@@ -265,39 +272,41 @@ div#logo {
         margin: {
             top: 0px;
             bottom: 0px;
-            left: 16px;
+            left: 0;
             right: 0px;
         }
     }
     @include breakpoint(laptop) {
         text-align: center;
-        float: none;
+        float: right;
         margin: {
             top: 0px;
-            bottom: 0px;
-            left: 64px;
-            right: 0px;
+            bottom: $normal_font_size;
+            left: 0;
+            right: 0;
         }
     }
 }
 
 #toc {
-    background: $toc_background;
     text-align: left;
+    background: $toc_background;
+    border: 1px solid $toc_border;
     width: 100%;
     @include breakpoint(tablet) {
         width: $sidebar_width;
         float: right;
         margin: 0;
-        padding: 0;
+        padding: 0.5em;
     }
     @include breakpoint(laptop) {
         width: $sidebar_width;
         position: absolute;
         top: $title_top_margin + $title_bottom_margin;
-        right: $sidebar_width;
+        right: 2em;
         float: none;
         margin: {
+            top: 5em;
             left: $body-width;
         }
     }
@@ -305,7 +314,7 @@ div#logo {
         font: {
             style: normal;
             weight: bold;
-            size: 12pt;
+            size: 1.2em;
         }
         text: {
             align: center;
@@ -314,51 +323,52 @@ div#logo {
     h1, h2, h3, h4, h5, h6 {
         margin: 0px;
     }
-    font: {
-        size:10pt;
-    }
     ul {
         margin: 0px;
     }
     li {
+        font: {
+            size: $normal_font_size * 0.8;
+        }
         margin: {
-            left: 32px;
-            bottom: 0px;
-            top: 10px;
-            right: 0px;
+            left: 1em;
+            bottom: 0;
+            top: $normal_font_size * 0.6;
+            right: 0;
         }
         list-style-type: lower;
     }
 }
 
 div#header {
+    margin: 0;
+    position: relative;
+    @include breakpoint(tablet) {
+    }
     @include breakpoint(laptop) {
         width: $sidebar_width;
         position: absolute;
         top: $title_top_margin + $title_bottom_margin;
-        left: 3em;
+        left: 1em;
         float: none;
         margin: {
             right: $body-width;
-        }
-    }
-    @include breakpoint(tablet) {
-        float: top;
-        margin: {
-            right: 0;
         }
     }
 }
 
 div#navigation {
     font-weight: bold;
-    text-align: right;
+    text-align: center;
     li {
         display: inline-block;
     }
     font: {
         size: 1.0em;
         weight: bold;
+    }
+    @include breakpoint(tablet) {
+        text-align: right;
     }
     @include breakpoint(laptop) {
         li {
@@ -430,13 +440,6 @@ a {
     }
 }
 
-.code
-{
-    font-size: $normal_font_size;
-    line-height: 0;
-    font-family: monospace;
-}
-
 .rss {
     float: right;
     color: $rss_color;
@@ -444,3 +447,5 @@ a {
     :visited { color: $rss_color;       }
     :hover   { color: $rss_hover_color; }
 }
+
+@import "syntax";
