@@ -44,7 +44,7 @@ I prefer software that makes smart decisions about this time tradeoff. Oftentime
 I use Linux exclusively. It caters better to developers and tinkerers than the alternatives.
 
 - **[Arch Linux]((https://www.archlinux.org/))**: Currently Arch Linux is my main OS.
-- **[Debian](https://www.debian.org/)**: I used Debian, with a blend of Sid/testing, from January-June 2014.
+- [Debian](https://www.debian.org/): I used Debian, with a blend of Sid/testing, from January-June 2014.
 
 ### Text editors
 
@@ -75,7 +75,7 @@ I use both Emacs and Vim, which is an odd combination to hear someone mention.
 
 #### Multiplexer
 
-- [tmux](http://tmux.sourceforge.net/).
+- **[tmux](http://tmux.sourceforge.net/)**.
 
 ### irc
 
@@ -90,6 +90,22 @@ I use both Emacs and Vim, which is an odd combination to hear someone mention.
 - **[Pandoc](http://johnmacfarlane.net/pandoc/)** generally, with documents written in markdown.
 - **[LaTeX](http://www.latex-project.org/)** for printed works, or things heavy in math or references.
 
+### Document viewers
+
+- **[Zathura](http://pwmt.org/projects/zathura/)** is the best PDF viewer I've found. It has Vim keybindings by default, is extremely lightweight, and supports multiple backends.
+
+### Web
+
+#### Browser
+
+- **[Firefox](https://www.mozilla.org)**.
+- [dwb](http://portix.bitbucket.org/dwb/)
+- [uzbl](http://www.uzbl.org/)
+
+#### Publishing
+
+- **[Hakyll](http://jaspervdj.be/hakyll/)**: see [About this site](/about.html)
+- **[SCSS](http://sass-lang.com/)**: CSS is painful to write. I automate it a bit with something modern.
 
 [^leiserson]: I transcribed more of it than just the quote here. The introduction to that part was:
 
