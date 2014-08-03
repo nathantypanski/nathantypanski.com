@@ -1,8 +1,6 @@
 ---
-title: Home
+title: Nathan Typanski
 ---
-
-<img class="img" src="/images/logo-noprojector.png" />
 
 I'm a student, currently in my fourth year studying computer engineering at [CNU](http://www.cnu.edu/pcs/academics/ce.asp).
 

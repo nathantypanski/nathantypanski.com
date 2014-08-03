@@ -1,4 +1,4 @@
-$codebg: #fefefe;
+$codebg: #eee;
 $codeborder: #ddd;
 $src_font: "Lucidia Console", monospace;
 $src_font_size: 10pt;
@@ -30,7 +30,7 @@ code
 {
     font-family: $src_font;
     font-size: $src_font_size;
-    //background: $codebg;
+    background: $codebg;
     border: 0px solid $codeborder;
     padding: {
         top:    0em;
@@ -57,14 +57,14 @@ pre.sourceCode
     margin: {
         top:    1em;
         bottom: 1em;
-        left:   -0.3em;
-        right:  -0.3em;
+        left:   -1.3em;
+        right:  -1.0em;
     }
     border: {
-        top:    1px solid $codeborder;
-        bottom: 1px solid $codeborder;
-        left:   1px solid $codeborder;
-        right:  1px solid $codeborder;
+        top:    0px solid $codeborder;
+        bottom: 0px solid $codeborder;
+        left:   0.3em solid $codeborder;
+        right:  0px solid $codeborder;
     }
     line-height: $src_line_height;
     background: $codebg;

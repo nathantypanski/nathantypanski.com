@@ -1,11 +1,13 @@
-$body_width: 800px;
+@import url(http://fonts.googleapis.com/css?family=Lora:400,400italic);
+
+$body_width: 40em;
 $default_color: #101010;
 $background: #fefefe;
-$toc_background: #f8f8f8;
+$toc_background: $background;
 $toc_border: #eee;
 $quote_border: #eee;
 $quote_background: #f0f0f0;
-$normal_font_size: 12pt;
+$normal_font_size: 13pt;
 $header_offset: -0.3em;
 $icon_color: #B0B0B0;
 $link: #2A75A9;
@@ -17,11 +19,23 @@ $footnote_border: 1px solid $toc_border;
 $footnote_top_margin: 2em;
 $h2_color: #303030;
 $title_family: serif;
-$body_family: serif;
+$body_family: 'Lora', serif;
 $rss_color: #ff6600;
 $rss_hover_color: #ee5500;
-$title_top_margin: -32px;
+$title_top_margin: 32px;
 $title_bottom_margin: 32px;
+$sidebar_width: 10em;
+$header_top_pad: 1.2em;
+
+@mixin breakpoint($point) {
+  @if $point == laptop {
+     @media (min-width: 80em) { @content ; }
+  }
+  @else if $point == tablet {
+    @media (min-width: $body_width + 6em) { @content ; }
+  }
+}
+
 
 /* STYLE RESET */
 * {
@@ -33,9 +47,32 @@ $title_bottom_margin: 32px;
     padding: 0;
     margin: 0;
 }
-
 h1, h2, h3, h4, h5, h6, p, pre, form, ul, ol, dl {
-    margin: 0 0 12px 0;
+    margin: 0 0 0 0;
+}
+
+body {
+    color: $default_color;
+    background: $background;
+    font-size: $normal_font_size;
+    font-family: $body_family;
+    line-height: 1.6;
+    margin: {
+        top: 1em;
+        bottom: 0px;
+        left: auto;
+        right: auto;
+    }
+    width: 90%;
+    @include breakpoint(tablet) {
+        width: $body_width;
+    }
+    @include breakpoint(laptop) {
+        width: $body_width;
+    }
+    p {
+        margin-top: $normal_font_size;
+    }
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -55,6 +92,7 @@ h1, h2, h3, h4, h5, h6 {
 
 h1 {
     font-size: 24px;
+    @include breakpoint(tablet) { font-size: 34px; }
     border-bottom: 1px solid $toc_border;
     margin: {
         top: $title_top_margin;
@@ -137,7 +175,7 @@ blockquote {
     padding: {
         left:   10px;
         right:  10px;
-        bottom: 0px;
+        bottom: 2px;
         top:    2px;
     }
     margin: {
@@ -162,17 +200,6 @@ table {
     border-spacing: 0;
 }
 
-body {
-    color: $default_color;
-    background: $background;
-    font-size: $normal_font_size;
-    font-family: $body_family;
-    line-height: 1.6;
-    margin: 0px auto 0px auto;
-    width: $body_width;
-}
-
-
 em {
     font-style: italic;
 }
@@ -187,66 +214,6 @@ em {
     font-size: 10px;
 }
 
-.float {
-    float: left;
-    margin {
-        left: 16px;
-        right: 16px;
-        bottom: 16px;
-        top: 16px;
-    }
-    padding {
-        left: 16px;
-        right: 16px;
-        bottom: 16px;
-        top: 16px;
-    }
-}
-
-#toc {
-    float: right;
-    border: 1px solid $toc_border;
-    h2 {
-        margin: {
-            left: 0;
-            top: 8px;
-            bottom: 8px;
-        }
-        font: {
-            style: normal;
-            weight: bold;
-            size: 12pt;
-        }
-        text: {
-            align: center;
-        }
-        border-bottom: 0px;
-    }
-    h3, h4, h5, h6 {
-        margin: 0px;
-    }
-    font: {
-        size:10pt;
-    }
-    ul {
-        margin: 8px;
-    }
-    li {
-        margin: {
-            left: 32px;
-            right: 32px;
-            bottom: 0px;
-            top: 0px;
-        }
-        list-style-type: lower;
-    }
-    margin: {
-        top: -30px;
-        left: 30px;
-        right: 0px;
-    }
-    background: $toc_background;
-}
 img {
     align: right;
     margin: {
@@ -290,23 +257,127 @@ div {
     }
 }
 
+div#logo {
+    text-align: center;
+    @include breakpoint(tablet) {
+        text-align: left;
+        float: left;
+        margin: {
+            top: 0px;
+            bottom: 0px;
+            left: 16px;
+            right: 0px;
+        }
+    }
+    @include breakpoint(laptop) {
+        text-align: center;
+        float: none;
+        margin: {
+            top: 0px;
+            bottom: 0px;
+            left: 64px;
+            right: 0px;
+        }
+    }
+}
+
+#toc {
+    background: $toc_background;
+    text-align: left;
+    width: 100%;
+    @include breakpoint(tablet) {
+        width: $sidebar_width;
+        float: right;
+        margin: 0;
+        padding: 0;
+    }
+    @include breakpoint(laptop) {
+        width: $sidebar_width;
+        position: absolute;
+        top: $title_top_margin + $title_bottom_margin;
+        right: $sidebar_width;
+        float: none;
+        margin: {
+            left: $body-width;
+        }
+    }
+    h2 {
+        font: {
+            style: normal;
+            weight: bold;
+            size: 12pt;
+        }
+        text: {
+            align: center;
+        }
+    }
+    h1, h2, h3, h4, h5, h6 {
+        margin: 0px;
+    }
+    font: {
+        size:10pt;
+    }
+    ul {
+        margin: 0px;
+    }
+    li {
+        margin: {
+            left: 32px;
+            bottom: 0px;
+            top: 10px;
+            right: 0px;
+        }
+        list-style-type: lower;
+    }
+}
+
 div#header {
-    border-bottom: 0px solid #5F819D;
-    margin-bottom: 30px;
-    padding: 12px 0px 12px 0px;
-    text-align: right;
+    @include breakpoint(laptop) {
+        width: $sidebar_width;
+        position: absolute;
+        top: $title_top_margin + $title_bottom_margin;
+        left: 3em;
+        float: none;
+        margin: {
+            right: $body-width;
+        }
+    }
+    @include breakpoint(tablet) {
+        float: top;
+        margin: {
+            right: 0;
+        }
+    }
 }
 
 div#navigation {
+    font-weight: bold;
     text-align: right;
-    a {
-        font: {
-            size: 16px;
-            weight: bold;
+    li {
+        display: inline-block;
+    }
+    font: {
+        size: 1.0em;
+        weight: bold;
+    }
+    @include breakpoint(laptop) {
+        li {
+            margin: {
+                bottom: 1em;
+            }
         }
-        margin-left: 16px;
-        text-decoration: none;
-        text-transform: lowercase;
+        font: {
+            size: 1.2em;
+        }
+    }
+    li {
+        list-style: none;
+    }
+    a {
+        text: {
+            decoration: none;
+            transform: lowercase;
+        }
     }
     i {
         color: $icon_color;
@@ -316,7 +387,9 @@ div#navigation {
 
 .snippets {
     i {
-        margin-right: 2px;
+        margin: {
+            right: 2px;
+        }
     }
     margin: {
         bottom: 16px;
