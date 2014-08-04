@@ -137,7 +137,7 @@ saving keyboard macros (see `edmacro-mode').
 
 We need to use the `kbd` function to describe our keybindings, since they contain an extra operator (the `<CTRL>` key). While single character bindings can be looked up in keymaps directly, a key sequence like `C-h` is not stored in the map in that form.
 
-You can look at the value of `(kbd "C-H")` by typing it on a line below those bindings, and then evaluating it with `C-x C-e` as before. In the **minibuffer**, the text area with a blank line at the bottom of the screen, `"^H"` is displayed. That tells you that the expression
+You can look at the value of `(kbd "C-h")` by typing it on a line below those bindings, and then evaluating it with `C-x C-e` as before. In the **minibuffer**, the text area with a blank line at the bottom of the screen, `"^H"` is displayed. That tells you that the expression
 
 ``` {.sourceCode}
 (define-key evil-normal-state-map (kbd "C-h") 'evil-window-left)
