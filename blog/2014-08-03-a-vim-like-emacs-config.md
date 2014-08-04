@@ -564,7 +564,14 @@ Giving it proper `jk` bindings is simple:
   :ensure magit
   :config
   (progn
+    (evil-set-initial-state 'magit-mode 'normal)
+    (evil-set-initial-state 'magit-status-mode 'normal)
+    (evil-set-initial-state 'magit-diff-mode 'normal)
+    (evil-set-initial-state 'magit-log-mode 'normal)
     (evil-define-key 'normal magit-mode-map
+        "j" 'magit-goto-next-section
+        "k" 'magit-goto-previous-section)
+    (evil-define-key 'normal magit-log-mode-map
         "j" 'magit-goto-next-section
         "k" 'magit-goto-previous-section)
     (evil-define-key 'normal magit-diff-mode-map
@@ -633,6 +640,10 @@ The toolbar is useful at first, but once you're familiar with the major mode you
 ``` {.sourceCode}
 (tool-bar-mode -1)
 ```
+
+## My config
+
+My config files are on [GitHub](https://github.com/nathantypanski/emacs.d) if you want to explore where I've gone with this. Caution that they don't follow this post exactly, and they may not work on everyone's system or be broken due to versioning (I build Emacs from the latest upstream source every couple weeks).
 
 [^hooks]: Often you'll see people defining hooks using a `lambda` construct. This is counterproductive, since once you add a hook to a list it can be complicated to get it out. If you messed anything up with your lambda, you can have a hard time removing it.
 Giving all of your hooks explicit names lets you remove them easily with `remove-hook` without restarting your Emacs session.
