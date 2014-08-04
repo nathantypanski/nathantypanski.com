@@ -192,7 +192,7 @@ Evaluating the above will do contextual lookup on the thing at point whenever yo
 
 The syntax here is different from when we defined the [window movement bindings](/blog/2014-08-03-a-vim-like-emacs-config.html#binding-keys) earlier. This is because we want to define `K` to call `elisp-slime-nav-describe-elisp-thing-at-point` only when we are in `emacs-lisp-mode-map` and Evil is in normal state. The `evil-define-key` function lets us do this, by providing arguments for both the Evil state and the keymap for the binding to be active in.
 
-Now you have the tools necessary to explore Emacs Lisp code without gettig lost. Doing documentation lookups on everything you see that you don't understand is a great way to start familiarizing yourself with Elisp code.
+Now you have the tools necessary to explore Emacs Lisp code without getting lost. Doing documentation lookups on everything you see that you don't understand is a great way to start familiarizing yourself with Elisp code.
 
 Before we move on, lookup the descriptions for `progn`, `require`, `add-hook`, and `emacs-lisp-mode-hook` and read them. Don't be afraid if you encounter words you don't understand. Seeing the bigger picture in all the lingo takes time, but just doing this will help you start to understand it.
 
