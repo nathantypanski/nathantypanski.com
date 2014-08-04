@@ -11,11 +11,13 @@ There is [Bling](http://bling.github.io/), the vim-airline developer, who switch
 It's a well-known and overstated joke that the default Emacs bindings are bad.
 If you're reading this post, you probably already agree with me here, but for the uninitiated: key combos are the devil. Any time you are pressing two keys at once, with the same hand, hundreds of times per day, you are setting yourself up for repetitive stress injury. As programmers, we need to take care of our hands or our careers will be over.
 
-This is going to be part-tutorial, part describing my configuration. With a little determination, this can take you from ground-zero to a working Evil configuration and generic development environment, that will teach you to understand Emacs and configure it to suit your needs.
+This is going to be part-tutorial, part describing my configuration. With a little determination, this can take you from ground-zero to a working Evil configuration and generic development environment.
+
+This post is geared at the **determined Vim user** who is willing to give Evil a shot and likes having a heavily customized editor. It has a number of tasks that are intended to teach the right attitude and mindset required to keep working with Emacs on your own. These will get you familiar enough with reading documentation that you know where to look when you want to do something. It is also Elisp-focused, with no emphasis on the more "modern" customization features of Emacs that ultimately prevent new users from groking its internals.
 
 ## First, some terminology
 
-When you first fire up Emacs, you need to learn how they reference the keybindings. This is pretty simple, but can be confusing if you don't have the initial introduction.
+When you first fire up Emacs, you need to learn how they reference certain objects and keybindings. This is pretty simple, but can be confusing if you don't have the initial introduction.
 
 - `M-x` means "press the `<ALT>` key, then press `x` while still holding that down". This brings up the Emacs command prompt, which gives you access to any of the functions that are declared **interactive** - that is, Elisp functions that may be run interactively by the user.
   - If someone gives you a command sequence like `M-x package-install <RET> evil <RET>`, that means to do the `M-x` keybinding, press enter, then type `evil` and press enter. Often the second `<RET>` will be omitted and taken as implicit.
@@ -42,7 +44,7 @@ Once you've added the above to that file, you can evaluate it inside Emacs with 
 
 Once the above is finished, you can install `evil-mode` with `M-x package-install <RET> evil <RET>`. The compilation log that pops up at the bottom of the screen can be killed with `C-x 4 0`. That runs the function `kill-buffer-and-window`, which you can also call interactively at the `M-x` prompt. More on that later.
 
-After that, Evil will be installed into the `~/.emacs.d` directory. To enable it, type `M-x evil-mode`. Now all your Vim bindings work, as long as you're in the same file.
+After that, Evil will be installed into the `~/.emacs.d` directory. To enable it, type `M-x evil-mode`. Now all your Vim bindings work, as long as you don't kill Emacs.
 
 You probably want to enable Evil more permanently. Add the following to the bottom of your `~/.emacs.d/init.el` file:
 
@@ -52,6 +54,16 @@ You probably want to enable Evil more permanently. Add the following to the bott
 ```
 
 This will automatically enable `evil-mode` every time you start Emacs. It's important that it goes at the bottom of the file. Evil relies on starting up after the rest of your packages, so that it can detect them and overlay its keybindings appropriately.
+
+If you break your configuration, restart Emacs with:
+
+``` {.sourceCode}
+$ emacs --debug-init
+```
+
+to get debug information on your init files. Don't feel bad if you have to use Vim to fix them in the meantime. Don't get worried thinking Evil is not a "first-class citizen" in Emacs: this is an editor built to be ripped to pieces by the competent user.
+
+The interesting part of Emacs is its Lisp engine. It's the scores of reusable functions for automating your interaction with code. Keybindings are just one way of calling these things.
 
 ## Modes
 
@@ -71,6 +83,8 @@ Evil uses the term *state* to refer to what Vim calls a "mode". There are more s
 - `evil-visual-state`
 
 Each of these can be called interactively with `M-x` to enable them. The way Evil works is each of these states is bound to a different keymap, and those keymaps change the meanings of your keys to call different functions when they are pressed. This affords you the ability to remap bindings across different states, where they will only work when `evil-mode` is enabled and Evil is also in the right state to activate the keymap.
+
+Use `ESC`, `i`, `v`, etc. as you would in Vim to switch between Evil states. Then play around with using `M-x` to toggle the different states before moving on.
 
 ## Binding keys
 
@@ -96,6 +110,8 @@ From the [official manual](http://www.gnu.org/software/emacs/manual/html_node/el
 > — Function: **symbolp** *object*
 >
 >   This function returns `t` if *object* is a symbol, `nil` otherwise.
+
+Now, use `M-x apropos RET point RET` and skim through the list that pops up. If you have Evil working properly, you can use `:q` to close that window when you're done with it.
 
 ### Quoting
 
@@ -203,6 +219,12 @@ You can list the buffers that are currently open by typing `M-x list-buffers`. U
 For a better listing, you can use `M-x ibuffer`.
 
 ![IBuffer with the default settings](/images/2014-08-ibuffer.png)
+
+The default bindings you should care about right now are:
+
+- `n` and `p` to go to the next and previous buffers.
+- `d` (marking the buffer for deletion), then `x` on a buffer will make it go away.
+- `RET` while a buffer name is at point will take you to that buffer.
 
 IBuffer has all sorts of useful features for browsing, filtering, and editing open buffers. But at least for a Vim user, its keybindings won't at all be intuitive. Typing `j` accidentally will call `jump-to-buffer`, which is almost certainly not what you want. If you felt like typing the name of the buffer at a prompt, you probably wouldn't have opened IBuffer to begin with!
 
@@ -342,9 +364,36 @@ I'll add that it's not really necessary to duplicate the entire keymap in your i
 
 If neither of these apply, then you can get rid of the bindings. But pasting them in to start with, then trimming the bindings down to what you're actually interested in gives you the chance to examine the default keymap and rebind things that sound useful.
 
-Now, read [this answer](http://stackoverflow.com/a/3145824) to the StackOverflow question [Emacs: help me understand file/buffer management](http://stackoverflow.com/questions/3145332/emacs-help-me-understand-file-buffer-management). It will familiarize you with filter groups, which will let you narrow down IBuffer's listings to only the buffers you're interested in when working on a project. It'll also help you filter buffers and mark them for performing actions.
+### Handling lots of buffers
 
-## Separating init files
+Over time, when you use Emacs you'll end up with a lot of garbage buffers. Tons of different commands will open scratch buffers to show you things and never kill them. Eventually you'll need to learn to filter IBuffer's output so it's actually relevant to you, and quickly group and delete buffers that aren't.
+
+Typing `/` in the IBuffer window starts a filter command. I'll list the default filter commands here, but remember that you can rebind them.
+
++------------------------------+------------------------------+
+| **key**                      |  **action**                  |
+|                              |                              |
++------------------------------+------------------------------+
+| `/ n`                        | Filter by name               |
++------------------------------+------------------------------+
+| `/ e`                        | Filter by extension          |
++------------------------------+------------------------------+
+|  `/ f`                       | Filter by filename           |
++------------------------------+------------------------------+
+| `/ s`                        | Save filters                 |
++------------------------------+------------------------------+
+| `/ !`                        | Negate filter                |
++------------------------------+------------------------------+
+| `/ g`                        | Make filters into group      |
++------------------------------+------------------------------+
+| `/ S`                        | Save filter groups           |
++------------------------------+------------------------------+
+| `/ r`                        | Switch to saved filters      |
++------------------------------+------------------------------+
+| `/ R`                        | Switch to saved filter group |
++------------------------------+------------------------------+
+
+## Separating your init files
 
 As I said before, putting everything in one init file gets old after a while. Emacs has a variable called `load-path` that you can use to customize where it looks for files. This is similar to the `$PATH` variable in most UNIX-derived shells.
 
@@ -353,6 +402,17 @@ Adding the following to the beginning of your `~/.emacs.d/init.el` file will mak
 ``` {.sourceCode}
 (add-to-list 'load-path (concat user-emacs-directory "config"))
 ```
+
+If you use `K` in Evil's normal state to look up the definition of `concat`, you'll see:
+
+> `(concat &rest SEQUENCES)`
+>
+> Concatenate all the arguments and make the result a string.
+> The result is a string whose elements are the elements of all the arguments.
+
+Since this won't be the last time you see it, I suggest reading the docs for `add-to-list` as well.
+
+You can use `M-x describe-variable` to see the definition of `user-emacs-directory` or `load-path`. It will also tell you the variable's value. Hitting `K` with the symbol at point will also take you to this, but it's good to do it the hard way at least once.
 
 Now you can create a file, `~/.emacs.d/config/my-ibuffer.el`, and move your IBuffer configuration over there. It won't be loadable by default, though, unless you declare it at the bottom of the file:
 
@@ -523,6 +583,8 @@ There's pretty detailed help in the README on GitHub, but I'll summarize some of
 The colons are necessary because these are *optional, named arguments* to an Elisp expression. You could use `use-package` with nothing but the first argument, although that wouldn't be very different from using `require`.
 
 Also note that you generally want `:init` and `:config` to be wrapped in a `(progn)`, since they only take one command normally.
+
+Your task for this section is to go get the previous code into Use-Package.
 
 ## Daemonizing Emacs
 
