@@ -1,5 +1,5 @@
 ---
-title: Towards a Vim-like Emacs (pt. 1)
+title: Towards a Vim-like Emacs
 tags: emacs, software
 ...
 
@@ -11,7 +11,7 @@ There is [Bling](http://bling.github.io/), the vim-airline developer, who switch
 It's a well-known and overstated joke that the default Emacs bindings are bad.
 If you're reading this post, you probably already agree with me here, but for the uninitiated: key combos are the devil. Any time you are pressing two keys at once, with the same hand, hundreds of times per day, you are setting yourself up for repetitive stress injury. As programmers, we need to take care of our hands or our careers will be over.
 
-This is going to be a tutorial, from ground-zero to a working Evil configuration and generic development environment, that will teach you to understand Emacs and configure it to suit your needs. It's going to follow my journey so far on customizing Emacs, and will teach you everything you need to get started learning its guts and crafting a personalized editing environment in this text editor.
+This is going to be part-tutorial, part describing my configuration. With a little determination, this can take you from ground-zero to a working Evil configuration and generic development environment, that will teach you to understand Emacs and configure it to suit your needs.
 
 ## First, some terminology
 
@@ -524,24 +524,34 @@ The colons are necessary because these are *optional, named arguments* to an Eli
 
 Also note that you generally want `:init` and `:config` to be wrapped in a `(progn)`, since they only take one command normally.
 
-## Flycheck
+## Daemonizing Emacs
 
-Do
+I use the following [systemd unit](/blog/2014-07-25-all-your-daemons.html) to start an Emacs daemon when my machine boots:
 
 ``` {.sourceCode}
-(use-package flycheck
-  :ensure flycheck
-  :init
-  (progn
-        (add-hook 'after-init-hook #'global-flycheck-mode))
-  :config
-  (progn
-    (setq flycheck-check-syntax-automatically '(save mode-enabled))
-    (setq flycheck-checkers (delq 'emacs-lisp-checkdoc flycheck-checkers))
-    (setq flycheck-checkers (delq 'html-tidy flycheck-checkers))
-    )
-  )
+[Unit]
+Description=Emacs daemon
+
+[Service]
+Type=forking
+WorkingDirectory=%h
+ExecStart=/usr/bin/emacs --daemon
+Restart=no
+
+[Install]
+WantedBy=console.target
 ```
+
+Then you can make a simple script like
+
+``` {.sourceCode}
+#!/bin/sh
+/usr/bin/emacsclient -c $@
+```
+
+And use that to spawn Emacs. It will just attach itself to the server process, allowing for instant startup.
+
+Non-systemd users can still use `emacs --daemon` in an init script somewhere for the same effect.
 
 ## Magit
 

@@ -222,13 +222,25 @@ em {
 }
 
 img {
-    align: right;
     margin: {
         left: auto;
         right: auto;
     }
 }
 
+figure {
+    text-align: center;
+    margin: {
+        top: 1em;
+        bottom: 1em;
+    }
+}
+
+figcaption {
+    font: {
+        size: $normal_font_size * 0.8;
+    }
+}
 
 img + p.caption {
     :before {
@@ -355,6 +367,10 @@ div#header {
             right: $body-width;
         }
     }
+}
+
+i {
+    color: $icon_color;
 }
 
 div#navigation {
