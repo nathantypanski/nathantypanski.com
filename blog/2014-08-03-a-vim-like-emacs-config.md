@@ -464,6 +464,8 @@ You'll notice the mark toggling is rebound to `v` here as well, which gives me a
 
 Rebinding `n` is another important thing here. By default, `n` and `p` are used for navigation within Dired, but with `hjkl` bindings set that's not really useful. Changing `n` and `N` to Evil's search commands gives us Vim-like searching within the file manager.
 
+Another thing to note about the above code is that I've made each binding an explicit expression. This is useful when you're just testing new keybindings - if you might want to change them and play around until you find something that works, you want to be able to evaluate each expression independently. If we feel like evaluating these all at the same time, we can just surround them in a `(progn)` block, or visual select the code and use `M-x eval-region` to do so.
+
 ### Dired-x
 
 Many incredibly useful Dired features are disabled by default, like `dired-jump`, which jumps to a Dired buffer in the same place as the current file.
