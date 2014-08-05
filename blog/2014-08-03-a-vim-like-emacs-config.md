@@ -277,8 +277,6 @@ and drop them into `~/.emacs.d/init.el`, after `(require 'evil)`, like follows:
   (kbd "u") 'ibuffer-unmark-forward
   (kbd "=") 'ibuffer-diff-with-file
   (kbd "j") 'ibuffer-jump-to-buffer
-  (kbd "k") 'evil-previous-line
-  (kbd "J") 'ibuffer-jump-to-buffer
   (kbd "M-g") 'ibuffer-jump-to-buffer
   (kbd "M-s a C-s") 'ibuffer-do-isearch
   (kbd "M-s a M-C-s") 'ibuffer-do-isearch-regexp
