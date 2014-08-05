@@ -38,6 +38,14 @@ In order to install packages from things besides the default repos, you need to 
 
 [MELPA](http://melpa.milkbox.net/) is the most important source for up-to-date Emacs packages. It's kind of like the [Arch Linux](/blog/2014-07-25-all-your-daemons.html) of Emacs package archives - it builds directly from upstream all the time, and it works with the builtin Emacs package manager.
 
+Also, below the above code, you'll need to initialize the package manager.
+
+``` {.sourceCode}
+(require 'package)
+(package-initialize)
+```
+
+
 Once you've added the above to that file, you can evaluate it inside Emacs with `C-x C-e`, while the cursor is positioned outside and following that expression.
 
 ### Installing Evil
