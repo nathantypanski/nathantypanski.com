@@ -43,7 +43,6 @@ Also, below the above code, you'll need to initialize the package manager.
 ``` {.sourceCode}
 (require 'package)
 (package-initialize)
-(print "hi")
 ```
 
 Once you've added the above to that file, you can evaluate each of these expressions inside Emacs with `C-x C-e`. To evaluate an expression, position the cursor outside and following the expression and hit that keybinding. This runs the command `pp-eval-last-sexp`, which evaluates the [symbolic expression](http://en.wikipedia.org/wiki/S-expression) before your cursor and pretty-prints the output.
