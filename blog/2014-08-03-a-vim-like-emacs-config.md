@@ -466,6 +466,24 @@ Rebinding `n` is another important thing here. By default, `n` and `p` are used 
 
 Another thing to note about the above code is that I've made each binding an explicit expression. This is useful when you're just testing new keybindings - if you might want to change them and play around until you find something that works, you want to be able to evaluate each expression independently. If we feel like evaluating these all at the same time, we can just surround them in a `(progn)` block, or visual select the code and use `M-x eval-region` to do so.
 
+One problem with this config is that while `l` will use `dired-find-alternate-file`, `h` will keep the old Dired buffers around. To fix this, we need to write a function that will jump up one directory, and close the old Dired buffer.
+
+``` {.sourceCode}
+(defun my-dired-up-directory ()
+  "Take dired up one directory, but behave like dired-find-alternate-file"
+  (interactive)
+  (let ((old (current-buffer)))
+    (dired-up-directory)
+    (kill-buffer old)
+    ))
+```
+
+Rebinding `h` to our new function makes buffer navigation behave much closer to other Vim-like file browsers.
+
+``` {.sourceCode}
+(evil-define-key 'normal dired-mode-map "h" 'my-dired-up-directory)
+```
+
 ### Dired-x
 
 Many incredibly useful Dired features are disabled by default, like `dired-jump`, which jumps to a Dired buffer in the same place as the current file.
