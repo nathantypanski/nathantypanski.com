@@ -35,10 +35,6 @@ code
 {
     font-size: 8pt;
     line-height: 12pt;
-    @include breakpoint(tablet) {
-        font-size: 10pt;
-        line-height: 14pt;
-    }
     font-family: $src_font;
     background: $codebg;
     border: 0px solid $codeborder;
@@ -53,14 +49,7 @@ pre.sourceCode
 {
     font-size: 8pt;
     line-height: 12pt;
-    @include breakpoint(tablet) {
-        font-size: 10pt;
-        line-height: 12pt;
-    }
     width: 100%;
-    @include breakpoint(tablet) {
-        width: 100%;
-    }
     code {
         background: $codebg;
         // Code blocks shouldn't have a border on each line.

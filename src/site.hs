@@ -87,7 +87,6 @@ main = hakyllWith config $ do
                 ( unixFilter "sass"
                     [ "-s"
                     , "--scss"
-                    , "--style"
                     , "compressed"]
                 )
             >>= return . fmap compressCss
@@ -202,4 +201,4 @@ postCtx =
 
 defaultCtx :: Context String
 defaultCtx = defaultContext `mappend`
-             mathCtx `mappend`
+             mathCtx
