@@ -197,6 +197,10 @@ From my [Reddit post](http://www.reddit.com/r/cscareerquestions/comments/27umgk/
 
 I also gave a [talk about Git](http://nathantypanski.github.io/git-talk/) to the software developers and managers there. It was accompanied by a live demo with some branching/rebasing bits. We're building momentum and there's now plans for some teams to start migrating projects away from Subversion.
 
+#### Git talk
+
+I gave an hour-long "brown bag" talk about Git for one of NASA's departments (though some outsiders stumbled in as well). You can find the slides [over here](http://nathantypanski.github.io/git-talk/).
+
 ### LaTeX WikiBook
 
 * Added a section on [color in mathematics](http://en.wikibooks.org/wiki/LaTeX/Mathematics#Color).
