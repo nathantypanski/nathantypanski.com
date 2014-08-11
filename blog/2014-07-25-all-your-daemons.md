@@ -29,7 +29,7 @@ $ userctl start gitit
 
 and it spawns my wiki process, keeps logs, and monitors its status like any other daemon. I've aliased `userctl` to `systemctl --user`, since it's way easier to type and makes more sense in my head.
 
-The script, located `$HOME/.config/systemd/user/gitit.service`, looks like so:
+The script, located at `$HOME/.config/systemd/user/gitit.service`, looks like so:
 
 ``` {.sourceCode}
 [Unit]
