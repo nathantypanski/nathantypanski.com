@@ -369,10 +369,6 @@ div#header {
     }
 }
 
-i {
-    color: $icon_color;
-}
-
 div#navigation {
     font-weight: bold;
     text-align: center;
@@ -454,12 +450,28 @@ a {
         font-size: $footnote_font_size;
         vertical-align: super
     }
+
+    .rss {
+        color: "#000000";
+        text-decoration: none;
+        :visited {
+            color: $rss_color;
+        }
+        :hover {
+            color: $rss_hover_color;
+        }
+    }
+
 }
 
 .rss {
     float: right;
-    color: $rss_color;
+    color: "#000000";
     text-decoration: none;
-    :visited { color: $rss_color;       }
-    :hover   { color: $rss_hover_color; }
+    :visited {
+        color: $rss_color;
+    }
+    :hover {
+        color: $rss_hover_color;
+    }
 }
