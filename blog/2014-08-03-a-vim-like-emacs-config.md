@@ -150,13 +150,7 @@ You can look at the value of `(kbd "C-h")` by typing it on a line below those bi
 (define-key evil-normal-state-map (kbd "C-h") 'evil-window-left)
 ```
 
-could also be written
-
-``` {.sourceCode}
-(define-key evil-normal-state-map "^H" 'evil-window-right)
-```
-
-but we will usually prefer the former, since it is more obvious your intent.
+is internally binding `"^H"` to `evil-window-left`, but don't doing that yourself---the way it's shown in the minibuffer is still a *displayed form*, which is different from the hashed value it eventually becomes.
 
 ## Lisp navigation
 
