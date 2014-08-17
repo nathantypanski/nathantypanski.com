@@ -38,7 +38,7 @@ The [Rust reference implementation](https://github.com/rust-lang/rust).
 
 ### Guidelines
 
-The [Rust guidelines](https://github.com/rust-lang/rust-guidelines/) are a project documenting "[c]onventions, principles, patterns, and best practices for Rust code".
+The [Rust guidelines](https://github.com/rust-lang/rust-guidelines/) are Mozilla's official "[c]onventions, principles, patterns, and best practices for Rust code".
 
 * [features/modules: clarification & updates ](https://github.com/rust-lang/rust-guidelines/commit/4c208773d48d7512302a0cf01380401edceea354)
 * [features/modules: Expand modules section](https://github.com/rust-lang/rust-guidelines/commit/bdbf206894f86670511c50bebcc7cf8e340f8e41)
