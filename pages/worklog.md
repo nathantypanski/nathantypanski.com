@@ -117,6 +117,8 @@ I rewrote the then-dwindling ArchWiki page for [iptables](https://wiki.archlinux
 
 ### tabview
 
+Tabview is a CSV viewer written in Python with Vim-like keybindings.
+
 - [Add `0` key for beginning-of-line](https://github.com/firecat53/tabview/pull/15)
 
 ## My projects
