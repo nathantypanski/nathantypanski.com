@@ -1,18 +1,15 @@
-@import url(http://fonts.googleapis.com/css?family=Lora:400,400italic);
-@import url(http://fonts.googleapis.com/css?family=Droid+Serif:700,700italic,400,400italic);
-
 $body_width: 40em;
 $default_color: #101010;
-$background: #fefefe;
+$background: #ffffff;
 $toc_background: $background;
 $toc_border: #eee;
 $quote_border: #eee;
 $quote_background: #f0f0f0;
-$normal_font_size: 13pt;
+$normal_font_size: 12pt;
 
 $h2_color: #303030;
 
-$header_offset: -0.3em;
+$header_offset: -1.0em;
 $title_top_margin: 1em;
 $title_bottom_margin: 1em;
 
@@ -117,6 +114,7 @@ h1 {
     }
     font-weight: bold;
     border-bottom: 1px solid $toc_border;
+    padding-right: $header_offset;
     align: center;
     width: 100%;
     margin: {

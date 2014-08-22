@@ -1,8 +1,6 @@
-@import url(http://fonts.googleapis.com/css?family=Droid+Sans+Mono);
-
 $codebg: #F7F5FF;
 $codeborder: #989CB3;
-$src_font: "Droid Sans Mono";
+$src_font: "Droid Sans Mono", monospace;
 
 .sourceCode
 {
@@ -30,6 +28,7 @@ td.lineNumbers
 }
 td.sourceCode
 {
+    font-family: $src_font;
 }
 code
 {
@@ -48,6 +47,7 @@ code
 pre.sourceCode
 {
     font-size: 8pt;
+    font-family: $src_font;
     line-height: 12pt;
     width: 100%;
     code {
@@ -70,6 +70,11 @@ pre.sourceCode
         right:  0;
     }
     background: $codebg;
+}
+
+.sourceCode span
+{
+    font-family: $src_font;
 }
 .sourceCode span.kw
 {

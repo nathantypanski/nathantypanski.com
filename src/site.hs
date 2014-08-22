@@ -3,6 +3,7 @@ import           Data.Monoid (mappend, (<>))
 import           Hakyll
 import           Text.Pandoc.Options as Pandoc.Options
 import Data.Map            (member)
+import Data.Set (insert)
 
 --------------------------------------------------------------------------------
 -- Pandoc
@@ -15,8 +16,23 @@ pandocWriterOptions = defaultHakyllWriterOptions
     , Pandoc.Options.writerHtmlQTags = True
     , Pandoc.Options.writerReferenceLinks = True
     , Pandoc.Options.writerSectionDivs = True
+    , writerHTMLMathMethod = MathJax ""
     }
 
+pandocReaderOptions :: Pandoc.Options.ReaderOptions
+pandocReaderOptions = defaultHakyllReaderOptions
+    {
+     readerExtensions = ext
+    }
+    where
+      myExtensions =
+           [
+           Ext_tex_math_dollars
+         , Ext_superscript
+         , Ext_yaml_metadata_block
+           ]
+      defaultExtensions = readerExtensions defaultHakyllReaderOptions
+      ext = foldr insert defaultExtensions myExtensions
 
 tocWriterOptions :: Pandoc.Options.WriterOptions
 tocWriterOptions = pandocWriterOptions
@@ -97,7 +113,7 @@ main = hakyllWith config $ do
     match "pages/*" $ do
         route $ gsubRoute "pages/" (const "") `composeRoutes`
             setExtension "html"
-        compile $ pandocCompilerWith defaultHakyllReaderOptions tocWriterOptions
+        compile $ pandocCompilerWith pandocReaderOptions tocWriterOptions
             >>= loadAndApplyTemplate "templates/default.html" defaultCtx
             >>= relativizeUrls
 
@@ -106,7 +122,7 @@ main = hakyllWith config $ do
         route $ setExtension "html"
         let context = postCtx <> defaultCtx
         compile $
-            pandocCompilerWith defaultHakyllReaderOptions tocWriterOptions
+            pandocCompilerWith pandocReaderOptions tocWriterOptions
             >>= loadAndApplyTemplate "templates/post.html" context
             >>= saveSnapshot "content"
             >>= loadAndApplyTemplate "templates/default.html" context
@@ -190,9 +206,13 @@ myFeedConfiguration = FeedConfiguration
 mathCtx :: Context a
 mathCtx = field "mathjax" $ \item -> do
     metadata <- getMetadata $ itemIdentifier item
-    return $ if "mathjax" `member` metadata
-                  then "<script type=\"text/javascript\" src=\"http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML\"></script>"
-                  else ""
+    let mathjaxScript = "<script type=\"text/javascript\" src=\"http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML\"></script>"
+    ---- TODO: make this check for `mathjax` in metadata.
+    ---- it's broken now for some reason.
+    -- return $ if "mathjax" `member` metadata
+    --             then mathjaxScript
+    --             else ""
+    return mathjaxScript
 
 postCtx :: Context String
 postCtx =
@@ -201,5 +221,4 @@ postCtx =
     defaultCtx
 
 defaultCtx :: Context String
-defaultCtx = defaultContext `mappend`
-             mathCtx
+defaultCtx = defaultContext <> mathCtx
