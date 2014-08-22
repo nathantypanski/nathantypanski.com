@@ -1,6 +1,5 @@
 ----
 title: Benchmarking Mike Bland's OpenSSL Makefiles
-mathjax: on
 ....
 
 [Mike Bland](http://mike-bland.com/) has been [hard at work](https://github.com/mbland/openssl/commits/makefiles) [refactoring the build system](http://goo.gl/yhvCno) for OpenSSL.
