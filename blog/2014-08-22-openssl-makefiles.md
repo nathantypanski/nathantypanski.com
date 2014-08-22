@@ -109,10 +109,10 @@ These builds are just the regular `make clean && /usr/bin/time -p make`. Since t
 
 ``` {.sourceCode .R}
 > boxplot(fullseq[which(fullseq$branch=='master'),]$real,
-          fullseq[which(fullseq$branch=='mbland-makefiles-00'),]$real,
-          ylab='time (real)', xlab='branch',
-          ames=c('master', 'mbland-makefiles-00'),
-          main='Full sequential build')
++ fullseq[which(fullseq$branch=='mbland-makefiles-00'),]$real,
++ ylab='time (real)', xlab='branch',
++ ames=c('master', 'mbland-makefiles-00'),
++ main='Full sequential build')
 ```
 
 ![](/images/openssl-sequential-real.png)
@@ -178,6 +178,14 @@ Max.   :52.95   Max.   :166.8   Max.   :12.46
 
 #### Comparison
 
+``` {.sourceCode .R}
+> boxplot(fullpar[which(fullpar$branch=='master'),]$real,
++ fullpar[which(fullpar$branch=='mbland-makefiles-00'),]$real,
++ ylab='time (real)', xlab='branch',
++ names=c('master', 'mbland-makefiles-00'),
++ main='Full parallel build')
+```
+
 ![Single-makefile structure performs *excellently* in parallel builds](/images/openssl-parallel-real.png)
 
 ``` {.sourceCode .R}
@@ -226,6 +234,14 @@ While doing build benchmarks with ccache might seem a bit odd,[^ccache-mistakes]
 ```
 
 #### Comparison
+
+``` {.sourceCode .R}
+> boxplot(fullseqcc[which(fullseqcc$branch=='master'),]$real,
++ fullseqcc[which(fullseqcc$branch=='mbland-makefiles-00'),]$real,
++ ylab='time (real)', xlab='branch',
++ names=c('master', 'mbland-makefiles-00'),
++ main='Full sequential build with ccache')
+```
 
 ![](/images/openssl-sequential-real-ccache.png)
 
