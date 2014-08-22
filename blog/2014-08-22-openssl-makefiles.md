@@ -201,6 +201,32 @@ T-test yields favorable results. Looks like a 40% speedup. This is the best resu
 
 While doing build benchmarks with ccache might seem a bit odd,[^ccache-mistakes] it actually makes sense: we should have data on how people might be building things in practice. If developers choose to use ccache when working, then they would want to know how this impacts *them*.
 
+#### master
+
+``` {.sourceCode .R}
+      real            user            sys       
+ Min.   :15.94   Min.   :11.16   Min.   :1.650  
+ 1st Qu.:16.00   1st Qu.:11.22   1st Qu.:1.695  
+ Median :16.06   Median :11.38   Median :1.790  
+ Mean   :16.17   Mean   :11.38   Mean   :1.778  
+ 3rd Qu.:16.29   3rd Qu.:11.48   3rd Qu.:1.825  
+ Max.   :16.63   Max.   :11.69   Max.   :1.940  
+```
+
+#### mbland-makefiles-00
+
+``` {.sourceCode .R}
+      real            user             sys       
+ Min.   :12.46   Min.   : 8.310   Min.   :1.400  
+ 1st Qu.:12.48   1st Qu.: 8.537   1st Qu.:1.490  
+ Median :12.55   Median : 8.595   Median :1.525  
+ Mean   :13.23   Mean   : 9.090   Mean   :1.632  
+ 3rd Qu.:12.72   3rd Qu.: 8.652   3rd Qu.:1.545  
+ Max.   :16.58   Max.   :11.850   Max.   :2.310  
+```
+
+#### Comparison
+
 ![](/images/openssl-sequential-real-ccache.png)
 
 ``` {.sourceCode .R}
