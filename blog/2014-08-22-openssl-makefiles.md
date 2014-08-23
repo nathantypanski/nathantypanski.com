@@ -46,7 +46,7 @@ I ran builds with ccache and without it, so we'll start by subsetting the data b
 
 ``` {.sourceCode .R}
 > ccache <- ssl[which(ssl$ccache),]
-> normal <- ssl[!which(ssl$ccache),]
+> normal <- ssl[which(!ssl$ccache),]
 ```
 
 Then we can subset the data into the different types of builds:
