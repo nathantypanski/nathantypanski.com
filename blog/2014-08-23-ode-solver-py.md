@@ -63,7 +63,7 @@ so we need to do some twisting to get our original problem in that form.
 If we're trying to solve
 $$ y'' + y' + 2y = 0, $$
 we can transform this into a first-order ODE with some simple variable substitution.
-Define $x_2(t)=y'$ and $x_1(t)=y(t)$. Then we have $x_1'=y'=x_2$ and $x_2'=y''$, where $y''$ is of the form $ax_1-bx_2$.
+Define $x_2(t)=y'$ and $x_1(t)=y(t)$ for some equation $y'' =ay'+by$. Then we have $x_1'=y'=x_2$ and $x_2'=y''$, where $y''$ is of the form $ax_1-bx_2$.
 Thus we can simplify our original equation into a system of equations
 $$\begin{align}
 x_1' &=x_2,\\
