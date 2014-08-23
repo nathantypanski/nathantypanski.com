@@ -30,8 +30,7 @@ $$r_{1,2} = \frac{-1 \pm \sqrt{-7}}{2},$$
 found using the quadratic equation
 $$x=\frac{-b\pm \sqrt{b^2 -4ac}}{2a}.$$
 Noting that $r_{1,2}$ are both complex, the general form for our solution here is thus[^generalform]
-$$y=e^{at}(c_1 \cos{bt} + c_2 \sin{bt}),$$
-where $a$ comes from the quadratic equation.
+$$y=e^{At}(c_1 \cos{Bt} + c_2 \sin{Bt}).$$
 
 [^generalform]: This equation might look duanting, but it is literally just straight-from-a-textbook material on these things. If you go look up "second-order homogeneous linear ODE with constant coefficients" you will find that for characteristic equations where both roots are complex, that is the general form of your solution. So when actually solving these analytically, you don't think about it much more once you know whether the c.e. roots are complex.
 
