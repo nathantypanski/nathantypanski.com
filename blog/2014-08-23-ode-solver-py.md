@@ -23,14 +23,14 @@ If you've taken a class on ordinary differential equations, then you should reco
 If you haven't, no big deal then either.
 Regardless, I'll go over the exact analytical answer, since it's pretty easy to find in this case.
 
-An equation of the form $$ Ay''+By'+Cy=0 $$ has a characteristic equation $$Ar^2 + Br + C=0.$$
+An equation of the form $$ \alpha y''+\beta y'+ \gamma y=0, $$ where $\alpha$, $\beta$, $\gamma$ are some constants, has a characteristic equation $$\alpha r^2 + \beta r + \gamma=0.$$
 Once we have this characteristic equation we can avoid actually doing any calculus and just solving that quadratic.
 So our characteristic equation here is $$r^2+r+2=0$$ and its roots $r_{1,2}$ are
 $$r_{1,2} = \frac{-1 \pm \sqrt{-7}}{2},$$
 found using the quadratic equation
 $$x=\frac{-b\pm \sqrt{b^2 -4ac}}{2a}.$$
 Noting that $r_{1,2}$ are both complex, the general form for our solution here is thus[^generalform]
-$$y=e^{At}(c_1 \cos{Bt} + c_2 \sin{Bt}).$$
+$$y=e^{\alpha t}(c_1 \cos{\beta t} + c_2 \sin{\beta t}).$$
 
 [^generalform]: This equation might look duanting, but it is literally just straight-from-a-textbook material on these things. If you go look up "second-order homogeneous linear ODE with constant coefficients" you will find that for characteristic equations where both roots are complex, that is the general form of your solution. So when actually solving these analytically, you don't think about it much more once you know whether the c.e. roots are complex.
 
@@ -64,11 +64,11 @@ so we need to do some twisting to get our original problem in that form.
 If we're trying to solve
 $$ y'' + y' + 2y = 0, $$
 we can transform this into a first-order ODE with some simple variable substitution.
-Define $x_2(t)=y'$ and $x_1(t)=y(t)$ for some equation $y'' =ay'+by$. Then we have $x_1'=y'=x_2$ and $x_2'=y''=ax_1-bx_2$.
+Define $x_2(t)=y'(t)$ and $x_1(t)=y(t)$ for some equation $y'' =Ay'+By$. Then we have $x_1'=y'=x_2$ and $x_2'=y''=Ax_1-Bx_2$.
 Thus we can simplify our original equation into a system of equations
 $$\begin{align}
 x_1' &=x_2,\\
-x_2' &=ax_1-bx_2.\\
+x_2' &=Ax_1-Bx_2.\\
 \end{align}$$
 In our original equation this means
 $$ \begin{align}
