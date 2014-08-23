@@ -104,7 +104,7 @@ if __name__ == '__main__':
 Running this at the command line will give a numeric value for $y$ (and $y'$, which we don't care about) at each time $t$ in the range $0 \leq t \leq 25$, in increments of 0.01.
 If we wanted a more exact solution, we could do this in smaller increments and get more numbers.
 
-If we stack our variables up into a 3-column array in the `main()` function and write this to a CSV:
+If we stack our data up into a 3-column array in the `main()` function and write this to a CSV:
 
 ``` {.sourceCode .python}
 def main():
