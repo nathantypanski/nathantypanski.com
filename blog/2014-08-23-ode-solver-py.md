@@ -10,7 +10,7 @@ Say we have the equation
 
 $$ y'' + y' + 2y = 0, $$
 
-and the initial values $y(0) = 1$, $y'(0)=0$. Can we write an equation for $y$, or at least get some answers about its behavior?
+where $y$ is a function of $t$ and the initial values $y(0) = 1$, $y'(0)=0$. Can we write an equation for $y$, or at least get some answers about its behavior?
 
 In real life, this sort of problem often comes up when you're dealing with a circuit containing a [capacitor](http://en.wikipedia.org/wiki/Capacitor) that discharges through an [inductor](http://en.wikipedia.org/wiki/Inductor) over time, and you want to analyze the voltage or current going through any given part of the circuit while this happens.
 Generally speaking, this is only one small part of a real-life circuit problem: you know that when you flip some switch, the circuit can be simplified to the above equation and that lets you solve it for some range $t_1 < t < t_2$, where $t_1$ and $t_2$ are the time boundaries where you *didn't* have the switch thrown.
