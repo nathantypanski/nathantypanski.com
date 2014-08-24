@@ -260,7 +260,7 @@ sample estimates:
                          16.17067                          13.22700 
 ```
 
-We see noticeable (and statistically significant) improvements in even the sequential build with ccache. However, considering we're talking a difference of 13-16 seconds here, this may or may not matter to you.
+We see noticeable (and statistically significant) improvements in even the sequential build with ccache. However, considering we're talking a difference of 13 vs. 16 seconds here, this may or may not matter to you.
 
 If you're concerned with how ccache impacts actual performance *during development*, there's some useful info on their site's [performance page](https://ccache.samba.org/performance.html):
 
