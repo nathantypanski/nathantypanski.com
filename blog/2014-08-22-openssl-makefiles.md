@@ -99,8 +99,8 @@ These builds are just the regular `make clean && /usr/bin/time -p make`. Since t
 
 ``` {.sourceCode .R}
 > plot(density(
-    fullseq[which(fullseq$branch=='mbland-makefiles-00'),]$real),
-    main='mbland-makefiles-00 build time density (real)')
++   fullseq[which(fullseq$branch=='mbland-makefiles-00'),]$real),
++   main='mbland-makefiles-00 build time density (real)')
 ```
 
 ![](/images/openssl-mbland-density.png)
@@ -152,7 +152,7 @@ Parallel builds are where you expect a single-makefile build system to really sh
 
 ``` {.sourceCode .R}
 > plot(density(fullpar[which(fullpar$branch=='master'),]$real),
-       main='master parallel build time density (real)')
++      main='master parallel build time density (real)')
 ```
 
 ![This could actually pass for a normal distribution](/images/openssl-master-parallel-density.png)
@@ -171,7 +171,7 @@ Max.   :52.95   Max.   :166.8   Max.   :12.46
 
 ``` {.sourceCode .R}
 > plot(density(fullpar[which(fullpar$branch=='mbland-makefiles-00'),]$real),
-       main='mbland-makefiles-00 parallel build time density (real)')
++      main='mbland-makefiles-00 parallel build time density (real)')
 ```
 
 ![](/images/openssl-mbland-parallel-density.png)
