@@ -111,7 +111,7 @@ These builds are just the regular `make clean && /usr/bin/time -p make`. Since t
 > boxplot(fullseq[which(fullseq$branch=='master'),]$real,
 + fullseq[which(fullseq$branch=='mbland-makefiles-00'),]$real,
 + ylab='time (real)', xlab='branch',
-+ ames=c('master', 'mbland-makefiles-00'),
++ names=c('master', 'mbland-makefiles-00'),
 + main='Full sequential build')
 ```
 
