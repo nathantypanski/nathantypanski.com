@@ -64,6 +64,10 @@ A [rust-nightly-archlinux](https://github.com/michaelsproul/rust-nightly-archlin
 
 * [use argparse to parse cli arguments](https://github.com/michaelsproul/rust-nightly-archlinux/pull/2). Somewhat daft, but I improved the CLI interface for this script, since I use it sometimes and seeing manual argument parsing in Python bothers me.
 
+### rust-url
+
+* [README: fix typo](https://github.com/servo/rust-url/pull/23#event-159534491)
+
 ## Arch Linux
 
 I make a [lot of wiki contributions](https://wiki.archlinux.org/index.php/Special:Contributions/Ndt) for Arch. Still, if I mention a page here, it's not to say "I singlehandedly wrote this" - wiki pages are community efforts, and no one person gets credit for them.
@@ -120,6 +124,11 @@ I rewrote the then-dwindling ArchWiki page for [iptables](https://wiki.archlinux
 Tabview is a CSV viewer written in Python with Vim-like keybindings.
 
 - [Add `0` key for beginning-of-line](https://github.com/firecat53/tabview/pull/15)
+
+### global-pygments plugin
+
+* [Generate test/ctags_stub.py with automake](https://github.com/yoshizow/global-pygments-plugin/pull/3#event-159658469)
+* Maintainer for [AUR package](https://aur.archlinux.org/packages/global-pygments-plugin-git/) (Arch Linux)
 
 ## My projects
 
