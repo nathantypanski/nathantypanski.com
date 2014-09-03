@@ -45,6 +45,7 @@ The [Rust guidelines](https://github.com/rust-lang/rust-guidelines/) are Mozilla
 * [style/comments: fix typo](https://github.com/rust-lang/rust-guidelines/commit/efec52d0053b0241a6417424c5300b94c486fb68)
 * [expand comments doc ](https://github.com/rust-lang/rust-guidelines/commit/e976db8bc739c7851e8e03970cc327c1a78b4617)
 * [style/imports: add example for import ordering ](https://github.com/rust-lang/rust-guidelines/commit/11267f3b90372ae3b3d8ec7daa1030039a920048)
+* [fix bulleted list in unit testing section](https://github.com/rust-lang/rust-guidelines/pull/32)
 
 ### quickcheck
 
