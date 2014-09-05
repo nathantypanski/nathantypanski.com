@@ -69,6 +69,32 @@ A [rust-nightly-archlinux](https://github.com/michaelsproul/rust-nightly-archlin
 
 * [README: fix typo](https://github.com/servo/rust-url/pull/23#event-159534491)
 
+## Python
+
+### Ranger
+
+[Ranger](http://ranger.nongnu.org/) is a text-based file manager.
+
+* [Fixed a crash](https://github.com/hut/ranger/pull/139) in previews of non-previewable files.
+
+### python-mode
+
+[python-mode](https://launchpad.net/python-mode/) is a [major mode for Emacs](https://answers.launchpad.net/python-mode/+question/250108).
+
+* [Bug report regarding virtualenv](https://answers.launchpad.net/python-mode/+question/250108), with some code for a potential workaround. My code got improved by one of the contributors, and a real workaround is supplied further down.
+
+### Pandas
+
+[Pandas](https://github.com/pydata/pandas) is a Python data analysis library.
+
+- [CI: fix typos in readme](https://github.com/pydata/pandas/pull/7831)
+
+### tabview
+
+Tabview is a CSV viewer written in Python with Vim-like keybindings.
+
+- [Add `0` key for beginning-of-line](https://github.com/firecat53/tabview/pull/15)
+
 ## Arch Linux
 
 I make a [lot of wiki contributions](https://wiki.archlinux.org/index.php/Special:Contributions/Ndt) for Arch. Still, if I mention a page here, it's not to say "I singlehandedly wrote this" - wiki pages are community efforts, and no one person gets credit for them.
@@ -110,32 +136,6 @@ I rewrote the then-dwindling ArchWiki page for [iptables](https://wiki.archlinux
 * Wrote an actual tutorial. This was the one thing the page desperately needed - a no-frills walkthrough on how to use it. It's still my #1 reference when I need to hack at some rules, and I only read things like this [crazy in-depth guide](https://www.frozentux.net/iptables-tutorial/iptables-tutorial.html) if I *really* have to.
 * I spent a lot of time poring over the verbage in the "basic concepts" section. For these things to be useful, the language had to be *exact*, providing a quick overview of what exactly these words like "chains", "tables", and "rules" meant.
 * Now the 8th link on Google for `iptables`, just below Debian's [much more spartan competition](https://wiki.debian.org/iptables).
-
-## Python
-
-### Ranger
-
-[Ranger](http://ranger.nongnu.org/) is a text-based file manager.
-
-* [Fixed a crash](https://github.com/hut/ranger/pull/139) in previews of non-previewable files.
-
-### python-mode
-
-[python-mode](https://launchpad.net/python-mode/) is a [major mode for Emacs](https://answers.launchpad.net/python-mode/+question/250108).
-
-* [Bug report regarding virtualenv](https://answers.launchpad.net/python-mode/+question/250108), with some code for a potential workaround. My code got improved by one of the contributors, and a real workaround is supplied further down.
-
-### Pandas
-
-[Pandas](https://github.com/pydata/pandas) is a Python data analysis library.
-
-- [CI: fix typos in readme](https://github.com/pydata/pandas/pull/7831)
-
-### tabview
-
-Tabview is a CSV viewer written in Python with Vim-like keybindings.
-
-- [Add `0` key for beginning-of-line](https://github.com/firecat53/tabview/pull/15)
 
 ## My projects
 
