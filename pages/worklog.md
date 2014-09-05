@@ -95,6 +95,12 @@ Tabview is a CSV viewer written in Python with Vim-like keybindings.
 
 - [Add `0` key for beginning-of-line](https://github.com/firecat53/tabview/pull/15)
 
+## Haskell
+
+### sandbox-move
+
+- [bump max base version requirement to 4.8](https://github.com/philopon/sandbox-move/pull/1)
+
 ## Arch Linux
 
 I make a [lot of wiki contributions](https://wiki.archlinux.org/index.php/Special:Contributions/Ndt) for Arch. Still, if I mention a page here, it's not to say "I singlehandedly wrote this" - wiki pages are community efforts, and no one person gets credit for them.
