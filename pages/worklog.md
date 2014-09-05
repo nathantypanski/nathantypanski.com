@@ -75,6 +75,13 @@ I make a [lot of wiki contributions](https://wiki.archlinux.org/index.php/Specia
 
 There were some cases where I made significant contributions to pages, and watched them grow into awesome resources where others could take over. One of the dynamics you see on wikis is that people don't help out with the stub pages, since they don't visit them without useful information. Having good information on a page attracts visitors, however, which in turn garners contributions from people who otherwise would never help out.
 
+### Packages
+
+#### global-pygments plugin
+
+* [Generate test/ctags_stub.py with automake](https://github.com/yoshizow/global-pygments-plugin/pull/3#event-159658469)
+* Maintainer for [AUR package](https://aur.archlinux.org/packages/global-pygments-plugin-git/) (Arch Linux)
+
 ### DisplayLink
 
 * When I got a USB DisplayLink monitor back in 2013, there weren't really any resources on how to set it up on a modern Linux machine. There were kernel drivers for it (`udlfb` and the - at the time - staging driver `udl`) but nothing on how to make them work with X. Supposedly Fedora could do it, but that turned out to be a dead end: nobody ever wrote something about it.
@@ -125,11 +132,6 @@ I rewrote the then-dwindling ArchWiki page for [iptables](https://wiki.archlinux
 Tabview is a CSV viewer written in Python with Vim-like keybindings.
 
 - [Add `0` key for beginning-of-line](https://github.com/firecat53/tabview/pull/15)
-
-### global-pygments plugin
-
-* [Generate test/ctags_stub.py with automake](https://github.com/yoshizow/global-pygments-plugin/pull/3#event-159658469)
-* Maintainer for [AUR package](https://aur.archlinux.org/packages/global-pygments-plugin-git/) (Arch Linux)
 
 ## My projects
 
