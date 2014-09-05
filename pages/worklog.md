@@ -82,6 +82,10 @@ There were some cases where I made significant contributions to pages, and watch
 * [Generate test/ctags_stub.py with automake](https://github.com/yoshizow/global-pygments-plugin/pull/3#event-159658469)
 * Maintainer for [AUR package](https://aur.archlinux.org/packages/global-pygments-plugin-git/) (Arch Linux)
 
+#### stmd-git
+
+* [AUR Package](https://aur.archlinux.org/packages/stmd-git/) [GitHub](https://github.com/nathantypanski/archlinux-stmd-git)
+
 ### DisplayLink
 
 * When I got a USB DisplayLink monitor back in 2013, there weren't really any resources on how to set it up on a modern Linux machine. There were kernel drivers for it (`udlfb` and the - at the time - staging driver `udl`) but nothing on how to make them work with X. Supposedly Fedora could do it, but that turned out to be a dead end: nobody ever wrote something about it.
