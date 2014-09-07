@@ -39,14 +39,14 @@ Of course, Emacs has its own problems, but the combination of the above and usef
 
 ## New habits
 
-The first habit I had to break was to stop hammering `<ESC>:wq` when I was done editing a file. Or `<ESC>\w\q`, for that matter, since I find typing `:` cumbersome. When you use Emacs, the tendency is to just keep it running - if you load a bunch of plugins, it starts slowly, and you're stuck waiting for `6` seconds to reopen it.
+The first habit I had to break was to stop hammering `<ESC>:wq` when I was done editing a file. Or `<ESC>\w\q`, for that matter, since I find typing `:` cumbersome. When you use Emacs, the tendency is to just keep it running - if you load a bunch of plugins, it starts slowly, and you're stuck waiting for six seconds to reopen it.
 
 There are occasional problems in the emulation that Evil offers. They're not massive, and I can't remember any off the top of my head, but they exist. Thankfully, Evil has an [active devteam](https://gitorious.org/evil) that works hard to fix them.
 
 The other big issue happens when you start digging into Emacs features. Usually they come with Emacs bindings, and you'll be confused about how to use them. You have a couple options for overcoming this:
 
 - Learn the Emacs bindings. I do this for some plugins, like [Magit](https://github.com/magit/magit), where they're not so much "Emacs bindings" as they are just "keybindings". Magit's bindings are actually more Vim-like than even [Fugitive](https://github.com/tpope/vim-fugitive)'s:
-    - Every binding in the Magit windows is a key chord. For example, when I look at my Git status window, and press `l`, that indicates that I want to do a "log action" and it's followed by another single key indicating the exact thing I'd like performed. There's even a handy popup buffer that lists my available choices:
+    - Every binding in the Magit windows is part of a key sequence. For example, when I look at my Git status window, and press `l`, that indicates that I want to do a "log action" and it's followed by another single key indicating the exact thing I'd like performed. There's even a handy popup buffer that lists my available choices:
 
     ![](../images/emacs-magit-log-status.png)
 
