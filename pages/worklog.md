@@ -191,7 +191,7 @@ The result was visually impressive, and the others had produced good music from 
 
 ### ZombieRL
 
-*My project*. *2011*. [GitHub](https://github.com/nathantypanski/zombierl).
+*2011*. [GitHub](https://github.com/nathantypanski/zombierl).
 
 As a senior in high school I got the chance to take my fourth and final computer science class as effectively an independent study. It was taught in C++, but I blew through the course material and started exploring other languages and projects to work on. I did the first couple chapters of [SICP](http://mitpress.mit.edu/sicp/), which I have yet to get back to, and picked up Python in my free time.
 
