@@ -197,15 +197,15 @@ As a senior in high school I got the chance to take my fourth and final computer
 
 The culmination of all this effort was a zombie-themed roguelike in Python. It uses [The Doryen Library](http://doryen.eptalys.net/) to draw graphics to the screen. After working on it for a while I ported it to Python 3, but it hasn't seen much activity since then.
 
-This was my first real intro to ideas like blitting graphics to a screen or having a main loop that had to respond to user input. It was also probably my first project where version control would have helped me.
+This was my first real intro to ideas like blitting graphics to a screen or having a main loop that had to respond to user input. It was also probably my first project where version control would have helped me; unfortunately I didn't discover Git until college.
 
 ### MGMT
 
 *2010*. [GitHub](https://github.com/nathantypanski/MGMT).
 
-I took [IB Computer Science](http://www.ibo.org/diploma/curriculum/group5/ComputerScience.cfm) as a Junior in high school. This was my "dossier", a massive final project that makes up half of the curriculum.
+I took [IB Computer Science](http://www.ibo.org/diploma/curriculum/group5/ComputerScience.cfm) as a Junior in high school. This was my "dossier," a massive final project that makes up half of the curriculum.
 
-It managed customer contacts, but only had a CLI interface. The real beauty of the project was that it forced you to go through a sort of software engineering life cycle that lasted more than a week or two. I had to make diagrams, describe the class interfaces and the way the objects interacted, and all that fun stuff before I could even get started *coding*.
+It managed customer contacts, but only had a CLI interface. The real beauty of the project was that - unlike most pedagogical software projects - it forced you to go through a sort of software engineering life cycle that lasted more than a week or two. I had to make diagrams, describe the class interfaces and the way the objects interacted, and all that fun stuff before I could even get started *coding*.
 
 ## Other
 
@@ -228,11 +228,11 @@ From my [Reddit post](http://www.reddit.com/r/cscareerquestions/comments/27umgk/
 * Hopefully will get GPL'd someday. I've been pushing for this, but it's not really in my control.
 * We have a short conference paper in [ICAI](http://www.worldacademyofscience.org/worldcomp14/ws/conferences/icai14) discussing the work.
 
-I also gave a [talk about Git](http://nathantypanski.github.io/git-talk/) to the software developers and managers there. It was accompanied by a live demo with some branching/rebasing bits. We're building momentum and there's now plans for some teams to start migrating projects away from Subversion.
-
 #### Git talk
 
-I gave an hour-long "brown bag" talk about Git for one of NASA's departments (though some outsiders stumbled in as well). You can find the slides [over here](http://nathantypanski.github.io/git-talk/).
+I gave an hour-long "brown bag" talk about Git for one of NASA's departments (though some outsiders stumbled in as well). It was accompanied by a live demo with some branching/rebasing bits. You can find the slides [over here](http://nathantypanski.github.io/git-talk/).
+
+We're building momentum and there's now plans for some teams to start migrating projects away from Subversion.
 
 ### LaTeX WikiBook
 
