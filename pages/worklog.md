@@ -234,6 +234,10 @@ I gave an hour-long "brown bag" talk about Git for one of NASA's departments (th
 
 We're building momentum and there's now plans for some teams to start migrating projects away from Subversion.
 
+#### nasa/NTL-Lunar-Mapping-and-Modeling-Portal
+
+* [README: cleanup botched merge text](https://github.com/nasa/NTL-Lunar-Mapping-and-Modeling-Portal/pull/1#event-165488297)
+
 ### LaTeX WikiBook
 
 * Added a section on [color in mathematics](http://en.wikibooks.org/wiki/LaTeX/Mathematics#Color).
