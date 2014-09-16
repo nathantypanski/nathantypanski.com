@@ -35,6 +35,9 @@ The [Rust reference implementation](https://github.com/rust-lang/rust).
 
 * [Dead code removal](https://github.com/rust-lang/rust/pull/14956)
 * [Documentation code update](https://github.com/rust-lang/rust/pull/14992)
+* [Add regression test for issue #10766](https://github.com/rust-lang/rust/pull/17061)
+* [Add ICE regression test for issue #16218.](https://github.com/rust-lang/rust/pull/17062)
+* [Add ICE regression test with unboxed closures](https://github.com/rust-lang/rust/pull/17093)
 
 ### Guidelines
 
@@ -107,17 +110,6 @@ I make a [lot of wiki contributions](https://wiki.archlinux.org/index.php/Specia
 
 There were some cases where I made significant contributions to pages, and watched them grow into awesome resources where others could take over. One of the dynamics you see on wikis is that people don't help out with the stub pages, since they don't visit them without useful information. Having good information on a page attracts visitors, however, which in turn garners contributions from people who otherwise would never help out.
 
-### Packages
-
-#### global-pygments plugin
-
-* [Generate test/ctags_stub.py with automake](https://github.com/yoshizow/global-pygments-plugin/pull/3#event-159658469)
-* Maintainer for [AUR package](https://aur.archlinux.org/packages/global-pygments-plugin-git/) (Arch Linux)
-
-#### stmd-git
-
-* [AUR Package](https://aur.archlinux.org/packages/stmd-git/) [GitHub](https://github.com/nathantypanski/archlinux-stmd-git)
-
 ### DisplayLink
 
 * When I got a USB DisplayLink monitor back in 2013, there weren't really any resources on how to set it up on a modern Linux machine. There were kernel drivers for it (`udlfb` and the - at the time - staging driver `udl`) but nothing on how to make them work with X. Supposedly Fedora could do it, but that turned out to be a dead end: nobody ever wrote something about it.
@@ -142,6 +134,19 @@ I rewrote the then-dwindling ArchWiki page for [iptables](https://wiki.archlinux
 * Wrote an actual tutorial. This was the one thing the page desperately needed - a no-frills walkthrough on how to use it. It's still my #1 reference when I need to hack at some rules, and I only read things like this [crazy in-depth guide](https://www.frozentux.net/iptables-tutorial/iptables-tutorial.html) if I *really* have to.
 * I spent a lot of time poring over the verbage in the "basic concepts" section. For these things to be useful, the language had to be *exact*, providing a quick overview of what exactly these words like "chains", "tables", and "rules" meant.
 * Now the 8th link on Google for `iptables`, just below Debian's [much more spartan competition](https://wiki.debian.org/iptables).
+
+### Packages
+
+Occasionally, I find a package isn't available in either the Arch standard repositories or the AUR. When this is the case, I package it rather than just installing it directly (perhaps from the Makefile). This helps my system stay clean, and it saves time for anyone who repeats the work after me.
+
+#### global-pygments plugin
+
+* [Generate test/ctags_stub.py with automake](https://github.com/yoshizow/global-pygments-plugin/pull/3#event-159658469)
+* Maintainer for [AUR package](https://aur.archlinux.org/packages/global-pygments-plugin-git/) (Arch Linux)
+
+#### stmd-git
+
+* [AUR Package](https://aur.archlinux.org/packages/stmd-git/) [GitHub](https://github.com/nathantypanski/archlinux-stmd-git)
 
 ## My projects
 
