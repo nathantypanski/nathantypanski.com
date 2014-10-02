@@ -152,7 +152,7 @@ Occasionally, I find a package isn't available in either the Arch standard repos
 
 #### stmd-git
 
-* [AUR Package](https://aur.archlinux.org/packages/stmd-git/) [GitHub](https://github.com/nathantypanski/archlinux-stmd-git)
+* [AUR Package](https://aur.archlinux.org/packages/stmd-git/) ([GitHub](https://github.com/nathantypanski/archlinux-stmd-git))
 
 ## My projects
 
