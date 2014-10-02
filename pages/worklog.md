@@ -98,7 +98,7 @@ Tabview is a CSV viewer written in Python with Vim-like keybindings.
 
 - [Add `0` key for beginning-of-line](https://github.com/firecat53/tabview/pull/15)
 
-#### global-pygments plugin
+### global-pygments plugin
 
 * [Generate test/ctags_stub.py with automake](https://github.com/yoshizow/global-pygments-plugin/pull/3#event-159658469)
 
