@@ -98,6 +98,10 @@ Tabview is a CSV viewer written in Python with Vim-like keybindings.
 
 - [Add `0` key for beginning-of-line](https://github.com/firecat53/tabview/pull/15)
 
+#### global-pygments plugin
+
+* [Generate test/ctags_stub.py with automake](https://github.com/yoshizow/global-pygments-plugin/pull/3#event-159658469)
+
 ### python-iwlib
 
 iwlib is an interface to [wireless tools for Linux](http://www.hpl.hp.com/personal/Jean_Tourrilhes/Linux/Tools.html). [python-iwlib](https://pypi.python.org/pypi/iwlib) is Python bindings to that interface, so you don't have to use C for everything.
@@ -147,7 +151,6 @@ Occasionally, I find a package isn't available in either the Arch standard repos
 
 #### global-pygments plugin
 
-* [Generate test/ctags_stub.py with automake](https://github.com/yoshizow/global-pygments-plugin/pull/3#event-159658469)
 * Maintainer for [AUR package](https://aur.archlinux.org/packages/global-pygments-plugin-git/) (Arch Linux)
 
 #### stmd-git
