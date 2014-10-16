@@ -2,7 +2,6 @@
 import           Data.Monoid (mappend, (<>))
 import           Hakyll
 import           Text.Pandoc.Options as Pandoc.Options
-import Data.Map            (member)
 import Data.Set (insert)
 
 --------------------------------------------------------------------------------
@@ -38,7 +37,7 @@ tocWriterOptions :: Pandoc.Options.WriterOptions
 tocWriterOptions = pandocWriterOptions
     { writerTableOfContents = True
     , writerTemplate =
-        "$if(toc)$<div id=\"toc\"><h2>Contents</h2>\n$toc$</div>\n$endif$$body$"
+        "$if(toc)$<div id=\"toc\"><h2>Contents</h2>\n$toc$ </div>\n$endif$$body$"
     , writerStandalone = True
     , writerHTMLMathMethod = MathJax ""
     }
@@ -65,8 +64,8 @@ main = hakyllWith config $ do
 
 
     -- route the fonts
-    match "font/*" $ do
-        route   idRoute
+    match "fonts/*" $ do
+        route idRoute
         compile copyFileCompiler
 
 
@@ -95,7 +94,7 @@ main = hakyllWith config $ do
 
 
     -- compile the scss and put it in _site/css/
-    match "scss/*" $ do
+    match (fromRegex "scss/[a-zA-Z].*s?css") $ do
         route $ gsubRoute "scss/" (const "css/") `composeRoutes`
             setExtension "css"
         compile $ getResourceString
@@ -114,9 +113,9 @@ main = hakyllWith config $ do
         route $ gsubRoute "pages/" (const "") `composeRoutes`
             setExtension "html"
         compile $ pandocCompilerWith pandocReaderOptions tocWriterOptions
+            >>= loadAndApplyTemplate "templates/essay.html" defaultCtx
             >>= loadAndApplyTemplate "templates/default.html" defaultCtx
             >>= relativizeUrls
-
 
     match "blog/*" $ do
         route $ setExtension "html"
@@ -143,7 +142,6 @@ main = hakyllWith config $ do
                 >>= loadAndApplyTemplate "templates/blog.html" archiveCtx
                 >>= loadAndApplyTemplate "templates/default.html" archiveCtx
                 >>= relativizeUrls
-
 
     create ["atom.xml"] $ do
         route idRoute
@@ -199,19 +197,16 @@ myFeedConfiguration = FeedConfiguration
     { feedTitle       = "Nathan's Blog"
     , feedDescription = "Linux and software development"
     , feedAuthorName  = "Nathan Typanski"
-    , feedAuthorEmail = "feed@nathantypanski.com"
+    , feedAuthorEmail = "ndt@nathantypanski.com"
     , feedRoot        = "http://www.nathantypanski.com"
     }
 
 mathCtx :: Context a
 mathCtx = field "mathjax" $ \item -> do
+    -- TODO: Make this check for a MonadMetadata field for mathjax
+    -- and only insert this JS if it's really needed
     metadata <- getMetadata $ itemIdentifier item
     let mathjaxScript = "<script type=\"text/javascript\" src=\"http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML\"></script>"
-    ---- TODO: make this check for `mathjax` in metadata.
-    ---- it's broken now for some reason.
-    -- return $ if "mathjax" `member` metadata
-    --             then mathjaxScript
-    --             else ""
     return mathjaxScript
 
 postCtx :: Context String

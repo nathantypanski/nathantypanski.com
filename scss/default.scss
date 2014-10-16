@@ -1,3 +1,17 @@
+@import "scss/syntax";
+@import "scss/variables";
+@import "scss/mixins";
+@import "scss/path";
+@import "scss/core";
+@import "scss/larger";
+@import "scss/fixed-width";
+@import "scss/list";
+@import "scss/bordered-pulled";
+@import "scss/spinning";
+@import "scss/rotated-flipped";
+@import "scss/stacked";
+@import "scss/icons";
+
 $body_width: 40em;
 $default_color: #101010;
 $background: #ffffff;
@@ -6,9 +20,9 @@ $toc_border: #eee;
 $quote_border: #eee;
 $quote_background: #f0f0f0;
 $normal_font_size: 12pt;
+$toc_edge_distance: 2em;
 
 $h2_color: #303030;
-
 $header_offset: -1.0em;
 $title_top_margin: 1em;
 $title_bottom_margin: 1em;
@@ -25,6 +39,7 @@ $footnote_top_margin: 2em;
 
 $title_family: 'Droid Serif', serif;
 $body_family: 'Lora', serif;
+$monospace_family: "Droid Sans Mono", monospace;
 $rss_color: #ff6600;
 $rss_hover_color: #ee5500;
 $sidebar_width: 10em;
@@ -313,7 +328,7 @@ div#logo {
         width: $sidebar_width;
         position: absolute;
         top: $title_top_margin + $title_bottom_margin;
-        right: 2em;
+        right: $toc_edge_distance;
         float: none;
         margin: {
             top: 5em;
@@ -370,38 +385,46 @@ div#header {
 div#navigation {
     font-weight: bold;
     text-align: center;
+    font: {
+        family: $title_family;
+        size: $normal_font_size;
+        weight: bold;
+    }
     li {
         display: inline-block;
+        list-style: none;
     }
-    font: {
-        size: 1.0em;
-        weight: bold;
+    a {
+        text-decoration: none;
+        text-transform: lowercase;
+    }
+    i {
+        color: $icon_color;
+        margin-right: 2px;
     }
     @include breakpoint(tablet) {
         text-align: right;
     }
     @include breakpoint(laptop) {
         li {
-            margin: {
-                bottom: 1em;
-            }
+            margin-bottom: $toc_edge_distance / 2.5;
         }
-        font: {
-            size: 1.2em;
-        }
+        font-size: $normal_font_size * 1.2;
     }
-    li {
-        list-style: none;
-    }
-    a {
-        text: {
-            decoration: none;
-            transform: lowercase;
-        }
-    }
-    i {
-        color: $icon_color;
-        margin-right: 2px;
+}
+
+div#metadata
+{
+    color: $icon_color;
+    background: $toc_background;
+    text-align: left;
+    position: absolute;
+    top: $title_bottom_margin;
+    right: $toc_edge_distance;
+    font: {
+        family: $title_family;
+        size: $normal_font_size * 0.8;
+        weight: normal;
     }
 }
 

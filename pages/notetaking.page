@@ -1,0 +1,93 @@
+---
+title: On Notetaking
+status: wip
+---
+
+## Analog
+
+Even people born after the year 2000 are still learning to take notes by hand.
+It follows that, for most people, this is how your brain learned to process information---and you shouldn't undervalue that as a factor in how well you learn things.
+Further, some disciplines (e.g., electrical engineering) lend themselves especially well to having a page on which to draw diagrams.
+
+### The wrong way
+
+I've always held a great deal of value in taking good notes.
+
+On this count I made two critical failures when I started college:
+failing to date my notes and writing them on loose paper.
+The first is a problem because the more you write, the less you're able
+to remember exactly when you wrote something.
+The second exacerbates the first.
+
+If you take notes, write dates on them.
+It's a small effort that solves a whole class of problems that should never exist in the first place.
+"This is silly," you might think. "If I take my notes in a notebook, like a regular person, I won't even have to date them."
+Don't succumb to this trap.
+Just write the dates.
+
+I used to use a clipboard and printer paper,
+or a clipboard and graph paper.
+I didn't like spiral notebooks because I'm left handed.
+Once you write enough on loose paper, it eventually gets mixed up.
+You're left with a pile of isolated flakes of knowledge: like newspaper clippings if someone blotted out all the dates.
+
+### Choosing the right tool for the job
+
+Legal pads are awesome for left-handed people.
+Your hand won't be crippled against a harsh metal spiral, and the left and right sides of a page on a legal pad don't matter, since the spine isn't vertical anyway.
+
+I write my notes using a modified version of [Cornell notes](http://en.wikipedia.org/wiki/Cornell_Notes) that don't include the part where you write a summary at the bottom of the page.
+The point of doing Cornell notes is to provide a skimmable index for your notes.
+When you go back looking for something you wrote a month ago, you want to be able to find it quickly.
+Legal pads already have the margin for this, but I like [wide margin](http://www.amazon.com/Ampad-Evidence-Ruling-Inches-20-245/dp/B0013CHS0O/ref=sr_1_1?s=office-products&ie=UTF8&qid=1413419914&sr=1-1&keywords=legal+pad+wide+margin) ones that allow for more detailed margin notes. If you want to go back and add footnotes to something you wrote earlier, getting the wide margins pays off. One Amazon purchaser [wrote](http://www.amazon.com/review/R3M0GVY80BWLJO/ref=cm_cr_dp_title?ie=UTF8&ASIN=B0013CHS0O&nodeID=1064954&store=office-products):
+
+> First used these in law school and got hooked. The wider left margin is great for jotting down specific reference points and the right side for a more detailed explanation.
+
+The downside to legal pads is they are designed to be abused.
+The pages are usually perforated and if you carry one around for long enough they will fall out.
+Further, the paper degrades over time---if you keep one on a shelf for a decade, it will fall apart when you so much as bump it.
+
+I spent a lot of time looking for the right notebook to use instead.
+There are a couple important qualities to look for in notebooks:
+
+- **Binding**. The pages should be [bound](http://en.wikipedia.org/wiki/Bookbinding). This means stitched together with an actual piece of thread. Spiral notebooks will rip your paper over time, and binders will do likewise (and require various horrible remedies over time, like those hole punch reinforcements you saw in elementary school). Legal pads will come loose at the perforation.
+- **Paper quality**. Paper should take well to markings and not smear ink nor pencil. Even if you use a fountain pen, ink should not bleed through. It should be acid-free so that it does not yellow and degrade over time.
+
+Options that meet these criteria are everywhere.
+The best value I could find was [Black n' Red Casebound](http://www.amazon.com/Black-Red-Casebound-Notebook-E66857/dp/B000JCPP9A/ref=pd_sim_op_1?ie=UTF8&refRID=1WYSE4CHGMFVJR33RPH0) notebooks.
+There is no indication of whether the paper is acid-free, but they are high-quality and [anecdotal evidence from A. Shrestha suggests they might be](http://www.amazon.com/review/RWXGAQV6E6SDF/ref=cm_cr_pr_perm?ie=UTF8&ASIN=B000JCPP9A):
+
+> I have one that is nearly 10 years old, and I don't see any issues with yellowing, fading, or deteriorating.
+
+On each set of pages I draw margins on the left/right sides, respectively, so the page looks something like this:
+
+``` {.sourceCode}
+    +--+-------+--------+--+
+    |..|,...,, | ,..,,. |  |
+    |  |,..    | ,.,    |..|
+    |..|,.....,| ,...,. |  |
+    |  |,..,,  | ,...   |.,|
+    |  |,...., | .,.... |  |
+    +--+-------+--------+--+
+```
+
+If I have some spare time before a class starts, I will draw margins on more pages and write numbers in the upper corners.
+This helps prevent slowdown and misaligned edges when you don't have time to fumble with a ruler, and gives you a system for referencing earlier pages so you can tie the individual bits of information together.
+
+## Digital
+
+> Beyond the neon shudder of Ninsei, the sky was that mean shade of gray.[^neuromancer]
+
+[^neuromancer]: William Gibson, *Neuromancer*, pg. 15.
+
+When I first discovered [LaTeX](/tex.html) it took me half an hour to learn enough to type my calculus notes.
+When I found a symbol that I didn't understand yet, I would type an identifier for it and go back to define the command later.
+This was slow, but eventually I got the hang of things: once you learn a symbol, you only need to look at your old notes to figure out how to type it again.
+
+I have three good reasons to type my notes:
+
+- I can `grep` digital documents.
+- My typing speed is *considerably* faster than my handwriting speed.[^typespeed]
+- I can [version control](https://github.com/nathantypanski/texnotes) digital text.
+
+[^typespeed]: According to a [totally unscientific test](http://play.typeracer.com/) that I just took, I type at 92 words per minute (WPM). While my theoretical maximum WPM is probably higher, the "I'm not trying that hard" speed is much closer to what I get when I'm taking notes and not, for example, transcribing text.
