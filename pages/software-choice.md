@@ -56,6 +56,7 @@ I use both Emacs and Vim, which is an odd combination to hear someone mention.
 
 ### File manager
 
+- **[Dired](/blog/2014-08-03-a-vim-like-emacs-config.html#dired)** sees the heaviest use from me, since I'm usually already in Emacs if I'm doing real work.
 - [Ranger](http://ranger.nongnu.org/) almost exclusively, but plain shell more often than that. I have a [post about it](blog/2013-08-12-ranger.html).
 - On very rare occasions, I will open [Thunar](https://en.wikipedia.org/wiki/Thunar) to satisfy Firefox's "Open containing folder" button in the download list.
 
