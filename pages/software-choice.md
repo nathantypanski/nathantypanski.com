@@ -94,6 +94,10 @@ I use both Emacs and Vim, which is an odd combination to hear someone mention.
 
 - **[Zathura](http://pwmt.org/projects/zathura/)** is the best PDF viewer I've found. It has Vim keybindings by default, is extremely lightweight, and supports multiple backends.
 
+### Productivity
+
+- **[Anki](http://ankisrs.net/)** ([notes](/notetaking.html#memory))
+
 ### Web
 
 #### Browser
