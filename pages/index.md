@@ -2,11 +2,13 @@
 title: Nathan Typanski
 ---
 
-I'm a student, currently in my fourth year studying computer engineering at [CNU](http://www.cnu.edu/pcs/academics/ce.asp).
+I'm a software developer, Linux hobbyist, and (F)OSS advocate in my senior-year studying computer engineering at [CNU](http://www.cnu.edu/pcs/academics/ce.asp).
 
-You can find some of what I've been doing over at my [worklog](worklog.html). My [blog](blog.html) is about Linux and software development. I also publish my [math notes](tex.html) here, covering basic calculus and discrete mathematics.
+## Contents
 
-I also host some notes about [software I use](software-choice.html).
+- My [blog](blog.html) is about Linux and software development.
+- I do [miscellaneous notes and writing](/pages.html) about math, code, and productivity.
+- I log my online contributions over at my [worklog](worklog.html).
 
 ## Profiles
 
