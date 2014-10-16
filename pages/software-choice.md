@@ -97,7 +97,8 @@ I use both Emacs and Vim, which is an odd combination to hear someone mention.
 
 ### Productivity
 
-- **[Anki](http://ankisrs.net/)** ([notes](/notetaking.html#memory))
+- **[Anki](http://ankisrs.net/)** (see [notes](/notetaking.html#memory))
+- **[Gitit](http://gitit.net/)** (see [blog post](/blog/2014-07-09-personal-wiki.html))
 
 ### Web
 
