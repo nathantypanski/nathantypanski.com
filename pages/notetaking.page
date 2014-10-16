@@ -91,3 +91,12 @@ I have three good reasons to type my notes:
 - I can [version control](https://github.com/nathantypanski/texnotes) digital text.
 
 [^typespeed]: According to a [totally unscientific test](http://play.typeracer.com/) that I just took, I type at 92 words per minute (WPM). While my theoretical maximum WPM is probably higher, the "I'm not trying that hard" speed is much closer to what I get when I'm taking notes and not, for example, transcribing text.
+
+### Memory
+
+I used to think I was bad at memorizing things. It turns out I just didn't know the right tricks.
+
+I started using [Anki](http://ankisrs.net/) seriously in September 2014, during my senior year in college.
+I use it to memorize chemical formulas, programming language syntax and libraries, Linux syscalls, and other similar facts.
+Anki is [spaced repetition](http://www.gwern.net/Spaced%20repetition) software, which means it exploits the "psychological trick" that the best way to memorize something is to review the material *right before* you would otherwise forget it.
+Each time you do this, it extends the duration that you can keep some tidbit of information in memory.
