@@ -23,9 +23,13 @@ $normal_font_size: 12pt;
 $toc_edge_distance: 2em;
 
 $h2_color: #303030;
-$header_offset: -1.0em;
+$header_offset: -0.3em;
 $title_top_margin: 1em;
 $title_bottom_margin: 1em;
+
+$paragraph_line_height: 1.6;
+$paragraph_top_margin: 0em;
+$paragraph_bottom_margin: 0;
 
 $icon_color: #B0B0B0;
 $link: #2A75A9;
@@ -77,10 +81,10 @@ body {
     background: $background;
     font-size: $normal_font_size;
     font-family: $body_family;
-    line-height: 1.6;
+    line-height: $paragraph_line_height;
     margin: {
-        top: 1em;
-        bottom: 0px;
+        top: $paragraph_top_margin;
+        bottom: $paragraph_bottom_margin;
         left: auto;
         right: auto;
     }
@@ -102,14 +106,14 @@ h1, h2, h3, h4, h5, h6 {
         family: $title_family;
         weight: normal;
     }
-    color: #111;
+    color: #303030;
     a {
         color: #274257;
         text-decoration: None;
     }
     margin: {
-        top: 1.4em;
-        bottom: 0.8em;;
+        top: $title_top_margin * 2.3;
+        bottom: 0;
     }
     @include breakpoint(tablet) {
         text-align: left;
@@ -132,6 +136,7 @@ h1 {
     padding-right: $header_offset;
     align: center;
     width: 100%;
+    color: #111;
     margin: {
         top: $title_top_margin;
         bottom: $title_bottom_margin;
@@ -158,7 +163,6 @@ h3 {
     @include breakpoint(laptop) {
         font-size: $normal_font_size * 1.4;
     }
-    color: #303030;
     a {
         color: #404040;
     }
@@ -170,7 +174,6 @@ h4 {
         style: italic;
         size: 18px;
     }
-    color: #303030;
     a {
         color: #606060;
         text-decoration: None;
@@ -193,25 +196,16 @@ blockquote {
         bottom: 0px solid $quote_border;
     }
     padding: {
-        left:   10px;
-        right:  10px;
-        bottom: 2px;
-        top:    2px;
+        left:   1em;
+        right:  1em;
+        bottom: 0em;
+        top:    0em;
     }
     margin: {
-        left:   0px;
-        right:  0px;
+        left:   1em;
+        right:  2em;
         bottom: 0px;
         top:    0px;
-    }
-    li {
-        padding: {
-            left: 10px;
-        }
-        margin: {
-            left: 20px;
-            right: 5px;
-        }
     }
 }
 
