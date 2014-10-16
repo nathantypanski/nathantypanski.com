@@ -17,6 +17,7 @@ $default_color: #101010;
 $background: #ffffff;
 $toc_background: $background;
 $toc_border: #eee;
+$toc_line_height: 1.3;
 $quote_border: #eee;
 $quote_background: #f0f0f0;
 $normal_font_size: 13pt;
@@ -306,6 +307,7 @@ div#logo {
 
 #toc {
     text-align: left;
+    line-height: $toc_line_height;
     background: $toc_background;
     border: 1px solid $toc_border;
     width: 100%;
