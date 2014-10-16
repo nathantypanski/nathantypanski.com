@@ -106,7 +106,8 @@ Tabview is a CSV viewer written in Python with Vim-like keybindings.
 
 iwlib is an interface to [wireless tools for Linux](http://www.hpl.hp.com/personal/Jean_Tourrilhes/Linux/Tools.html). [python-iwlib](https://pypi.python.org/pypi/iwlib) is Python bindings to that interface, so you don't have to use C for everything.
 
-- [Add Python 3 support](https://bitbucket.org/nathantypanski/python-iwlib/commits/branch/py3): awaiting feedback on [pull request](https://bitbucket.org/getoffmalawn/python-iwlib/pull-request/1/add-python3-support/diff) as of 2014-10-01.
+- [Add Python 3 support](https://bitbucket.org/getoffmalawn/python-iwlib/pull-request/1/add-python3-support/diff)
+- [Coding style consistency](https://github.com/nathan-hoad/python-iwlib/pull/1)
 
 ## Haskell
 
