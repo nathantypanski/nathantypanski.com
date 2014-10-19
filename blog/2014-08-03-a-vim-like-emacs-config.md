@@ -243,9 +243,13 @@ With `ibuffer` open, type `M-x describe-mode` to pull up the help info below.
 
 ![A link to `ibuffer.el` in `help-mode`](/images/2014-08-ibuffer-link.png)
 
-Following that link will take you to the source code for IBuffer. Somewhere in there, you'll find the keymap:
+Following that link[^nolink] will take you to the source code for IBuffer. Somewhere in there, you'll find the keymap:
 
 ![Default IBuffer keymap](/images/2014-08-ibuffer-default-map.png)
+
+[^nolink]: A friend of mine pointed out that his version of Emacs (24.4, I believe) did not incldue a [jump-to-source link](http://emacslife.com/how-to-read-emacs-lisp.html#sec-6-1) in his `describe-mode` help window. While this was [reported as a bug](http://lists.gnu.org/archive/html/emacs-bug-tracker/2011-03/msg00147.html) back in 2011, I was fairly certain that it has since been resolved ...
+
+    I tried this out and, indeed, the same was true for me: either the feature had been removed, or our Emacs' packages were built incorrectly (e.g., without the source files). I think it's possible to fix this by [modifying the package source](https://gist.github.com/nathantypanski/e006ff1b2240ecb4901a/revisions) for whatever distro one is using to not strip the `.el.gz` files, but trying this on my own system has thus far not solved the issue.
 
 Any one of these major mode keymaps is bound to be really large, so I won't reproduce it here. The idea is to redefine these into a map within Evil, so IBuffer will respect your Evil keymaps and still have its functionality. The `evil-define-key` function we used earlier has the option of taking an unlimited number of arguments. Now, copy lines like the following out of `ibuffer.el`:
 
