@@ -4,7 +4,8 @@ title: Writing
 
 - [Math](/tex.html)
 - [Software Choices](/software-choice.html)
-- [On Notetaking](notetaking.html)
+- [On Notetaking](/notetaking.html)
+- [Notes](/notes.html)
 
 The inherit problem with [blogging](/blog.html) is its [temporal locality](http://en.wikipedia.org/wiki/Locality_of_reference):[^temporal] the tendency is for posts to capture some *instant in time*, even at the expense of covering more information or permitting deeper content. On occasion, I'll feel the need to go back and edit my posts: perhaps to correct a factual error, or maybe just to make the writing *flow* more nicely. But I feel like, in doing so, I'm cheating readers out of the facts---blog posts have dates; they're linked in order of posting.
 
