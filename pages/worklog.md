@@ -248,6 +248,12 @@ We're building momentum and there's now plans for some teams to start migrating 
 
 * [README: cleanup botched merge text](https://github.com/nasa/NTL-Lunar-Mapping-and-Modeling-Portal/pull/1#event-165488297)
 
+### Large Scale Development Culture Change: Google and the US Government
+
+I was a slide reviewer for [Mike Bland](https://mike-bland.com/2014/09/29/the-next-step.html)'s talk on fostering healthy developer culture.
+
+- [Slides](https://docs.google.com/presentation/d/1cNUOaGrd9dZ6LN1cKotA7UYvaDyT9rXEMlXOpzREhC4/edit)
+
 ### LaTeX WikiBook
 
 * Added a section on [color in mathematics](http://en.wikibooks.org/wiki/LaTeX/Mathematics#Color).
