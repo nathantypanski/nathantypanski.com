@@ -96,7 +96,11 @@ I have three good reasons to type my notes:
 
 I used to think I was bad at memorizing things. It turns out I just didn't know the right tricks.
 
-I started using [Anki](http://ankisrs.net/) seriously in September 2014, during my senior year in college.
+I started using [Anki](http://ankisrs.net/) seriously in September 2014, during my senior year in college.[^cardstrategy]
 I use it to memorize chemical formulas, programming language syntax and libraries, Linux syscalls, and other similar facts.
 Anki is [spaced repetition](http://www.gwern.net/Spaced%20repetition) software, which means it exploits the "psychological trick" that the best way to memorize something is to review the material *right before* you would otherwise forget it.
 Each time you do this, it extends the duration that you can keep some tidbit of information in memory.
+
+[^cardstrategy]: Some people suggest using pre-built decks. I'm against this. One [Less Wrong user agrees with me](http://lesswrong.com/lw/4z6/rational_reading_thoughts_on_prioritizing_books/3s1z):
+
+    > I've been working my way through CLRS lately, and I notice that I'm able that extracting all of the important content in a chapter and transforming it into cards takes maybe about 30-60 minutes. Previously I would spend much longer on the same material, and comprehend it much worse.
