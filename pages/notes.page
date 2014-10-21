@@ -2,6 +2,8 @@
 title: Notes
 ...
 
+## Writing code
+
 > As a group, software developers don’t practice enough. Most of our learning
 > takes place on the job, which means that most of our mistakes get made there
 > as well. Other creative professions practice: artists carry a sketchpad,
@@ -10,3 +12,13 @@ title: Notes
 > learning and refining basic moves. The more formal of these exercises are
 > called kata.
 > -- [Code Kata](http://codekata.com/kata/kata01-supermarket-pricing/)
+
+## Organization
+
+One thing that bothers me about my efforts to stay organized, even in light of modern computing tech, is that I still simply have no obvious way to portably sync knowledge, todo lists, notifications, etc. between devices.
+
+Sure, I can use Google Calendar for notifications when I'm in my web browser, but what about at a Linux shell? Can I download my task list into a plaintext format? Can I `grep` it?
+
+It seems like, for all of our time spent building better technology, all of our efforts at making life organization easy are dominated by vendor lock-in and proprietary data formats. [Org-mode](http://orgmode.org/) is maybe the best thing out there - but it's a complex beast, and only works marginally well on, e.g., Android.
+
+If you want control over your own data, this is even worse. Then you have to manage a means of syncing it yourself, which is time-consuming and complicated.
