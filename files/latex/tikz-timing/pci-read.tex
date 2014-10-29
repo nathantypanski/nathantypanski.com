@@ -1,0 +1,51 @@
+% Tikz-timing example of PCI read operation.
+%
+% Author: Nathan Typanski <http://nathantypanski.com>
+% License: Creative Commons Attribution 4.0 International License
+%          <http://creativecommons.org/licenses/by/4.0/>
+
+\documentclass{standalone}
+
+\usepackage{xparse} % NewDocumentCommand, IfValueTF, IFBooleanTF
+
+\usepackage{tikz-timing}[2014/10/29]
+\usetikztiminglibrary[rising arrows]{clockarrows}
+
+% Reference a bus.
+%
+% Usage:
+%
+%     \busref[3::0]{C/BE}    ->   C/BE[3::0]
+%     \busref*{AD}           ->   AD#
+%     \busref*[3::0]{C/BE}   ->   C/BE[3::0]#
+%
+\NewDocumentCommand{\busref}{som}{\texttt{%
+#3%
+\IfValueTF{#2}{[#2]}{}%
+\IfBooleanTF{#1}{\#}{}%
+}}
+
+\begin{document}
+
+\begin{tikztimingtable}[%
+    timing/dslope=0.1,
+    timing/.style={x=5ex,y=2ex},
+    x=5ex,
+    timing/rowdist=3ex,
+    timing/name/.style={font=\sffamily\scriptsize}
+]
+\busref{CLK}         & 18{c} \\
+\busref*{FRAME}      & 2u 6L H U \\
+\busref[31::0]{AD}  & 2u 1D{addr} 1U{} 1D{$d_1$} D{$d_1 '$} D{$d_2$} 2D{$d_3$} U \\
+\busref*[3::0]{C/BE} & 2u 1D{0010} 6D{BE\#} U  \\
+\busref*{IRDY} & UU 4L HLH \\
+\busref*{TRDY} & UU HLH 3L H \\
+\busref*{DEVSEL} & 2U 6L H\\
+\extracode
+\begin{pgfonlayer}{background}
+\begin{scope}[semitransparent ,semithick]
+\vertlines[darkgray,dotted]{0.5,1.5 ,...,8.0}
+\end{scope}
+\end{pgfonlayer}
+\end{tikztimingtable}
+\end{document}
