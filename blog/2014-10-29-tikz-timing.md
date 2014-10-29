@@ -1,11 +1,12 @@
 ---
-title: Beautiful digital electronics timing diagrams in LaTeX
+title: Draw beautiful digital electronics timing diagrams in LaTeX
 ...
 
 Today, for one of my engineering courses, I had to create some [timing diagrams](http://en.wikipedia.org/wiki/Digital_timing_diagram) to show certain parts of the PCI standard.
-If you've never had to draw your own timing diagrams before, then you probably haven't realized that there is absolutely *no* obvious way to produce good ones.
+If you've never had to draw your own timing diagrams before, then you probably haven't realized that there is no obvious to quickly, easily draw waveforms for a bunch of signals.
 
-The holy grail of timing diagrams, as far as I can tell, is [tikz-timing](http://www.ctan.org/pkg/tikz-timing).
+The solution I found is
+[tikz-timing](http://www.ctan.org/pkg/tikz-timing).
 An alternative is [timing.sty](http://www.texample.net/tikz/examples/timing-diagram/),
 which is simple and pretty enough in a pinch.
 
@@ -79,7 +80,7 @@ One notable feature lacking in my diagrams is the delay cycles---most books you'
 \end{tikztimingtable}
 ```
 
-You can think of timing diagrams as two-column [tables](http://en.wikibooks.org/wiki/LaTeX/Tables) with some special syntax for the righthand column. The gist of it is this: there are signal variants, and you create them by writing a letter that serves as a key. Each key has two variants: a half-duration lowercase one and a full-duration uppercase one.
+You can think of the `tikztimingtable` environment as two-column [tables](http://en.wikibooks.org/wiki/LaTeX/Tables) with some special syntax for the righthand column. The gist of it is this: there are signal variants, and you create them by writing a letter that serves as a key. Each key has two variants: a half-duration lowercase one and a full-duration uppercase one.
 
 So to make the clock signal in the PCI read diagram, it's 18 half-duration clock cycles, and we write that `18{c}`. The brackets there aren't strictly necessary, but you can write them for clarity.
 Signal changes are separated by spaces if there's any ambiguity about what argument goes with what transition.
