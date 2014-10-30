@@ -11,7 +11,23 @@ title: Notes
 > where the aim is to learn to spar or fight, most of a student’s time is spent
 > learning and refining basic moves. The more formal of these exercises are
 > called kata.
-> -- [Code Kata](http://codekata.com/kata/kata01-supermarket-pricing/)
+>
+> - [Code Kata](http://codekata.com/kata/kata01-supermarket-pricing/)
+
+### Abstraction
+
+> From a bit to a few hundred megabytes, from a microsecond to a half an hour of
+> computing confronts us with completely baffling ratio of 109! The programmer
+> is in the unique position that his is the only discipline and profession in
+> which such a gigantic ratio, which totally baffles our imagination, has to be
+> bridged by a single technology. He has to be able to think in terms of
+> conceptual hierarchies that are much deeper than a single mind ever needed to
+> face before. Compared to that number of semantic levels, the average
+> mathematical theory is almost flat. By evoking the need for deep conceptual
+> hierarchies, the automatic computer confronts us with a radically new
+> intellectual challenge that has no precedent in our history.
+>
+> - [EWD 1036](https://www.cs.utexas.edu/~EWD/ewd10xx/EWD1036.PDF)
 
 ## Organization
 
