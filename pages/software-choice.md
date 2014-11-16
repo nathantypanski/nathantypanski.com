@@ -43,7 +43,7 @@ I prefer software that makes smart decisions about this time tradeoff. Oftentime
 
 I use Linux exclusively. It caters better to developers and tinkerers than the alternatives.
 
-- **[Arch Linux]((https://www.archlinux.org/))**: Currently Arch Linux is my main OS.
+- **[Arch Linux](https://www.archlinux.org/)**: Currently Arch Linux is my main OS.
 - [Debian](https://www.debian.org/): I used Debian, with a blend of Sid/testing, from January-June 2014.
 
 ### Text editors
