@@ -55,7 +55,7 @@ The other big issue happens when you start digging into Emacs features. Usually 
 - Rebind keys yourself. This is good for features that you use often, though it means writing your own keybindings. It's not a huge task, and it's aided by the fact that your available operations are functions and you can search for them (`M-x apropos-command`), but this takes time.
 - Let Evil overlay Vim bindings into the plugin. This has varying levels of success. For one, it won't (by default) override keys that are already bound in the Emacs plugin ("Major mode" as they're called - Evil uses the term "state" to refer to Vim modes). This means you can end up with `h`, `j`, and `l` bound in a major mode, but `k` does something different - like kill the commit in a Git rebase - and this can be unnerving.
 
-All in all, I've found the keybinding issues in major modes to be workable. Per [Emacs as my <Leader>](http://bling.github.io/blog/2013/10/27/emacs-as-my-leader-vim-survival-guide/), a fantastic post from the author of [`vim-airline`](https://github.com/bling/vim-airline), I've bound `\` to "take me to Emacs state" and learned enough Emacs idioms to find my way around in new modes.
+All in all, I've found the keybinding issues in major modes to be workable. Per [Emacs as my \<Leader\>](http://bling.github.io/blog/2013/10/27/emacs-as-my-leader-vim-survival-guide/), a fantastic post from the author of [`vim-airline`](https://github.com/bling/vim-airline), I've bound `\` to "take me to Emacs state" and learned enough Emacs idioms to find my way around in new modes.
 
 ## A whole new world
 
