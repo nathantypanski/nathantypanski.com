@@ -24,6 +24,7 @@ $normal_font_size: 13pt;
 $toc_edge_distance: 2em;
 
 $h2_color: #303030;
+$h3_color: #404040;
 $header_offset: -8.0pt;
 $title_top_margin: 1.5em;
 $title_bottom_margin: 1.0em;
@@ -160,22 +161,17 @@ h2 {
 
 h3 {
     font-size: $normal_font_size * 1.2;
-    a {
-        color: #404040;
-    }
+    color: $h3_color;
 }
 
 h4 {
     font: {
         weight: normal;
         style: italic;
-        size: 18px;
         size: $normal_font_size * 1.1;
     }
-    a {
-        color: #606060;
-        text-decoration: None;
-    }
+    color: #606060;
+    text-decoration: None;
 }
 
 li, dd {
