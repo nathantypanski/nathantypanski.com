@@ -2,12 +2,14 @@
 title: Writing
 ...
 
-## Articles/pages
+## Catalog
 
-- [Math](/tex.html)
 - [Software Choices](/software-choice.html)
-- [On Notetaking](/notetaking.html)
-- [Notes](/notes.html)
+- Notebooks
+    - [On Notetaking](/notetaking.html)
+    - [On math](/tex.html)
+    - [Machine learning](machine-learning.html)
+    - [Scratchpad](/notes.html)
 
 ## About this section
 

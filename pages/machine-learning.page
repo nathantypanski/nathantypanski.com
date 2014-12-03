@@ -1,0 +1,28 @@
+---
+title: Notes on machine learning
+...
+
+## Tools
+
+- [OpenRefine](http://openrefine.org/)
+
+## Libraries
+
+### Python
+
+- [NLTK](https://github.com/nltk/nltk)
+- [Scikit-learn](http://scikit-learn.org/stable/)
+
+## Books
+
+### Free
+
+- [Natural Language Processing with Python](http://www.nltk.org/book/)
+- [Think Bayes](http://www.greenteapress.com/thinkbayes/)
+- [The Elements of Statistical Learning: Data Mining, Inference, and Prediction](http://statweb.stanford.edu/~tibs/ElemStatLearn/)
+- [Information Theory, Inference, and Learning Algorithms](http://www.inference.phy.cam.ac.uk/mackay/itila/book.html)
+- [Introduction to Machine Learning](http://alex.smola.org/drafts/thebook.pdf)
+
+### Paid
+
+- [Probabilistic Graphical Models](https://mitpress.mit.edu/books/probabilistic-graphical-models)
