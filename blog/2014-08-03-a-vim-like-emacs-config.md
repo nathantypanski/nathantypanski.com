@@ -20,7 +20,7 @@ This post is geared at the **determined Vim user** who is willing to give Evil a
 When you first fire up Emacs, you need to learn how they reference certain objects and keybindings. This is pretty simple, but can be confusing if you don't have the initial introduction.
 
 - `M-x` means "press the `<ALT>` key, then press `x` while still holding that down". This brings up the Emacs command prompt, which gives you access to any of the functions that are declared **interactive** - that is, Elisp functions that may be run interactively by the user.
-  - If someone gives you a command sequence like `M-x package-install <RET> evil <RET>`, that means to do the `M-x` keybinding, press enter, then type `evil` and press enter. Often the second `<RET>` will be omitted and taken as implicit.
+  - If someone gives you a command sequence like `M-x package-install <RET> evil <RET>`, that means to do the `M-x` keybinding, type `package-install`, press enter, then type `evil` and press enter. Often the second `<RET>` will be omitted and taken as implicit.
 - A **buffer** is a place where text may go. This is distinct from a **window** which is a visual area on screen which displays a buffer.
 - A **frame** is another Emacs window in your window manager that is attached to the same Emacs process.
 
