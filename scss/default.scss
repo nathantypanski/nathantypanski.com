@@ -1,4 +1,3 @@
-@import "scss/syntax";
 @import "scss/variables";
 @import "scss/mixins";
 @import "scss/path";
@@ -47,11 +46,16 @@ $footnote_top_margin: 2em;
 
 $title_family: 'Droid Serif', serif;
 $body_family: 'Lora', serif;
-$monospace_family: "Droid Sans Mono", monospace;
+$monospace_family: 'Lucida Console', 'Droid Sans Mono', monospace;
 $rss_color: #ff6600;
 $rss_hover_color: #ee5500;
 $sidebar_width: 10em;
 $header_top_pad: 1.2em;
+
+$codebg: #F7F5FF;
+$codeborder: #989CB3;
+
+$inline_code_font_size: 10pt;
 
 @mixin breakpoint($point) {
   @if $point == desktop {
@@ -504,3 +508,91 @@ a {
         color: $rss_hover_color;
     }
 }
+
+.sourceCode {
+    padding: {
+        top:    0.5em;
+        bottom: 0.5em;
+        left:   1.0em;
+        right:  1.0em;
+    }
+    span {
+        font-family: $monospace_family;
+        &.kw { color: #007020; font-weight: bold; }
+        &.co { color: #60a0b0; font-style: italic; }
+        &.al { color: red; font-weight: bold; }
+        &.er { color: red; font-weight: bold;}
+        &.dt { color: #902000; }
+        &.dv { color: #40a070; }
+        &.bn { color: #40a070; }
+        &.fl { color: #40a070; }
+        &.ch { color: #4070a0; }
+        &.st { color: #4070a0; }
+        &.ot { color: #007020; }
+        &.fu { color: #06287e; }
+        &.re { }
+    }
+}
+
+tr.sourceCode, td.lineNumbers, td.sourceCode, table.sourceCode
+pre {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    vertical-align: baseline;
+    border: none;
+    background: $codebg;
+}
+
+td.lineNumbers {
+    border-right: 1px solid #AAAAAA;
+    text-align: right;
+    color: #AAAAAA;
+}
+
+code {
+    font-size: $inline_code_font_size;
+    line-height: $paragraph_line_height;
+    font-family: $monospace_family;
+    background: $codebg;
+    border: 0px solid $codeborder;
+    padding: {
+        top:    0;
+        bottom: 0;
+        left:   0;
+        right:  0;
+    }
+}
+
+td.sourceCode {
+    font-family: $monospace_family;
+}
+
+pre.sourceCode
+{
+    font-size: 8pt;
+    font-family: $monospace_family;
+    line-height: 12pt;
+    width: 100%;
+    code {
+        background: $codebg;
+        // Code blocks shouldn't have a border on each line.
+        border: 0px;
+        padding: 0px;
+        margin: 0px;
+    }
+    margin: {
+        top:    1em;
+        bottom: 1em;
+        left:   -2.5%;
+        right:  0em;
+    }
+    border: {
+        top:    0;
+        bottom: 0;
+        left:   0.5em solid $codeborder;
+        right:  0;
+    }
+    background: $codebg;
+}
+
