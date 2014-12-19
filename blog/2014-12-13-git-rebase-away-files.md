@@ -24,7 +24,7 @@ Refs: [master]
  2 files changed, 14 insertions(+), 19 deletions(-)
 ```
 
-I was partway through an attempt at assing simple [travis](https://travis-ci.org/) testing
+I was partway through an attempt at adding simple [travis](https://travis-ci.org/) testing
 to the repo, but accidentally included that `.travis.yml` along with a batch of
 theme config changes.
 
