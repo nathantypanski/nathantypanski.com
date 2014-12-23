@@ -90,7 +90,9 @@ A [rust-nightly-archlinux](https://github.com/michaelsproul/rust-nightly-archlin
 
 [Pandas](https://github.com/pydata/pandas) is a Python data analysis library.
 
-- [CI: fix typos in readme](https://github.com/pydata/pandas/pull/7831)
+- [CI: fix typos in readme](https://github.com/pydata/pandas/pull/7831)[^release-notes]
+
+[^release-notes]: I got credited in the [pandas 0.15.0 release notes](http://pandas.pydata.org/pandas-docs/version/0.15.0/release.html) for this little fix. Yay!
 
 ### tabview
 
