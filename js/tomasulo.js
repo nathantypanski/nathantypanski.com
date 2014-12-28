@@ -10,17 +10,6 @@ function heading(row, text) {
 }
 
 
-
-function tcnode(row, text) {
-    if (typeof text === 'undefined')
-        var text = '';
-    var text = document.createTextNode(text);
-    var cell = row.insertCell();
-    cell.appendChild(text);
-    return {'cell': cell, 'text': text};
-}
-
-
 function newTable(caption, cssFloat) {
     var table = document.createElement('table');
     if (typeof caption !== 'undefined') {
@@ -28,10 +17,28 @@ function newTable(caption, cssFloat) {
         table_caption.appendChild(document.createTextNode(caption));
         table.appendChild(table_caption);
     }
-    if (typeof caption !== 'undefined') {
+    if (typeof cssFloat !== 'undefined') {
         table.style.cssFloat = cssFloat;
     }
     return table;
+}
+
+
+function Address(register, offset) {
+    var addr = {
+        'register': register,
+        'offset': offset,
+        'toString': function() {
+            if (typeof offset !== 'undefined') {
+                var sign = offset < 0 ? ' - ' : ' + ';
+                return 'Regs[' + register.toString() + ']'
+                    + sign
+                    + offset.toString();
+            }
+            return 'Regs[' + register.toString() + ']'
+        }
+    }
+    return addr;
 }
 
 
@@ -65,9 +72,12 @@ function RegisterFile() {
     return regfile
 }
 
+
 function RegisterStat(registers) {
     var rs = {}
-    var table = newTable('Register status', 'left');
+    var table = newTable('Register status');
+    $(table).css('position', 'absolute');
+    $(table).css('bottom', 0);
     var tr = table.insertRow();
     heading(tr, 'Field')
     for (reg of registers.each()) {
@@ -81,16 +91,36 @@ function RegisterStat(registers) {
         var text = document.createTextNode('');
         var cell = tr.insertCell();
         cell.appendChild(text);
-        rs[reg.name] = {
+        var slot = {
             'Qi': function(v) {
-                if (typeof v === 'undefined') { return value; }
+                if (typeof v === 'undefined') { return Qi; }
                 Qi = v;
                 $(cell).text(Qi === null ? '' : Qi.toString());
             },
+            // Whether the status slot is full. The opposite of "available".
+            'full': function() {
+                return Qi !== null;
+            },
+            // Whether the status slot has no contents.
             'available': function() {
                 return Qi === null;
             },
+            toString: function() {
+                return (Qi === null ? '' : Qi.toString());
+            }
         };
+        $(cell).mouseenter(function() {
+            if (!slot.full()) return;
+            $(slot.Qi()._row).find('td').each(function() {
+                $(this).css('background', '#f2f2f2');
+            });
+        });
+        $(cell).mouseleave(function() {
+            if (!slot.full()) return;
+            var $tds = $(slot.Qi()._row).find('td');
+            $tds.css('background', '#fff');
+        });
+        rs[reg.name] = slot;
     }
 
     for (var reg of registers.each()) {
@@ -102,12 +132,14 @@ function RegisterStat(registers) {
 }
 
 
-function ExecutionUnit(tr, type, name) {
-    function makeProperty(name, initialValue) {
-        var value = typeof initialValue === 'undefined' ? null : initialValue;
+function ExecutionUnit(tr, type, name, registerStatus) {
+    function makeProperty(name, initialValue, cellCallback) {
+        var value = initialValue || null;
         var text = document.createTextNode(value === null ? '' : value.toString());
         var cell = tr.insertCell();
         cell.appendChild(text);
+        if (cellCallback)
+            cellCallback(cell);
         return function(v) {
             if (typeof v !== 'undefined') {
                 value = v;
@@ -116,24 +148,56 @@ function ExecutionUnit(tr, type, name) {
             return value;
         }
     }
-    var unit =  {
-        'type': type,
-        'toString': function() { return name },
+    var object = {
+        type: type,
+        _row: tr,
+        toString: function() { return name },
         'Name': makeProperty('Name', name),
         'Busy': makeProperty('Busy', false),
         'Op': makeProperty('Op'),
         'Vj': makeProperty('Vj'),
         'Vk': makeProperty('Vk'),
-        'Qj': makeProperty('Qj'),
-        'Qk': makeProperty('Qk'),
         'A': makeProperty('A'),
+    };
+    function highlight(selector) {
+        return function(cell) {
+            $(cell).mouseenter(function() {
+                if (!object[selector]()) return;
+                console.log(object[selector]());
+                $(object[selector]()._row).find('td').each(function() {
+                    $(this).css('background', '#f2f2f2');
+                });
+            });
+            $(cell).mouseleave(function() {
+                if (!object[selector]()) return;
+                $(object[selector]()._row).find('td').each(function() {
+                    $(this).css('background', '#fff');
+                });
+            });
+        }
     }
-    return unit;
+    object.Qj = makeProperty('Qj', null, highlight('Qj'));
+    object.Qk = makeProperty('Qk', null, highlight('Qk'));
+    object.getSource = function(source) {
+        if (registerStatus[source].full() && object.Qj()) {
+            object.Qk(registerStatus[source].Qi());
+        }
+        else if (registerStatus[source].full()) {
+            object.Qj(registerStatus[source].Qi());
+        }
+        else if (object.Vj()) {
+            object.Vj(Address(source));
+        }
+        else {
+            object.Vk(Address(source));
+        }
+    };
+    return object;
 }
 
-var ReservationStation = function() {
+var ReservationStation = function(registerStatus) {
     var data = {};
-    var table = newTable('Reservation stations', 'right');
+    var table = newTable('Reservation stations');
     tr = table.insertRow();
     for (var col of column_names) {
         heading(tr, col);
@@ -142,7 +206,7 @@ var ReservationStation = function() {
         return _.map(_.range(count), function(i) {
             var tr = table.insertRow();
             var rowName = name + i.toString();
-            var unit = new ExecutionUnit(tr, name, rowName);
+            var unit = new ExecutionUnit(tr, name, rowName, registerStatus);
             data[rowName] = unit;
             return unit;
         });
@@ -161,28 +225,35 @@ var ReservationStation = function() {
         if (!station) return null;
         station.Busy(true);
         station.Op(instruction.type);
+        if (instruction.type !== 'Load') {
+            for (var source of instruction.wants()) {
+                station.getSource(source);
+            }
+        }
+        else {
+            station.A(Address(instruction.rs, instruction.offset));
+        }
         return station;
     }
-    document.body.appendChild(table);
+    data.addTable = function() {
+        document.body.appendChild(table);
+    }
     return data;
 }
 
 
 function Assembler(registerStatus) {
     function RINST(op, rd, rs, rt) {
-        var data = {
+        return {
             'op': op,
             'rd': rd,
             'rs': rs,
             'rt': rt,
-        }
-        return {
-            'op': op,
             'toString': function() {
                 return op + ' ' + rd + ',' + rs + ',' + rt
             },
             'destination': function() {
-                return registerStat[rd];
+                return registerStatus[rd];
             },
             'wants': function() {
                 return [rs, rt];
@@ -190,19 +261,16 @@ function Assembler(registerStatus) {
         }
     }
     function IINST(op, rd, rs, offset) {
-        var data = {
+        return {
             'op': op,
             'rd': rd,
             'rs': rs,
             'offset': offset,
-        }
-        return {
-            'op': op,
             'toString': function() {
                 return op + ' ' + rd + ',' + offset.toString() + '(' + rs + ')'
             },
             'destination': function() {
-                return registerStat[rd];
+                return registerStatus[rd];
             },
             'wants': function() {
                 return [rs];
@@ -236,42 +304,55 @@ function Assembler(registerStatus) {
 
 
 var InstructionStatus = function(assembler, reservationStation, registerStatus) {
-    table = newTable('InstructionStatus');
+    table = newTable('Instruction Status', 'right');
+    var columns = ['Instruction',
+                   'Issue',
+                   'Execute',
+                   'Write result'];
 
     var newInstruction = function(instruction) {
         tr = table.insertRow();
-        function box(text) {
-            if (typeof text === 'undefined')
-                var text = '';
-            var text = document.createTextNode(text);
-            var cell = tr.insertCell();
-            cell.appendChild(text);
-            $(cell).click(function() {
-                if (instruction.destination().available()) {
-                    var reserved = reservationStation.issue(instruction);
-                    if (reserved) {
-                        instruction.destination().Qi(reserved.toString());
-                        console.debug(instruction.destination().Qi())
-                    }
-                }
-            });
-            return {'cell': cell, 'text': text};
+        var row = {};
+        _.each(columns, function(colName) {
+            var cell = $(tr.insertCell()).text('');
+            row[colName] = cell;
+            return cell;
+        });
+        var issue = function() {
+            var reserved = reservationStation.issue(instruction);
+            if (reserved) {
+                instruction.destination().Qi(reserved);
+                row['Issue'].text('true');
+            }
         }
-        var columns = {
-            'Instruction': box(instruction.toString()),
-            'Issue': box(),
-            'Execute': box(),
-            'Write result': box(),
+        var execute = function () {
+            row['Execute'].text('true');
         }
+        var writeResult = function () {
+            row['Write result'].text('true');
+        }
+        row['Instruction'].text(instruction.toString()).click(function() {
+            if ('true' === row['Write result'].text()) {
+                return
+            }
+            else if ('true' === row['Execute'].text()) {
+                writeResult();
+            }
+            else if ('true' === row['Issue'].text()) {
+                execute();
+            }
+            else {
+                issue();
+            }
+        });
     }
 
     var tr = table.insertRow();
-    for (name of ['Instruction',
-                  'From iteration',
-                  'Issue',
-                  'Execute',
-                  'Write result']) {
-        heading(tr, name);
+    for (var name of columns) {
+        var th = document.createElement('th');
+        var text = document.createTextNode(name);
+        th.appendChild(text);
+        tr.appendChild(th);
     }
     document.body.appendChild(table);
     console.debug(assembler);
@@ -279,7 +360,7 @@ var InstructionStatus = function(assembler, reservationStation, registerStatus) 
         assembler['L.D']('F0', 'R1', 0),
         assembler['MUL.D']('F4', 'F0', 'F2'),
         assembler['S.D']('F4', 'R1', 0),
-        assembler['L.D']('F0', 'R1', 0),
+        assembler['L.D']('F0', 'R1', 8),
         assembler['MUL.D']('F4', 'F0', 'F2'),
         assembler['S.D']('F4', 'R1', 0),
     ]
@@ -294,9 +375,13 @@ var InstructionStatus = function(assembler, reservationStation, registerStatus) 
     }
 }
 
-var regs = new RegisterFile();
-var registerStat = new RegisterStat(regs);
-var rs = new ReservationStation();
 
-var asm = new Assembler()
-var is = new InstructionStatus(asm, rs, registerStat);
+$(function(){
+    var regs = new RegisterFile();
+    var registerStat = new RegisterStat(regs);
+    var rs = new ReservationStation(registerStat);
+
+    var asm = new Assembler(registerStat);
+    var is = new InstructionStatus(asm, rs, registerStat);
+    rs.addTable();
+});
