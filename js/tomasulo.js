@@ -15,18 +15,13 @@ function defined(v) {
 
 
 function heading(row, words, tooltip) {
-    if (typeof tooltip === 'undefined') {
-        $(row).append($('<th>', {
-            text: words,
-        }));
+    var heading = {'text': words};
+
+    if (defined(tooltip)) {
+        heading['title'] = tooltip;
+        heading['class'] = 'mastertooltip';
     }
-    else {
-        $(row).append($('<th>', {
-            text: words,
-            title: tooltip,
-            'class': 'mastertooltip',
-        }));
-    }
+    $(row).append($('<th>', heading));
 }
 
 
