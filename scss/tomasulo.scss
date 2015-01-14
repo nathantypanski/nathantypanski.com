@@ -7,6 +7,11 @@ $table-head-bg: #ededed;
 $table-border-width: 1px;
 $table-border-color: #eee;
 
+$destination-color: #DE94AF;
+$source-color: #D8F0A0;
+$source-occupied-color: #fff693;
+$destination-occupied-color: #ffc16f;
+
 body {
     font-size: 16px;
 }
@@ -49,18 +54,19 @@ table tr {
     .highlight {
         background: #f2f2f2;
     }
-    .destination {
-        background: #DE94AF;
-    }
-    .source {
-        background: #D8F0A0;
-    }
-    .sourceOccupied {
-        background: #fff693;
-    }
-    .destinationOccupied {
-        background: #ffc16f;
-    }
+}
+
+.destination {
+    background: $destination-color;
+}
+.source {
+    background: $source-color;
+}
+.sourceOccupied {
+    background: $source-occupied-color;
+}
+.destinationOccupied {
+    background: $destination-occupied-color;
 }
 
 #RegisterStatus {
