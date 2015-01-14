@@ -10,6 +10,13 @@ var column_names = [
     'Result'
 ];
 
+var instructionStatusColumnNames = [
+    'Instruction',
+    'Issue',
+    'Execute',
+    'Write result'
+];
+
 
 // Make all functions automatically curryable..
 Function.prototype.curry = function () {
@@ -48,6 +55,12 @@ function newTable(kwargs) {
     if (defined(kwargs['id'])) {
         $(table).attr('id', kwargs['id']);
     }
+    if (defined(kwargs['headings'])) {
+        tr = table.insertRow();
+        _.map(kwargs['headings'], function(h) {
+            heading.apply(heading, [tr].concat(h));
+        });
+    }
     return table;
 }
 
@@ -80,18 +93,17 @@ function Register(name) {
 // A list of registers.
 function RegisterFile() {
     this.name = 'RegisterFile';
-    registerNames = []
-    _.map(_.range(0, 16, 2), function(i) {
-        registerNames.push('F' + i.toString());
-    });
-    _.map(_.range(0, 8), function(i) {
-        registerNames.push('R' + i.toString());
-    });
+    function regName(name, index) {
+        return name + index.toString();
+    }
+    registerNames = _.map(_.range(0, 16, 2), regName.curry('F')).concat(
+                    _.map(_.range(0, 8),     regName.curry('R')));
 
     regfile = {}
-    for (var name of registerNames) {
+    _.map(registerNames, function(name) {
         regfile[name] = new Register(name);
-    }
+    });
+
     regfile['each'] = function*() {
         for (var name of registerNames) {
             yield regfile[name]
@@ -106,14 +118,9 @@ function RegisterStat(registers) {
     var table = newTable({
         'caption': 'Register status',
         'id': 'RegisterStatus',
+        'headings': ['Field'].concat(_.map(registers, function(r) { return r.name; })),
     });
     var tr = table.insertRow();
-
-    heading(tr, 'Field')
-    for (var reg of registers.each()) {
-        heading(tr, reg.name);
-    }
-    tr = table.insertRow();
     heading(tr, 'Qi', 'Which reservation station will produce register contents');
 
     function makeStatusSlot(reg) {
@@ -148,9 +155,9 @@ function RegisterStat(registers) {
         };
         slot.highlightDestination = function() {
             if (slot.full())
-                $(cell).addClass('destinationOccupied');
+                $(cell).toggleClass('destinationOccupied');
             else
-                $(cell).addClass('destination');
+                $(cell).toggleClass('destination');
         };
         slot.clearHighlights = function() {
             $(cell).attr('class', '');
@@ -165,10 +172,7 @@ function RegisterStat(registers) {
         return slot;
     }
 
-    registerSlots = [];
-    for (var reg of registers.each()) {
-        registerSlots.push(makeStatusSlot(reg));
-    }
+    registerSlots = _.map(registers, makeStatusSlot);
     document.body.appendChild(table);
     rs.each = function*() { for (var r of registerSlots) yield r; }
     return rs;
@@ -176,17 +180,19 @@ function RegisterStat(registers) {
 
 
 function ExecutionUnit(tr, type, name, registerStatus) {
-    function makeProperty(name, initialValue, cellCallback) {
+
+    function makeProperty(name, initialValue, hover) {
         var value = defined(initialValue) ? initialValue : null;
         var text = document.createTextNode(value === null ? '' : value.toString());
         var cell = tr.insertCell();
         cell.appendChild(text);
-        if (cellCallback)
-            cellCallback(cell);
+        if (defined(hover)) {
+            $(cell).hover(hover.curry(name));
+        }
         return function(v) {
-            if (typeof v !== 'undefined') {
-                value = v;
-                $(cell).text(value === null ? '' : v.toString());
+            if (defined(v)) {
+                $(cell).text(
+                    (value = v) === null ? '' : v.toString());
             }
             return value;
         }
@@ -209,19 +215,18 @@ function ExecutionUnit(tr, type, name, registerStatus) {
     };
 
     function highlight(selector) {
-        return function(cell) {
-            $(cell).hover(function() {
-                if (!object[selector]()) return;
-                $(object[selector]()._row).find('td').each(function() {
-                    $(this).toggleClass('highlight');
-                });
-            });
-        }
+        if (!object[selector]()) return;
+        $(object[selector]()._row).find('td').each(function() {
+            $(this).toggleClass('source');
+        });
     }
 
+    // TODO: Is there a way we can group instruction + instructionRow
+    // so this doesn't have to be done separately?
     object.instruction = null;
-    object.Qj = makeProperty('Qj', null, highlight('Qj'));
-    object.Qk = makeProperty('Qk', null, highlight('Qk'));
+    object.instructionRow = null;
+    object.Qj = makeProperty('Qj', null, highlight);
+    object.Qk = makeProperty('Qk', null, highlight);
     object.A = makeProperty('A', '');
     object.Result = makeProperty('Result');
     object.getSource = function(source) {
@@ -232,21 +237,22 @@ function ExecutionUnit(tr, type, name, registerStatus) {
             object.Qj(source.Qi());
         }
         else if (object.Vj()) {
-            object.Vj(Address(source.name));
+            object.Vj(new Address(source.name));
         }
         else {
-            object.Vk(Address(source.name));
+            object.Vk(new Address(source.name));
         }
     };
-    object.issue = function(instruction) {
+    object.issue = function(row, instruction) {
         if (object.Busy()) {
             return null;
         }
         object.instruction = instruction;
+        object.instructionRow = row;
         object.Busy(true);
-        object.Op(instruction.type);
+        object.Op(instruction.op);
         if (instruction.type === 'Store') {
-            object.A(Address(instruction.rd, instruction.offset));
+            object.A(new Address(instruction.rd, instruction.offset));
             for (var source of instruction.wants()) {
                 object.getSource(source);
             }
@@ -266,7 +272,7 @@ function ExecutionUnit(tr, type, name, registerStatus) {
             //
             //    RS[r].A <- RS[r].Vj + RS[r].A;
             //
-            object.A(Address(object.instruction.rs, object.instruction.offset));
+            object.A(new Address(object.instruction.rs, object.instruction.offset));
             return;
         } else if (!object.instruction || object.Qj() || object.Qk() || !object.Busy()) {
             return null;
@@ -297,6 +303,7 @@ function ExecutionUnit(tr, type, name, registerStatus) {
     };
     object.clear = function() {
         object.instruction = null;
+        object.instructionRow = null;
         object.A(null)
         object.Result(null)
         object.Op(null)
@@ -311,6 +318,16 @@ function ExecutionUnit(tr, type, name, registerStatus) {
         });
         return object;
     };
+
+    $(tr).hover(function() {
+        if (object.instructionRow !== null) {
+            var i = object.instructionRow['Instruction'];
+            console.debug(object.instruction);
+            object.instruction.destination().highlightDestination()
+            $(i).toggleClass('source');
+        }
+    });
+
     return object;
 }
 
@@ -325,18 +342,18 @@ var ReservationStation = function(registerStatus) {
     var table = newTable({
         'caption': 'Reservation stations',
         'id': 'ReservationStations',
+        'headings': [
+            ['Name',   'Name of the execution unit'],
+            ['Busy',   'Whether the unit is in use'],
+            ['Op',     'Operation type'],
+            ['Vj',     'j value'],
+            ['Vk',     'k value'],
+            ['Qj',     'j data source'],
+            ['Qk',     'k data source'],
+            ['A',      'Calculated address'],
+            ['Result', 'Whether a final result has been produced'],
+        ]
     });
-
-    tr = table.insertRow();
-    heading(tr, 'Name', 'Name of the execution unit');
-    heading(tr, 'Busy', 'Whether the unit is in use');
-    heading(tr, 'Op', 'Operation type');
-    heading(tr, 'Vj', 'j value');
-    heading(tr, 'Vk', 'k value');
-    heading(tr, 'Qj', 'j data source');
-    heading(tr, 'Qk', 'k data source');
-    heading(tr, 'A', 'Calculated address');
-    heading(tr, 'Result', 'Whether a final result has been produced');
 
     var executionUnits = [];
 
@@ -361,14 +378,13 @@ var ReservationStation = function(registerStatus) {
         'Store': build_station('Store', 2),
     }
 
-    object.issue = function(instruction) {
-        currentInstruction = instruction;
+    object.issue = function(row, instruction) {
         function busy(executionUnit) {
             return executionUnit.Busy();
         }
         var station = _.first(_.reject(units[instruction.type], busy));
         if (!station) return null;
-        else station.issue(instruction);
+        else station.issue(row, instruction);
         return station;
     };
 
@@ -456,102 +472,107 @@ function Assembler(registerStatus) {
 }
 
 
-var InstructionStatus = function(reservationStation, registerStatus) {
-    table = newTable({'caption': 'Instruction Status'});
-    $(table).attr('id', 'InstructionStatus');
-    var columns = ['Instruction',
-                   'Issue',
-                   'Execute',
-                   'Write result'];
+var InstructionStatus = function(reservationStation, table, instruction) {
+    var object = {};
+    instruction['status'] = object;
 
+    object['issue'] = function(row, instruction) {
+        var reserved = reservationStation.issue(row, instruction);
+        if (reserved) {
+            instruction.destination().Qi(reserved);
+            row['Issue'].text('true');
+        }
+        return reserved;
+    }
+    object['execute'] = function (row, executionUnit, instruction) {
+        var executed = executionUnit.execute();
+        if (executed) {
+            row['Execute'].text('true');
+        }
+        return executed;
+    }
+    object['writeResult'] = function (row, executionUnit, instruction) {
+        var wrote = reservationStation.writeBack(executionUnit);
+        console.log(wrote);
+        if (wrote) {
+            if (instruction.destination().Qi() === executionUnit) {
+                instruction.destination().Qi(null);
+            }
+            row['Write result'].text('true');
+            executionUnit = null;
+        }
+        return wrote;
+    }
 
     var tr = table.insertRow();
-    for (var name of columns) {
-        var th = document.createElement('th');
-        var text = document.createTextNode(name);
-        th.appendChild(text);
-        tr.appendChild(th);
-    }
+    var row = {};
+    var executionUnit = null;
+    var cells = _.each(instructionStatusColumnNames, function addColumn(colName) {
+        return row[colName] = $(tr.insertCell()).text('');
+    });
+
+    object.addHighlights = function () {
+        $(this).addClass('highlight');
+        if (!row['Issue'].text()) {
+            instruction.destination().highlightDestination();
+            for (var source of instruction.wants()) {
+                source.highlightSource();
+            }
+        }
+    };
+
+    object.clearHighlights = function() {
+        $(this).removeClass('highlight');
+        instruction.destination().clearHighlights();
+        for (var source of instruction.wants()) {
+            source.clearHighlights();
+        }
+    };
+
+    row['Instruction'].hover(object.addHighlights, object.clearHighlights);
+
+    row['Instruction'].text(instruction.toString()).click(function() {
+        if ('true' === row['Write result'].text()) {
+            return;
+        }
+        else if ('true' === row['Execute'].text()) {
+            if(object.writeResult(row, executionUnit, instruction))
+                object.executionUnit = null;
+        }
+        else if ('true' === row['Issue'].text()) {
+            object.execute(row, executionUnit, instruction);
+        }
+        else {
+            executionUnit = object.issue(row, instruction);
+        }
+        object.clearHighlights();
+    });
+
+    return object;
+};
+
+
+var InstructionStatusTable = function(reservationStation, registerStatus) {
+    var table = newTable({
+        'caption': 'Instruction Status',
+        'id': 'InstructionStatus',
+        'headings': instructionStatusColumnNames,
+    });
+
     document.body.appendChild(table);
-    return {
-        'newInstruction': function(instruction) {
-            tr = table.insertRow();
-            var row = {};
-            var executionUnit = null;
-            var cells = _.each(columns, function(colName) {
-                var cell = $(tr.insertCell()).text('');
-                row[colName] = cell;
-                return cell;
-            });
-            var issue = function() {
-                var reserved = reservationStation.issue(instruction);
-                if (reserved) {
-                    instruction.destination().Qi(reserved);
-                    row['Issue'].text('true');
-                }
-                return reserved;
-            }
-            var execute = function () {
-                var executed = executionUnit.execute();
-                if (executed) {
-                    row['Execute'].text('true');
-                }
-                return executed;
-            }
-            var writeResult = function () {
-                var wrote = reservationStation.writeBack(executionUnit);
-                if (wrote) {
-                    if (instruction.destination().Qi() === executionUnit) {
-                        instruction.destination().Qi(null);
-                    }
-                    row['Write result'].text('true');
-                    executionUnit = null;
-                }
-                return wrote;
-            }
 
-            function addHighlights() {
-                $(this).addClass('highlight');
-                if (!row['Issue'].text()) {
-                    instruction.destination().highlightDestination();
-                    for (var source of instruction.wants()) {
-                        source.highlightSource();
-                    }
-                }
-            }
-
-            function clearHighlights() {
-                $(this).removeClass('highlight');
-                instruction.destination().clearHighlights();
-                for (var source of instruction.wants()) {
-                    source.clearHighlights();
-                }
-            }
-
-            row['Instruction'].hover(addHighlights, clearHighlights);
-
-            row['Instruction'].text(instruction.toString()).click(function() {
-                if ('true' === row['Write result'].text()) {
-                    return
-                }
-                else if ('true' === row['Execute'].text()) {
-                    if(writeResult(executionUnit))
-                        executionUnit = null;
-                }
-                else if ('true' === row['Issue'].text()) {
-                    execute(executionUnit);
-                }
-                else {
-                    executionUnit = issue();
-                }
-                clearHighlights();
-            });
+    var object = {
+        'read': function(instruction) {
+            new InstructionStatus(reservationStation,
+                                  table,
+                                  instruction);
         },
         'each': function*() {
             for(var inst of instructions)
                 yield inst;
         }
-    }
+    };
+    return object;
 }
 
 
@@ -559,9 +580,7 @@ $(function(){
     var regs = new RegisterFile();
     var registerStat = new RegisterStat(regs);
     var rs = new ReservationStation(registerStat);
-
-    var asm = new Assembler(registerStat);
-    var is = new InstructionStatus(asm, rs, registerStat);
+    var is = new InstructionStatusTable(rs, registerStat);
     rs.addTable();
 
     $('.mastertooltip').hover(function(){
@@ -583,21 +602,18 @@ $(function(){
             .css({ top: mousey , left: mousex });
     });
 
-    var instructions = [
-        // asm.LD('F0', 'R1', 0),
-        // asm.MULD('F4', 'F0', 'F2'),
-        // asm.SD('F4', 'R1', 0),
-        // asm.LD('F0', 'R1', 8),
-        // asm.MULD('F4', 'F0', 'F2'),
-        // asm.SD('F4', 'R1', 0),
-        asm.LD('F6', 'R2', 32),
-        asm.LD('F2', 'R3', 44),
-        asm.MULD('F0', 'F2', 'F4'),
-        asm.SUBD('F8', 'F2', 'F6'),
-        asm.DIVD('F10', 'F0', 'F6'),
-        asm.ADDD('F6', 'F8', 'F2'),
-    ]
-    for (var inst of instructions) {
-        is.newInstruction(inst);
-    }
+    var asm = new Assembler(registerStat);
+    // is.read(asm.LD('F0', 'R1', 0));
+    // is.read(asm.MULD('F4', 'F0', 'F2'));
+    // is.read(asm.SD('F4', 'R1', 0));
+    // is.read(asm.LD('F0', 'R1', 8));
+    // is.read(asm.MULD('F4', 'F0', 'F2'));
+    // is.read(asm.SD('F4', 'R1', 0));
+    is.read(asm.LD  ('F6',  'R2', 32));
+    is.read(asm.LD  ('F2',  'R3', 44));
+    is.read(asm.MULD('F0',  'F2', 'F4'));
+    is.read(asm.SUBD('F8',  'F2', 'F6'));
+    is.read(asm.DIVD('F10', 'F0', 'F6'));
+    is.read(asm.ADDD('F6',  'F8', 'F2'));
+    is.read(asm.SD  ('F6',  'R2', 32));
 });
