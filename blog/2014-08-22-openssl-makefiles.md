@@ -12,7 +12,7 @@ The results are quite good.
 
 ## Motivation
 
-The main reference point in the literature for Mike's refactoring is the 1997 paper [Recursive Make Considered Harmful](aegis.sourceforge.net/auug97.pdf). That article makes all sorts of good points, and offers some solutions as well.
+The main reference point in the literature for Mike's refactoring is the 1997 paper [Recursive Make Considered Harmful](http://aegis.sourceforge.net/auug97.pdf). That article makes all sorts of good points, and offers some solutions as well.
 
 But to summarize it, the two problems with recursive Make we're concerned with:
 
