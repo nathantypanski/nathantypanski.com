@@ -31,4 +31,4 @@ If you're like me and you [have trouble writing](/blog/2014-06-22-keep-writing.h
 
 A reasonable solution, I think, is to create an environment in which I feel free to dump links, unfinished research, etc. on the web and go back to refine it later. I want the mental freedom to share the low-quality work that composes the first steps to timeless writing.
 
-[^gwern]: And, indeed, have modeled some of this site after his, though I am nowhere near as productive a content producer as he
+[^gwern]: And, indeed, have modeled some of this site after his, though I am nowhere near as productive a content producer as he.
