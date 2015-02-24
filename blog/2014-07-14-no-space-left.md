@@ -45,7 +45,7 @@ cp: cannot create directory ‘linux-kernel/kernel/arch/powerpc’: No space lef
 
 I looked around everywhere. `tmpfs` wasn't full, but I tried mounting it explicitly in `/etc/fstab` with 16GiB of space just to be sure.
 
-Eventually my sistem became unusable.
+Eventually my system became unusable.
 
 ## Solution
 
