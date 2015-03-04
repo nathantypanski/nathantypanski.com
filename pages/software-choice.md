@@ -110,7 +110,7 @@ I use both Emacs and Vim, which is an odd combination to hear someone mention.
 
 #### Publishing
 
-- **[Hakyll](http://jaspervdj.be/hakyll/)**: see [About this site](/about.html)
+- **[Hakyll](http://jaspervdj.be/hakyll/)**: see [About this site](/website.html)
 - **[SCSS](http://sass-lang.com/)**: CSS is painful to write. I automate it a bit with something modern.
 
 [^leiserson]: I transcribed more of it than just the quote here. The introduction to that part was:
