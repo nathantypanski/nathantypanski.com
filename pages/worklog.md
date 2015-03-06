@@ -111,6 +111,11 @@ iwlib is an interface to [wireless tools for Linux](http://www.hpl.hp.com/person
 - [Add Python 3 support](https://bitbucket.org/getoffmalawn/python-iwlib/pull-request/1/add-python3-support/diff)
 - [Coding style consistency](https://github.com/nathan-hoad/python-iwlib/pull/1)
 
+### fuzzywuzzy
+
+- [make process.extract accept {dict, list}-like choices](https://github.com/seatgeek/fuzzywuzzy/pull/69)
+- [improve docs for fuzzywuzzy.process](https://github.com/seatgeek/fuzzywuzzy/pull/68)
+
 ## Haskell
 
 ### sandbox-move
