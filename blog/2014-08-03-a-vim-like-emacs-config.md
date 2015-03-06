@@ -200,7 +200,20 @@ While the `(progn)` here doesn't serve any practical purpose, it might help you 
 
 Since `emacs-lisp-mode` is already running (you're in a `.el` file), you can force your hook's evaluation by typing `(my-lisp-hook)` into the buffer and evaluating it manually.
 
-You'll notice that when you hover over functions now, `eldoc-mode` shows their signature in the minibuffer. If you want to see the help information like we'd been doing manually before, though, you still need to type `describe-function` into the `M-x` prompt. Now that we have Slime, we can simplify this with another keybinding:
+You'll notice that when you hover over functions now, `eldoc-mode` shows their signature in the minibuffer. If you want to see the help information like we'd been doing manually before, though, you still need to type `describe-function` into the `M-x` prompt. Now that we have Slime, we can simplify this with another keybinding:[^kbd-is-wrong]
+
+[^kbd-is-wrong]: One reader wrote to me, finding that the code I provide here did not work for him.
+
+    > I can see the elisp-slime description appearing at the bottom section, but when I press K it seems like it's running another function. I've also tried mapping it to "T", but I'm not able to get it working (but by running elisp-slime-nav-describe-elisp-thing-at-point from the M-x, (or : when in evil-normal-mode) it works perfectly)
+
+    When he changed it to the following, it worked:
+
+    ``` {.sourceCode}
+    (evil-define-key 'normal emacs-lisp-mode-map "K"
+      'elisp-slime-nav-describe-elisp-thing-at-point)
+    ```
+
+    So readers who have issue with my code might want to try binding to `K` per above.
 
 ``` {.sourceCode}
 (evil-define-key 'normal emacs-lisp-mode-map (kbd "K")
