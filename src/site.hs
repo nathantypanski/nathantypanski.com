@@ -184,7 +184,7 @@ main = hakyllWith config $ do
 
 config :: Configuration
 config = defaultConfiguration
-    {   deployCommand = "rsync --checksum -ave 'ssh' _site/* "
+    {   deployCommand = "rsync --delete-before --checksum -ave 'ssh' _site/* "
                         ++ "athen@ephesus:/srv/http/nathantypanski.com"
       , inMemoryCache = True
       , previewPort = 8080
