@@ -1,6 +1,6 @@
 ---
 title: Powerusers
-tags: linux
+tags: Linux, workflow
 ---
 <a href="http://i.imgur.com/RSwNK.png"><img src="http://i.imgur.com/RSwNKl.png" title="Hosted by imgur.com" alt="" /></a>
 

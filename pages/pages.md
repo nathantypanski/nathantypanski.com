@@ -1,15 +1,15 @@
 ---
 title: Writing
+status: log
 ...
 
 ## Catalog
 
 - [Software Choices](/software-choice.html)
-- Notebooks
-    - [On Notetaking](/notetaking.html)
-    - [On math](/tex.html)
-    - [Machine learning](machine-learning.html)
-    - [Scratchpad](/notes.html)
+- [On Notetaking](/notetaking.html)
+- [On math](/tex.html)
+- [Machine learning](machine-learning.html)
+- [Scratchpad](/notes.html)
 
 ## About this section
 

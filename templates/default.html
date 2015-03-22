@@ -5,16 +5,14 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <title>$title$</title>
         <link rel="stylesheet" type="text/css" href="/css/default.css" />
-        <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        $mathjax$
     </head>
     <body>
         <div id="header">
           $partial("templates/links.html")$
         </div>
         <div id="content">
-            <h1>$title$$if(rssblog)$
-              <a href="atom.xml" class="rss"><i class="fa fa-rss"></i></a>
-            $endif$</h1>
+            <h1>$title$$if(rssblog)$<a href="atom.xml" class="rss"><i class="fa fa-rss"></i></a>$endif$</h1>
             $body$
         </div>
         <div id="footer">

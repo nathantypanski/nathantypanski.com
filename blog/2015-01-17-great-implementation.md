@@ -1,5 +1,7 @@
 ----
 title: You don't need a great idea
+tags: philosophy
+status: finished
 ....
 
 This world has enough great ideas. You need a great implementation.

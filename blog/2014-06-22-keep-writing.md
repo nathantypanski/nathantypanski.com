@@ -1,5 +1,6 @@
 ---
 title: Genius programmers
+tags: philosophy, personal
 ---
 
 I haven't blogged in a few months. I've tried to write a number of times, and even sat down and thought I had a good idea and could write a blog post about it. Then I'd hammer out a few paragraphs, decide they're stupid, and end up not pushing them out to my webserver out of fear that people would think I seem dumb.

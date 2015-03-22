@@ -1,5 +1,7 @@
 ---
 title: Software Choices
+tags: software
+status: log
 ---
 
 ## Philosophy

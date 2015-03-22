@@ -1,6 +1,6 @@
 ---
 title: Git: rebasing apart history
-tags: Git workflow
+tags: Git, workflow
 ...
 
 I always appreciate it when people share some of the quirks of their development workflow,

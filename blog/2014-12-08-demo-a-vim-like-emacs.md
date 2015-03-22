@@ -1,6 +1,6 @@
 ---
 title: Evil-mode configuration demo
-tags: emacs, software
+tags: Emacs, software
 ...
 
 In an effort to help out one of my readers, I made a quick Asciicast demo of the first few steps in my [Towards a Vim-like Emacs](/blog/2014-08-03-a-vim-like-emacs-config.html) blog post.

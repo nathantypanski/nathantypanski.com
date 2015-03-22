@@ -3,11 +3,7 @@ import           Data.Monoid (mappend, (<>))
 import           Hakyll
 import           Text.Pandoc.Options as Pandoc.Options
 import Data.Set (insert)
-
---------------------------------------------------------------------------------
--- Pandoc
---------------------------------------------------------------------------------
-
+import Data.Maybe (isJust)
 
 pandocWriterOptions :: Pandoc.Options.WriterOptions
 pandocWriterOptions = defaultHakyllWriterOptions
@@ -42,56 +38,58 @@ tocWriterOptions = pandocWriterOptions
     , writerHTMLMathMethod = MathJax ""
     }
 
---------------------------------------------------------------------------------
--- Site building
---------------------------------------------------------------------------------
-
-
 main :: IO ()
 main = hakyllWith config $ do
+    tags <- buildTags ("blog/*" .||. "pages/*") (fromCapture "tags/*.html")
 
+    tagsRules tags $ \tag pattern -> do
+        let title = "tag: " ++ tag
+        route idRoute
+        compile $ do
+            posts <- loadAll pattern
+            let ctx = constField "mathjax" "" <>
+                      constField "title" title <>
+                      listField "posts" (postCtx <> tagsCtx tags) (return posts)
+                      <> defaultContext
+            makeItem ""
+                >>= loadAndApplyTemplate "templates/tag-list.html" ctx
+                >>= loadAndApplyTemplate "templates/default.html" ctx
+                >>= relativizeUrls
 
     -- put all the images in /images
     match "images/*" $ do
         route   idRoute
         compile copyFileCompiler
 
-
     -- copy site icon to `favicon.ico`
     match "images/favicon.ico" $ do
         route   (constRoute "favicon.ico")
         compile copyFileCompiler
-
 
     -- route the fonts
     match "fonts/*" $ do
         route idRoute
         compile copyFileCompiler
 
-
     -- route my extra files
     match "files/**" $ do
         route   idRoute
         compile copyFileCompiler
-
 
     -- javascript
     match "js/**" $ do
         route   idRoute
         compile copyFileCompiler
 
-
     -- route the css
     match "css/*" $ do
         route   idRoute
         compile compressCssCompiler
 
-
     -- robots
     match "robots.txt" $ do
         route idRoute
         compile copyFileCompiler
-
 
     -- compile the scss and put it in _site/css/
     match (fromRegex "scss/[a-zA-Z].*s?css") $ do
@@ -107,26 +105,25 @@ main = hakyllWith config $ do
                 )
             >>= return . fmap compressCss
 
-
     -- make top-level pages
     match "pages/*" $ do
         route $ gsubRoute "pages/" (const "") `composeRoutes`
             setExtension "html"
+        let context = tagsCtx tags <> defaultCtx
         compile $ pandocCompilerWith pandocReaderOptions tocWriterOptions
-            >>= loadAndApplyTemplate "templates/essay.html" defaultCtx
-            >>= loadAndApplyTemplate "templates/default.html" defaultCtx
+            >>= loadAndApplyTemplate "templates/essay.html" context
+            >>= loadAndApplyTemplate "templates/default.html" context
             >>= relativizeUrls
 
     match "blog/*" $ do
         route $ setExtension "html"
-        let context = postCtx <> defaultCtx
+        let context = postCtx <> tagsCtx tags <> defaultCtx
         compile $
             pandocCompilerWith pandocReaderOptions tocWriterOptions
             >>= loadAndApplyTemplate "templates/post.html" context
             >>= saveSnapshot "content"
             >>= loadAndApplyTemplate "templates/default.html" context
             >>= relativizeUrls
-
 
     create ["blog.html"] $ do
         route idRoute
@@ -151,7 +148,6 @@ main = hakyllWith config $ do
                 loadAllSnapshots "blog/*" "content"
             renderAtom myFeedConfiguration feedCtx posts
 
-
     create ["404.html"] $ do
         route idRoute
         compile $ do
@@ -160,7 +156,6 @@ main = hakyllWith config $ do
                     defaultCtx
             makeItem ""
                 >>= loadAndApplyTemplate "templates/default.html" notFoundCtx
-
 
     match "pages/index.html" $ do
         route $ gsubRoute "pages/" (const "") `composeRoutes` idRoute
@@ -176,11 +171,7 @@ main = hakyllWith config $ do
                 >>= loadAndApplyTemplate "templates/default.html" indexCtx
                 >>= relativizeUrls
 
-
     match "templates/*" $ compile templateCompiler
-
-
---------------------------------------------------------------------------------
 
 config :: Configuration
 config = defaultConfiguration
@@ -189,8 +180,6 @@ config = defaultConfiguration
       , inMemoryCache = True
       , previewPort = 8080
     }
---------------------------------------------------------------------------------
-
 
 myFeedConfiguration :: FeedConfiguration
 myFeedConfiguration = FeedConfiguration
@@ -202,17 +191,19 @@ myFeedConfiguration = FeedConfiguration
     }
 
 mathCtx :: Context a
-mathCtx = field "mathjax" $ \item -> do
-    -- TODO: Make this check for a MonadMetadata field for mathjax
-    -- and only insert this JS if it's really needed
-    metadata <- getMetadata $ itemIdentifier item
-    let mathjaxScript = "<script type=\"text/javascript\" src=\"http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML\"></script>"
-    return mathjaxScript
+mathCtx = field "mathjax" $ \item -> do 
+    hasMathJax <- getMetadataField (itemIdentifier item) "mathjax"
+    if (isJust hasMathJax) then
+        return "<script type=\"text/javascript\" src=\"http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML\"></script>"
+        else return ""
+
+tagsCtx :: Tags -> Context String
+tagsCtx = tagsField "tagLinks"
 
 postCtx :: Context String
 postCtx =
-    modificationTimeField "modified" "%B %e, %Y" `mappend`
-    dateField "date" "%B %e, %Y" `mappend`
+    modificationTimeField "modified" "%B %e, %Y" <>
+    dateField "date" "%B %e, %Y" <>
     defaultCtx
 
 defaultCtx :: Context String

@@ -1,6 +1,6 @@
 ----
 title: Switching to Emacs: Becoming Evil
-tags: Emacs, Evil
+tags: Emacs, Vim
 ----
 
 Last December I started switching from Vim to Emacs+[Evil](http://www.emacswiki.org/emacs/Evil), which is a Vim emulation layer for Emacs. I think I've used this setup enough to comment intelligently on it, so I'll talk about the experience and some of the cool tricks I've picked up along the way.

@@ -1,6 +1,6 @@
 ----
 title: btrfs: No space left on device
-tags: linux
+tags: Linux, btrfs
 ----
 
 I've been using btrfs on a SSD for around six months now. I have a slightly unusual setup: btrfs on LVM, even though [btrfs lets you create subvolumes and resize them at will](https://wiki.archlinux.org/index.php/Btrfs#Sub-volumes). My reasoning was that I might not necessarily stick with btrfs, but I'd appreciate the flexibility to change my partition layouts and use other filesystems.

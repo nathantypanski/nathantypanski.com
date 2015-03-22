@@ -1,5 +1,6 @@
 ----
 title: Gitit as my personal wiki
+tags: wiki, workflow
 ----
 
 I've wanted a personal wiki for a while now. The problem is there wasn't any good software out there for it, or I couldn't find it.

@@ -1,6 +1,6 @@
 ---
 title: Towards a Vim-like Emacs
-tags: emacs, software
+tags: Emacs, software, Vim
 ...
 
 I've [previously written](/blog/2014-07-02-switching-to-emacs.html) about my own process of transitioning from Vim to Emacs. It's fairly high-level, however, and doesn't cover the nitty-gritty: all those long, painful hours spent trying to smash Emacs into reasonable keybindings are lost.

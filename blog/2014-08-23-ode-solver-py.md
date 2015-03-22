@@ -1,5 +1,6 @@
 ---
 title: Solving a second-order ODE with NumPy and SciPy
+tags: math, Python, numpy, scipy
 ...
 
 I was going through my ODE notes the other day and wondered if I could solve any of them with Python. I gave it a shot for one of the simpler equations, and here are my results (with analytic solution included for comparison).

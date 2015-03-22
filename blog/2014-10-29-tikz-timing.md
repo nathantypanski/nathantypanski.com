@@ -1,5 +1,6 @@
 ---
 title: Draw beautiful digital electronics timing diagrams in LaTeX
+tags: LaTeX, engineering, hardware
 ...
 
 Today, for one of my engineering courses, I had to create some [timing diagrams](http://en.wikipedia.org/wiki/Digital_timing_diagram) to show certain parts of the PCI standard.

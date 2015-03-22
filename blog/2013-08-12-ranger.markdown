@@ -1,5 +1,6 @@
 ---
 title: Ranger: speedy file management
+tags: software, Linux
 ---
 
 Background

@@ -1,6 +1,6 @@
 ----
 title: All your daemons are belong to us
-tags: linux
+tags: Linux, systemd, daemons
 ----
 
 This January I [switched from Arch to Debian](2014-01-19-debian.html), and I was very happy with it. Now I'm back on Arch.
