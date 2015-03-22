@@ -5,11 +5,17 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <title>$title$</title>
         <link rel="stylesheet" type="text/css" href="/css/default.css" />
-        $mathjax$
+        $if(mathjax)$$mathjax$$endif$
     </head>
     <body>
         <div id="header">
           $partial("templates/links.html")$
+        </div>
+        <div id="metadata">
+            $if(tags)$
+                <p>tags: <em>$tagLinks$</em></p>
+            $endif$
+            $if(status)$<p>status: <em> $status$ </em></p>$endif$
         </div>
         <div id="content">
             <h1>$title$$if(rssblog)$<a href="atom.xml" class="rss"><i class="fa fa-rss"></i></a>$endif$</h1>

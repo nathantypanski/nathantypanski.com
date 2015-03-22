@@ -1,5 +1,7 @@
 ---
 title: Math notes
+status: hiatus
+tags: math, notes
 ---
 
 I publish

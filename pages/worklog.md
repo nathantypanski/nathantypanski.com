@@ -1,5 +1,7 @@
 ---
 title: Worklog
+status: wip
+tags: log
 ---
 
 These are my efforts to make the world better.

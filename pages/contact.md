@@ -1,6 +1,7 @@
 ---
 title: Contact
 status: log
+tags: info
 ...
 
 - **Email**: `ndt` at *this website*.com

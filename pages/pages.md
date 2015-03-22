@@ -1,6 +1,7 @@
 ---
 title: Writing
-status: log
+status: wip
+tags: meta
 ...
 
 ## Catalog

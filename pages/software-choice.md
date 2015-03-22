@@ -1,6 +1,6 @@
 ---
 title: Software Choices
-tags: software
+tags: software, philosophy
 status: log
 ---
 

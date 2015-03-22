@@ -1,5 +1,6 @@
 ---
 title: vincemod
+tags: art
 ---
 
 ![[Higher-res screenshot](/images/vincemod.png)](/images/vincemod_thumb.png)

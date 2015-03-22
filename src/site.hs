@@ -4,6 +4,7 @@ import           Hakyll
 import           Text.Pandoc.Options as Pandoc.Options
 import Data.Set (insert)
 import Data.Maybe (isJust)
+import Data.Map (lookup)
 
 pandocWriterOptions :: Pandoc.Options.WriterOptions
 pandocWriterOptions = defaultHakyllWriterOptions
@@ -47,8 +48,7 @@ main = hakyllWith config $ do
         route idRoute
         compile $ do
             posts <- loadAll pattern
-            let ctx = constField "mathjax" "" <>
-                      constField "title" title <>
+            let ctx = constField "title" title <>
                       listField "posts" (postCtx <> tagsCtx tags) (return posts)
                       <> defaultContext
             makeItem ""
@@ -152,6 +152,7 @@ main = hakyllWith config $ do
         route idRoute
         compile $ do
             let notFoundCtx =
+                    constField "mathjaxScript" "" <>
                     constField "title" "404 you're lost" `mappend`
                     defaultCtx
             makeItem ""
@@ -190,12 +191,15 @@ myFeedConfiguration = FeedConfiguration
     , feedRoot        = "http://www.nathantypanski.com"
     }
 
-mathCtx :: Context a
-mathCtx = field "mathjax" $ \item -> do 
-    hasMathJax <- getMetadataField (itemIdentifier item) "mathjax"
-    if (isJust hasMathJax) then
-        return "<script type=\"text/javascript\" src=\"http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML\"></script>"
-        else return ""
+-- Originally found on John Lenz's blog:
+-- http://blog.wuzzeb.org/posts/2012-06-08-hakyll-and-latex.html
+-- and adapted to work with Hakyll 4
+mathCtx :: Context String
+mathCtx = field "mathjax" $ \item -> do
+    metadata <- getMetadata (itemIdentifier item)
+    return $ case Data.Map.lookup "math" metadata of
+        Just "true" -> "<script type=\"text/javascript\" src=\"http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML\"></script>"
+        otherwise   -> ""
 
 tagsCtx :: Tags -> Context String
 tagsCtx = tagsField "tagLinks"

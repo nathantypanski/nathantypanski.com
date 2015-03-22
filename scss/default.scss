@@ -138,12 +138,6 @@ h1, h2, h3, h4, h5, h6 {
 
 h1 {
     font-size: $normal_font_size * 1.8;
-    @include breakpoint(tablet) {
-        font-size: $normal_font_size * 2.0;
-    }
-    @include breakpoint(laptop) {
-        font-size: $normal_font_size * 2.2;
-    }
     font-weight: bold;
     border-bottom: 1px solid $toc_border;
     padding-right: $header_offset;
