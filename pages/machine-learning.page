@@ -1,6 +1,7 @@
 ---
 title: Notes on machine learning
 status: list
+tags: notes, machine learning
 ...
 
 ## Tools
@@ -27,3 +28,7 @@ status: list
 ### Paid
 
 - [Probabilistic Graphical Models](https://mitpress.mit.edu/books/probabilistic-graphical-models)
+
+## Courses
+
+- [CS221: Artificial Intelligence: Principles and Techniques](http://web.stanford.edu/class/cs221/)
