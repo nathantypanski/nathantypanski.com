@@ -10,6 +10,7 @@ tags: meta
 - [On Notetaking](/notetaking.html)
 - [On math](/tex.html)
 - [Machine learning](machine-learning.html)
+- [Text processing](text-processing.html)
 - [Scratchpad](/notes.html)
 
 ## About this section
