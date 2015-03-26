@@ -1,7 +1,7 @@
 {-# LANGUAGE OverloadedStrings #-}
-import           Data.Monoid (mappend, (<>))
-import           Hakyll
-import           Text.Pandoc.Options as Pandoc.Options
+import Data.Monoid (mappend, (<>))
+import Hakyll
+import Text.Pandoc.Options as Pandoc.Options
 import Data.Set (insert)
 import Data.Maybe (isJust)
 import Data.Map (lookup)
