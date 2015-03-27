@@ -11,7 +11,7 @@
 @import "scss/stacked";
 @import "scss/icons";
 
-$body_width: 40em;
+$body_width: 50em;
 $default_color: #101010;
 $background: #ffffff;
 $toc_background: $background;
@@ -59,13 +59,13 @@ $inline_code_font_size: 10pt;
 
 @mixin breakpoint($point) {
   @if $point == desktop {
-     @media (min-width: 70em) { @content ; }
+     @media (min-width: 68em) { @content ; }
   }
   @if $point == laptop {
-     @media (min-width: $body_width + $sidebar_width * 4) { @content ; }
+     @media (min-width: $body_width + $sidebar_width * 3.8) { @content ; }
   }
   @else if $point == tablet {
-    @media (min-width: $body_width + 6em) { @content ; }
+    @media (min-width: $body_width + $sidebar_width ) { @content ; }
   }
 }
 
@@ -137,11 +137,10 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 h1 {
-    font-size: $normal_font_size * 1.8;
+    font-size: $normal_font_size * 1.7;
     font-weight: bold;
     border-bottom: 1px solid $toc_border;
     padding-right: $header_offset;
-    align: center;
     width: 100%;
     color: #111;
     margin: {
@@ -281,10 +280,10 @@ div#logo {
         text-align: left;
         float: left;
         margin: {
-            top: 0px;
+            top: 1em;
             bottom: 0px;
-            left: 0;
-            right: 0px;
+            left: -4em;
+            right: 0;
         }
     }
     @include breakpoint(laptop) {
@@ -384,12 +383,12 @@ div#navigation {
     text-align: center;
     font: {
         family: $title_family;
-        size: $normal_font_size;
+        size: $normal_font_size * 1.2;
         weight: bold;
     }
     li {
-        display: inline-block;
         list-style: none;
+        display: inline-block;
     }
     a {
         text-decoration: none;
@@ -401,36 +400,38 @@ div#navigation {
     }
     @include breakpoint(tablet) {
         text-align: right;
+        li {
+            list-style: none;
+        }
     }
     @include breakpoint(laptop) {
         li {
             margin-bottom: $toc_edge_distance / 2.5;
         }
-        font-size: $normal_font_size * 1.2;
     }
 }
 
 div#metadata
 {
     color: $icon_color;
-    background: $toc_background;
-    float: top;
+    text-align: right;
     position: relative;
-    top: 0;
-    right: 0;
     font: {
-        family: $title_family;
+        family: $body_family;
         size: $normal_font_size * 0.8;
         weight: normal;
     }
-    @include breakpoint(tablet) {
-        float: bottom;
-    }
+    margin-bottom: -3em;
     @include breakpoint(laptop) {
-        text-align: right;
-        position: absolute;
         top: $title_bottom_margin;
         right: $toc_edge_distance;
+        position: absolute;
+    }
+}
+
+.meta {
+    li {
+        list-style: none;
     }
 }
 

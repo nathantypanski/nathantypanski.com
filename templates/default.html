@@ -12,10 +12,14 @@
           $partial("templates/links.html")$
         </div>
         <div id="metadata">
+            <ul class="meta">
             $if(tags)$
-                <p>tags: <em>$tagLinks$</em></p>
+                <li>tags: <em>$tagLinks$</em></li>
             $endif$
-            $if(status)$<p>status: <em> $status$ </em></p>$endif$
+            $if(status)$<li>status: <em> $status$ </em></li>$endif$
+            $if(date)$<li>posted: <em> $date$ </em></li>$endif$
+            $if(modified)$<li>modified: <em> $modified$ </em></li>$endif$
+            </ul>
         </div>
         <div id="content">
             <h1>$title$$if(rssblog)$<a href="atom.xml" class="rss"><i class="fa fa-rss"></i></a>$endif$</h1>
