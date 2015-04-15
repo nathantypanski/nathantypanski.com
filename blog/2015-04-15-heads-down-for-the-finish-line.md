@@ -1,5 +1,5 @@
 ----
-title: Head down for the finish line
+title: Heads down for the finish line
 tags: life, Red Hat, algorithms, Palantir, Red Hat, microcontrollers, hardware, Arch Linux, Linux, jobs
 ----
 
