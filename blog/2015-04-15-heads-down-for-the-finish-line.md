@@ -22,7 +22,7 @@ I don't think anything could validate a newly-founded Linux user group more than
 In complete good spirit, it's worth mentioning [i3](https://i3wm.org/) was written largely *because* the developers thought XMonad was cool, but didn't want to learn Haskell.
 
 After the presentation I was told by one of the LUG members that Tom's talk was really inspiring for them.
-The student said "It's really great seeing industry leaders and finding out they're just like us - only maybe a bit older or more knowledgeable - and feeling like I can be just like that, too, if I just work hard and dedicate myself.
+The student said "It's really great seeing industry leaders and finding out they're just like us - only maybe a bit older or more knowledgeable - and feeling like I can be just like that, too, if I just work hard and dedicate myself."
 
 It's that kind of thing that makes me so glad I stuck with CNULUG.
 Even through all the lows, the awful turnout for the first year or so,
