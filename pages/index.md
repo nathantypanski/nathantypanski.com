@@ -2,7 +2,8 @@
 title: Nathan Typanski
 ---
 
-I'm a software developer, Linux hobbyist, and (F)OSS advocate in my senior-year studying computer engineering at [CNU](http://www.cnu.edu/pcs/academics/ce.asp).
+I'm a software developer, Linux hobbyist, and (F)OSS advocate with a degree in computer engineering from [CNU](http://www.cnu.edu/pcs/academics/ce.asp).
+I have worked at NASA Langley Research Facility for both CNU and [SSAI](https://www.ssaihq.com/), and starting June 2015 I'll be working for [Palantir](https://www.palantir.com/) with an internship in their Mission Ops team.
 
 ## Contents
 
