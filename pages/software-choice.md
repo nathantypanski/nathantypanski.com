@@ -64,7 +64,8 @@ I use both Emacs and Vim, which is an odd combination to hear someone mention.
 
 ### Window manager
 
-- Current: **[Xmonad](http://xmonad.org/)**. Great tiling window manager. Written in [Haskell](http://www.haskell.org/haskellwiki/Haskell).
+- Current: **[2bwm](https://github.com/venam/2bwm)**
+- [Xmonad](http://xmonad.org/). Great tiling window manager. Written in [Haskell](http://www.haskell.org/haskellwiki/Haskell).
 - [bspwm](https://github.com/baskerville/bspwm). Nicer tiling features than Xmonad. Harder to customize: I find Haskell easier to work with than C.
 
 ### Email
