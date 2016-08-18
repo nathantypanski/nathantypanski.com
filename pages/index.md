@@ -2,6 +2,9 @@
 title: Nathan Typanski
 ---
 
+Hey! I'm Nathan. I play with Linux systems and like solving really hard problems.
+Sometimes I write about what I'm doing, and that's why I have this website.
+
 ## Contents
 
 - My [blog](blog.html) is about Linux and software development.

@@ -8,6 +8,10 @@ These are my efforts to make the world better.
 
 The point of this is to keep some sort of record of the things that I've helped out with online, and organizations I participate in, so that I can reference them later and don't forget about my efforts.
 
+## MongoDB
+
+- [SERVER-23168 fix shell crashes on ctrl+c](https://github.com/mongodb/mongo/commit/b155bb65881db1e271e847f1960c1bc6e736b450)
+
 ## Rust
 
 [Rust](http://www.rust-lang.org/) is a systems programming language from Mozilla with a heavy community focus.
