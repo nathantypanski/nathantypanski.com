@@ -12,6 +12,7 @@ tags: meta
 - [Machine learning](machine-learning.html)
 - [Text processing](text-processing.html)
 - [Scratchpad](/notes.html)
+- [Kim Typanski Obituary](/kim-typanski-obituary.html)
 
 ## About this section
 
