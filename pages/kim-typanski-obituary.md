@@ -1,11 +1,13 @@
 ---
-title: Kim Typanski Obituary
+title: Kim Typanski obituary
 status: wip
 tags: journal
 ...
 
 > This post is a collaborative work between myself and my sister Nicole.
 > The original post was published on November 3, 2016.
+
+![Kim riding her horse Fable](/images/takingabreak.jpg)
 
 My mother, Kim Typanski, died on August 31st, 2016 at the age of 51.
 She was born in Pittsburgh, Pennsylvania and was the oldest of two children.
