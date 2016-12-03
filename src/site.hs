@@ -24,8 +24,10 @@ pandocReaderOptions = defaultHakyllReaderOptions
       myExtensions =
            [
            Ext_tex_math_dollars
+         , Ext_tex_math_double_backslash
          , Ext_superscript
          , Ext_yaml_metadata_block
+         , Ext_latex_macros
            ]
       defaultExtensions = readerExtensions defaultHakyllReaderOptions
       ext = foldr insert defaultExtensions myExtensions
@@ -33,9 +35,7 @@ pandocReaderOptions = defaultHakyllReaderOptions
 tocWriterOptions :: Pandoc.Options.WriterOptions
 tocWriterOptions = pandocWriterOptions
     { writerTableOfContents = True
-    , writerTemplate =
-        "$if(toc)$<div id=\"toc\"><h2>Contents</h2>\n$toc$ </div>\n$endif$$body$"
-    , writerStandalone = True
+    , writerTemplate = Just "$if(toc)$<div id=\"toc\"><h2>Contents</h2>\n$toc$ </div>\n$endif$$body$"
     , writerHTMLMathMethod = MathJax ""
     }
 
@@ -196,9 +196,9 @@ myFeedConfiguration = FeedConfiguration
 -- and adapted to work with Hakyll 4
 mathCtx :: Context String
 mathCtx = field "mathjax" $ \item -> do
-    metadata <- getMetadata (itemIdentifier item)
-    return $ case Data.Map.lookup "math" metadata of
-        Just "true" -> "<script type=\"text/javascript\" src=\"http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML\"></script>"
+    metadata <- getMetadataField (itemIdentifier item) "math"
+    return $ case metadata of
+        Just "true" -> "<script type=\"text/javascript\" src=\"https://www.nathantypanski.com/js/MathJax.js\"></script>"
         otherwise   -> ""
 
 tagsCtx :: Tags -> Context String
