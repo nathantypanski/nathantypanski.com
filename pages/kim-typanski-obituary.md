@@ -27,4 +27,4 @@ She is survived by her sister, Amy, and her niece and nephews.
 She also leaves behind her mother Linda.
 Kim is preceded by her father John and her grandma Sissy. 
 
-The funeral will be held at her family’s convenience in the coming days.
+The funeral was held on Friday, November 4th, 2016.
