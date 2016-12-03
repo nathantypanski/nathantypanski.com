@@ -1,5 +1,5 @@
 ---
-title: Git: rebasing apart history
+title: 'Git: rebasing apart history'
 tags: Git, workflow
 ...
 

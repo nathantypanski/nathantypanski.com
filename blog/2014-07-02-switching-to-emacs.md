@@ -1,5 +1,5 @@
 ----
-title: Switching to Emacs: Becoming Evil
+title: 'Switching to Emacs: Becoming Evil'
 tags: Emacs, Vim
 ----
 
