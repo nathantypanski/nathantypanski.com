@@ -43,7 +43,7 @@ I prefer software that makes smart decisions about this time tradeoff. Oftentime
 
 ### Operating system
 
-I use Linux exclusively. It caters better to developers and tinkerers than the alternatives.
+In college, I used Linux exclusively. Now I run Arch on my home laptop and dual boot OS X and Arch Linux on my work Macbook Pro.
 
 - **[Arch Linux](https://www.archlinux.org/)**: Currently Arch Linux is my main OS.
 - [Debian](https://www.debian.org/): I used Debian, with a blend of Sid/testing, from January-June 2014.
