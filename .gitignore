@@ -13,4 +13,3 @@ wordir/*
 .virthualenv
 _cache/
 _site/
-site
