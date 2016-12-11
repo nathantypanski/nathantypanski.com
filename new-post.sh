@@ -19,18 +19,18 @@ blog_dir="blog"
 verbose=0
 
 usage() {
-    echo "Usage: $0 [-p <postname>]" 1>&2
+    echo "Usage: $0 -p <postname> -t <title> [-e]" 1>&2
     echo "Make a new blog post with <postname>" 1>&2
 }
 
-while getopts "h?p:e?t" opt; do
+while getopts "h?p:e?t:" opt; do
     case "$opt" in
     h|\?)
         usage
         exit 1
         ;;
     t)
-        title=true
+        title="${OPTARG}"
         ;;
     e)
         edit_file=true
@@ -61,7 +61,7 @@ else
     if [[ -n "${tags}" ]]; then
         cat <<EOF > "${post_path}"
 ----
-title: ${postname}
+title: ${title}
 tags: ${tags}
 ----
 EOF
