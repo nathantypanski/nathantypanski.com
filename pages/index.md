@@ -15,6 +15,7 @@ Sometimes I write about what I'm doing, and that's why I have this website.
 
 * [Google+](https://plus.google.com/+NathanTypanski/about)
 * [LinkedIn](http://www.linkedin.com/pub/nathan-typanski/54/2a5/a01/)
+* [Twitter](https://twitter.com/nathantypanski)
 * [GitHub](https://github.com/nathantypanski)
 * [Reddit](http://www.reddit.com/user/euid)
 * [ArchWiki](https://wiki.archlinux.org/index.php/Special:Contributions/Ndt)
