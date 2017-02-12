@@ -234,7 +234,7 @@ It managed customer contacts, but only had a CLI interface. The real beauty of t
 
 ### NASA
 
-I've worked at NASA since September 2013. My big project has been standardizing this huge volume of data files, where a team and I have built an expert system that uses fuzzy matching against our knowledgebase to standardize (meta)data.
+I worked at NASA from September 2013 to May 2015. My big project has been standardizing this huge volume of data files, where a team and I have built an expert system that uses fuzzy matching against our knowledgebase to standardize (meta)data.
 
 From my [Reddit post](http://www.reddit.com/r/cscareerquestions/comments/27umgk/anyone_here_work_in_machine_learning_big_data/ci4q5ws):
 
