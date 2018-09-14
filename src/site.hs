@@ -2,14 +2,13 @@
 import Data.Monoid (mappend, (<>))
 import Hakyll
 import Text.Pandoc.Options as Pandoc.Options
-import Data.Set (insert)
 import Data.Maybe (isJust)
 import Data.Map (lookup)
 
 pandocWriterOptions :: Pandoc.Options.WriterOptions
 pandocWriterOptions = defaultHakyllWriterOptions
-    { Pandoc.Options.writerHtml5 = True
-    , Pandoc.Options.writerHtmlQTags = True
+    { -- Pandoc.Options.writerHtml5 = True
+    Pandoc.Options.writerHtmlQTags = True
     , Pandoc.Options.writerReferenceLinks = True
     , Pandoc.Options.writerSectionDivs = True
     , writerHTMLMathMethod = MathJax ""
@@ -21,7 +20,7 @@ pandocReaderOptions = defaultHakyllReaderOptions
      readerExtensions = ext
     }
     where
-      myExtensions =
+      myExtensions = extensionsFromList
            [
            Ext_tex_math_dollars
          , Ext_tex_math_double_backslash
@@ -30,7 +29,7 @@ pandocReaderOptions = defaultHakyllReaderOptions
          , Ext_latex_macros
            ]
       defaultExtensions = readerExtensions defaultHakyllReaderOptions
-      ext = foldr insert defaultExtensions myExtensions
+      ext = defaultExtensions `mappend` myExtensions
 
 tocWriterOptions :: Pandoc.Options.WriterOptions
 tocWriterOptions = pandocWriterOptions
