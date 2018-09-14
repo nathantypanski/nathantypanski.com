@@ -2,8 +2,6 @@
 import Data.Monoid (mappend, (<>))
 import Hakyll
 import Text.Pandoc.Options as Pandoc.Options
-import Data.Maybe (isJust)
-import Data.Map (lookup)
 
 pandocWriterOptions :: Pandoc.Options.WriterOptions
 pandocWriterOptions = defaultHakyllWriterOptions
@@ -198,7 +196,7 @@ mathCtx = field "mathjax" $ \item -> do
     metadata <- getMetadataField (itemIdentifier item) "math"
     return $ case metadata of
         Just "true" -> "<script type=\"text/x-mathjax-config\">MathJax.Hub.Config({jax: [\"input/TeX\", \"output/HTML-CSS\"], TeX: {extensions: [\"AMSmath.js\",\"AMSsymbols.js\"]}})</script><script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>"
-        otherwise   -> ""
+        _  -> ""
 
 tagsCtx :: Tags -> Context String
 tagsCtx = tagsField "tagLinks"
