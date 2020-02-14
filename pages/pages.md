@@ -12,7 +12,6 @@ tags: meta
 - [Machine learning](machine-learning.html)
 - [Text processing](text-processing.html)
 - [Scratchpad](/notes.html)
-- [Kim Typanski obituary](/kim-typanski-obituary.html)
 
 ## About this section
 
@@ -33,5 +32,11 @@ Is it rewriting history to go back and improve them, months or years down the li
 If you're like me and you [have trouble writing](/blog/2014-06-22-keep-writing.html) because the pressure is too high to "get it right" the first time around, then lowering the barrier to entry for a webpage might help. I've been working on a [personal wiki](/blog/2014-07-09-personal-wiki.html) for a while now. It serves me nicely as a knowledge base, and it has a low barrier to entry, but if I want to link someone to it---or access it from somewhere that's not my laptop---I'm out of luck.
 
 A reasonable solution, I think, is to create an environment in which I feel free to dump links, unfinished research, etc. on the web and go back to refine it later. I want the mental freedom to share the low-quality work that composes the first steps to timeless writing.
+
+## Personal
+
+These are links that are just for my own reference.
+
+- [Kim Typanski obituary](/kim-typanski-obituary.html)
 
 [^gwern]: And, indeed, have modeled some of this site after his, though I am nowhere near as productive a content producer as he.
