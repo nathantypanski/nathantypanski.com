@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html>
+    <meta charset="UTF-8">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>Worklog</title>
+        <link rel="stylesheet" type="text/css" href="./css/default.css" />
+        
+    </head>
+    <body>
+        <div id="header">
+          <div id="logo">
+      <a href="./">
+        <img class="img" src="./images/log0.png" />
+      </a>
+</div>
+<div id="navigation">
+  <ul>
+    <li>
+      <a href="./blog.html">
+        Blog
+        <i class="fa fa-pencil"></i>
+      </a>
+    </li>
+    <li>
+      <a href="./pages.html">
+        Writing
+        <i class="fa fa-globe"></i>
+      </a>
+    </li>
+    <li>
+      <a href="./worklog.html">
+        Worklog
+        <i class="fa fa-bar-chart"></i>
+      </a>
+    </li>
+    <li>
+      <a href="./contact.html">
+        Contact
+        <i class="fa fa-envelope"></i>
+      </a>
+    </li>
+  </ul>
+</div>
+
+        </div>
+        <div id="metadata">
+            <ul class="meta">
+            
+                <li>tags: <em><a href="./tags/log.html">log</a></em></li>
+            
+            <li>status: <em> wip </em></li>
+            
+            
+            </ul>
+        </div>
+        <div id="content">
+            <h1>Worklog</h1>
+            <div id="toc"><h2>Contents</h2>
+<ul>
+<li><a href="#mongodb">MongoDB</a></li>
+<li><a href="#rust">Rust</a><ul>
+<li><a href="#rust-class">Rust class</a></li>
+<li><a href="#rust-langrust">rust-lang/rust</a></li>
+<li><a href="#guidelines">Guidelines</a></li>
+<li><a href="#quickcheck">quickcheck</a></li>
+<li><a href="#bors">bors</a></li>
+<li><a href="#rust-nightly-archlinux">rust-nightly-archlinux</a></li>
+<li><a href="#rust-url">rust-url</a></li>
+</ul></li>
+<li><a href="#python">Python</a><ul>
+<li><a href="#ranger">Ranger</a></li>
+<li><a href="#python-mode">python-mode</a></li>
+<li><a href="#pandas">Pandas</a></li>
+<li><a href="#tabview">tabview</a></li>
+<li><a href="#global-pygments-plugin">global-pygments plugin</a></li>
+<li><a href="#python-iwlib">python-iwlib</a></li>
+<li><a href="#fuzzywuzzy">fuzzywuzzy</a></li>
+</ul></li>
+<li><a href="#haskell">Haskell</a><ul>
+<li><a href="#sandbox-move">sandbox-move</a></li>
+</ul></li>
+<li><a href="#arch-linux">Arch Linux</a><ul>
+<li><a href="#displaylink">DisplayLink</a></li>
+<li><a href="#security">Security</a></li>
+<li><a href="#iptables">iptables</a></li>
+<li><a href="#packages">Packages</a></li>
+</ul></li>
+<li><a href="#my-projects">My projects</a><ul>
+<li><a href="#this-website">This website</a></li>
+<li><a href="#cnulug">CNULUG</a></li>
+<li><a href="#dotfiles">Dotfiles</a></li>
+<li><a href="#math-notebook">Math notebook</a></li>
+<li><a href="#smartsgarden-visualizer">SmartsGarden Visualizer</a></li>
+<li><a href="#zombierl">ZombieRL</a></li>
+<li><a href="#mgmt">MGMT</a></li>
+</ul></li>
+<li><a href="#other">Other</a><ul>
+<li><a href="#nasa">NASA</a></li>
+<li><a href="#large-scale-development-culture-change-google-and-the-us-government">Large Scale Development Culture Change: Google and the US Government</a></li>
+<li><a href="#latex-wikibook">LaTeX WikiBook</a></li>
+<li><a href="#cnu-uav-lab">CNU UAV Lab</a></li>
+<li><a href="#cnu-math-hpc-project">CNU Math HPC project</a></li>
+</ul></li>
+</ul> </div>
+<p>These are my efforts to make the world better.</p>
+<p>The point of this is to keep some sort of record of the things that I’ve helped out with online, and organizations I participate in, so that I can reference them later and don’t forget about my efforts.</p>
+<section id="mongodb" class="level2">
+<h2>MongoDB</h2>
+<ul>
+<li><a href="https://github.com/mongodb/mongo/commit/b155bb65881db1e271e847f1960c1bc6e736b450">SERVER-23168 fix shell crashes on ctrl+c</a></li>
+</ul>
+</section>
+<section id="rust" class="level2">
+<h2>Rust</h2>
+<p><a href="http://www.rust-lang.org/">Rust</a> is a systems programming language from Mozilla with a heavy community focus.</p>
+<section id="rust-class" class="level3">
+<h3>Rust class</h3>
+<p>I took David Evans’ <a href="http://rust-class.org/">operating systems class</a> in Spring 2014 as an <q>open student</q>, part of his project letting anyone worldwide register. Informally, I think I was the only open student to actually finish all of the projects. I collaborated on the last three remotely on teams with UVa students - who were actually taking the course for credit, and graded on the projects. I was on Google Hangouts <a href="http://rust-class.org/presentations.html">in one of the presentations</a> for the final projects at the end, but didn’t get the chance to talk (I’m not bothered).</p>
+<p>Overall it was a wild experience. From using a completely new language to me, to doing systems and kernel programming for the first time, it’s really one of the most positive experiences I’ve had programming.</p>
+<section id="projects" class="level4">
+<h4>Projects</h4>
+<p>Team projects are labeled explicitly. Others were completed solely by me.</p>
+<ul>
+<li><a href="https://github.com/nathantypanski/cs4414-ps0">ps0</a>: getting familiar with Rust.</li>
+<li><a href="https://github.com/nathantypanski/cs4414-ps1">ps1</a>: really simple webserver.</li>
+<li><a href="https://github.com/nathantypanski/cs4414-ps2">ps2</a>: writing a shell.</li>
+<li>ps3 (currently private): parallelized webserver (<em>team project</em>).</li>
+<li><a href="https://github.com/lenary/cs4414-ps4">ps4</a>: hacking <a href="https://github.com/wbthomason/ironkernel">ironkernel</a> (<em>team project</em>).</li>
+<li><a href="https://github.com/lenary/cs4414-project">final project</a>: <a href="http://raftconsensus.github.io/">Raft</a> in Rust (<em>team project</em>). Incomplete.</li>
+</ul>
+<p>It’s worth noting that all of these were written to a very old version of rust (0.7 or so, slightly later for the more recent ones). Rust has changed very significantly since then; none of them even still compile.</p>
+</section>
+</section>
+<section id="rust-langrust" class="level3">
+<h3>rust-lang/rust</h3>
+<p>The <a href="https://github.com/rust-lang/rust">Rust reference implementation</a>.</p>
+<ul>
+<li><a href="https://github.com/rust-lang/rust/pull/14956">Dead code removal</a></li>
+<li><a href="https://github.com/rust-lang/rust/pull/14992">Documentation code update</a></li>
+<li><a href="https://github.com/rust-lang/rust/pull/17061">Add regression test for issue #10766</a></li>
+<li><a href="https://github.com/rust-lang/rust/pull/17062">Add ICE regression test for issue #16218.</a></li>
+<li><a href="https://github.com/rust-lang/rust/pull/17093">Add ICE regression test with unboxed closures</a></li>
+</ul>
+</section>
+<section id="guidelines" class="level3">
+<h3>Guidelines</h3>
+<p>The <a href="https://github.com/rust-lang/rust-guidelines/">Rust guidelines</a> are Mozilla’s official <q>[c]onventions, principles, patterns, and best practices for Rust code</q>.</p>
+<ul>
+<li><a href="https://github.com/rust-lang/rust-guidelines/commit/4c208773d48d7512302a0cf01380401edceea354">features/modules: clarification &amp; updates</a></li>
+<li><a href="https://github.com/rust-lang/rust-guidelines/commit/bdbf206894f86670511c50bebcc7cf8e340f8e41">features/modules: Expand modules section</a></li>
+<li><a href="https://github.com/rust-lang/rust-guidelines/commit/efec52d0053b0241a6417424c5300b94c486fb68">style/comments: fix typo</a></li>
+<li><a href="https://github.com/rust-lang/rust-guidelines/commit/e976db8bc739c7851e8e03970cc327c1a78b4617">expand comments doc</a></li>
+<li><a href="https://github.com/rust-lang/rust-guidelines/commit/11267f3b90372ae3b3d8ec7daa1030039a920048">style/imports: add example for import ordering</a></li>
+<li><a href="https://github.com/rust-lang/rust-guidelines/pull/32">fix bulleted list in unit testing section</a></li>
+</ul>
+</section>
+<section id="quickcheck" class="level3">
+<h3>quickcheck</h3>
+<p>BurntSushi’s <a href="https://github.com/BurntSushi/quickcheck">quickcheck</a> is a <a href="http://en.wikipedia.org/wiki/QuickCheck">QuickCheck</a> implementation for Rust.</p>
+<ul>
+<li><a href="https://github.com/BurntSushi/quickcheck/pull/17">fix Travis CI and Cargo builds</a></li>
+</ul>
+</section>
+<section id="bors" class="level3">
+<h3>bors</h3>
+<p><a href="https://github.com/graydon/bors">bors</a> is Mozilla’s buildbot for Rust.</p>
+<ul>
+<li><a href="https://github.com/graydon/bors/pull/39">allow hyphens in usernames</a></li>
+</ul>
+</section>
+<section id="rust-nightly-archlinux" class="level3">
+<h3>rust-nightly-archlinux</h3>
+<p>A <a href="https://github.com/michaelsproul/rust-nightly-archlinux/">rust-nightly-archlinux</a> is a <a href="https://wiki.archlinux.org/index.php/PKGBUILD">PKGBUILD</a> generator for <a href="https://wiki.archlinux.org/index.php/Arch_Linux">Arch Linux</a>.</p>
+<ul>
+<li><a href="https://github.com/michaelsproul/rust-nightly-archlinux/pull/2">use argparse to parse cli arguments</a>. Somewhat daft, but I improved the CLI interface for this script, since I use it sometimes and seeing manual argument parsing in Python bothers me.</li>
+</ul>
+</section>
+<section id="rust-url" class="level3">
+<h3>rust-url</h3>
+<ul>
+<li><a href="https://github.com/servo/rust-url/pull/23#event-159534491">README: fix typo</a></li>
+</ul>
+</section>
+</section>
+<section id="python" class="level2">
+<h2>Python</h2>
+<section id="ranger" class="level3">
+<h3>Ranger</h3>
+<p><a href="http://ranger.nongnu.org/">Ranger</a> is a text-based file manager.</p>
+<ul>
+<li><a href="https://github.com/hut/ranger/pull/139">Fixed a crash</a> in previews of non-previewable files.</li>
+</ul>
+</section>
+<section id="python-mode" class="level3">
+<h3>python-mode</h3>
+<p><a href="https://launchpad.net/python-mode/">python-mode</a> is a <a href="https://answers.launchpad.net/python-mode/+question/250108">major mode for Emacs</a>.</p>
+<ul>
+<li><a href="https://answers.launchpad.net/python-mode/+question/250108">Bug report regarding virtualenv</a>, with some code for a potential workaround. My code got improved by one of the contributors, and a real workaround is supplied further down.</li>
+</ul>
+</section>
+<section id="pandas" class="level3">
+<h3>Pandas</h3>
+<p><a href="https://github.com/pydata/pandas">Pandas</a> is a Python data analysis library.</p>
+<ul>
+<li><a href="https://github.com/pydata/pandas/pull/7831">CI: fix typos in readme</a><a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a></li>
+</ul>
+</section>
+<section id="tabview" class="level3">
+<h3>tabview</h3>
+<p>Tabview is a CSV viewer written in Python with Vim-like keybindings.</p>
+<ul>
+<li><a href="https://github.com/firecat53/tabview/pull/15">Add <code>0</code> key for beginning-of-line</a></li>
+</ul>
+</section>
+<section id="global-pygments-plugin" class="level3">
+<h3>global-pygments plugin</h3>
+<ul>
+<li><a href="https://github.com/yoshizow/global-pygments-plugin/pull/3#event-159658469">Generate test/ctags_stub.py with automake</a></li>
+</ul>
+</section>
+<section id="python-iwlib" class="level3">
+<h3>python-iwlib</h3>
+<p>iwlib is an interface to <a href="http://www.hpl.hp.com/personal/Jean_Tourrilhes/Linux/Tools.html">wireless tools for Linux</a>. <a href="https://pypi.python.org/pypi/iwlib">python-iwlib</a> is Python bindings to that interface, so you don’t have to use C for everything.</p>
+<ul>
+<li><a href="https://bitbucket.org/getoffmalawn/python-iwlib/pull-request/1/add-python3-support/diff">Add Python 3 support</a></li>
+<li><a href="https://github.com/nathan-hoad/python-iwlib/pull/1">Coding style consistency</a></li>
+</ul>
+</section>
+<section id="fuzzywuzzy" class="level3">
+<h3>fuzzywuzzy</h3>
+<ul>
+<li><a href="https://github.com/seatgeek/fuzzywuzzy/pull/69">make process.extract accept {dict, list}-like choices</a></li>
+<li><a href="https://github.com/seatgeek/fuzzywuzzy/pull/68">improve docs for fuzzywuzzy.process</a></li>
+</ul>
+</section>
+</section>
+<section id="haskell" class="level2">
+<h2>Haskell</h2>
+<section id="sandbox-move" class="level3">
+<h3>sandbox-move</h3>
+<ul>
+<li><a href="https://github.com/philopon/sandbox-move/pull/1">bump max base version requirement to 4.8</a></li>
+</ul>
+</section>
+</section>
+<section id="arch-linux" class="level2">
+<h2>Arch Linux</h2>
+<p>I make a <a href="https://wiki.archlinux.org/index.php/Special:Contributions/Ndt">lot of wiki contributions</a> for Arch. Still, if I mention a page here, it’s not to say <q>I singlehandedly wrote this</q> - wiki pages are community efforts, and no one person gets credit for them.</p>
+<p>There were some cases where I made significant contributions to pages, and watched them grow into awesome resources where others could take over. One of the dynamics you see on wikis is that people don’t help out with the stub pages, since they don’t visit them without useful information. Having good information on a page attracts visitors, however, which in turn garners contributions from people who otherwise would never help out.</p>
+<section id="displaylink" class="level3">
+<h3>DisplayLink</h3>
+<ul>
+<li>When I got a USB DisplayLink monitor back in 2013, there weren’t really any resources on how to set it up on a modern Linux machine. There were kernel drivers for it (<code>udlfb</code> and the - at the time - staging driver <code>udl</code>) but nothing on how to make them work with X. Supposedly Fedora could do it, but that turned out to be a dead end: nobody ever wrote something about it.</li>
+<li>I started <a href="https://bbs.archlinux.org/viewtopic.php?id=164385">this forum thread</a> about DisplayLink, in hopes of some solutions. Once I figured out to do <a href="https://bbs.archlinux.org/viewtopic.php?pid=1298516#p1298516"><code>--setprovideroutputsource</code></a> we started to make progress.</li>
+<li>Over the course of this I filled out the <a href="https://wiki.archlinux.org/index.php/DisplayLink">DisplayLink wiki page</a> with working information. It’s now pretty well-maintained by others, and is currently (22/06/2014) the second result on Google for <q>linux displaylink</q>.</li>
+<li><p>Still, in March 2014 Pluggable<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a> <a href="http://plugable.com/2014/03/06/displaylink-usb-2-0-graphics-adapters-on-linux-2014-edition">wrote</a>:</p>
+<blockquote>
+<p>Multi-monitor on Linux, especially with multiple graphics cards and USB graphics adapters, remains problematic. You can find many distros and configurations where it just won’t work. We’d recommend staying away unless you’re an advanced Linux user who is willing to play with different distros, install optional components and do hand configuration. Unfortunately, it’s just not plug and play yet today, as it is on Windows.</p>
+</blockquote></li>
+</ul>
+</section>
+<section id="security" class="level3">
+<h3>Security</h3>
+<p>I did a big overhaul of the <a href="https://wiki.archlinux.org/index.php/Security">Arch Wiki page on security</a> in June–August 2013.</p>
+<ul>
+<li>The whole thing used to just be links, or lists of links to other pages. I rewrote nearly every section, did tons of research on Linux security (RHEL best practices, research papers on mandatory access control, etc.) and shaped it into an actual pleasant overview of security.</li>
+</ul>
+</section>
+<section id="iptables" class="level3">
+<h3>iptables</h3>
+<p>I rewrote the then-dwindling ArchWiki page for <a href="https://wiki.archlinux.org/index.php/Iptables">iptables</a>.</p>
+<ul>
+<li>Wrote an actual tutorial. This was the one thing the page desperately needed - a no-frills walkthrough on how to use it. It’s still my #1 reference when I need to hack at some rules, and I only read things like this <a href="https://www.frozentux.net/iptables-tutorial/iptables-tutorial.html">crazy in-depth guide</a> if I <em>really</em> have to.</li>
+<li>I spent a lot of time poring over the verbage in the <q>basic concepts</q> section. For these things to be useful, the language had to be <em>exact</em>, providing a quick overview of what exactly these words like <q>chains</q>, <q>tables</q>, and <q>rules</q> meant.</li>
+<li>Now the 8th link on Google for <code>iptables</code>, just below Debian’s <a href="https://wiki.debian.org/iptables">much more spartan competition</a>.</li>
+</ul>
+</section>
+<section id="packages" class="level3">
+<h3>Packages</h3>
+<p>Occasionally, I find a package isn’t available in either the Arch standard repositories or the AUR. When this is the case, I package it rather than just installing it directly (perhaps from the Makefile). This helps my system stay clean, and it saves time for anyone who repeats the work after me.</p>
+<section id="global-pygments-plugin-1" class="level4">
+<h4>global-pygments plugin</h4>
+<ul>
+<li>Maintainer for <a href="https://aur.archlinux.org/packages/global-pygments-plugin-git/">AUR package</a> (Arch Linux)</li>
+</ul>
+</section>
+<section id="stmd-git" class="level4">
+<h4>stmd-git</h4>
+<ul>
+<li><a href="https://aur.archlinux.org/packages/stmd-git/">AUR Package</a> (<a href="https://github.com/nathantypanski/archlinux-stmd-git">GitHub</a>)</li>
+</ul>
+</section>
+</section>
+</section>
+<section id="my-projects" class="level2">
+<h2>My projects</h2>
+<section id="this-website" class="level3">
+<h3>This website</h3>
+<p>See <a href="website.html">About this site</a>.</p>
+</section>
+<section id="cnulug" class="level3">
+<h3>CNULUG</h3>
+<p><em>Summer 2013 - present</em>. <a href="http://cnulug.org/">Website</a>.</p>
+<p>I founded the Linux user group at <a href="http://www.cnu.edu/pcs/academics/ce.asp">CNU</a>. It’s still getting on its feet, but I run the mailing lists and do a static site for it. We had weekly meetings all through Spring 2014.</p>
+</section>
+<section id="dotfiles" class="level3">
+<h3>Dotfiles</h3>
+<p><em>Fall 2012</em>. <a href="https://github.com/nathantypanski/dotfiles">GitHub</a>.</p>
+<p>One of the cool things Linux users do is they post their user-level configuration files on the internet for other people to grab. We often have useful scripts, vim configurations, and creative ways of setting our environment variables tucked away in our dotfiles for nobody to see. Now, with sites like GitHub, you can search the vast repositories of user configuration for just the settings you need.</p>
+<p>I post mine, too. There’s a short writeup with some extra photos about my most recent configuration <a href="http://imgur.com/a/vPhbb">over at Imgur</a>.</p>
+</section>
+<section id="math-notebook" class="level3">
+<h3>Math notebook</h3>
+<p><em>Spring 2011</em>. <a href="./tex.html">Webpage</a>. <a href="https://github.com/nathantypanski/texnotes">GitHub</a>.</p>
+<p>Once college-level integral calculus hit me I started searching for a better solution to managing my notes. One of the nice things about computerized documents is that you can search them, but math always seemed out of that domain. <a href="http://en.wikipedia.org/wiki/LaTeX">LaTeX</a> turned out to be the solution to that problem - I started learning it early into my second semester of college, and ended up writing over 200 pages of notes. Some on discrete math, some on calculus, and a little bit of random tidbits thrown in there. It covers more than just that one class, but the bulk of describes tricky integration, sequences, and series - standard Calc II material.</p>
+<p>It’s something I’m really proud of, and I still reference them whenever I need a bit of that math knowledge.</p>
+<p>The experience as a whole gave me the chance to explore mathematics a little deeper, and to gain some grasp on technical writing. I haven’t feared any technical writing projects since then, and I gained an awesome new skill (technical typesetting) for any time I’ve had to write papers.</p>
+</section>
+<section id="smartsgarden-visualizer" class="level3">
+<h3>SmartsGarden Visualizer</h3>
+<p><em>Spring 2011</em>. <a href="https://github.com/nathantypanski/SGVisualizer">GitHub</a>.</p>
+<p>I joined a capstone project to build generative music and artwork from network data. It was a team project with two others (although we each built specialized components) and my first serious effort using Git.</p>
+<p>I made the music visualizer. Even though it was generated from music, and not visualizing live network data, the results had to <em>look</em> like they were coming from a network. I experimented with creating nodes onscreen and drawing them like network graphs, then got them working in resposne to thresholds from a <a href="http://en.wikipedia.org/wiki/Fast_Fourier_transform">FFT</a> of the audio.</p>
+<p>We won <a href="http://cnu.edu/pcs">CNU</a>’s information systems capstone competition that year. The result was visually impressive, and the others had produced good music from their traffic analysis. My code is written in <a href="https://www.processing.org/">Processing</a>, a sort of Java-lite for the computer graphics and artwork community. As far as I know, only the visualizer component is open-source.</p>
+</section>
+<section id="zombierl" class="level3">
+<h3>ZombieRL</h3>
+<p><em>2011</em>. <a href="https://github.com/nathantypanski/zombierl">GitHub</a>.</p>
+<p>As a senior in high school I got the chance to take my fourth and final computer science class as effectively an independent study. It was taught in C++, but I blew through the course material and started exploring other languages and projects to work on. I did the first couple chapters of <a href="http://mitpress.mit.edu/sicp/">SICP</a>, which I have yet to get back to, and picked up Python in my free time.</p>
+<p>The culmination of all this effort was a zombie-themed roguelike in Python. It uses <a href="http://doryen.eptalys.net/">The Doryen Library</a> to draw graphics to the screen. After working on it for a while I ported it to Python 3, but it hasn’t seen much activity since then.</p>
+<p>This was my first real intro to ideas like blitting graphics to a screen or having a main loop that had to respond to user input. It was also probably my first project where version control would have helped me; unfortunately I didn’t discover Git until college.</p>
+</section>
+<section id="mgmt" class="level3">
+<h3>MGMT</h3>
+<p><em>2010</em>. <a href="https://github.com/nathantypanski/MGMT">GitHub</a>.</p>
+<p>I took <a href="http://www.ibo.org/diploma/curriculum/group5/ComputerScience.cfm">IB Computer Science</a> as a Junior in high school. This was my <q>dossier,</q> a massive final project that makes up half of the curriculum.</p>
+<p>It managed customer contacts, but only had a CLI interface. The real beauty of the project was that - unlike most pedagogical software projects - it forced you to go through a sort of software engineering life cycle that lasted more than a week or two. I had to make diagrams, describe the class interfaces and the way the objects interacted, and all that fun stuff before I could even get started <em>coding</em>.</p>
+</section>
+</section>
+<section id="other" class="level2">
+<h2>Other</h2>
+<section id="nasa" class="level3">
+<h3>NASA</h3>
+<p>I worked at NASA from September 2013 to May 2015. My big project has been standardizing this huge volume of data files, where a team and I have built an expert system that uses fuzzy matching against our knowledgebase to standardize (meta)data.</p>
+<p>From my <a href="http://www.reddit.com/r/cscareerquestions/comments/27umgk/anyone_here_work_in_machine_learning_big_data/ci4q5ws">Reddit post</a>:</p>
+<blockquote>
+<p>Data scientists call this process <a href="http://en.wikipedia.org/wiki/Data_wrangling">data wrangling</a>, and my job is making it automatic.</p>
+<p>This means writing parsers for things that no sane person would write parsers for (a human-writable data <q>standard</q>) and automatically sanitizing/cleaning that input data so normal people can actually write parsers for data that’s in the standard format. Then I apply machine learning techniques to (fuzzy) match the metadata for those files to a database of known metadata, thereby automatically standardizing things like variable naming, descriptions, and notation used to write their units.</p>
+<p>I have yet to receive my undergrad degree in computer engineering. The main skills involved in my work are</p>
+<ul>
+<li>a deep understanding of Python (my main language),</li>
+<li>knowledge of parsers (compilers can teach you about this),</li>
+<li>fuzzy matching algorithms.</li>
+</ul>
+</blockquote>
+<ul>
+<li>Hopefully will get GPL’d someday. I’ve been pushing for this, but it’s not really in my control.</li>
+<li>We have a short conference paper in <a href="http://www.worldacademyofscience.org/worldcomp14/ws/conferences/icai14">ICAI</a> discussing the work.</li>
+</ul>
+<section id="git-talk" class="level4">
+<h4>Git talk</h4>
+<p>I gave an hour-long <q>brown bag</q> talk about Git for one of NASA’s departments (though some outsiders stumbled in as well). It was accompanied by a live demo with some branching/rebasing bits. You can find the slides <a href="http://nathantypanski.github.io/git-talk/">over here</a>.</p>
+<p>We’re building momentum and there’s now plans for some teams to start migrating projects away from Subversion.</p>
+</section>
+<section id="nasantl-lunar-mapping-and-modeling-portal" class="level4">
+<h4>nasa/NTL-Lunar-Mapping-and-Modeling-Portal</h4>
+<ul>
+<li><a href="https://github.com/nasa/NTL-Lunar-Mapping-and-Modeling-Portal/pull/1#event-165488297">README: cleanup botched merge text</a></li>
+</ul>
+</section>
+</section>
+<section id="large-scale-development-culture-change-google-and-the-us-government" class="level3">
+<h3>Large Scale Development Culture Change: Google and the US Government</h3>
+<p>I was a slide reviewer for <a href="https://mike-bland.com/2014/09/29/the-next-step.html">Mike Bland</a>’s talk on fostering healthy developer culture.</p>
+<ul>
+<li><a href="https://docs.google.com/presentation/d/1cNUOaGrd9dZ6LN1cKotA7UYvaDyT9rXEMlXOpzREhC4/edit">Slides</a></li>
+</ul>
+</section>
+<section id="latex-wikibook" class="level3">
+<h3>LaTeX WikiBook</h3>
+<ul>
+<li>Added a section on <a href="http://en.wikibooks.org/wiki/LaTeX/Mathematics#Color">color in mathematics</a>.</li>
+</ul>
+</section>
+<section id="cnu-uav-lab" class="level3">
+<h3>CNU UAV Lab</h3>
+<p>I volunteer hosting the <a href="http://lists.cnulug.org/mailman/listinfo/uav-lab_lists.cnulug.org">mailing lists</a> for CNU’s unmanned aerial vehicle lab.</p>
+</section>
+<section id="cnu-math-hpc-project" class="level3">
+<h3>CNU Math HPC project</h3>
+<p>CNU’s math department is getting their feet wet with high-performance computing. I volunteer as the sysadmin for their server, a ProLiant SL250s Gen8. Mostly this means I installed RHEL on it, found drivers for the Tesla GPU, and configured a dev environment for CUDA and whatnot.</p>
+<p>I’ll hopefully be doing more wrt coding on it soon; my scratchpad <a href="https://github.com/nathantypanski/PDEs">is on GitHub</a>.</p>
+</section>
+</section>
+<section class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>I got credited in the <a href="http://pandas.pydata.org/pandas-docs/version/0.15.0/release.html">pandas 0.15.0 release notes</a> for this little fix. Yay!<a href="#fnref1" class="footnote-back">↩</a></p></li>
+<li id="fn2"><p>Authors of the first Displaylink linux drivers, I think.<a href="#fnref2" class="footnote-back">↩</a></p></li>
+</ol>
+</section>
+
+        </div>
+        <div id="footer">
+            <p>
+  Content © 2012-2021 Nathan Typanski
+  and licensed under a <br /><a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.
+  Opinions are my own and not the views of my employer.
+  <a href="./website.html">About this site.</a>
+<!-- p-->
+<p>
+  <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/80x15.png" /></a>
+</p>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-37825924-1', 'nathantypanski.com');
+  ga('send', 'pageview');
+
+</script>
+
+
+        </div>
+    </body>
+</html>

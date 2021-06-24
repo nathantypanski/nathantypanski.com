@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+    <meta charset="UTF-8">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>Ranger: speedy file management</title>
+        <link rel="stylesheet" type="text/css" href="../css/default.css" />
+        
+    </head>
+    <body>
+        <div id="header">
+          <div id="logo">
+      <a href="../">
+        <img class="img" src="../images/log0.png" />
+      </a>
+</div>
+<div id="navigation">
+  <ul>
+    <li>
+      <a href="../blog.html">
+        Blog
+        <i class="fa fa-pencil"></i>
+      </a>
+    </li>
+    <li>
+      <a href="../pages.html">
+        Writing
+        <i class="fa fa-globe"></i>
+      </a>
+    </li>
+    <li>
+      <a href="../worklog.html">
+        Worklog
+        <i class="fa fa-bar-chart"></i>
+      </a>
+    </li>
+    <li>
+      <a href="../contact.html">
+        Contact
+        <i class="fa fa-envelope"></i>
+      </a>
+    </li>
+  </ul>
+</div>
+
+        </div>
+        <div id="metadata">
+            <ul class="meta">
+            
+                <li>tags: <em><a href="../tags/software.html">software</a>, <a href="../tags/Linux.html">Linux</a></em></li>
+            
+            
+            <li>posted: <em> August 12, 2013 </em></li>
+            <li>modified: <em> December  3, 2016 </em></li>
+            </ul>
+        </div>
+        <div id="content">
+            <h1>Ranger: speedy file management</h1>
+            <div class="info">
+    <!--
+    <div class="snippets">
+        <i class="fa fa-calendar"></i> August 12, 2013 <i class="fa fa-cut" December  3, 2016></i> December  3, 2016
+    </div>
+    -->
+    
+</div>
+<div id="toc"><h2>Contents</h2>
+<ul>
+<li><a href="#background">Background</a></li>
+<li><a href="#back-to-the-tty">Back to the TTY</a></li>
+<li><a href="#ranger-scope-and-rifle">Ranger, Scope and Rifle</a></li>
+</ul> </div>
+<section id="background" class="level2">
+<h2>Background</h2>
+<p>I’ve been using Linux as my primary OS for about six years now. When I started out I used <a href="https://en.wikipedia.org/wiki/Nautilus_%28file_manager%29">Nautilus</a>, which came with <a href="http://www.ubuntu.com/">Ubuntu</a>. Then I moved to <a href="http://xubuntu.org/">Xubuntu</a> and found <a href="https://en.wikipedia.org/wiki/Thunar">Thunar</a>, which was better (read: faster). After switching to <a href="https://www.archlinux.org/">Arch</a> and using <a href="http://openbox.org/">Openbox</a> exclusively for years I mostly stuck with Thunar, but experimented with <a href="https://en.wikipedia.org/wiki/Dolphin_%28file_manager%29">Dolphin</a>, which was feature-packed, and later <a href="https://en.wikipedia.org/wiki/PCManFM">PcManFM</a>, which was basically an even lighter Thunar.</p>
+<p>Then some change happened. I started experimenting with <a href="https://en.wikipedia.org/wiki/Tiling_window_manager">tiling window managers</a> and striving for a more keyboard-driven desktop. As a natural consequence of this, I began to rely on file managers less and less. I would open one, browse to the files or directory I needed, and then hit <code>F4</code> and jam out in the terminal for my real work.</p>
+<p>File managers are too slow. Partially for the user (clicking with a mouse is slower than typing for me), and partially because of the system time wasted drawing pictures of your files. My terminal starts instantly. I can open one and type</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="ex">la</span> <span class="kw">|</span> <span class="fu">grep</span> zsh</a></code></pre></div>
+<p>before Thunar can even start up. Copying or moving files is still mouse-driven, unless I want to fumble around with modifiers and arrow keys for half an hour. It’s just not efficient.</p>
+<p>And besides, it’s hardly hackable.</p>
+</section>
+<section id="back-to-the-tty" class="level2">
+<h2>Back to the TTY</h2>
+<p>My CentOS servers don’t have file managers. When I <code>adb shell</code> into my <a href="http://www.google.com/nexus/10/">Nexus 10</a>, I don’t have a file manager. My <a href="http://beagleboard.org/Products/BeagleBone%20Black">Beaglebone Black</a> doesn’t have a file manager. Why does my laptop need one?</p>
+<p>I never understood the draw of console-based file managers. I once had a friend, who was a relative newbie to Arch, tell me he was trying to do everything with the console. <q>To learn more</q> was his reasoning. I wrote the idea off as silly.</p>
+<p><q>Just use <code>ls</code>, <code>mv</code>, <code>cp</code>, etc. in a Bourne shell,</q> I told him. <q>You’ll learn more using fundamental Unix commands than crippling yourself with 80’s anachronisms like <code>mc</code>.</q></p>
+<p>File managers, like photo editors, were just one of those areas where a GUI was the right tool for the job. You couldn’t possibly convince me the horrific fluorescent blue of <a href="https://en.wikipedia.org/wiki/Midnight_Commander">Midnight Commander</a> was superior to a program with fancy modern features like tabs, file previews, and drag-and-drop.</p>
+<p>Case closed. Or so I thought.</p>
+</section>
+<section id="ranger-scope-and-rifle" class="level2">
+<h2>Ranger, Scope and Rifle</h2>
+<p>Then I found <a href="https://wiki.archlinux.org/index.php/Ranger">Ranger</a>.</p>
+<p>It’s a text-based file manager with a vim-like interface written in Python. It is fast and keyboard-driven. Bound to a key, it opens instantly. But most importantly, it does some things better than its GUI-based cousins.</p>
+<p>Ranger is what I like to call a <q>modern</q> terminal application, like <a href="https://en.wikipedia.org/wiki/Vim_%28text_editor%29">Vim</a> or <a href="https://en.wikipedia.org/wiki/Tmux">tmux</a> or <a href="http://www.mutt.org/">mutt</a>. To outsiders, these kinds of programs look severely dated, like an ancient printing press that requires custom-made blocks for each page. When a Windows user sees you use this software, they often mistake you for working with one hand tied behind your back.</p>
+<p>Behind the scenes, however, you’re just using the best tool for the job. What these programs lack in user interface, they make up for in automation and hackability.</p>
+<p>The first thing that struck me about Ranger was the <a href="http://download.savannah.gnu.org/releases-noredirect/ranger/screenshot2.png">file previews</a>. When you highlight a text file, it actually shows some of its contents immediately beside it. For html files, it uses a terminal-based renderer to preview the finished page. PDFs get text-based previews, as well. Even images have a hacky full-color ASCII art preview on display.</p>
+<p>Pressing <code>l</code> opens the file in its default program as defined in <code>~/.config/ranger/rifle.conf</code>, the config file for Ranger’s custom file opener. No mimetypes or <code>.desktop</code> files to worry about, just one simple, powerful mapping from filetypes to commands.</p>
+<p>Scope, Ranger’s built-in file previewer, has a similar ethos. It’s just an 80-ish-line Bourne script that attempts some sensible defaults for text-rendering filetypes. It has its problems, like trying to render <code>text/gpg</code> files in all their encrypted glory, but this is forgiven for but one reason:</p>
+<p>All of this can be easily changed.</p>
+<p>That’s the beauty of this kind of design philosophy. Nearly everyone can hack out a few lines of Python or Bash nowadays, and it’s much faster to do so than digging around in C source files, recompiling, and then dorking around in <code>valgrind</code> for a few hours to figure out what you just broke. In the words of Eric S. Raymond (Whether you love the guy or hate him, I can generally trust him to make good points):</p>
+<blockquote>
+<p>With today’s machines as powerful as they are, this is usually a bad tradeoff — it’s smarter to use a language that uses the machine’s time less efficiently, but your time much more efficiently.</p>
+</blockquote>
+<p>Ranger embodies this attitude. It runs fast, but not <a href="http://suckless.org/">suckless</a> fast and it doesn’t try to. Ranger is user-fast. Opening it and moving files around is fast. Teaching it new tricks is fast. It’s my kind of application—it does its job when I need it, and then it gets the hell out of my way.</p>
+</section>
+
+        </div>
+        <div id="footer">
+            <p>
+  Content © 2012-2021 Nathan Typanski
+  and licensed under a <br /><a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.
+  Opinions are my own and not the views of my employer.
+  <a href="../website.html">About this site.</a>
+<!-- p-->
+<p>
+  <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/80x15.png" /></a>
+</p>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-37825924-1', 'nathantypanski.com');
+  ga('send', 'pageview');
+
+</script>
+
+
+        </div>
+    </body>
+</html>

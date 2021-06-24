@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+    <meta charset="UTF-8">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>Switching to Emacs: Becoming Evil</title>
+        <link rel="stylesheet" type="text/css" href="../css/default.css" />
+        
+    </head>
+    <body>
+        <div id="header">
+          <div id="logo">
+      <a href="../">
+        <img class="img" src="../images/log0.png" />
+      </a>
+</div>
+<div id="navigation">
+  <ul>
+    <li>
+      <a href="../blog.html">
+        Blog
+        <i class="fa fa-pencil"></i>
+      </a>
+    </li>
+    <li>
+      <a href="../pages.html">
+        Writing
+        <i class="fa fa-globe"></i>
+      </a>
+    </li>
+    <li>
+      <a href="../worklog.html">
+        Worklog
+        <i class="fa fa-bar-chart"></i>
+      </a>
+    </li>
+    <li>
+      <a href="../contact.html">
+        Contact
+        <i class="fa fa-envelope"></i>
+      </a>
+    </li>
+  </ul>
+</div>
+
+        </div>
+        <div id="metadata">
+            <ul class="meta">
+            
+                <li>tags: <em><a href="../tags/Emacs.html">Emacs</a>, <a href="../tags/Vim.html">Vim</a></em></li>
+            
+            
+            <li>posted: <em> July  2, 2014 </em></li>
+            <li>modified: <em> December  3, 2016 </em></li>
+            </ul>
+        </div>
+        <div id="content">
+            <h1>Switching to Emacs: Becoming Evil</h1>
+            <div class="info">
+    <!--
+    <div class="snippets">
+        <i class="fa fa-calendar"></i> July  2, 2014 <i class="fa fa-cut" December  3, 2016></i> December  3, 2016
+    </div>
+    -->
+    
+</div>
+<div id="toc"><h2>Contents</h2>
+<ul>
+<li><a href="#evil-is-not-vim">Evil is not Vim …</a></li>
+<li><a href="#if-vim-is-so-great-why-bother-switching">If Vim is so great, why bother switching?</a></li>
+<li><a href="#new-habits">New habits</a></li>
+<li><a href="#a-whole-new-world">A whole new world</a></li>
+</ul> </div>
+<p>Last December I started switching from Vim to Emacs+<a href="http://www.emacswiki.org/emacs/Evil">Evil</a>, which is a Vim emulation layer for Emacs. I think I’ve used this setup enough to comment intelligently on it, so I’ll talk about the experience and some of the cool tricks I’ve picked up along the way.</p>
+<section id="evil-is-not-vim" class="level2">
+<h2>Evil is not Vim …</h2>
+<p>… but it’s pretty darn close. It’s better than <a href="http://vrapper.sourceforge.net/home/">Vrapper</a> for Eclipse, <a href="http://visualstudiogallery.msdn.microsoft.com/59ca71b3-a4a3-46ca-8fe1-0e90e3f79329">VsVim</a> for Visual Studio, and any other Vim-like plugin that you can think of.</p>
+<p>Try this out in your <q>Vim plugin</q>: hit <code>qq</code> to start recording a macro, <code>F(</code> to search backwards for an opening paren, <code>ldt)</code> to delete until the closing paren, <code>mm</code> to mark, <code>bbyw</code> to copy the word from before the paren, <code>`m</code> to jump back to the mark, <code>hp</code> to paste it inside the parens, <code>q</code> again, and then <code>@q</code> to use the macro. Then hammer <code>@@</code> a few times, running the macro elsewhere in the file.</p>
+<p>Now do a visual block selection, hit <code>I</code> and type some text, and then hit <code>&lt;ESC&gt;</code> twice to apply it. Was that text added across all of the lines? Cool - repeat that with <code>A</code> to append instead of insert, on lines with different text widths.</p>
+<p>Now visual select a huge line. Hit <code>&lt;ESC&gt;gq</code> to wrap it to 80 columns, breaking at word boundaries.</p>
+<p>Did your editor pass? Great! It has usable Vim emulation. Otherwise, sorry, your plugin just broke my workflow. I always cringe slightly whenever my reflexes start to try this and it breaks. Vim is that ingrained in me - it’s my default brain mode for editing text, and the only bindings that give me maximum editing ability with minimum keystrokes.</p>
+<p>Evil is the only plugin I’ve found that comes close to getting this right.</p>
+</section>
+<section id="if-vim-is-so-great-why-bother-switching" class="level2">
+<h2>If Vim is so great, why bother switching?</h2>
+<p>Vim has awesome keybindings. A ton of people agree with this - they do wonders for keeping RSI at bay and letting you automate tedious text editing. It’s like an interactive Perl golfing machine, except you don’t have to think about what you’re doing because the bindings get immortalized in your neural circuitry.</p>
+<p>But Vim has warts. Big, ugly warts.</p>
+<ul>
+<li>Vimscript. It is the <a href="http://www.reddit.com/r/vim/comments/1bf672/why_does_viml_suck/">PHP of plugin languages</a>. Keymappings can <a href="http://learnvimscriptthehardway.stevelosh.com/chapters/05.html">recurse endlessly</a>. Autocommands <a href="http://learnvimscriptthehardway.stevelosh.com/chapters/14.html">do insane things</a>. Mapping keys the wrong way will do different things <a href="http://learnvimscriptthehardway.stevelosh.com/chapters/29.html">depending on users’ keymaps</a>. Nothing is obvious. There are edge cases to avoid when handling edge cases, and they <em>sometimes</em> cause <a href="http://en.wikipedia.org/wiki/Undefined_behavior">nasal demons</a>.</li>
+<li>Asynchronous operations are impossible. Well, not really, <a href="https://github.com/LaTeX-Box-Team/LaTeX-Box/blob/master/doc/latex-box.txt">LaTeX box</a> fakes it with VimServer for example - but that’s not a pretty solution.</li>
+<li>Vim is slow. This might sound crazy when compared with Emacs’ startup times, but it’s for real. Specifically, it’s slow when editing files that need ridiculous amounts of word wrap or syntax highlighting. For my work at NASA I sometimes dealt with data files where one line would wrap across the whole screen two times over. Oh, and they’re 150 MiB. Vim <em>crawls</em> when rendering this stuff, and it’s unusable. When editing my Python code there, I’d sometimes have files that needed to represent massive nested lists of text (metadata for the data files we worked with). Vim also crawls for those every time a bracket or comma would change - the regexps for syntax highlighting simply weren’t fast enough.</li>
+</ul>
+<p>Emacs gets these things right.</p>
+<ul>
+<li>It’s scriptable in a Lisp dialect, which means the knowledge gained from writing it is actually useful outside your editor (the core concepts of Lisp programming are consistent across dialects, even if the details and libraries differ). This also means that when I bind a key, it’s bound to a real function call in a real programming language - and that’s much closer to what I’m used to doing as a programmer than Vim’s approximations.</li>
+<li>Asynchronously running a command is easy. I can <a href="https://github.com/ggreer/the_silver_searcher"><code>ag</code></a> the Linux kernel while writing this blog post, and my editor won’t skip a beat.</li>
+<li>None of the rendering slowness that I talked about for Vim. It’s speedy for text editing and viewing, regardless of how ugly the input is.</li>
+</ul>
+<p>Of course, Emacs has its own problems, but the combination of the above and useful Vim emulation were what sold me on giving it a shot.</p>
+</section>
+<section id="new-habits" class="level2">
+<h2>New habits</h2>
+<p>The first habit I had to break was to stop hammering <code>&lt;ESC&gt;:wq</code> when I was done editing a file. Or <code>&lt;ESC&gt;\w\q</code>, for that matter, since I find typing <code>:</code> cumbersome. When you use Emacs, the tendency is to just keep it running - if you load a bunch of plugins, it starts slowly, and you’re stuck waiting for six seconds to reopen it.</p>
+<p>There are occasional problems in the emulation that Evil offers. They’re not massive, and I can’t remember any off the top of my head, but they exist. Thankfully, Evil has an <a href="https://gitorious.org/evil">active devteam</a> that works hard to fix them.</p>
+<p>The other big issue happens when you start digging into Emacs features. Usually they come with Emacs bindings, and you’ll be confused about how to use them. You have a couple options for overcoming this:</p>
+<ul>
+<li>Learn the Emacs bindings. I do this for some plugins, like <a href="https://github.com/magit/magit">Magit</a>, where they’re not so much <q>Emacs bindings</q> as they are just <q>keybindings</q>. Magit’s bindings are actually more Vim-like than even <a href="https://github.com/tpope/vim-fugitive">Fugitive</a>’s:
+<ul>
+<li>Every binding in the Magit windows is part of a key sequence. For example, when I look at my Git status window, and press <code>l</code>, that indicates that I want to do a <q>log action</q> and it’s followed by another single key indicating the exact thing I’d like performed. There’s even a handy popup buffer that lists my available choices:</li>
+</ul>
+<p><img src="../images/emacs-magit-log-status.png" /></p>
+<p>All of the common Git operations are bound to single key sequences like this: there’s no <code>C-g-M-X-^&lt;CTRL&gt;&lt;Menu&gt;</code> in sight.</p></li>
+<li>Rebind keys yourself. This is good for features that you use often, though it means writing your own keybindings. It’s not a huge task, and it’s aided by the fact that your available operations are functions and you can search for them (<code>M-x apropos-command</code>), but this takes time.</li>
+<li><p>Let Evil overlay Vim bindings into the plugin. This has varying levels of success. For one, it won’t (by default) override keys that are already bound in the Emacs plugin (<q>Major mode</q> as they’re called - Evil uses the term <q>state</q> to refer to Vim modes). This means you can end up with <code>h</code>, <code>j</code>, and <code>l</code> bound in a major mode, but <code>k</code> does something different - like kill the commit in a Git rebase - and this can be unnerving.</p></li>
+</ul>
+<p>All in all, I’ve found the keybinding issues in major modes to be workable. Per <a href="http://bling.github.io/blog/2013/10/27/emacs-as-my-leader-vim-survival-guide/">Emacs as my &lt;Leader&gt;</a>, a fantastic post from the author of <a href="https://github.com/bling/vim-airline"><code>vim-airline</code></a>, I’ve bound <code>\</code> to <q>take me to Emacs state</q> and learned enough Emacs idioms to find my way around in new modes.</p>
+</section>
+<section id="a-whole-new-world" class="level2">
+<h2>A whole new world</h2>
+<p>I think there’s a fundamental dichotomy between Vim’s philosophy as an editor and that of Emacs: Vim is a text editor. Emacs is far more, sometimes jokingly called an <a href="http://developers.slashdot.org/comments.pl?sid=3465893&amp;cid=42919741"><q>operating system</q></a>: it’s more like a full-blown IDE for <em>everything</em>.</p>
+<p>There’s a fairly recent trend in Vim plugin development, where people try to maneuver Vim into being a complete development environment. It’s <a href="http://www.gwern.net/Choosing%20Software#fn2">not really made for that</a>, which shows in everything from the poor design of Vimscript to the lack of asynchronous capabilities: Vim is a world-class text editor. Only by coincidence have people managed to make it into something more.</p>
+<p>So Emacs has some features that Vim’s codebase would (and should!) scoff at including in the base editor. For example, an <a href="https://www.gnu.org/software/emacs/manual/html_node/emacs/Dired.html">insanely powerful file browser</a>, capable of traversing SSH tunnels and editing remote files. Or a built-in <a href="http://orgmode.org/">wiki/personal organization system</a>, running entirely in plain text. An <a href="http://www.emacswiki.org/emacs/ArtistMode">ascii flowchart drawer</a>. A <a href="https://www.gnu.org/software/emacs/manual/html_node/org/Built_002din-table-editor.html">table editor</a>. All of this in the Emacs core - no plugins attached.</p>
+<p>The end result is something that feels much closer to a complete programming <em>environment</em> rather than just a text editor. Since this is something many people try to mod Vim into, I think if you’re part of that group then you should take a long, hard look at the Dark Side before trying too hard at making Vim do everything.</p>
+<p>Or don’t. Vim has a large and incredibly dedicated group of programmers writing plugins for it: you’ll find plenty of awesome plugins on either side of the fence.</p>
+</section>
+
+        </div>
+        <div id="footer">
+            <p>
+  Content © 2012-2021 Nathan Typanski
+  and licensed under a <br /><a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.
+  Opinions are my own and not the views of my employer.
+  <a href="../website.html">About this site.</a>
+<!-- p-->
+<p>
+  <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/80x15.png" /></a>
+</p>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-37825924-1', 'nathantypanski.com');
+  ga('send', 'pageview');
+
+</script>
+
+
+        </div>
+    </body>
+</html>

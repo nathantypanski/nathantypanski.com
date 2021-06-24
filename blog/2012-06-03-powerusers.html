@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+    <meta charset="UTF-8">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>Powerusers</title>
+        <link rel="stylesheet" type="text/css" href="../css/default.css" />
+        
+    </head>
+    <body>
+        <div id="header">
+          <div id="logo">
+      <a href="../">
+        <img class="img" src="../images/log0.png" />
+      </a>
+</div>
+<div id="navigation">
+  <ul>
+    <li>
+      <a href="../blog.html">
+        Blog
+        <i class="fa fa-pencil"></i>
+      </a>
+    </li>
+    <li>
+      <a href="../pages.html">
+        Writing
+        <i class="fa fa-globe"></i>
+      </a>
+    </li>
+    <li>
+      <a href="../worklog.html">
+        Worklog
+        <i class="fa fa-bar-chart"></i>
+      </a>
+    </li>
+    <li>
+      <a href="../contact.html">
+        Contact
+        <i class="fa fa-envelope"></i>
+      </a>
+    </li>
+  </ul>
+</div>
+
+        </div>
+        <div id="metadata">
+            <ul class="meta">
+            
+                <li>tags: <em><a href="../tags/Linux.html">Linux</a>, <a href="../tags/workflow.html">workflow</a></em></li>
+            
+            
+            <li>posted: <em> June  3, 2012 </em></li>
+            <li>modified: <em> November  3, 2016 </em></li>
+            </ul>
+        </div>
+        <div id="content">
+            <h1>Powerusers</h1>
+            <div class="info">
+    <!--
+    <div class="snippets">
+        <i class="fa fa-calendar"></i> June  3, 2012 <i class="fa fa-cut" November  3, 2016></i> November  3, 2016
+    </div>
+    -->
+    
+</div>
+<p><a href="http://i.imgur.com/RSwNK.png"><img src="http://i.imgur.com/RSwNKl.png" title="Hosted by imgur.com" alt /></a></p>
+<p>See that? That’s one of my ten <a href="http://openbox.org/">Openbox 3</a> desktops running <a href="http://www.vim.org/">vim</a> fullscreen in <a href="http://software.schmorp.de/pkg/rxvt-unicode.html">rxvt unicode</a> with the <a href="http://tmux.sourceforge.net/">Tmux terminal multiplexer</a>. It’s styled using the <a href="http://ethanschoonover.com/solarized">Solarized color scheme</a> by Ethan Schoover and uses the beautiful <a href="http://en.wikipedia.org/wiki/Terminus_%28typeface%29">Terminus</a> typeface.</p>
+<p>These are all things I care about. They are all things I’ve hand-picked for my <a href="http://www.archlinux.org/">Arch Linux</a> system, which boots into an ugly low reolution terminal by default. I type <code>xinit</code> after the login prompt to start the GUI because this eliminates the overhead of a regular login manager.</p>
+<p>Because of the stability this system offers, I don’t have to reboot and type that very often. Maybe twice a month. When I do, my desktop looks something like this:</p>
+<p><a href="http://i.imgur.com/RaaV1.png"><img src="http://i.imgur.com/RaaV1l.png" title="Hosted by imgur.com" alt /></a></p>
+<p>Except without 1.53 GiB of RAM usage, a CPU core clocked up to 2.7 GHz, and WLAN connection info in my logfile.</p>
+<p>I have ten virtual desktops, and they all serve different functions. I switch between them by hitting <q>Super</q> (the Windows key) and then a number (0-9).</p>
+<ul>
+<li>terminals</li>
+<li>coding</li>
+<li>web</li>
+<li>graphics</li>
+<li>5</li>
+<li>6</li>
+<li>7</li>
+<li>files</li>
+<li>chat</li>
+<li>music</li>
+</ul>
+<p>The function of most of these is obvious. 5, 6, and 7 are throwaway desktops for unconventional uses, like playing games or reading a pdf file.</p>
+<p>The reason I’m organized this way is that on a modern system, with 8 GiB of RAM and a quad-core CPU, there’s no reason to close and open programs every time I need to use them. I should be able to hit two keys and instantly be doing the thing that I want, whether it’s graphics editing, web browsing, text editing, coding, irc or instant messenger chat, or anything else I do on a day to day basis.</p>
+<p>When I’m not actively using one of these programs, my CPU clocks down from 2.7 GHz to 800 MHz to conserve battery usage and heat output. When I am using one, it clocks up the CPU cores, but only by as much and on as many cores as are necessary to do this.</p>
+<p>When I’m busy, like during finals week last semester, my desktop looks like this:</p>
+<p><a href="http://i.imgur.com/nrCHR.png"><img src="http://i.imgur.com/nrCHRl.png" title="Hosted by imgur.com" alt /></a></p>
+<p>Yeah, that’s my calendar. Those events all send custom notifications to my cell phone and desktop, with frequency proportional to their importance.</p>
+<p>I’m a poweruser, and it’s a cycle that gains and never decreases in complexity. Once you start tweaking a particular part of your system you never go back and think <q>oh, well, I suppose the defaults were <code>just good enough</code>.</q> If they were good enough, you never would have changed them in the first place.</p>
+<p>Some of these things are really boring, like configuration files that tell my computer exactly which programs to place on which desktops and how to scale them and when to run them.</p>
+<p>Or <a href="http://pastebin.com/urgcZhem">my ~/.conkyrc</a>, for example.</p>
+<p>One of these I’m really proud of. It’s the <a href="http://www.nathantypanski.com/vincemod.html">vincemod</a> theme for Openbox 3 I designed. It’s a modification of <a href="http://box-look.org/content/show.php/Dyne?content=62000">Dyne</a>, a theme I loved, which makes some improvements upon the original to be more usable (while still maintaining the utter simplicity).</p>
+<p><a href="http://i.imgur.com/JtmdO.png"><img src="http://i.imgur.com/JtmdOl.png" title="Hosted by imgur.com" alt /></a></p>
+<p>Namely:</p>
+<ul>
+<li>1px borders around menus</li>
+<li>text labels on inactive windows</li>
+<li>4px borders around windows and 10px handles at the bottom of windows, for easy resizing (Dyne uses very thin borders, which is good for simplicity but makes drag-resizing unnecessarily difficult).</li>
+<li>Complete adoption of the <a href="http://ethanschoonover.com/solarized">Solarized Dark</a> color scheme, to be easy on the eyes after long sessions of computer usage and integrate well into terminal windows (and the rest of my desktop).</li>
+</ul>
+<p>There are endless more tweaks like this I’ve made to my desktop, and I will post about them in the future, but I felt an introduction to my poweruser habits necessary.</p>
+
+        </div>
+        <div id="footer">
+            <p>
+  Content © 2012-2021 Nathan Typanski
+  and licensed under a <br /><a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.
+  Opinions are my own and not the views of my employer.
+  <a href="../website.html">About this site.</a>
+<!-- p-->
+<p>
+  <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/80x15.png" /></a>
+</p>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-37825924-1', 'nathantypanski.com');
+  ga('send', 'pageview');
+
+</script>
+
+
+        </div>
+    </body>
+</html>

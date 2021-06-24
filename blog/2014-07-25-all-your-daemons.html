@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+    <meta charset="UTF-8">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>All your daemons are belong to us</title>
+        <link rel="stylesheet" type="text/css" href="../css/default.css" />
+        
+    </head>
+    <body>
+        <div id="header">
+          <div id="logo">
+      <a href="../">
+        <img class="img" src="../images/log0.png" />
+      </a>
+</div>
+<div id="navigation">
+  <ul>
+    <li>
+      <a href="../blog.html">
+        Blog
+        <i class="fa fa-pencil"></i>
+      </a>
+    </li>
+    <li>
+      <a href="../pages.html">
+        Writing
+        <i class="fa fa-globe"></i>
+      </a>
+    </li>
+    <li>
+      <a href="../worklog.html">
+        Worklog
+        <i class="fa fa-bar-chart"></i>
+      </a>
+    </li>
+    <li>
+      <a href="../contact.html">
+        Contact
+        <i class="fa fa-envelope"></i>
+      </a>
+    </li>
+  </ul>
+</div>
+
+        </div>
+        <div id="metadata">
+            <ul class="meta">
+            
+                <li>tags: <em><a href="../tags/Linux.html">Linux</a>, <a href="../tags/systemd.html">systemd</a>, <a href="../tags/daemons.html">daemons</a></em></li>
+            
+            
+            <li>posted: <em> July 25, 2014 </em></li>
+            <li>modified: <em> November  3, 2016 </em></li>
+            </ul>
+        </div>
+        <div id="content">
+            <h1>All your daemons are belong to us</h1>
+            <div class="info">
+    <!--
+    <div class="snippets">
+        <i class="fa fa-calendar"></i> July 25, 2014 <i class="fa fa-cut" November  3, 2016></i> November  3, 2016
+    </div>
+    -->
+    
+</div>
+<div id="toc"><h2>Contents</h2>
+<ul>
+<li><a href="#why-go-back">Why go back?</a><ul>
+<li><a href="#systemd">systemd</a></li>
+<li><a href="#understanding">Understanding</a></li>
+<li><a href="#arch-build-system">Arch Build System</a></li>
+<li><a href="#arch-wiki">Arch Wiki</a></li>
+</ul></li>
+<li><a href="#concerns">Concerns</a></li>
+<li><a href="#conclusions">Conclusions</a></li>
+</ul> </div>
+<p>This January I <a href="2014-01-19-debian.html">switched from Arch to Debian</a>, and I was very happy with it. Now I’m back on Arch.</p>
+<section id="why-go-back" class="level2">
+<h2>Why go back?</h2>
+<p>After using it for six months, I <em>love</em> Debian. I finally understand what it’s like to have a user-friendly operating system that is still powerful for the experts. But the problems I had with it were hit just as I started transitioning toward expert usage: on Debian, doing the advanced things is <em>harder</em> than doing them on Arch.</p>
+<p>So I’ve gone back. And I love Arch just as much as ever, and appreciate it a bit more now that I’ve tried something else.</p>
+<section id="systemd" class="level3">
+<h3>systemd</h3>
+<p>Even though it was something I complained about in Arch, the one big thing I ended up missing was systemd. Arch makes systemd a first-class citizen. Debian has been in the middle of an official switch for months, but it still feels painful and not fully thought out. In retrospect, this makes sense: Arch has been on systemd for <em>years</em>, and Debian only announced systemd as the official init system <a href="https://lists.debian.org/debian-ctte/2014/02/msg00405.html">back in February</a>.</p>
+<p>Of course, Debian has systemd. Jessie had the 204 release for most of the time I was using it. I’m back on Arch now, running systemd 215. As someone who uses my computer as a laptop and not, you know, a server, systemd user sessions are among the most useful features it has to offer.</p>
+<p>Not long ago, I posted a <a href="2014-07-09-personal-wiki.html">horrible script for daemonizing</a> my personal wiki. It barely worked. Sometimes it would cause <code>ps</code> to bug and report problems, which I was told to submit to the developers. Unfortunately, the line reported for causing the bug was the same line that was supposed to display information about the bug. I also have no idea where I’m supposed to report the bug - <a href="http://sourceforge.net/p/procps-ng/tickets/?source=navbar">here at SourceForge</a>? Who knows.</p>
+<p>In lieu of writing a better script, something that uses <code>mkdir</code> for PID locks,<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> I started to miss the sheer beauty of letting systemd manage my user-level init. To me, it’s a simple fact that using shell scripts to spawn daemons for, say X startup is archaic, awful, and prone to errors.</p>
+<p>On Arch, I can do this:</p>
+<pre class="sourceCode"><code>$ userctl start gitit</code></pre>
+<p>and it spawns my wiki process, keeps logs, and monitors its status like any other daemon. I’ve aliased <code>userctl</code> to <code>systemctl --user</code>, since it’s way easier to type and makes more sense in my head.</p>
+<p>The script, located at <code>$HOME/.config/systemd/user/gitit.service</code>, looks like so:</p>
+<pre class="sourceCode"><code>[Unit]
+Description=my personal wiki
+
+[Service]
+Type=simple
+WorkingDirectory=%h/.gitit
+ExecStart=/home/nathan/.cabal/bin/gitit -f %h/.gitit/my.conf
+Restart=no
+
+[Install]
+WantedBy=console.target</code></pre>
+<p>Let’s break that down:</p>
+<ul>
+<li><code>[Unit]</code>: generic information about the unit. Often contains dependency information - but not in this simple case. <code>systemd.unit (5)</code> has the details.
+<ul>
+<li><code>Description</code>: name displayed in UI. For example, this is the name displayed when I type <code>systemctl status gitit</code>.<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a></li>
+</ul></li>
+<li><code>[Service]</code>: Info about the process. See <code>systemd.service (5)</code> for the nitty-gritty.
+<ul>
+<li><code>Type</code>: How the process gets started. <code>simple</code> means the process just runs, and it would block your terminal if you ran it at the shell and didn’t background it. There’s also <code>forking</code> for processes that call <code>fork()</code> during startup, <code>oneshot</code>, which starts and then dies quickly, and a few others that I won’t describe here.</li>
+<li><code>WorkingDirectory</code>: The directory that the service starts in. I had configured Gitit to start in <code>$HOME/.gitit</code>, and in systemd <code>%h</code> is the variable for a user’s home folder.</li>
+<li><code>ExecStart</code>: The command that launches the daemon (or program, in the case of <code>oneshot</code>). One quirk here: this has to be a fully qualified path, not just an executable or something you’d expect to find in <code>$PATH</code>.</li>
+<li><code>Restart</code>: Whether to restart the service on startup.</li>
+</ul></li>
+<li><code>[Install]</code>: How to set up the dependencies and startup for a service.
+<ul>
+<li><code>WantedBy</code>: The target that <q>wants</q> this service. Services in systemd are owned by <em>targets</em>, and when you enable or disable a target it will start the appropriate services with it. In this case, <code>console.target</code> is a service that starts every time I start a user session.</li>
+</ul></li>
+</ul>
+<p>Once you have your daemons properly configured, systemd tracks <em>everything</em> they spawn and makes sure the process hierarchy matches that setup. There was a time, months ago, when I had my entire user session spawned by systemd - no bash scripts the whole way through. The <code>htop</code> tree output was <em>beautiful</em>: systemd tracks the parents of each process perfectly, and nothing escapes its watch and reparents to <code>1</code> like in traditional Linux systems.</p>
+<p>And if I ever need more fine-grained control, <a href="http://en.wikipedia.org/wiki/Cgroups">cgroups</a> have me covered.</p>
+</section>
+<section id="understanding" class="level3">
+<h3>Understanding</h3>
+<p>The other core part about Arch is that its very nature means you understand <em>everything</em> that goes on in your system. Certain parts about Debian just make it completely non-obvious how they work. What is <code>update-alternatives</code> doing under the hood? How is <code>dpkg</code> managing its <a href="https://www.debian.org/doc/debian-policy/ap-pkg-conffiles.html">configuration subsystem</a>? The details are complicated just to <em>use</em> these systems, and finding information on the implementation nuts-and-bolts is over my head. The Arch philosophy of simplicity is immediately apparent: <em>I can actually grok this system completely</em>.</p>
+<p>Even on a Debian minimal install, it started a daemon when I installed <em>nethack</em>. Frigging <em>nethack</em>! Can’t I make these decisions for myself?</p>
+<p>There are situations where it’s not worth my time to figure out how to get things working, and I just want the operating system to do everything for me. But there’s an important balancing act whenever you’re building an operating system, where you can either make things easy at first and in the default case, or make them easy for the general case (but harder by default). Arch leans toward <q>this system should be easy for a <em>competent user</em></q>.</p>
+</section>
+<section id="arch-build-system" class="level3">
+<h3>Arch Build System</h3>
+<p>When I finally started compiling my own software on Debian, I realized how much harder it is to make packages compared to Arch. If I need a package for something that isn’t in the default repositories, I can usually spin one together in a few minutes (provided the software is easy to build). Debian packages are <em>complicated</em>, by contrast - capable of much more, perhaps, but raising the cost of creation.</p>
+<p>Lowering the barrier to entry to the packaging system means I can have my entire system be first-class citizens to the package manager. That is <em>awesome</em>. I can’t remember the last time I had an arch system where I just ran <code>sudo make install</code> on some software and dropped it all over <code>/usr/local</code>. It’s easier to make a real package than to do that garbage.</p>
+</section>
+<section id="arch-wiki" class="level3">
+<h3>Arch Wiki</h3>
+<p>The <a href="https://wiki.archlinux.org/">Arch Wiki</a> is fantastic. I tell people it’s the best wiki in the Linux ecosystem. I’m pretty sure that I’m right about that one. Lots of people, including myself,<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a> really work hard to keep it up to date on the latest software in the Linux world. Today I was able to get <a href="https://wiki.archlinux.org/index.php/Nftables">nftables</a> up and running in a few minutes thanks to their documentation.</p>
+</section>
+</section>
+<section id="concerns" class="level2">
+<h2>Concerns</h2>
+<p>I’m no longer totally comfortable using Arch as my daily OS. I had far more trust in Debian and the fact that I wouldn’t see upstream releases that caused serious breakages until they were actually stable for most people. Arch doesn’t try to protect its users by withholding packages until they work perfectly with everything and don’t break: if upstream pushes bad code, you get the bad code.</p>
+<p>There’s a degree of responsibility the user has to assume, then, to not let upstream break their system. But considering every distro can end up with broken software <em>anyhow</em>, it’s not as bad as you’d think.</p>
+<p>The Arch dev community also seems a bit more secluded than Debian’s. With Debian, you can follow nearly all of the dev activity, and it’s easy to watch and find. The Arch developers leave you with <code>arch-dev-public</code> and the occasional DeveloperWiki updates to keep the users up on their activity. I think this is mostly a result of the smaller size of the Arch community: the sheer size of Debian leads to a more open development process almost of necessity.</p>
+</section>
+<section id="conclusions" class="level2">
+<h2>Conclusions</h2>
+<p>I think I’ll be happy with Arch. Everything I’ve seen so far has shown me that it’s thoroughly alive and better than ever.</p>
+<p>But I’m sure in a few months I’ll have more to say. Maybe one day I’ll put some real effort into Gentoo or one of the BSDs.</p>
+</section>
+<section class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>Using regular files as locks is a bad idea. The problem is that there is no way to build a <a href="http://en.wikipedia.org/wiki/Test-and-set">test and set</a> with regular files - on Unix-like systems, you can’t both <em>check if a file exists</em> and <em>create it if it doesn’t exist</em> in an atomic manner. The <code>mkdir</code> command, on the other hand, has all the properties we need to build this concurrency primitive:</p>
+<ul>
+<li>Failing and returning an exit status if the directory exists,</li>
+<li>Creating the directory if it doesn’t exist.</li>
+</ul>
+<p>The problem you can run into with regular files is that if the file <em>does</em> exist, when you try to spawn a new process and create a lockfile in that place, another process could have spawned in the time between when you deleted the lockfile and when you’re writing the new one. This means your daemonizing system will eventually fail, and your system will be broken.<a href="#fnref1" class="footnote-back">↩</a></p></li>
+<li id="fn2"><p>Example output:</p>
+<pre class="sourceCode"><code>$ userctl status gitit
+● gitit.service - my personal wiki
+   Loaded: loaded (/home/nathan/.config/systemd/user/gitit.service; enabled)
+   Active: active (running) since Fri 2014-07-25 21:21:16 EDT; 13min ago
+ Main PID: 4905 (gitit)
+   CGroup: /user.slice/user-1000.slice/user@1000.service/gitit.service
+           └─4905 /home/nathan/.cabal/bin/gitit -f /home/nathan/.gitit/my.conf
+
+Jul 25 21:21:16 dionysus systemd[388]: Started my personal wiki.</code></pre>
+<a href="#fnref2" class="footnote-back">↩</a></li>
+<li id="fn3"><p>I made <a href="https://wiki.archlinux.org/index.php/Special:Contributions/Ndt">16 contributions</a> even during the 6 months I used Debian primarily. I still had Arch on a VPS of mine, but that system doesn’t see modification very often.<a href="#fnref3" class="footnote-back">↩</a></p></li>
+</ol>
+</section>
+
+        </div>
+        <div id="footer">
+            <p>
+  Content © 2012-2021 Nathan Typanski
+  and licensed under a <br /><a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.
+  Opinions are my own and not the views of my employer.
+  <a href="../website.html">About this site.</a>
+<!-- p-->
+<p>
+  <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/80x15.png" /></a>
+</p>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-37825924-1', 'nathantypanski.com');
+  ga('send', 'pageview');
+
+</script>
+
+
+        </div>
+    </body>
+</html>

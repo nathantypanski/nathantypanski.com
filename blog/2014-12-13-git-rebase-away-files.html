@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html>
+    <meta charset="UTF-8">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>Git: rebasing apart history</title>
+        <link rel="stylesheet" type="text/css" href="../css/default.css" />
+        
+    </head>
+    <body>
+        <div id="header">
+          <div id="logo">
+      <a href="../">
+        <img class="img" src="../images/log0.png" />
+      </a>
+</div>
+<div id="navigation">
+  <ul>
+    <li>
+      <a href="../blog.html">
+        Blog
+        <i class="fa fa-pencil"></i>
+      </a>
+    </li>
+    <li>
+      <a href="../pages.html">
+        Writing
+        <i class="fa fa-globe"></i>
+      </a>
+    </li>
+    <li>
+      <a href="../worklog.html">
+        Worklog
+        <i class="fa fa-bar-chart"></i>
+      </a>
+    </li>
+    <li>
+      <a href="../contact.html">
+        Contact
+        <i class="fa fa-envelope"></i>
+      </a>
+    </li>
+  </ul>
+</div>
+
+        </div>
+        <div id="metadata">
+            <ul class="meta">
+            
+                <li>tags: <em><a href="../tags/Git.html">Git</a>, <a href="../tags/workflow.html">workflow</a></em></li>
+            
+            
+            <li>posted: <em> December 13, 2014 </em></li>
+            <li>modified: <em> December  3, 2016 </em></li>
+            </ul>
+        </div>
+        <div id="content">
+            <h1>Git: rebasing apart history</h1>
+            <div class="info">
+    <!--
+    <div class="snippets">
+        <i class="fa fa-calendar"></i> December 13, 2014 <i class="fa fa-cut" December  3, 2016></i> December  3, 2016
+    </div>
+    -->
+    
+</div>
+<div id="toc"><h2>Contents</h2>
+<ul>
+<li><a href="#picking-a-rebase-target">Picking a rebase target</a></li>
+<li><a href="#cleaning-your-worktree">Cleaning your worktree</a></li>
+<li><a href="#blasting-apart-history">Blasting apart history</a><ul>
+<li><a href="#removing-unrelated-files">Removing unrelated files</a></li>
+<li><a href="#making-new-commits">Making new commits</a></li>
+</ul></li>
+<li><a href="#conclusion">Conclusion</a></li>
+</ul> </div>
+<p>I always appreciate it when people share some of the quirks of their development workflow, particularly with Git, since the version control monster is so powerful that it can be difficult to stumble your way through its features.</p>
+<p>Here’s something I do every so often: I’m working too quickly, and I add extra unrelated files to an otherwise granular commit. Then I have to fix it, but I usually don’t want to rewrite the commit message. What’s the solution?</p>
+<p>Here’s an example from my Emacs config:</p>
+<pre class="sourceCode"><code>Refs: [master]
+
+    eyecandy: just use zenburn theme
+
+---
+ .travis.yml                    | 11 +++++++++++
+ config/eyecandy/my-eyecandy.el | 22 +++-------------------
+ 2 files changed, 14 insertions(+), 19 deletions(-)</code></pre>
+<p>I was partway through an attempt at adding simple <a href="https://travis-ci.org/">travis</a> testing to the repo, but accidentally included that <code>.travis.yml</code> along with a batch of theme config changes.</p>
+<p>Obviously my personal text editor config files can’t get away with <a href="https://github.com/nathantypanski/emacs.d/commit/3597bfd5d1c1c561f019f7fce7ad6119b5edb07e">bad commits</a>!<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> I’ll have to fix that.</p>
+<p>There are a handful of ways I could do this, but the method I inevitably choose is <a href="http://git-scm.com/docs/git-rebase"><code>git rebase</code></a>. Called with the <code>--interactive</code> switch, <code>git rebase</code> gives you a list of commit messages since some point in the tree, and lets you modify and rewrite them as you see fit.</p>
+<p>What we’re going to do here is this:</p>
+<ul>
+<li>start an interactive rebase,</li>
+<li>remove <code>.travis.yml</code> from the commit shown above,</li>
+<li>amend the old commit,</li>
+<li>create a new commit adding <code>.travis.yml</code> to the repository.</li>
+</ul>
+<p>The reason I prefer using an interactive rebase is</p>
+<ol type="1">
+<li>I know how to do it,</li>
+<li>it differs less from my everyday git usage than the alternatives.<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a></li>
+</ol>
+<section id="picking-a-rebase-target" class="level2">
+<h2>Picking a rebase target</h2>
+<p>One of the most important choices before you start any interactive rebase is <q>how far back am I rebasing.</q> It’s only safe to rewrite the parts of history that haven’t been pushed to a remote yet,<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a> so the natural choice is to rebase against a remote.</p>
+<p>I’ll pretend that I’m working on a codebase with multiple people, purely for didactic purposes, and do a fetch before I get started:</p>
+<pre class="sourceCode"><code>~/dotfiles/emacs/.emacs.d/ » git fetch origin
+~/dotfiles/emacs/.emacs.d/ »</code></pre>
+<p>Since there was no output, that means I have the latest version of <code>origin</code>. Great! Let’s get started:</p>
+<pre class="sourceCode"><code>~/dotfiles/emacs/.emacs.d/ » git rebase -i origin/master
+Cannot rebase: You have unstaged changes.
+Please commit or stash them.</code></pre>
+<p>Woops.</p>
+</section>
+<section id="cleaning-your-worktree" class="level2">
+<h2>Cleaning your worktree</h2>
+<p>When you start an interactive rebase, you need to have a clean worktree. To get there, I used to run <code>git stash</code> before the rebase, and <code>git stash apply</code> afterwards to reapply my old changes after modifying the log. As it turns out, there’s a better way (from <code>man git-rebase</code>):</p>
+<pre class="sourceCode"><code>--[no-]autostash
+    Automatically create a temporary stash before the operation begins, and apply it
+    after the operation ends. This means that you can run rebase on a dirty worktree.
+    However, use with care: the final stash application after a successful rebase might
+    result in non-trivial conflicts.</code></pre>
+<p>As mentioned, stashes don’t necessarily apply cleanly after a rebase. This works best if you know that your unstaged changes won’t conflict with anything you’re rebasing. In my case, I only start rebases if I think my stash (if any) will apply cleanly, so I’m going to make this a default in my config:<a href="#fn4" class="footnote-ref" id="fnref4"><sup>4</sup></a></p>
+<pre class="sourceCode"><code>~/dotfiles/emacs/.emacs.d/ » git config --get rebase.autostash
+~/dotfiles/emacs/.emacs.d/ » git config --global rebase.autostash true
+~/dotfiles/emacs/.emacs.d/ » git config --get rebase.autostash
+true</code></pre>
+</section>
+<section id="blasting-apart-history" class="level2">
+<h2>Blasting apart history</h2>
+<p>Now we can get started, and Git will <code>stash</code> unstaged changes automatically before interactive rebases.</p>
+<pre class="sourceCode"><code>~/dotfiles/emacs/.emacs.d/ » git rebase -i origin/master</code></pre>
+<p>We’re dropped into the interactive rebase window:</p>
+<pre class="sourceCode"><code>pick 712edab eyecandy: just use zenburn theme
+
+# Rebase 8edc222..712edab onto 8edc222
+#
+# Commands:
+#  , pick = use commit
+#  , reword = use commit, but edit the commit message
+#  , edit = use commit, but stop for amending
+#  , squash = use commit, but meld into previous commit
+#  , fixup = like &quot;squash&quot;, but discard this commit's log message
+#  , exec = run command (the rest of the line) using shell
+#
+# These lines can be re-ordered; they are executed from top to bottom.
+#
+# If you remove a line here THAT COMMIT WILL BE LOST.
+#
+# However, if you remove everything, the rebase will be aborted.
+#
+# Note that empty commits are commented out</code></pre>
+<section id="removing-unrelated-files" class="level3">
+<h3>Removing unrelated files</h3>
+<p>I want to remove a file from <code>712edab</code>, so I change that commit to <code>edit</code>:</p>
+<pre class="sourceCode"><code>edit 712edab eyecandy: just use zenburn theme</code></pre>
+<p>and save the file. Now we’re back at the terminal:</p>
+<pre class="sourceCode"><code>~/dotfiles/emacs/.emacs.d/ » git rebase -i origin/master
+Created autostash: ce6634c
+HEAD is now at 712edab eyecandy: just use zenburn theme
+Stopped at 712edab4e039cf2bd784031f04a202eec5f2195a... eyecandy: just use zenburn theme
+You can amend the commit now, with
+
+        git commit --amend
+
+Once you are satisfied with your changes, run
+
+        git rebase --continue</code></pre>
+<p>This has dropped us into the history at a point in time <q>just after</q> <code>712edab</code> was committed. We can modify the files that were changed in that commit, and then use <code>git commit --amend</code> to replace the old commit with our new changes.</p>
+<p>In my case, I still want to keep my <code>.travis.yml</code> changes, but wish to move them into a separate commit. I’ll remove the file from Git’s index, but not my worktree, using <code>git rm --cached</code>.</p>
+<pre class="sourceCode"><code>~/dotfiles/emacs/.emacs.d/ » git rm --cached .travis.yml
+rm '.travis.yml'
+~/dotfiles/emacs/.emacs.d/ » git commit --amend</code></pre>
+</section>
+<section id="making-new-commits" class="level3">
+<h3>Making new commits</h3>
+<p>Note how the addition of <code>.travis.yml</code> is gone now:</p>
+<pre class="sourceCode"><code>eyecandy: just use zenburn theme
+
+# Changes to be committed:
+#       modified:   config/eyecandy/my-eyecandy.el
+#</code></pre>
+<p>But the file is still present on my machine:</p>
+<pre class="sourceCode"><code>[detached HEAD cc71d68] eyecandy: just use zenburn theme
+ Date: Sat Dec 13 20:45:54 2014 -0500
+ 1 file changed, 3 insertions(+), 19 deletions(-)
+~/dotfiles/emacs/.emacs.d/ » ls .travis.yml
+.travis.yml</code></pre>
+<p>Great! We’ve rewritten the commit to remove the unrelated changes. It’s worth noting that <code>edit</code> actions in a rebase still let you make new commits, unlike most <q>detached head</q> states in Git.</p>
+<p>So we can just add the file back in right here, and finish the rebase:</p>
+<pre class="sourceCode"><code>~/dotfiles/emacs/.emacs.d/ » git add .travis.yml
+~/dotfiles/emacs/.emacs.d/ » git commit -m 'test out travis CI for emacs'
+[detached HEAD dab1f85] test out travis CI for emacs
+ 1 file changed, 11 insertions(+)
+ create mode 100644 .travis.yml
+~/dotfiles/emacs/.emacs.d/ » git rebase --continue
+Successfully rebased and updated refs/heads/master.
+Applied autostash.</code></pre>
+</section>
+</section>
+<section id="conclusion" class="level2">
+<h2>Conclusion</h2>
+<p>Now the repo is how I wanted it:</p>
+<pre class="sourceCode"><code>2014-12-14 03:46 Unknown         o Unstaged changes
+2014-12-13 22:42 Nathan Typanski o [master] test out travis CI for emacs
+2014-12-13 20:45 Nathan Typanski o eyecandy: just use zenburn theme
+2014-12-13 19:09 Nathan Typanski o {origin/master} evil: fancy smart indent behavior</code></pre>
+<p>This is just a little snapshot of my Git workflow. I wrote this post because I find myself constantly wondering if I’m using Git <q>the right way</q>, and find myself curious how other people solve problems like this one. Perhaps there’s a way to do this using only a handful of one-liners, and I’m going overkill by using <code>git rebase</code> for this kind of thing (it certainly feels that way).</p>
+<p>But then I realize there’s no One True Workflow with Git. Git usage is a <a href="https://en.wikipedia.org/wiki/State_function">state function</a>: we went from our initial state to our desired result state, and nobody cares how we got there. That’s the whole point.</p>
+</section>
+<section class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>Or I might not tolerate it in a few weeks. Ho, ho.<a href="#fnref1" class="footnote-back">↩</a></p></li>
+<li id="fn2"><p>If I have to hack apart a tree in Git, the easiest way for me to do it is usually inside of an interactive rebase. Unlike memorizing a bunch of esoteric one-liners, this lets me work on a repository like I’m always <q>at its tip</q> - which is the normal state of a Git repo when you’re working on new changes.<a href="#fnref2" class="footnote-back">↩</a></p></li>
+<li id="fn3"><p>You can get away with rewriting commits that are on a remote, but then you’re doomed to <code>git push -f</code>’ing all over said remote. Without good reason, this is a pretty bad idea. If you have coworkers, it’s a really bad idea.<a href="#fnref3" class="footnote-back">↩</a></p></li>
+<li id="fn4"><p>From the man page for <code>git rebase</code>:</p>
+<pre class="sourceCode"><code>CONFIGURATION
+       rebase.autostash
+                  If set to true enable --autostash option by default.</code></pre>
+<a href="#fnref4" class="footnote-back">↩</a></li>
+</ol>
+</section>
+
+        </div>
+        <div id="footer">
+            <p>
+  Content © 2012-2021 Nathan Typanski
+  and licensed under a <br /><a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.
+  Opinions are my own and not the views of my employer.
+  <a href="../website.html">About this site.</a>
+<!-- p-->
+<p>
+  <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/80x15.png" /></a>
+</p>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-37825924-1', 'nathantypanski.com');
+  ga('send', 'pageview');
+
+</script>
+
+
+        </div>
+    </body>
+</html>

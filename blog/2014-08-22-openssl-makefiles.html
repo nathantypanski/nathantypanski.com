@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html>
+    <meta charset="UTF-8">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>Benchmarking Mike Bland's OpenSSL Makefiles</title>
+        <link rel="stylesheet" type="text/css" href="../css/default.css" />
+        
+    </head>
+    <body>
+        <div id="header">
+          <div id="logo">
+      <a href="../">
+        <img class="img" src="../images/log0.png" />
+      </a>
+</div>
+<div id="navigation">
+  <ul>
+    <li>
+      <a href="../blog.html">
+        Blog
+        <i class="fa fa-pencil"></i>
+      </a>
+    </li>
+    <li>
+      <a href="../pages.html">
+        Writing
+        <i class="fa fa-globe"></i>
+      </a>
+    </li>
+    <li>
+      <a href="../worklog.html">
+        Worklog
+        <i class="fa fa-bar-chart"></i>
+      </a>
+    </li>
+    <li>
+      <a href="../contact.html">
+        Contact
+        <i class="fa fa-envelope"></i>
+      </a>
+    </li>
+  </ul>
+</div>
+
+        </div>
+        <div id="metadata">
+            <ul class="meta">
+            
+                <li>tags: <em><a href="../tags/OpenSSL.html">OpenSSL</a>, <a href="../tags/benchmarks.html">benchmarks</a>, <a href="../tags/Make.html">Make</a></em></li>
+            
+            
+            <li>posted: <em> August 22, 2014 </em></li>
+            <li>modified: <em> November  3, 2016 </em></li>
+            </ul>
+        </div>
+        <div id="content">
+            <h1>Benchmarking Mike Bland's OpenSSL Makefiles</h1>
+            <div class="info">
+    <!--
+    <div class="snippets">
+        <i class="fa fa-calendar"></i> August 22, 2014 <i class="fa fa-cut" November  3, 2016></i> November  3, 2016
+    </div>
+    -->
+    
+</div>
+<div id="toc"><h2>Contents</h2>
+<ul>
+<li><a href="#motivation">Motivation</a></li>
+<li><a href="#r-analysis">R analysis</a><ul>
+<li><a href="#full-sequential-build">Full sequential build</a></li>
+<li><a href="#full-parallel-build">Full parallel build</a></li>
+<li><a href="#full-sequential-build-with-ccache">Full sequential build with ccache</a></li>
+<li><a href="#full-parallel-build-with-ccache">Full parallel build with ccache</a></li>
+</ul></li>
+<li><a href="#specs">Specs</a></li>
+<li><a href="#complications">Complications</a><ul>
+<li><a href="#make-links">make links</a></li>
+</ul></li>
+<li><a href="#conclusion">Conclusion</a></li>
+</ul> </div>
+<p><a href="http://mike-bland.com/">Mike Bland</a> has been <a href="https://github.com/mbland/openssl/commits/makefiles">hard at work</a> <a href="http://goo.gl/yhvCno">refactoring the build system</a> for OpenSSL. I wasn’t involved in developing these changes, but I do care about OpenSSL and the way the decision process happens there. I care about making sure its developers get the best <q>bang for their buck</q> out of their time, so that they can focus on the important issues.</p>
+<p>As my small contribution to this effort, I ran benchmarks and did statistical analysis of Mike’s builds to see if they <em>really are</em> faster than the old ones — and if so, to see just where these speedups manifest.</p>
+<p>The results are quite good.</p>
+<section id="motivation" class="level2">
+<h2>Motivation</h2>
+<p>The main reference point in the literature for Mike’s refactoring is the 1997 paper <a href="http://aegis.sourceforge.net/auug97.pdf">Recursive Make Considered Harmful</a>. That article makes all sorts of good points, and offers some solutions as well.</p>
+<p>But to summarize it, the two problems with recursive Make we’re concerned with:</p>
+<blockquote>
+<ul>
+<li>The inaccuracy of the dependencies, or the simple lack of dependencies, can result in a product which is incapable of building cleanly, requiring the build process to be carefully watched by a human.</li>
+<li>Related to the above, some projects are incapable of taking advantage of various <q>parallel make</q> impementations, because the build does patently silly things.</li>
+</ul>
+</blockquote>
+<p>I won’t go further into the details of why these refactors are helpful here. You can read about that in <a href="http://goo.gl/yhvCno">Mike’s writeup</a>, <a href="https://groups.google.com/d/topic/mailing.openssl.dev/F1CkO4WCrv8/discussion"><code>[openssl-dev]</code></a>, or the <a href="https://groups.google.com/d/topic/openssl-testing/AUJME_4xkWM/discussion"><code>[openssl-testing]</code></a> thread if you’re interested. What I’m going to cover is the benchmarks that I ran and which of my results are statistically significant.</p>
+<p>Why? Because I don’t like to see speed statistics without the data analysis to back them up. When someone comes around saying <q>hey, this way of doing it is faster</q> I want to see some sort of proof, repeated trials, and a significance test of some sort.</p>
+</section>
+<section id="r-analysis" class="level2">
+<h2>R analysis</h2>
+<p>You can find the full dataset created from my benchmarking in one <a href="../files/openssl-all-builds.csv">easy-to-use CSV file</a>.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="op">&gt;</span><span class="st"> </span>ssl &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">'all_builds.csv'</span>)</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="op">&gt;</span><span class="st"> </span><span class="kw">head</span>(ssl)</a>
+<a class="sourceLine" id="cb1-3" data-line-number="3">  branch shortref command   real   user  sys ccache</a>
+<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="dv">1</span> master  a46149c    make <span class="fl">112.30</span>  <span class="fl">99.15</span> <span class="fl">8.07</span>  <span class="ot">FALSE</span></a>
+<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="dv">2</span> master  a46149c    make <span class="fl">118.95</span> <span class="fl">105.31</span> <span class="fl">8.58</span>  <span class="ot">FALSE</span></a>
+<a class="sourceLine" id="cb1-6" data-line-number="6"><span class="dv">3</span> master  a46149c    make <span class="fl">118.12</span> <span class="fl">104.59</span> <span class="fl">8.52</span>  <span class="ot">FALSE</span></a>
+<a class="sourceLine" id="cb1-7" data-line-number="7"><span class="dv">4</span> master  a46149c    make <span class="fl">117.28</span> <span class="fl">103.85</span> <span class="fl">8.22</span>  <span class="ot">FALSE</span></a>
+<a class="sourceLine" id="cb1-8" data-line-number="8"><span class="dv">5</span> master  a46149c    make <span class="fl">124.16</span> <span class="fl">109.49</span> <span class="fl">9.21</span>  <span class="ot">FALSE</span></a>
+<a class="sourceLine" id="cb1-9" data-line-number="9"><span class="dv">6</span> master  a46149c    make <span class="fl">121.17</span> <span class="fl">106.99</span> <span class="fl">8.71</span>  <span class="ot">FALSE</span></a></code></pre></div>
+<p>I ran builds with ccache and without it, so we’ll start by subsetting the data based on that.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="op">&gt;</span><span class="st"> </span>ccache &lt;-<span class="st"> </span>ssl[<span class="kw">which</span>(ssl<span class="op">$</span>ccache),]</a>
+<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="op">&gt;</span><span class="st"> </span>normal &lt;-<span class="st"> </span>ssl[<span class="kw">which</span>(<span class="op">!</span>ssl<span class="op">$</span>ccache),]</a></code></pre></div>
+<p>Then we can subset the data into the different types of builds:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="op">&gt;</span><span class="st"> </span>fullseq &lt;-<span class="st"> </span>normal[<span class="kw">which</span>(normal<span class="op">$</span>command <span class="op">==</span><span class="st"> 'make'</span>),]</a>
+<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="op">&gt;</span><span class="st"> </span>fullpar &lt;-<span class="st"> </span>normal[<span class="kw">which</span>(normal<span class="op">$</span>command <span class="op">==</span><span class="st"> 'make -j4'</span>),]</a>
+<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="op">&gt;</span><span class="st"> </span>fulltest &lt;-<span class="st"> </span>normal[<span class="kw">which</span>(normal<span class="op">$</span>command <span class="op">==</span></a>
+<a class="sourceLine" id="cb3-4" data-line-number="4"><span class="op">+</span><span class="st"> 'touch ssl/d1_both.c &amp;&amp; /usr/bin/time make'</span>),]</a>
+<a class="sourceLine" id="cb3-5" data-line-number="5"><span class="op">&gt;</span><span class="st"> </span>fullseqcc &lt;-<span class="st"> </span>ccache[<span class="kw">which</span>(ccache<span class="op">$</span>command <span class="op">==</span><span class="st"> 'make'</span>),]</a>
+<a class="sourceLine" id="cb3-6" data-line-number="6"><span class="op">&gt;</span><span class="st"> </span>fullparcc &lt;-<span class="st"> </span>ccache[<span class="kw">which</span>(ccache<span class="op">$</span>command <span class="op">==</span><span class="st"> 'make -j4'</span>),]</a>
+<a class="sourceLine" id="cb3-7" data-line-number="7"><span class="op">&gt;</span><span class="st"> </span>fulltestcc &lt;-<span class="st"> </span>ccache[<span class="kw">which</span>(ccache<span class="op">$</span>command <span class="op">==</span><span class="st"> 'make test'</span>),]</a></code></pre></div>
+<section id="full-sequential-build" class="level3">
+<h3>Full sequential build</h3>
+<p>These builds are just the regular <code>make clean &amp;&amp; /usr/bin/time -p make</code>. Since the single-makefile approach generally favors parallel more than sequential builds, it’s not surprising that we don’t see much improvement here.</p>
+<section id="master" class="level4">
+<h4>master</h4>
+<div class="sourceCode" id="cb4"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">      real            user             sys       </a>
+<a class="sourceLine" id="cb4-2" data-line-number="2"> Min.   <span class="op">:</span><span class="fl">112.3</span>   Min.   <span class="op">:</span><span class="st"> </span><span class="fl">99.15</span>   Min.   <span class="op">:</span><span class="fl">8.070</span>  </a>
+<a class="sourceLine" id="cb4-3" data-line-number="3"> 1st Qu.<span class="op">:</span><span class="fl">118.1</span>   1st Qu.<span class="op">:</span><span class="fl">104.15</span>   1st Qu.<span class="op">:</span><span class="fl">8.520</span>  </a>
+<a class="sourceLine" id="cb4-4" data-line-number="4"> Median <span class="op">:</span><span class="fl">119.2</span>   Median <span class="op">:</span><span class="fl">105.31</span>   Median <span class="op">:</span><span class="fl">8.710</span>  </a>
+<a class="sourceLine" id="cb4-5" data-line-number="5"> Mean   <span class="op">:</span><span class="fl">120.6</span>   Mean   <span class="op">:</span><span class="fl">106.50</span>   Mean   <span class="op">:</span><span class="fl">8.784</span>  </a>
+<a class="sourceLine" id="cb4-6" data-line-number="6"> 3rd Qu.<span class="op">:</span><span class="fl">122.3</span>   3rd Qu.<span class="op">:</span><span class="fl">107.80</span>   3rd Qu.<span class="op">:</span><span class="fl">9.210</span>  </a>
+<a class="sourceLine" id="cb4-7" data-line-number="7"> Max.   <span class="op">:</span><span class="fl">132.3</span>   Max.   <span class="op">:</span><span class="fl">117.17</span>   Max.   <span class="op">:</span><span class="fl">9.410</span></a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="op">&gt;</span><span class="st"> </span><span class="kw">plot</span>(<span class="kw">density</span>(fullseq[<span class="kw">which</span>(fullseq<span class="op">$</span>branch<span class="op">==</span><span class="st">'master'</span>),]<span class="op">$</span>real),</a>
+<a class="sourceLine" id="cb5-2" data-line-number="2">       <span class="dt">main=</span><span class="st">'master build time density (real)'</span>)</a></code></pre></div>
+<figure>
+<img src="../images/openssl-master-density.png" alt="Not exactly a normal distribution, but close enough for comfort" /><figcaption>Not exactly a normal distribution, but close enough for comfort</figcaption>
+</figure>
+</section>
+<section id="mbland-makefiles-00" class="level4">
+<h4>mbland-makefiles-00</h4>
+<div class="sourceCode" id="cb6"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">      real            user             sys       </a>
+<a class="sourceLine" id="cb6-2" data-line-number="2"> Min.   <span class="op">:</span><span class="fl">111.6</span>   Min.   <span class="op">:</span><span class="st"> </span><span class="fl">98.66</span>   Min.   <span class="op">:</span><span class="fl">7.880</span>  </a>
+<a class="sourceLine" id="cb6-3" data-line-number="3"> 1st Qu.<span class="op">:</span><span class="fl">115.2</span>   1st Qu.<span class="op">:</span><span class="fl">101.97</span>   1st Qu.<span class="op">:</span><span class="fl">8.160</span>  </a>
+<a class="sourceLine" id="cb6-4" data-line-number="4"> Median <span class="op">:</span><span class="fl">118.1</span>   Median <span class="op">:</span><span class="fl">104.52</span>   Median <span class="op">:</span><span class="fl">8.410</span>  </a>
+<a class="sourceLine" id="cb6-5" data-line-number="5"> Mean   <span class="op">:</span><span class="fl">118.0</span>   Mean   <span class="op">:</span><span class="fl">104.42</span>   Mean   <span class="op">:</span><span class="fl">8.482</span>  </a>
+<a class="sourceLine" id="cb6-6" data-line-number="6"> 3rd Qu.<span class="op">:</span><span class="fl">119.7</span>   3rd Qu.<span class="op">:</span><span class="fl">105.79</span>   3rd Qu.<span class="op">:</span><span class="fl">8.870</span>  </a>
+<a class="sourceLine" id="cb6-7" data-line-number="7"> Max.   <span class="op">:</span><span class="fl">125.6</span>   Max.   <span class="op">:</span><span class="fl">111.12</span>   Max.   <span class="op">:</span><span class="fl">9.060</span>  </a></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="op">&gt;</span><span class="st"> </span><span class="kw">plot</span>(<span class="kw">density</span>(</a>
+<a class="sourceLine" id="cb7-2" data-line-number="2"><span class="op">+</span><span class="st">   </span>fullseq[<span class="kw">which</span>(fullseq<span class="op">$</span>branch<span class="op">==</span><span class="st">'mbland-makefiles-00'</span>),]<span class="op">$</span>real),</a>
+<a class="sourceLine" id="cb7-3" data-line-number="3"><span class="op">+</span><span class="st">   </span><span class="dt">main=</span><span class="st">'mbland-makefiles-00 build time density (real)'</span>)</a></code></pre></div>
+<p><img src="../images/openssl-mbland-density.png" /></p>
+</section>
+<section id="comparison" class="level4">
+<h4>Comparison</h4>
+<div class="sourceCode" id="cb8"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="op">&gt;</span><span class="st"> </span><span class="kw">boxplot</span>(fullseq[<span class="kw">which</span>(fullseq<span class="op">$</span>branch<span class="op">==</span><span class="st">'master'</span>),]<span class="op">$</span>real,</a>
+<a class="sourceLine" id="cb8-2" data-line-number="2"><span class="op">+</span><span class="st"> </span>fullseq[<span class="kw">which</span>(fullseq<span class="op">$</span>branch<span class="op">==</span><span class="st">'mbland-makefiles-00'</span>),]<span class="op">$</span>real,</a>
+<a class="sourceLine" id="cb8-3" data-line-number="3"><span class="op">+</span><span class="st"> </span><span class="dt">ylab=</span><span class="st">'time (real)'</span>, <span class="dt">xlab=</span><span class="st">'branch'</span>,</a>
+<a class="sourceLine" id="cb8-4" data-line-number="4"><span class="op">+</span><span class="st"> </span><span class="dt">names=</span><span class="kw">c</span>(<span class="st">'master'</span>, <span class="st">'mbland-makefiles-00'</span>),</a>
+<a class="sourceLine" id="cb8-5" data-line-number="5"><span class="op">+</span><span class="st"> </span><span class="dt">main=</span><span class="st">'Full sequential build'</span>)</a></code></pre></div>
+<p><img src="../images/openssl-sequential-real.png" /></p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="op">&gt;</span><span class="st"> </span><span class="kw">t.test</span>(real <span class="op">~</span><span class="st"> </span>branch, <span class="dt">data=</span>fullseq)</a>
+<a class="sourceLine" id="cb9-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb9-3" data-line-number="3">	Welch Two Sample t<span class="op">-</span>test</a>
+<a class="sourceLine" id="cb9-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb9-5" data-line-number="5">data<span class="op">:</span><span class="st">  </span>real by branch</a>
+<a class="sourceLine" id="cb9-6" data-line-number="6">t =<span class="st"> </span><span class="fl">1.0478</span>, df =<span class="st"> </span><span class="fl">15.906</span>, p<span class="op">-</span>value =<span class="st"> </span><span class="fl">0.3104</span></a>
+<a class="sourceLine" id="cb9-7" data-line-number="7">alternative hypothesis<span class="op">:</span><span class="st"> </span>true difference <span class="cf">in</span> means is not equal to <span class="dv">0</span></a>
+<a class="sourceLine" id="cb9-8" data-line-number="8"><span class="dv">95</span> percent confidence interval<span class="op">:</span></a>
+<a class="sourceLine" id="cb9-9" data-line-number="9"><span class="st"> </span><span class="fl">-2.688901</span>  <span class="fl">7.940012</span></a>
+<a class="sourceLine" id="cb9-10" data-line-number="10">sample estimates<span class="op">:</span></a>
+<a class="sourceLine" id="cb9-11" data-line-number="11"><span class="st">             </span>mean <span class="cf">in</span> group master mean <span class="cf">in</span> group mbland<span class="op">-</span>makefiles<span class="dv">-00</span> </a>
+<a class="sourceLine" id="cb9-12" data-line-number="12">                         <span class="fl">120.6433</span>                          <span class="fl">118.0178</span> </a></code></pre></div>
+<p>Not surprisingly, the T-test is inconclusive. If you don’t have a multicore machine, odds are you won’t see a significant speedup from these patches.</p>
+</section>
+</section>
+<section id="full-parallel-build" class="level3">
+<h3>Full parallel build</h3>
+<p>Parallel builds are where you expect a single-makefile build system to really shine. When running these, it certainly <em>felt</em> faster.</p>
+<section id="master-1" class="level4">
+<h4>master</h4>
+<div class="sourceCode" id="cb10"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">      real            user            sys       </a>
+<a class="sourceLine" id="cb10-2" data-line-number="2"> Min.   <span class="op">:</span><span class="fl">79.24</span>   Min.   <span class="op">:</span><span class="fl">105.8</span>   Min.   <span class="op">:</span><span class="fl">8.190</span>  </a>
+<a class="sourceLine" id="cb10-3" data-line-number="3"> 1st Qu.<span class="op">:</span><span class="fl">80.10</span>   1st Qu.<span class="op">:</span><span class="fl">106.6</span>   1st Qu.<span class="op">:</span><span class="fl">8.690</span>  </a>
+<a class="sourceLine" id="cb10-4" data-line-number="4"> Median <span class="op">:</span><span class="fl">80.92</span>   Median <span class="op">:</span><span class="fl">107.2</span>   Median <span class="op">:</span><span class="fl">8.730</span>  </a>
+<a class="sourceLine" id="cb10-5" data-line-number="5"> Mean   <span class="op">:</span><span class="fl">81.24</span>   Mean   <span class="op">:</span><span class="fl">107.8</span>   Mean   <span class="op">:</span><span class="fl">8.814</span>  </a>
+<a class="sourceLine" id="cb10-6" data-line-number="6"> 3rd Qu.<span class="op">:</span><span class="fl">82.67</span>   3rd Qu.<span class="op">:</span><span class="fl">109.4</span>   3rd Qu.<span class="op">:</span><span class="fl">9.070</span>  </a>
+<a class="sourceLine" id="cb10-7" data-line-number="7"> Max.   <span class="op">:</span><span class="fl">83.66</span>   Max.   <span class="op">:</span><span class="fl">110.6</span>   Max.   <span class="op">:</span><span class="fl">9.190</span></a></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="op">&gt;</span><span class="st"> </span><span class="kw">plot</span>(<span class="kw">density</span>(fullpar[<span class="kw">which</span>(fullpar<span class="op">$</span>branch<span class="op">==</span><span class="st">'master'</span>),]<span class="op">$</span>real),</a>
+<a class="sourceLine" id="cb11-2" data-line-number="2"><span class="op">+</span><span class="st">      </span><span class="dt">main=</span><span class="st">'master parallel build time density (real)'</span>)</a></code></pre></div>
+<figure>
+<img src="../images/openssl-master-parallel-density.png" alt="This could actually pass for a normal distribution" /><figcaption>This could actually pass for a normal distribution</figcaption>
+</figure>
+</section>
+<section id="mbland-makefiles-00-1" class="level4">
+<h4>mbland-makefiles-00</h4>
+<div class="sourceCode" id="cb12"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1">    real            user            sys</a>
+<a class="sourceLine" id="cb12-2" data-line-number="2">Min.   <span class="op">:</span><span class="fl">45.10</span>   Min.   <span class="op">:</span><span class="fl">147.8</span>   Min.   <span class="op">:</span><span class="fl">11.08</span></a>
+<a class="sourceLine" id="cb12-3" data-line-number="3">1st Qu.<span class="op">:</span><span class="fl">46.90</span>   1st Qu.<span class="op">:</span><span class="fl">151.6</span>   1st Qu.<span class="op">:</span><span class="fl">11.44</span></a>
+<a class="sourceLine" id="cb12-4" data-line-number="4">Median <span class="op">:</span><span class="fl">47.68</span>   Median <span class="op">:</span><span class="fl">154.9</span>   Median <span class="op">:</span><span class="fl">11.70</span></a>
+<a class="sourceLine" id="cb12-5" data-line-number="5">Mean   <span class="op">:</span><span class="fl">48.36</span>   Mean   <span class="op">:</span><span class="fl">157.6</span>   Mean   <span class="op">:</span><span class="fl">11.75</span></a>
+<a class="sourceLine" id="cb12-6" data-line-number="6">3rd Qu.<span class="op">:</span><span class="fl">50.37</span>   3rd Qu.<span class="op">:</span><span class="fl">166.1</span>   3rd Qu.<span class="op">:</span><span class="fl">12.06</span></a>
+<a class="sourceLine" id="cb12-7" data-line-number="7">Max.   <span class="op">:</span><span class="fl">52.95</span>   Max.   <span class="op">:</span><span class="fl">166.8</span>   Max.   <span class="op">:</span><span class="fl">12.46</span></a></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1"><span class="op">&gt;</span><span class="st"> </span><span class="kw">plot</span>(<span class="kw">density</span>(fullpar[<span class="kw">which</span>(fullpar<span class="op">$</span>branch<span class="op">==</span><span class="st">'mbland-makefiles-00'</span>),]<span class="op">$</span>real),</a>
+<a class="sourceLine" id="cb13-2" data-line-number="2"><span class="op">+</span><span class="st">      </span><span class="dt">main=</span><span class="st">'mbland-makefiles-00 parallel build time density (real)'</span>)</a></code></pre></div>
+<p><img src="../images/openssl-mbland-parallel-density.png" /></p>
+</section>
+<section id="comparison-1" class="level4">
+<h4>Comparison</h4>
+<div class="sourceCode" id="cb14"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1"><span class="op">&gt;</span><span class="st"> </span><span class="kw">boxplot</span>(fullpar[<span class="kw">which</span>(fullpar<span class="op">$</span>branch<span class="op">==</span><span class="st">'master'</span>),]<span class="op">$</span>real,</a>
+<a class="sourceLine" id="cb14-2" data-line-number="2"><span class="op">+</span><span class="st"> </span>fullpar[<span class="kw">which</span>(fullpar<span class="op">$</span>branch<span class="op">==</span><span class="st">'mbland-makefiles-00'</span>),]<span class="op">$</span>real,</a>
+<a class="sourceLine" id="cb14-3" data-line-number="3"><span class="op">+</span><span class="st"> </span><span class="dt">ylab=</span><span class="st">'time (real)'</span>, <span class="dt">xlab=</span><span class="st">'branch'</span>,</a>
+<a class="sourceLine" id="cb14-4" data-line-number="4"><span class="op">+</span><span class="st"> </span><span class="dt">names=</span><span class="kw">c</span>(<span class="st">'master'</span>, <span class="st">'mbland-makefiles-00'</span>),</a>
+<a class="sourceLine" id="cb14-5" data-line-number="5"><span class="op">+</span><span class="st"> </span><span class="dt">main=</span><span class="st">'Full parallel build'</span>)</a></code></pre></div>
+<figure>
+<img src="../images/openssl-parallel-real.png" alt="Single-makefile structure performs excellently in parallel builds" /><figcaption>Single-makefile structure performs <em>excellently</em> in parallel builds</figcaption>
+</figure>
+<div class="sourceCode" id="cb15"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1"><span class="op">&gt;</span><span class="st"> </span><span class="kw">t.test</span>(real <span class="op">~</span><span class="st"> </span>branch, <span class="dt">data=</span>fullpar)</a>
+<a class="sourceLine" id="cb15-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb15-3" data-line-number="3">	Welch Two Sample t<span class="op">-</span>test</a>
+<a class="sourceLine" id="cb15-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb15-5" data-line-number="5">data<span class="op">:</span><span class="st">  </span>real by branch</a>
+<a class="sourceLine" id="cb15-6" data-line-number="6">t =<span class="st"> </span><span class="fl">31.1981</span>, df =<span class="st"> </span><span class="fl">13.113</span>, p<span class="op">-</span>value =<span class="st"> </span><span class="fl">1.084e-13</span></a>
+<a class="sourceLine" id="cb15-7" data-line-number="7">alternative hypothesis<span class="op">:</span><span class="st"> </span>true difference <span class="cf">in</span> means is not equal to <span class="dv">0</span></a>
+<a class="sourceLine" id="cb15-8" data-line-number="8"><span class="dv">95</span> percent confidence interval<span class="op">:</span></a>
+<a class="sourceLine" id="cb15-9" data-line-number="9"><span class="st"> </span><span class="fl">30.60205</span> <span class="fl">35.15128</span></a>
+<a class="sourceLine" id="cb15-10" data-line-number="10">sample estimates<span class="op">:</span></a>
+<a class="sourceLine" id="cb15-11" data-line-number="11"><span class="st">             </span>mean <span class="cf">in</span> group master mean <span class="cf">in</span> group mbland<span class="op">-</span>makefiles<span class="dv">-00</span> </a>
+<a class="sourceLine" id="cb15-12" data-line-number="12">                         <span class="fl">81.24000</span>                          <span class="fl">48.36333</span> </a></code></pre></div>
+<p>T-test yields favorable results. Looks like a 40% speedup. This is the best result on this whole page, since fast parallel builds after just this initial work can open doors for even better parallelization in the future.</p>
+</section>
+</section>
+<section id="full-sequential-build-with-ccache" class="level3">
+<h3>Full sequential build with ccache</h3>
+<p>While doing build benchmarks with ccache might seem a bit odd,<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> it actually makes sense: we should have data on how people might be building things in practice. If developers choose to use ccache when working, then they would want to know how this impacts <em>them</em>.</p>
+<section id="master-2" class="level4">
+<h4>master</h4>
+<div class="sourceCode" id="cb16"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1">      real            user            sys       </a>
+<a class="sourceLine" id="cb16-2" data-line-number="2"> Min.   <span class="op">:</span><span class="fl">15.94</span>   Min.   <span class="op">:</span><span class="fl">11.16</span>   Min.   <span class="op">:</span><span class="fl">1.650</span>  </a>
+<a class="sourceLine" id="cb16-3" data-line-number="3"> 1st Qu.<span class="op">:</span><span class="fl">16.00</span>   1st Qu.<span class="op">:</span><span class="fl">11.22</span>   1st Qu.<span class="op">:</span><span class="fl">1.695</span>  </a>
+<a class="sourceLine" id="cb16-4" data-line-number="4"> Median <span class="op">:</span><span class="fl">16.06</span>   Median <span class="op">:</span><span class="fl">11.38</span>   Median <span class="op">:</span><span class="fl">1.790</span>  </a>
+<a class="sourceLine" id="cb16-5" data-line-number="5"> Mean   <span class="op">:</span><span class="fl">16.17</span>   Mean   <span class="op">:</span><span class="fl">11.38</span>   Mean   <span class="op">:</span><span class="fl">1.778</span>  </a>
+<a class="sourceLine" id="cb16-6" data-line-number="6"> 3rd Qu.<span class="op">:</span><span class="fl">16.29</span>   3rd Qu.<span class="op">:</span><span class="fl">11.48</span>   3rd Qu.<span class="op">:</span><span class="fl">1.825</span>  </a>
+<a class="sourceLine" id="cb16-7" data-line-number="7"> Max.   <span class="op">:</span><span class="fl">16.63</span>   Max.   <span class="op">:</span><span class="fl">11.69</span>   Max.   <span class="op">:</span><span class="fl">1.940</span>  </a></code></pre></div>
+</section>
+<section id="mbland-makefiles-00-2" class="level4">
+<h4>mbland-makefiles-00</h4>
+<div class="sourceCode" id="cb17"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1">      real            user             sys       </a>
+<a class="sourceLine" id="cb17-2" data-line-number="2"> Min.   <span class="op">:</span><span class="fl">12.46</span>   Min.   <span class="op">:</span><span class="st"> </span><span class="fl">8.310</span>   Min.   <span class="op">:</span><span class="fl">1.400</span>  </a>
+<a class="sourceLine" id="cb17-3" data-line-number="3"> 1st Qu.<span class="op">:</span><span class="fl">12.48</span>   1st Qu.<span class="op">:</span><span class="st"> </span><span class="fl">8.537</span>   1st Qu.<span class="op">:</span><span class="fl">1.490</span>  </a>
+<a class="sourceLine" id="cb17-4" data-line-number="4"> Median <span class="op">:</span><span class="fl">12.55</span>   Median <span class="op">:</span><span class="st"> </span><span class="fl">8.595</span>   Median <span class="op">:</span><span class="fl">1.525</span>  </a>
+<a class="sourceLine" id="cb17-5" data-line-number="5"> Mean   <span class="op">:</span><span class="fl">13.23</span>   Mean   <span class="op">:</span><span class="st"> </span><span class="fl">9.090</span>   Mean   <span class="op">:</span><span class="fl">1.632</span>  </a>
+<a class="sourceLine" id="cb17-6" data-line-number="6"> 3rd Qu.<span class="op">:</span><span class="fl">12.72</span>   3rd Qu.<span class="op">:</span><span class="st"> </span><span class="fl">8.652</span>   3rd Qu.<span class="op">:</span><span class="fl">1.545</span>  </a>
+<a class="sourceLine" id="cb17-7" data-line-number="7"> Max.   <span class="op">:</span><span class="fl">16.58</span>   Max.   <span class="op">:</span><span class="fl">11.850</span>   Max.   <span class="op">:</span><span class="fl">2.310</span>  </a></code></pre></div>
+</section>
+<section id="comparison-2" class="level4">
+<h4>Comparison</h4>
+<div class="sourceCode" id="cb18"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" data-line-number="1"><span class="op">&gt;</span><span class="st"> </span><span class="kw">boxplot</span>(fullseqcc[<span class="kw">which</span>(fullseqcc<span class="op">$</span>branch<span class="op">==</span><span class="st">'master'</span>),]<span class="op">$</span>real,</a>
+<a class="sourceLine" id="cb18-2" data-line-number="2"><span class="op">+</span><span class="st"> </span>fullseqcc[<span class="kw">which</span>(fullseqcc<span class="op">$</span>branch<span class="op">==</span><span class="st">'mbland-makefiles-00'</span>),]<span class="op">$</span>real,</a>
+<a class="sourceLine" id="cb18-3" data-line-number="3"><span class="op">+</span><span class="st"> </span><span class="dt">ylab=</span><span class="st">'time (real)'</span>, <span class="dt">xlab=</span><span class="st">'branch'</span>,</a>
+<a class="sourceLine" id="cb18-4" data-line-number="4"><span class="op">+</span><span class="st"> </span><span class="dt">names=</span><span class="kw">c</span>(<span class="st">'master'</span>, <span class="st">'mbland-makefiles-00'</span>),</a>
+<a class="sourceLine" id="cb18-5" data-line-number="5"><span class="op">+</span><span class="st"> </span><span class="dt">main=</span><span class="st">'Full sequential build with ccache'</span>)</a></code></pre></div>
+<p><img src="../images/openssl-sequential-real-ccache.png" /></p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1"><span class="op">&gt;</span><span class="st"> </span><span class="kw">t.test</span>(real <span class="op">~</span><span class="st"> </span>branch, <span class="dt">data=</span>fullseqcc)</a>
+<a class="sourceLine" id="cb19-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb19-3" data-line-number="3">	Welch Two Sample t<span class="op">-</span>test</a>
+<a class="sourceLine" id="cb19-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb19-5" data-line-number="5">data<span class="op">:</span><span class="st">  </span>real by branch</a>
+<a class="sourceLine" id="cb19-6" data-line-number="6">t =<span class="st"> </span><span class="fl">4.3274</span>, df =<span class="st"> </span><span class="fl">5.265</span>, p<span class="op">-</span>value =<span class="st"> </span><span class="fl">0.006681</span></a>
+<a class="sourceLine" id="cb19-7" data-line-number="7">alternative hypothesis<span class="op">:</span><span class="st"> </span>true difference <span class="cf">in</span> means is not equal to <span class="dv">0</span></a>
+<a class="sourceLine" id="cb19-8" data-line-number="8"><span class="dv">95</span> percent confidence interval<span class="op">:</span></a>
+<a class="sourceLine" id="cb19-9" data-line-number="9"><span class="st"> </span><span class="fl">1.221215</span> <span class="fl">4.666119</span></a>
+<a class="sourceLine" id="cb19-10" data-line-number="10">sample estimates<span class="op">:</span></a>
+<a class="sourceLine" id="cb19-11" data-line-number="11"><span class="st">             </span>mean <span class="cf">in</span> group master mean <span class="cf">in</span> group mbland<span class="op">-</span>makefiles<span class="dv">-00</span> </a>
+<a class="sourceLine" id="cb19-12" data-line-number="12">                         <span class="fl">16.17067</span>                          <span class="fl">13.22700</span> </a></code></pre></div>
+<p>We see noticeable (and statistically significant) improvements in even the sequential build with ccache. However, considering we’re talking a difference of 13 vs. 16 seconds here, this may or may not matter to you.</p>
+<p>If you’re concerned with how ccache impacts actual performance <em>during development</em>, there’s some useful info on their site’s <a href="https://ccache.samba.org/performance.html">performance page</a>:</p>
+<blockquote>
+<p>It should also be noted that if the expected hit rate is low, there may be a net performance loss when using ccache because of the overhead of cache misses (typically 5%-20%). Also, if the build machine is short on memory compared to the amount of memory used by the build tools (compiler, linker, etc), usage of ccache could decrease performance due the fact that ccache’s cached files may flush other files from the OS’s disk cache. See this mailing list post by Christopher Tate for a good write-up on this issue. So to sum it up: it is probably wise to perform some measurements with and without ccache for your typical use case before enabling it!</p>
+</blockquote>
+</section>
+</section>
+<section id="full-parallel-build-with-ccache" class="level3">
+<h3>Full parallel build with ccache</h3>
+<section id="master-3" class="level4">
+<h4>master</h4>
+<div class="sourceCode" id="cb20"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" data-line-number="1">      real            user            sys       </a>
+<a class="sourceLine" id="cb20-2" data-line-number="2"> Min.   <span class="op">:</span><span class="fl">10.85</span>   Min.   <span class="op">:</span><span class="fl">9.420</span>   Min.   <span class="op">:</span><span class="fl">1.270</span>  </a>
+<a class="sourceLine" id="cb20-3" data-line-number="3"> 1st Qu.<span class="op">:</span><span class="fl">10.97</span>   1st Qu.<span class="op">:</span><span class="fl">9.555</span>   1st Qu.<span class="op">:</span><span class="fl">1.347</span>  </a>
+<a class="sourceLine" id="cb20-4" data-line-number="4"> Median <span class="op">:</span><span class="fl">11.14</span>   Median <span class="op">:</span><span class="fl">9.710</span>   Median <span class="op">:</span><span class="fl">1.420</span>  </a>
+<a class="sourceLine" id="cb20-5" data-line-number="5"> Mean   <span class="op">:</span><span class="fl">11.09</span>   Mean   <span class="op">:</span><span class="fl">9.670</span>   Mean   <span class="op">:</span><span class="fl">1.403</span>  </a>
+<a class="sourceLine" id="cb20-6" data-line-number="6"> 3rd Qu.<span class="op">:</span><span class="fl">11.22</span>   3rd Qu.<span class="op">:</span><span class="fl">9.768</span>   3rd Qu.<span class="op">:</span><span class="fl">1.462</span>  </a>
+<a class="sourceLine" id="cb20-7" data-line-number="7"> Max.   <span class="op">:</span><span class="fl">11.25</span>   Max.   <span class="op">:</span><span class="fl">9.890</span>   Max.   <span class="op">:</span><span class="fl">1.510</span></a></code></pre></div>
+</section>
+<section id="mbland-makefiles-00-3" class="level4">
+<h4>mbland-makefiles-00</h4>
+<div class="sourceCode" id="cb21"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1">      real            user            sys       </a>
+<a class="sourceLine" id="cb21-2" data-line-number="2"> Min.   <span class="op">:</span><span class="fl">5.315</span>   Min.   <span class="op">:</span><span class="fl">13.14</span>   Min.   <span class="op">:</span><span class="fl">2.220</span>  </a>
+<a class="sourceLine" id="cb21-3" data-line-number="3"> 1st Qu.<span class="op">:</span><span class="fl">5.433</span>   1st Qu.<span class="op">:</span><span class="fl">13.15</span>   1st Qu.<span class="op">:</span><span class="fl">2.240</span>  </a>
+<a class="sourceLine" id="cb21-4" data-line-number="4"> Median <span class="op">:</span><span class="fl">5.644</span>   Median <span class="op">:</span><span class="fl">13.19</span>   Median <span class="op">:</span><span class="fl">2.320</span>  </a>
+<a class="sourceLine" id="cb21-5" data-line-number="5"> Mean   <span class="op">:</span><span class="fl">5.550</span>   Mean   <span class="op">:</span><span class="fl">13.46</span>   Mean   <span class="op">:</span><span class="fl">2.317</span>  </a>
+<a class="sourceLine" id="cb21-6" data-line-number="6"> 3rd Qu.<span class="op">:</span><span class="fl">5.663</span>   3rd Qu.<span class="op">:</span><span class="fl">13.82</span>   3rd Qu.<span class="op">:</span><span class="fl">2.393</span>  </a>
+<a class="sourceLine" id="cb21-7" data-line-number="7"> Max.   <span class="op">:</span><span class="fl">5.667</span>   Max.   <span class="op">:</span><span class="fl">14.04</span>   Max.   <span class="op">:</span><span class="fl">2.410</span> </a></code></pre></div>
+</section>
+<section id="comparison-3" class="level4">
+<h4>Comparison</h4>
+<div class="sourceCode" id="cb22"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" data-line-number="1"><span class="op">&gt;</span><span class="st"> </span><span class="kw">boxplot</span>(fullseqcc[<span class="kw">which</span>(fullseqcc<span class="op">$</span>branch<span class="op">==</span><span class="st">'master'</span>),]<span class="op">$</span>real,</a>
+<a class="sourceLine" id="cb22-2" data-line-number="2"><span class="op">+</span><span class="st">       </span>fullseqcc[<span class="kw">which</span>(fullseqcc<span class="op">$</span>branch<span class="op">==</span><span class="st">'mbland-makefiles-00'</span>),]<span class="op">$</span>real,</a>
+<a class="sourceLine" id="cb22-3" data-line-number="3"><span class="op">+</span><span class="st">       </span><span class="dt">ylab=</span><span class="st">'time (real)'</span>, <span class="dt">xlab=</span><span class="st">'branch'</span>,</a>
+<a class="sourceLine" id="cb22-4" data-line-number="4"><span class="op">+</span><span class="st">       </span><span class="dt">names=</span><span class="kw">c</span>(<span class="st">'master'</span>, <span class="st">'mbland-makefiles-00'</span>),</a>
+<a class="sourceLine" id="cb22-5" data-line-number="5"><span class="op">+</span><span class="st">       </span><span class="dt">main=</span><span class="st">'Full sequential build with ccache'</span>)</a></code></pre></div>
+<p><img src="../images/openssl-parallel-real-ccache.png" /></p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" data-line-number="1"><span class="op">&gt;</span><span class="st"> </span><span class="kw">t.test</span>(real <span class="op">~</span><span class="st"> </span>branch, <span class="dt">data=</span>fullparcc)</a>
+<a class="sourceLine" id="cb23-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb23-3" data-line-number="3">	Welch Two Sample t<span class="op">-</span>test</a>
+<a class="sourceLine" id="cb23-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb23-5" data-line-number="5">data<span class="op">:</span><span class="st">  </span>real by branch</a>
+<a class="sourceLine" id="cb23-6" data-line-number="6">t =<span class="st"> </span><span class="fl">57.7511</span>, df =<span class="st"> </span><span class="fl">9.992</span>, p<span class="op">-</span>value =<span class="st"> </span><span class="fl">6.001e-14</span></a>
+<a class="sourceLine" id="cb23-7" data-line-number="7">alternative hypothesis<span class="op">:</span><span class="st"> </span>true difference <span class="cf">in</span> means is not equal to <span class="dv">0</span></a>
+<a class="sourceLine" id="cb23-8" data-line-number="8"><span class="dv">95</span> percent confidence interval<span class="op">:</span></a>
+<a class="sourceLine" id="cb23-9" data-line-number="9"><span class="st"> </span><span class="fl">5.326394</span> <span class="fl">5.753940</span></a>
+<a class="sourceLine" id="cb23-10" data-line-number="10">sample estimates<span class="op">:</span></a>
+<a class="sourceLine" id="cb23-11" data-line-number="11"><span class="st">             </span>mean <span class="cf">in</span> group master mean <span class="cf">in</span> group mbland<span class="op">-</span>makefiles<span class="dv">-00</span> </a>
+<a class="sourceLine" id="cb23-12" data-line-number="12">                        <span class="fl">11.090500</span>                          <span class="fl">5.550333</span> </a></code></pre></div>
+<p>More obviously so, the single-makefile parallel build with ccache is faster. These kinds of results are really encouraging: ccache can do its job better, work in parallel, and cut build time in half on an already quick build.</p>
+</section>
+</section>
+</section>
+<section id="specs" class="level2">
+<h2>Specs</h2>
+<pre class="sourceCode"><code>~$ gcc -v
+Using built-in specs.
+COLLECT_GCC=gcc
+COLLECT_LTO_WRAPPER=/usr/lib/gcc/x86_64-unknown-linux-gnu/4.9.1/lto-wrapper
+Target: x86_64-unknown-linux-gnu
+Configured with: /build/gcc/src/gcc-4.9.1/configure --prefix=/usr
+--libdir=/usr/lib --libexecdir=/usr/lib --mandir=/usr/share/man
+--infodir=/usr/share/info --with-bugurl=https://bugs.archlinux.org/
+--enable-languages=c,c++,ada,fortran,go,lto,objc,obj-c++ --enable-shared
+--enable-threads=posix --with-system-zlib --enable-__cxa_atexit
+--disable-libunwind-exceptions --enable-clocale=gnu --disable-libstdcxx-pch
+--disable-libssp --enable-gnu-unique-object --enable-linker-build-id
+--enable-cloog-backend=isl --disable-isl-version-check
+--disable-cloog-version-check --enable-lto --enable-plugin
+--enable-install-libiberty --with-linker-hash-style=gnu --disable-multilib
+--disable-werror --enable-checking=release
+Thread model: posix
+gcc version 4.9.1 (GCC) </code></pre>
+<pre class="sourceCode"><code>$ ccache -V | head -n1
+ccache version 3.1.9</code></pre>
+<pre class="sourceCode"><code>$ uname -a
+Linux dionysus 3.16.1-1-ARCH #1 SMP PREEMPT Thu Aug 14 07:40:19 CEST 2014 x86_64 GNU/Linux</code></pre>
+<pre class="sourceCode"><code>$ cat /proc/meminfo | head -n1
+MemTotal:        7952408 kB</code></pre>
+<pre class="sourceCode"><code>$ cat /proc/cpuinfo | egrep &quot;(model name|cache size|cpu cores)&quot; | head -n3
+model name	: Intel(R) Core(TM) i7-2620M CPU @ 2.70GHz
+cache size	: 4096 KB
+cpu cores	: 2</code></pre>
+</section>
+<section id="complications" class="level2">
+<h2>Complications</h2>
+<section id="make-links" class="level3">
+<h3>make links</h3>
+<p>Mike has noted in his <a href="http://goo.gl/yhvCno">Google Doc</a>:</p>
+<blockquote>
+<p>(In fact, firing up a new build instance on Arch Linux revealed a problem with <q>make links</q> I hadn’t previously noticed. Though I was running <q>make clean</q> often in my original OS X working directories, the links produced by <q>make clean</q> are not removed by that target. Hence, I’ve already pushed a fix for this issue that succeeds the mbland-makefiles-00 tag.)</p>
+</blockquote>
+<p>I’m not sure to what extent this affects the quality of my build benchmarks.</p>
+</section>
+</section>
+<section id="conclusion" class="level2">
+<h2>Conclusion</h2>
+<p>As far as I can tell, Mike’s makefile refactoring has definitely achieved a ~40% speedup for parallel builds of OpenSSL, even without ccache. That’s an 81 second build time versus a 48 second build time.</p>
+<p>As one StackOverflow member <a href="http://stackoverflow.com/questions/136650/long-compile-times-and-lost-productivity">writes</a>:<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a></p>
+<blockquote>
+<p>I believe Caper Jones discussed some studies in which anything greater than a 1 second delay broke people out of the zone (my gist), and that the time / productivity lost due to that small delay was really an order of magnitude larger than it appeared.</p>
+</blockquote>
+<p>If torial is correct in saying that, then build times really <em>do</em> have a significant impact on developers. Which makes this a big deal.</p>
+<p>Mike has a <a href="https://github.com/openssl/openssl/pull/160">pull request</a> for these changes pending on GitHub.</p>
+</section>
+<section class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>When I originally reported my results on openssl-dev, I just provided the ccache data without even realizing I had been using it. Aside from slight embarrassment on my part, that shouldn’t take away form the results.<a href="#fnref1" class="footnote-back">↩</a></p></li>
+<li id="fn2"><p>I’ve quoted that build time/dev performance statistic in <a href="http://nathantypanski.github.io/git-talk/">other contexts</a> as well. It really rings true to me.<a href="#fnref2" class="footnote-back">↩</a></p></li>
+</ol>
+</section>
+
+        </div>
+        <div id="footer">
+            <p>
+  Content © 2012-2021 Nathan Typanski
+  and licensed under a <br /><a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.
+  Opinions are my own and not the views of my employer.
+  <a href="../website.html">About this site.</a>
+<!-- p-->
+<p>
+  <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/80x15.png" /></a>
+</p>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-37825924-1', 'nathantypanski.com');
+  ga('send', 'pageview');
+
+</script>
+
+
+        </div>
+    </body>
+</html>

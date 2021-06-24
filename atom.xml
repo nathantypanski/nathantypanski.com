@@ -1,0 +1,1259 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <title>Nathan's Blog</title>
+    <link href="http://www.nathantypanski.com/atom.xml" rel="self" />
+    <link href="http://www.nathantypanski.com" />
+    <id>http://www.nathantypanski.com/atom.xml</id>
+    <author>
+        <name>Nathan Typanski</name>
+        <email>ndt@nathantypanski.com</email>
+    </author>
+    <updated>2016-12-08T00:00:00Z</updated>
+    <entry>
+    <title>Website statistics</title>
+    <link href="http://www.nathantypanski.com/blog/2016-12-08-website-statistics.html" />
+    <id>http://www.nathantypanski.com/blog/2016-12-08-website-statistics.html</id>
+    <published>2016-12-08T00:00:00Z</published>
+    <updated>2016-12-08T00:00:00Z</updated>
+    <summary type="html"><![CDATA[<div class="info">
+    <!--
+    <div class="snippets">
+        <i class="fa fa-calendar"></i> December  8, 2016 <i class="fa fa-cut" February 12, 2017></i> February 12, 2017
+    </div>
+    -->
+    
+</div>
+<p>This post is a quick update about my website. I love running my personal site. It is my diary, it is my intellectual backbone, and it has gone largely neglected for most of 2015–2016. I am working on redirecting attention back to my blog and starting to write publicly again; let us see if I will be successful.</p>
+<p>This post is a very quick and rudimentary overview of the current analytics and popularity of my site.</p>
+<figure>
+<img src="../images/website_2016-12-08_google_analytics.png" alt="My website in 2016." /><figcaption>My website in 2016.</figcaption>
+</figure>
+<p>I wrote my first post on this blog on June 3, 2012. <a href="2016-12-03-systems-and-philosophy.html">Just last Saturday</a> I mentioned it, since I’m starting to get back into writing again. I got somewhere between 1500 and 2000 user sessions a month on my website, and I’ve been running <a href="https://www.google.com/analytics/">Google Analytics</a> on the site for most of that time.</p>
+<p>I used to think <a href="2014-08-03-a-vim-like-emacs-config.html">Towards a Vim-like Emacs</a> was the most popular post on my website. It hit <a href="https://news.ycombinator.com/item?id=8581530">#1 on Hacker News</a> for a brief period of time,<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> and I’ve never been quite sure if I will be able to top that or if it will go down as my magnum opus.</p>
+<p>Now my <a href="2014-08-23-ode-solver-py.html">ODE solver</a> turns out to be the most popular, with 10,716 pageviews in 2016, versus 5,457 for the Emacs post. This is surprising given that the mathjax was broken for some unknown period of time, until I fixed it <a href="https://github.com/nathantypanski/nathantypanski.com/commit/1557c22449cb1c473b4937dedba3595eebcbcf73">5 days ago</a> in a scramble to <a href="https://github.com/nathantypanski/nathantypanski.com/commit/de89bb8de58aacd6690e06b4c87ac14aa0b9c1ee">fix the Haskell that assembles my website</a>. This is surprising to me, but it’s easy to explain—that is easily my best post that combines mathematics with a generally useful tutorial on Python code. If I were a scientist working with applied mathematics, that post would certainly be of more interest to me.</p>
+<p>Further, now the <a href="http://spacemacs.org/">Spacemacs</a> project has been successful (10,001 stars on GitHub and 2,597 forks), which brings <a href="https://www.emacswiki.org/emacs/Evil">Evil</a> to the general population with considerably less work than following my Emacs post would require. I’m not sure how much impact my work had in inspiring that project, or whether Spacemacs started first, but they certainly make it easy enough for the everyday person that you don’t need to do <a href="2014-08-03-a-vim-like-emacs-config.html#stealing-ibuffers-keymap">some of the immensely crazy shit I did stealing keymaps on your own</a>.</p>
+<p>No big conclusion for this piece. Just a quick update, carrying high <a href="../pages.html#blogging">temporal locality</a>. <a href="http://genius.com/10981254">Onward! and Onward!</a></p>
+<figure>
+<img src="../images/website_2016-12-08_google_analytics_vimlike.png" alt="When Towards a Vim-like Emacs hit Hacker News, my website spiked to 13,423 hits in a week." /><figcaption>When <a href="2014-08-03-a-vim-like-emacs-config.html">Towards a Vim-like Emacs</a> <a href="https://news.ycombinator.com/item?id=8581530">hit Hacker News</a>, my website spiked to 13,423 hits in a week.</figcaption>
+</figure>
+<section class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>I think I have a screenshot of this floating around somewhere, but I’m not sure where to find it.<a href="#fnref1" class="footnote-back">↩</a></p></li>
+</ol>
+</section>
+]]></summary>
+</entry>
+<entry>
+    <title>Systems and philosophy</title>
+    <link href="http://www.nathantypanski.com/blog/2016-12-03-systems-and-philosophy.html" />
+    <id>http://www.nathantypanski.com/blog/2016-12-03-systems-and-philosophy.html</id>
+    <published>2016-12-03T00:00:00Z</published>
+    <updated>2016-12-03T00:00:00Z</updated>
+    <summary type="html"><![CDATA[<div class="info">
+    <!--
+    <div class="snippets">
+        <i class="fa fa-calendar"></i> December  3, 2016 <i class="fa fa-cut" December  3, 2016></i> December  3, 2016
+    </div>
+    -->
+    
+</div>
+<div id="toc"><h2>Contents</h2>
+<ul>
+<li><a href="#free-software-backoff">Free software backoff</a></li>
+<li><a href="#computer-brand">Computer brand</a></li>
+<li><a href="#programming-languages">Programming languages</a></li>
+<li><a href="#conclusion">Conclusion</a></li>
+</ul> </div>
+<p>When I started computing, I was heavy into customization. I wrote <a href="/blog/2012-06-03-powerusers.html">Powerusers</a>, which was about the intense customizations I had done to personalize my Arch Linux distribution. It felt sort of juvenile to spend that much time <a href="https://fun.irq.dk/funroll-loops.org/">ricing</a> my Linux distro. But it was fun. Linux and open-source were my hobbies; I did them in my free time and studied computer engineering as my main gig.</p>
+<p>At the time, I only really managed two Linux systems: my laptop and this webserver. So it was easy to get away with hacking the hell out of my own system, since I knew it well, and refusing to automate tasks like my webserver configuration because I ran it in more of a fire-and-forget style. Put <a href="https://www.nginx.com/resources/wiki/">nginx</a> in a <a href="https://wiki.archlinux.org/index.php/change_root">chroot</a> once and you’re done.</p>
+<p>Now I’m getting older, I manage Linux systems professionally, and my philosophies on customizaiton, among many other things, are starting to change. Here’s an example: my zsh config has <a href="https://github.com/nathantypanski/dotfiles/blob/15900ce524a20b117ba950eaf9dbf03d3c263849/zsh/.config/zsh/settings.zsh#L64"><code>setopt vi</code></a> in it. This means that on my local system, I have vi key bindings in my shell. But when I SSH into a remote host, it’s more likely than not that my shell will be Bash. It’s possible that the system maintainer hasn’t even installed zsh on it, or maybe won’t install it. But I can predictably, always, find Bash. Now I’m considering removing the vi bindings, or scrapping zsh entirely and moving back to Bash, just because that’s what I find on every single system that I encounter.<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a></p>
+<p>I can’t context-switch from vi to Emacs-like Bash keybindings very often. It gets quite confusing.</p>
+<blockquote>
+<ul>
+<li>What shell do you use?</li>
+<li>zsh.</li>
+<li>What? Just use Bash, dude.</li>
+<li>Why?</li>
+<li>Just use Bash.</li>
+</ul>
+</blockquote>
+<section id="free-software-backoff" class="level2">
+<h2>Free software backoff</h2>
+<p>What else has changed? Well, for a long time I was a very public advocate of using only <a href="https://www.gnu.org/philosophy/free-sw.en.html">free software</a>, at least to the fullest extent that I could manage. I wrote all my school papers in <a href="https://www.latex-project.org/">LaTeX</a>, which was the subject of some scorn from my professors when I could not submit <code>.doc</code> or <code>.docx</code> files. I still use LaTeX for some of my personal correspondence, but now I’m back to using Google Docs or <a href="https://www.atlassian.com/software/confluence">Confluence</a> for half of my things. It can be handy, sometimes, to have the editor get out of the way, and sometimes the benefit of collaborative work is worth the software philosophical tradeoff.</p>
+<p>However, I will add that free software solutions to the problem of collaborative document editing, at least in the case of wikis, exist. You can use <a href="https://github.com/jgm/gitit">Gitit</a>, which gives you a Git-backed wiki with Pandoc for document markup. Sure, it doesn’t have an LDAP connector, but it’s a wonderful system to write in, and something like Markdown is relatively easier to learn than MediaWiki markup.</p>
+</section>
+<section id="computer-brand" class="level2">
+<h2>Computer brand</h2>
+<p>Another switch: I use a Macbook. Not for my personal computing, but for my work stuff, ever since around September 2014. Getting used to OSX after spending something like 5 years running almost exclusively Arch Linux was a real change. But nearly every developer who I know in the industry uses OS X<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a>, and sometimes I just have to play by other people’s rules. I still put Arch on half of it, but to use that system I have to compile a <a href="https://aur.archlinux.org/packages/linux-macbook/">custom kernel</a> with Apple-specific patches to work around <a href="https://bugzilla.kernel.org/show_bug.cgi?id=103211">Bug 103211</a>. This takes an annoying amount of effort when I have more important things to be doing than customizing my Linux distro.</p>
+<p>Besides: when there’s an emergency, and I happen to be stranded in a coffee shop and need to access the internet immediately, not having to fumble around with <a href="https://wiki.archlinux.org/index.php/netctl">netctl</a> to access WiFi comes in handy. So, in those situations, I use OS X.</p>
+</section>
+<section id="programming-languages" class="level2">
+<h2>Programming languages</h2>
+<p>The other thing that has happened is my languages of choice have become a bit less dogmatic. I will probably always write Python, because it is ubiquitous, easy to write and read, and I know it quite well. But I’ve since <a href="/blog/2015-05-17-ruby.html">picked up Ruby</a>, worked on a Rails application, and now I’m a bit less dogmatic about languages in general. I’m no longer out there trying to get everyone to learn Haskell because strong static type systems and functional languages are just <em>so damn cool</em>. I understand when people look at <a href="https://www.rust-lang.org/en-US/">Rust</a> and tell me that high-level abstractions coupled with a serious type system and strong, compile-time guarantees of memory safety are not useful things to put in production or learn about (though I disagree with those people, and they probably enjoy writing Java).</p>
+</section>
+<section id="conclusion" class="level2">
+<h2>Conclusion</h2>
+<p>People who knew me in 2014-2015 might be convinced that I’ve sold out. I’ve reneged on my free software idealism, am slowly tending toward anti-customization, bought an iPhone, and am becoming complacent with my gradual absorption into the general tech monoculture. But in some ways, this is OK. I’ve picked up new skills, tried out new things, and I would bet that people now find me a bit easier to work with.</p>
+<p>The other bit is that I’ve moved more seriously into the private industry. When you’re just a student and researcher, it’s easy to be dogmatic about Linux and weird programming languages - especially when you’re broke and can’t afford to pay for computer programs. And when your day-to-day activities are math and electronics classes, it’s easy to go home and hack code in Haskell in your free time. But when you’re hacking code all day and working hard with complex Linux systems, sometimes nothing beats just being able to go home at the end of it, chill out, and watch Netflix on a MacBook.</p>
+<p>This isn’t some giant announcement that everything I believed in college was wrong and proprietary software has no ethical issues. It’s more of just an acknowledgement that life is fluid, and reality is dynamic and difficult. Sometimes this means making concessions. I am willing to do that, now, just as long as I learn some new things and can get the job done.</p>
+</section>
+<section class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>If you’re really hardcore, you could argue that <a href="https://en.wikipedia.org/wiki/Bourne_shell">Bourne Shell</a> is the most ubiquitous, and therefore I should use that.<a href="#fnref1" class="footnote-back">↩</a></p></li>
+<li id="fn2"><p>Something I’m not too happy about, but it’s the case.<a href="#fnref2" class="footnote-back">↩</a></p></li>
+</ol>
+</section>
+]]></summary>
+</entry>
+<entry>
+    <title>First thoughts on Ruby: A quick showdown vs. Python</title>
+    <link href="http://www.nathantypanski.com/blog/2015-05-17-ruby.html" />
+    <id>http://www.nathantypanski.com/blog/2015-05-17-ruby.html</id>
+    <published>2015-05-17T00:00:00Z</published>
+    <updated>2015-05-17T00:00:00Z</updated>
+    <summary type="html"><![CDATA[<div class="info">
+    <!--
+    <div class="snippets">
+        <i class="fa fa-calendar"></i> May 17, 2015 <i class="fa fa-cut" December  3, 2016></i> December  3, 2016
+    </div>
+    -->
+    
+</div>
+<div id="toc"><h2>Contents</h2>
+<ul>
+<li><a href="#toy-script-comparisons">Toy script comparisons</a><ul>
+<li><a href="#running-sum">Running sum</a></li>
+<li><a href="#oop">OOP</a></li>
+<li><a href="#hidden">Hidden</a></li>
+</ul></li>
+<li><a href="#conclusion">Conclusion</a></li>
+</ul> </div>
+<p>Python and Ruby always struck me as somewhat related. They’re both dynamic languages from the 1990s, still highly popular, and influenced a number of more modern dynamic programming languages like <a href="https://en.wikipedia.org/wiki/Julia_%28programming_language%29">Julia</a>. They’re similar enough in spirit that one can easily fall into the trap of thinking that if they know one of Python and Ruby, they don’t have to learn the other. I was primarily a Python programmer for my research work, and Python is popular in academia, so I am definitely guilty of having a closed mind toward Ruby.</p>
+<p>Today I made an effort to challenge my assumptions and give Ruby a serious shot. I finished the <a href="http://rubykoans.com/">Ruby koans</a>, which took me about <a href="https://github.com/nathantypanski/ruby-koans">five hours, and four hours of <q>real work</q></a>. I’d messed with <a href="http://tryruby.org/levels/1/challenges/0">Try Ruby</a> before that, but that didn’t take me very far, and <a href="https://rubymonk.com/">RubyMonk</a> felt too slow and clunky for my tastes when I tried the primer.</p>
+<p>So the natural thing to do for me is to compare Ruby with Python, and see what I like and don’t like about each of them. I’m not trying to <a href="http://c2.com/cgi/wiki?PythonVsRuby">start a flamewar</a>, it’s more like I’m just trying to translate some of my knowledge and highlight some of the differences that I saw so far.</p>
+<section id="toy-script-comparisons" class="level2">
+<h2>Toy script comparisons</h2>
+<p>I wrote some toy scripts to show the most jarring differences so far. Yeah, I’m sure I’ll dig further into the language and all of this code will look silly, but as a budding Rubyist this is about as advanced as I can muster.</p>
+<section id="running-sum" class="level3">
+<h3>Running sum</h3>
+<p>In Ruby, the tendency is to iterate over a number of variables with the <code>#each</code> method, and then you pass in a block that gets called on each of the elements. What’s immediately noticeable here is that Ruby blocks are way more powerful than Python’s anonymous callalbles (<code>lambdas</code>).</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode Ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">#!/usr/bin/env ruby</span></a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb1-3" data-line-number="3">running_sum = []</a>
+<a class="sourceLine" id="cb1-4" data-line-number="4">args = []</a>
+<a class="sourceLine" id="cb1-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb1-6" data-line-number="6">[<span class="dv">1</span>,<span class="dv">5</span>,<span class="dv">7</span>].each <span class="kw">do</span> |x|</a>
+<a class="sourceLine" id="cb1-7" data-line-number="7">  args &lt;&lt; x</a>
+<a class="sourceLine" id="cb1-8" data-line-number="8">  <span class="kw">if</span> running_sum.size &gt; <span class="dv">0</span> <span class="kw">then</span></a>
+<a class="sourceLine" id="cb1-9" data-line-number="9">    running_sum &lt;&lt; running_sum.last + x</a>
+<a class="sourceLine" id="cb1-10" data-line-number="10">  <span class="kw">else</span></a>
+<a class="sourceLine" id="cb1-11" data-line-number="11">    running_sum &lt;&lt; x</a>
+<a class="sourceLine" id="cb1-12" data-line-number="12">  <span class="kw">end</span></a>
+<a class="sourceLine" id="cb1-13" data-line-number="13"><span class="kw">end</span></a>
+<a class="sourceLine" id="cb1-14" data-line-number="14"></a>
+<a class="sourceLine" id="cb1-15" data-line-number="15">puts <span class="st">&quot;Running sum: </span><span class="ot">#{</span>running_sum<span class="ot">}</span><span class="st"> from </span><span class="ot">#{</span>args<span class="ot">}</span><span class="st">.&quot;</span></a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode Python"><code class="sourceCode python"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="co">#!/usr/bin/env python3</span></a>
+<a class="sourceLine" id="cb2-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb2-3" data-line-number="3">running_sum <span class="op">=</span> []</a>
+<a class="sourceLine" id="cb2-4" data-line-number="4">args <span class="op">=</span> []</a>
+<a class="sourceLine" id="cb2-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb2-6" data-line-number="6"><span class="cf">for</span> n <span class="kw">in</span> [<span class="dv">1</span>, <span class="dv">5</span>, <span class="dv">7</span>]:</a>
+<a class="sourceLine" id="cb2-7" data-line-number="7">    args.append(args)</a>
+<a class="sourceLine" id="cb2-8" data-line-number="8">    <span class="cf">if</span> running_sum:</a>
+<a class="sourceLine" id="cb2-9" data-line-number="9">        running_sum.append(running_sum[<span class="op">-</span><span class="dv">1</span>] <span class="op">+</span> n)</a>
+<a class="sourceLine" id="cb2-10" data-line-number="10">    <span class="cf">else</span>:</a>
+<a class="sourceLine" id="cb2-11" data-line-number="11">        running_sum.append(n)</a>
+<a class="sourceLine" id="cb2-12" data-line-number="12"></a>
+<a class="sourceLine" id="cb2-13" data-line-number="13"><span class="bu">print</span>(<span class="st">&quot;Running sum: </span><span class="sc">{}</span><span class="st"> from </span><span class="sc">{}</span><span class="st">.&quot;</span>.<span class="bu">format</span>(running_sum, args))</a></code></pre></div>
+<p>At face value, the two aren’t very different, but these examples illustrate a fundamental difference between the attitudes toward iteration: Python uses <code>for</code> loops for everything, but Rubyists will do everything in their power to avoid using them.</p>
+</section>
+<section id="oop" class="level3">
+<h3>OOP</h3>
+<p>Ruby classes seem to be both less verbose and syntactically simpler than Python classes. Both languages have a <q>message passing</q> way of calling instance methods: in Python, with <code>getattr(object, name)</code> and in Ruby via <code>#send()</code>. Mixins, via <code>modules</code>, are the coolest advantage Ruby seems to have over Python, where the closest equivalent is boring old implementation inheritance.</p>
+<p>Both languages have an equivalent for getters and setters. In Python, this is done via a decorator, but in Ruby it seems to be a language builtin.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode Ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw">#!/usr/bin/env ruby</span></a>
+<a class="sourceLine" id="cb3-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="kw">module</span> <span class="dt">Nameable</span></a>
+<a class="sourceLine" id="cb3-4" data-line-number="4">  <span class="kw">def</span> name=(name)</a>
+<a class="sourceLine" id="cb3-5" data-line-number="5">    puts <span class="st">&quot;changed name to </span><span class="ot">#{</span>name<span class="ot">}</span><span class="st">&quot;</span></a>
+<a class="sourceLine" id="cb3-6" data-line-number="6">    <span class="ot">@name</span> = name</a>
+<a class="sourceLine" id="cb3-7" data-line-number="7">  <span class="kw">end</span></a>
+<a class="sourceLine" id="cb3-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb3-9" data-line-number="9">  <span class="kw">def</span> name</a>
+<a class="sourceLine" id="cb3-10" data-line-number="10">    <span class="ot">@name</span></a>
+<a class="sourceLine" id="cb3-11" data-line-number="11">  <span class="kw">end</span></a>
+<a class="sourceLine" id="cb3-12" data-line-number="12"><span class="kw">end</span></a>
+<a class="sourceLine" id="cb3-13" data-line-number="13"></a>
+<a class="sourceLine" id="cb3-14" data-line-number="14"><span class="kw">class</span> <span class="dt">Dog</span></a>
+<a class="sourceLine" id="cb3-15" data-line-number="15">  include <span class="dt">Nameable</span></a>
+<a class="sourceLine" id="cb3-16" data-line-number="16"></a>
+<a class="sourceLine" id="cb3-17" data-line-number="17">  <span class="kw">def</span> initialize(name)</a>
+<a class="sourceLine" id="cb3-18" data-line-number="18">    <span class="ot">@name</span> = name</a>
+<a class="sourceLine" id="cb3-19" data-line-number="19">  <span class="kw">end</span></a>
+<a class="sourceLine" id="cb3-20" data-line-number="20"></a>
+<a class="sourceLine" id="cb3-21" data-line-number="21">  <span class="kw">def</span> bark</a>
+<a class="sourceLine" id="cb3-22" data-line-number="22">    puts <span class="st">&#39;Woof!&#39;</span></a>
+<a class="sourceLine" id="cb3-23" data-line-number="23">  <span class="kw">end</span></a>
+<a class="sourceLine" id="cb3-24" data-line-number="24"><span class="kw">end</span></a>
+<a class="sourceLine" id="cb3-25" data-line-number="25"></a>
+<a class="sourceLine" id="cb3-26" data-line-number="26">fido = <span class="dt">Dog</span>.new(<span class="st">&#39;Fido&#39;</span>)</a>
+<a class="sourceLine" id="cb3-27" data-line-number="27">fido.send(<span class="st">&#39;bark&#39;</span>)</a>
+<a class="sourceLine" id="cb3-28" data-line-number="28">fido.name = <span class="st">&#39;Cheese&#39;</span></a>
+<a class="sourceLine" id="cb3-29" data-line-number="29">puts fido.name</a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode Python"><code class="sourceCode python"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="co">#!/usr/bin/env python3</span></a>
+<a class="sourceLine" id="cb4-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb4-3" data-line-number="3"><span class="kw">class</span> Nameable(<span class="bu">object</span>):</a>
+<a class="sourceLine" id="cb4-4" data-line-number="4">    <span class="at">@property</span></a>
+<a class="sourceLine" id="cb4-5" data-line-number="5">    <span class="kw">def</span> name(<span class="va">self</span>):</a>
+<a class="sourceLine" id="cb4-6" data-line-number="6">        <span class="cf">return</span> <span class="va">self</span>._name</a>
+<a class="sourceLine" id="cb4-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb4-8" data-line-number="8">    <span class="at">@name.setter</span></a>
+<a class="sourceLine" id="cb4-9" data-line-number="9">    <span class="kw">def</span> name(<span class="va">self</span>, value):</a>
+<a class="sourceLine" id="cb4-10" data-line-number="10">        <span class="bu">print</span>(<span class="st">&#39;Changed name to </span><span class="sc">{}</span><span class="st">&#39;</span>.<span class="bu">format</span>(value))</a>
+<a class="sourceLine" id="cb4-11" data-line-number="11">        <span class="va">self</span>._name <span class="op">=</span> value</a>
+<a class="sourceLine" id="cb4-12" data-line-number="12"></a>
+<a class="sourceLine" id="cb4-13" data-line-number="13"><span class="kw">class</span> Dog(Nameable):</a>
+<a class="sourceLine" id="cb4-14" data-line-number="14">    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, name):</a>
+<a class="sourceLine" id="cb4-15" data-line-number="15">        <span class="va">self</span>._name <span class="op">=</span> name</a>
+<a class="sourceLine" id="cb4-16" data-line-number="16"></a>
+<a class="sourceLine" id="cb4-17" data-line-number="17">    <span class="kw">def</span> bark(<span class="va">self</span>):</a>
+<a class="sourceLine" id="cb4-18" data-line-number="18">        <span class="bu">print</span>(<span class="st">&quot;Woof!&quot;</span>)</a>
+<a class="sourceLine" id="cb4-19" data-line-number="19"></a>
+<a class="sourceLine" id="cb4-20" data-line-number="20">fido <span class="op">=</span> Dog(<span class="st">&#39;Fido&#39;</span>)</a>
+<a class="sourceLine" id="cb4-21" data-line-number="21">fido.bark()</a>
+<a class="sourceLine" id="cb4-22" data-line-number="22">fido.name <span class="op">=</span> <span class="st">&#39;Cheese&#39;</span></a>
+<a class="sourceLine" id="cb4-23" data-line-number="23"><span class="bu">print</span>(fido.name)</a></code></pre></div>
+</section>
+<section id="hidden" class="level3">
+<h3>Hidden</h3>
+<p><em>Finally, a serious scripting task!</em></p>
+<p>I’ve been playing with <a href="https://github.com/venam/2bwm">2bwm</a> as my window manager lately. One of its major defects is that it lacks an easy way to list all hidden windows and show them. It comes with a tool, <code>hidden</code>, that will list hidden windows and print <code>xdotool</code> output for raising them, but the output looks like this:</p>
+<pre class="sourceCode"><code>&#39;hidden.rb&#39;:&#39;xdotool windowactivate 0xc003ec windowraise 0xc003ec&#39;
+&#39;[nathan@dionysus][~/dotfiles]%&#39;:&#39;xdotool windowactivate 0xc0085c windowraise 0xc0085c&#39;</code></pre>
+<p>Which obviously isn’t sufficient for easily raising the windows. A potential fix to this is building a wrapper for <a href="http://tools.suckless.org/dmenu/">dmenu</a> that lets you easily raise hidden windows.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode Ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw">#!/usr/bin/env ruby</span></a>
+<a class="sourceLine" id="cb6-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb6-3" data-line-number="3">hidden_windows = <span class="st">`hidden -c`</span>.split(<span class="ot">/\n/</span>)</a>
+<a class="sourceLine" id="cb6-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb6-5" data-line-number="5">map = {}</a>
+<a class="sourceLine" id="cb6-6" data-line-number="6">hidden_windows.each <span class="kw">do</span> |line|</a>
+<a class="sourceLine" id="cb6-7" data-line-number="7">    match = <span class="ot">/&#39;(.*)&#39;:&#39;(.*)&#39;/</span>.match(line)</a>
+<a class="sourceLine" id="cb6-8" data-line-number="8">    key = match[<span class="dv">1</span>]</a>
+<a class="sourceLine" id="cb6-9" data-line-number="9">    val = match[<span class="dv">2</span>]</a>
+<a class="sourceLine" id="cb6-10" data-line-number="10">    <span class="kw">while</span> map.has_key? key</a>
+<a class="sourceLine" id="cb6-11" data-line-number="11">        key = key + <span class="ch">&#39;*&#39;</span></a>
+<a class="sourceLine" id="cb6-12" data-line-number="12">    <span class="kw">end</span></a>
+<a class="sourceLine" id="cb6-13" data-line-number="13">    map[key] = val</a>
+<a class="sourceLine" id="cb6-14" data-line-number="14"><span class="kw">end</span></a>
+<a class="sourceLine" id="cb6-15" data-line-number="15"></a>
+<a class="sourceLine" id="cb6-16" data-line-number="16">choice = <span class="dv">nil</span></a>
+<a class="sourceLine" id="cb6-17" data-line-number="17"></a>
+<a class="sourceLine" id="cb6-18" data-line-number="18"><span class="dt">IO</span>.popen(<span class="st">&#39;dmenu&#39;</span>, <span class="st">&#39;r+&#39;</span>) <span class="kw">do</span> |dmenu|</a>
+<a class="sourceLine" id="cb6-19" data-line-number="19">    map.keys.each <span class="kw">do</span> |name|</a>
+<a class="sourceLine" id="cb6-20" data-line-number="20">        dmenu.write(name)</a>
+<a class="sourceLine" id="cb6-21" data-line-number="21">        dmenu.write(<span class="st">&quot;\n&quot;</span>)</a>
+<a class="sourceLine" id="cb6-22" data-line-number="22">    <span class="kw">end</span></a>
+<a class="sourceLine" id="cb6-23" data-line-number="23">    dmenu.close_write</a>
+<a class="sourceLine" id="cb6-24" data-line-number="24">    choice = dmenu.gets.rstrip</a>
+<a class="sourceLine" id="cb6-25" data-line-number="25"><span class="kw">end</span></a>
+<a class="sourceLine" id="cb6-26" data-line-number="26"></a>
+<a class="sourceLine" id="cb6-27" data-line-number="27"><span class="dt">IO</span>.popen(map[choice])</a></code></pre></div>
+<p>In Python:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode Python"><code class="sourceCode python"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="co">#!/usr/bin/env python3</span></a>
+<a class="sourceLine" id="cb7-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb7-3" data-line-number="3"><span class="im">import</span> subprocess</a>
+<a class="sourceLine" id="cb7-4" data-line-number="4"><span class="im">import</span> re</a>
+<a class="sourceLine" id="cb7-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb7-6" data-line-number="6"><span class="kw">def</span> main():</a>
+<a class="sourceLine" id="cb7-7" data-line-number="7">    hidden_windows <span class="op">=</span> subprocess.check_output([<span class="st">&#39;hidden&#39;</span>, <span class="st">&#39;-c&#39;</span>])</a>
+<a class="sourceLine" id="cb7-8" data-line-number="8">    hidden_windows <span class="op">=</span> hidden_windows.splitlines()</a>
+<a class="sourceLine" id="cb7-9" data-line-number="9">    hidden_map <span class="op">=</span> {}</a>
+<a class="sourceLine" id="cb7-10" data-line-number="10">    search <span class="op">=</span> re.<span class="bu">compile</span>(<span class="st">&quot;^&#39;(.*)&#39;:&#39;(.*)&#39;$&quot;</span>)</a>
+<a class="sourceLine" id="cb7-11" data-line-number="11">    <span class="cf">for</span> window <span class="kw">in</span> hidden_windows:</a>
+<a class="sourceLine" id="cb7-12" data-line-number="12">        window <span class="op">=</span> window.decode(<span class="st">&#39;utf-8&#39;</span>)</a>
+<a class="sourceLine" id="cb7-13" data-line-number="13">        match <span class="op">=</span> search.match(<span class="bu">str</span>(window))</a>
+<a class="sourceLine" id="cb7-14" data-line-number="14">        name, tool <span class="op">=</span> match.group(<span class="dv">1</span>), match.group(<span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb7-15" data-line-number="15">        <span class="cf">while</span> name <span class="kw">in</span> hidden_map:</a>
+<a class="sourceLine" id="cb7-16" data-line-number="16">            name <span class="op">+=</span> <span class="st">&#39;*&#39;</span></a>
+<a class="sourceLine" id="cb7-17" data-line-number="17">        hidden_map[name] <span class="op">=</span> tool</a>
+<a class="sourceLine" id="cb7-18" data-line-number="18">    dmenu <span class="op">=</span> subprocess.check_output([<span class="st">&#39;dmenu&#39;</span>],</a>
+<a class="sourceLine" id="cb7-19" data-line-number="19">            <span class="bu">input</span><span class="op">=</span><span class="bu">bytes</span>(<span class="st">&#39;</span><span class="ch">\n</span><span class="st">&#39;</span>.join(hidden_map.keys()), encoding<span class="op">=</span><span class="st">&#39;utf-8&#39;</span>))</a>
+<a class="sourceLine" id="cb7-20" data-line-number="20">    subprocess.call(hidden_map[dmenu.rstrip().decode(<span class="st">&#39;utf-8&#39;</span>)], shell<span class="op">=</span><span class="va">True</span>)</a>
+<a class="sourceLine" id="cb7-21" data-line-number="21"></a>
+<a class="sourceLine" id="cb7-22" data-line-number="22"></a>
+<a class="sourceLine" id="cb7-23" data-line-number="23"><span class="cf">if</span> <span class="va">__name__</span> <span class="op">==</span> <span class="st">&#39;__main__&#39;</span>:</a>
+<a class="sourceLine" id="cb7-24" data-line-number="24">    main()</a></code></pre></div>
+<p>The advantages Ruby has here are its simpler means of spawning and interacting with subprocesses, and the far prettier Regex syntax, both of which are inspired by Perl. Python, by contrast, has a clunkier regex engine that requires an import, a call to <code>re.compile</code>, and another call to <code>regex.match(...)</code> in order to use it.</p>
+<p>The other thing you notice here is the <code>bytes</code> handling. Subprocess output returns <code>bytes</code> objects in Python, and they have to be decoded into <code>utf-8</code> before I can do much with them.</p>
+<p>This results in a far more verbose Python solution.</p>
+<p>It’s also worth mentioning that the subprocess interface in Ruby is handled through an RAII-style block. In Python’s case, it looks like <a href="https://bugs.python.org/issue10554"><code>Popen</code> objects can be used in <code>with</code> statements</a>:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode Python"><code class="sourceCode python"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="cf">with</span> Popen([<span class="st">&quot;ifconfig&quot;</span>], stdout<span class="op">=</span>PIPE) <span class="im">as</span> proc:</a>
+<a class="sourceLine" id="cb8-2" data-line-number="2">    log.write(proc.stdout.read())</a></code></pre></div>
+<p>but that leaves the clunky <code>Popen</code> interface to worry about. Personally I can never remember what <code>stdout=PIPE</code> actually does, or which of those given modes I should be using for my process. In Ruby, I get to use <a href="http://man7.org/linux/man-pages/man3/fopen.3.html"><code>fopen(3)</code> arguments</a> to describe how I’d like to handle fds on the subprocess. That’s an interface I’m already familiar with, and it’s intutitive.</p>
+</section>
+</section>
+<section id="conclusion" class="level2">
+<h2>Conclusion</h2>
+<p>My initial impression of Ruby is quite positive. It’s a strong candidate for replacing my <q>one off Python scripts</q> that often felt a bit too verbose for the tasks they were achieving. While I’m not comfortable enough to do serious development in it yet, I do get the feeling that Ruby will be quite readable over the equivalent Bash/Awk/Sed mashup that I might otherwise use to avoid writing a wordy Python script that uses <code>subprocess</code>.</p>
+<p>There’s a distinct impression that Ruby is more <q>fun</q> than Python. There are many ways to achieve certain tasks, and the general goal is to find the most beautiful way. In Python, it seems like there’s a heavier focus on readability. I was skimming through some of the Rails codebase, and Rubyists seem to have no qualms about using the obscure <code>||=</code> operator, in spite of the fact that it <a href="https://stackoverflow.com/questions/995593/what-does-or-equals-mean-in-ruby">really doesn’t mean what you think it means</a>. I think the most obscure syntactic construct in Python is just the <a href="https://stackoverflow.com/questions/394809/does-python-have-a-ternary-conditional-operator">wacky ternary operator</a>.</p>
+<p>I do not believe that Python and Ruby are really playing in the same niche. While Python dominates in academia and scientific programming, Ruby seems to win in the Perl-ish systems scripting and web development areas (though <a href="https://www.djangoproject.com/">Django</a> and <a href="http://www.tornadoweb.org/en/stable/">Tornado</a> put out some serious competition with <a href="http://rubyonrails.org/">Rails</a> and <a href="http://www.sinatrarb.com/">Sinatra</a>, and Python’s <a href="http://blog.getpelican.com/">Pelican</a> looks like a fine alternative to <a href="http://jekyllrb.com/">Jekyll</a>).</p>
+</section>
+]]></summary>
+</entry>
+<entry>
+    <title>Heads down for the finish line</title>
+    <link href="http://www.nathantypanski.com/blog/2015-04-15-heads-down-for-the-finish-line.html" />
+    <id>http://www.nathantypanski.com/blog/2015-04-15-heads-down-for-the-finish-line.html</id>
+    <published>2015-04-15T00:00:00Z</published>
+    <updated>2015-04-15T00:00:00Z</updated>
+    <summary type="html"><![CDATA[<div class="info">
+    <!--
+    <div class="snippets">
+        <i class="fa fa-calendar"></i> April 15, 2015 <i class="fa fa-cut" November  3, 2016></i> November  3, 2016
+    </div>
+    -->
+    
+</div>
+<div id="toc"><h2>Contents</h2>
+<ul>
+<li><a href="#red-hat">Red Hat</a></li>
+<li><a href="#pcse-coding-challenge">PCSE Coding Challenge</a></li>
+<li><a href="#mike-bland-cnu-research-google-and-the-us-government">Mike Bland, CNU research, Google, and the US Government</a></li>
+<li><a href="#microcontrollers-are-fun">Microcontrollers are fun</a></li>
+<li><a href="#leaving-college-joining-palantir">Leaving college, joining Palantir</a></li>
+</ul> </div>
+<p>I haven’t blogged since January, and I really wish I had a better reason for it but the truth is I simply have not applied my characteristic productive laziness to writing.</p>
+<p>I’ve been reading a lot of jwz lately. I think I read <a href="http://www.jwz.org/gruntle/nscpdorm.html">the netscape dorm</a> three times in the last few weeks. That was a bad sign, and I should have known better, but I didn’t quite pick up on it.</p>
+<p>So let’s do a breakdown of the past few months; maybe somehow I can justify the silence.</p>
+<section id="red-hat" class="level2">
+<h2>Red Hat</h2>
+<p><a href="https://fedoraproject.org/wiki/User:Spot">Tom Callaway</a> from Red Hat <a href="http://blog.pcs.cnu.edu/?p=254">came to speak on March 24</a> for CNU’s PCSE<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> department and the <a href="http://cnulug.org/">LUG I founded</a>. That was awesome. I don’t think anything could validate a newly-founded Linux user group more than having industry leaders come joke with you about tiling window managers. Quoting Tom:</p>
+<blockquote>
+<p>The venn diagram between people who use tiling window managers and people who know Haskell is just a circle.</p>
+</blockquote>
+<p>In complete good spirit, it’s worth mentioning <a href="https://i3wm.org/">i3</a> was written largely <em>because</em> the developers thought XMonad was cool, but didn’t want to learn Haskell.</p>
+<p>After the presentation I was told by one of the LUG members that Tom’s talk was really inspiring for them. The student said <q>It’s really great seeing industry leaders and finding out they’re just like us - only maybe a bit older or more knowledgeable - and feeling like I can be just like that, too, if I just work hard and dedicate myself.</q></p>
+<p>It’s that kind of thing that makes me so glad I stuck with CNULUG. Even through all the lows, the awful turnout for the first year or so, we’ve pulled through - and now we matter so much that we’re making a real difference in students’ lives. Those sort of results, to me, almost makes my whole four years at CNU worth it on their own.</p>
+</section>
+<section id="pcse-coding-challenge" class="level2">
+<h2>PCSE Coding Challenge</h2>
+<p>A team I was on (with <a href="https://www.linkedin.com/pub/wilson-ho/82/33/b23">Wilson Ho</a> and <a href="https://www.linkedin.com/pub/ian-miller/b1/ba9/513">Ian Miller</a>) won my university’s <q>PCSE Coding Challenge</q> on April 3. That was fun. I totally embarrassed myself during the big-wig ACM programming competition last semester, so it’s relieving to see some sort of quantifiable progress.</p>
+<p>Something struck me about the <a href="/files/2015Spring-PCSE-coding-challenge-Koehl.pdf">problems</a>, though. We had three language options: Java, C (<code>gcc</code> with default flags), and C++ (<code>g++</code> with default flags). At least two of these would be more well-suited to scripting languages, though.</p>
+<p>Problem 4 is simple text substitution. The input two lines forming a substitution table (preceded by a less-than-helpful count), followed by a list of plaintext/cyphertext blocks:</p>
+<pre class="sourceCode"><code>3
+a b c
+B C D
+2
+PT: abc
+CT: BCDDCB</code></pre>
+<p>You’re supposed to encrypt the plaintext blocks, and decrypt the cyphertext blocks. Normally I’d solve this in Bash:<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a></p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode Bash"><code class="sourceCode bash"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="co">#!/bin/bash</span></a>
+<a class="sourceLine" id="cb4-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb4-3" data-line-number="3"><span class="kw">while</span> <span class="bu">read</span> -r <span class="va">cypher_count</span>; <span class="kw">do</span></a>
+<a class="sourceLine" id="cb4-4" data-line-number="4">    [[ <span class="va">${cypher_count}</span> <span class="ex">-eq</span> 0 ]] <span class="kw">&amp;&amp;</span> <span class="bu">break</span></a>
+<a class="sourceLine" id="cb4-5" data-line-number="5">    <span class="bu">read</span> -r <span class="va">plaintext</span></a>
+<a class="sourceLine" id="cb4-6" data-line-number="6">    <span class="bu">read</span> -r <span class="va">cyphertext</span></a>
+<a class="sourceLine" id="cb4-7" data-line-number="7">    <span class="bu">read</span> -r <span class="va">count</span></a>
+<a class="sourceLine" id="cb4-8" data-line-number="8">    <span class="kw">for</span> <span class="ex">_</span> in <span class="va">$(</span><span class="fu">seq</span> <span class="va">${count})</span><span class="kw">;</span> <span class="kw">do</span></a>
+<a class="sourceLine" id="cb4-9" data-line-number="9">        <span class="bu">read</span> -r <span class="va">line</span></a>
+<a class="sourceLine" id="cb4-10" data-line-number="10">        <span class="kw">if [[</span> <span class="va">${line:0:2}</span> <span class="ot">==</span> <span class="st">&#39;PT&#39;</span><span class="kw"> ]]</span>; <span class="kw">then</span></a>
+<a class="sourceLine" id="cb4-11" data-line-number="11">            <span class="bu">echo</span> -n <span class="st">&quot;CT: &quot;</span></a>
+<a class="sourceLine" id="cb4-12" data-line-number="12">            <span class="bu">echo</span> <span class="va">${line:4}</span> <span class="kw">|</span> <span class="fu">tr</span> <span class="st">&quot;</span><span class="va">$plaintext</span><span class="st">&quot;</span> <span class="st">&quot;</span><span class="va">$cyphertext</span><span class="st">&quot;</span></a>
+<a class="sourceLine" id="cb4-13" data-line-number="13">        <span class="kw">else</span></a>
+<a class="sourceLine" id="cb4-14" data-line-number="14">            <span class="bu">echo</span> -n <span class="st">&quot;PT: &quot;</span></a>
+<a class="sourceLine" id="cb4-15" data-line-number="15">            <span class="bu">echo</span> <span class="va">${line:4}</span> <span class="kw">|</span> <span class="fu">tr</span> <span class="st">&quot;</span><span class="va">$cyphertext</span><span class="st">&quot;</span> <span class="st">&quot;</span><span class="va">$plaintext</span><span class="st">&quot;</span></a>
+<a class="sourceLine" id="cb4-16" data-line-number="16">        <span class="kw">fi</span></a>
+<a class="sourceLine" id="cb4-17" data-line-number="17">    <span class="kw">done</span></a>
+<a class="sourceLine" id="cb4-18" data-line-number="18"><span class="kw">done</span></a></code></pre></div>
+<p>Problems 1 and 5 were semi-interesting graph problems, but why bother with those when there are nice and easy text substitution problems to play with?</p>
+<p>Anyway, I’m actually pretty embarrassed by the win. My team solved the above text translation problem and the Sudoku problem (problem 3). Neither of those are particularly difficult, or require any sort of serious algorithms knowledge to solve. They’re more like run-of-the-mill programming challenges. We were about 90% of the way through problem 2, another simple text processing/sorting problem, when the timer rang.</p>
+<p>Main lesson learned: brush up on I/O in whatever language I’m choosing before the next algorithms competition. We could have performed a <em>lot</em> better if we spent less time fumbling around with a <code>BufferedReader</code> and more time thinking about algorithms.</p>
+</section>
+<section id="mike-bland-cnu-research-google-and-the-us-government" class="level2">
+<h2>Mike Bland, CNU research, Google, and the US Government</h2>
+<p><a href="http://mike-bland.com/">Mike Bland</a> keynoted <a href="http://cnu.edu/research/about/paideia.asp">Paideia</a>, CNU’s annual <q>research conference</q> on April 11. He gave a primer of his talk, itself a sort of toned-down variation of his slideshow behemoth <a href="https://18f.gsa.gov/2014/12/11/large-scale-development-culture-change/">Large Scale Development Culture Change: Google and the US Government</a> to the PCSE department on Friday, April 10. Apparently no one told him that the April 10 event would be a <q>talk</q>, and not a Q&amp;A, so Mike just ran through the same slides he’d be covering at Paideia.</p>
+<p>Mike really did a great job relating to the audience at the keynote. Even though he covered somewhat technical material, I think everyone who was there (mostly non-programmers) managed to relate to his talk and took him seriously. He made <a href="https://18f.gsa.gov/">18F</a> seem like <em>the real deal</em>, where Google was just like the training grounds for work that will have real, lasting impact on the United States.</p>
+<p>One unfortunate consequence of Friday’s talk was that PCSE folks were notably absent on Saturday. In some sense that’s OK because they already saw most of it on Friday, but in another sense it’s not since Mike was quite obviously more well-prepared on Saturday.</p>
+<p>Mike is locally famous for organizing student demonstrations to <q>save</q>, from bureaucratic shutdown, CNU’s <a href="http://cnu.edu/academics/graduate/">graduate program</a>, which basically makes him the reason I can write <q>Christopher Newport University</q> on my resumé instead of <q>Christopher Newport College</q>. But he was actually <em>confused</em> why he was relevant when <a href="http://www.pcs.cnu.edu/~David.Gore/">Dr. Gore</a> asked him to keynote CNU’s undergraduate/graduate research conference. Go figure.</p>
+<p>One thing I noticed is that he put a lot of effort into engaging the audience during his presentations. Sometimes this was successful, and sometimes this wasn’t. The difference I noticed between successively captivating a live audience and <em>not</em> doing so is when he asked people in the audience to express themselves. I can recall this same dynamic from when I gave my <a href="http://nathantypanski.github.io/git-talk/">talk advocating Git</a> at NASA Langley: people were engaged when it seemed like I valued their opinions on things. Asking questions like <q>How many have you have used version control? How many of you <em>liked</em> using it?</q> engaged viewers way more than my 15-minute usage demo.</p>
+<p>Similarly, when an audience members got to ask questions and be part of a conversation instead of just recipients of a speech, they seemed more alive and interested themselves, and the presentation seemed to have bigger impact.</p>
+<p>This kind of thing reminds me not to focus too hard on slides when I do a presentation. What I should be doing is motivating the audience, and then letting them tell me what they’re interested in - not the other way around. Unless I have something truly original to say, people are probably going to be more interested in how what I’m saying applies to <em>them</em> than whatever it is that I’m saying. Maybe that’s a sad reality, and people should care more about the generalized intellectual pursuit than individual relevance, but feeling that way isn’t going to make people listen to you.</p>
+<p>Making people relate to you will make them listen. Inspiring the hell out of people will make them listen. You don’t need to win everywhere to captivate an audience, but you better damn well captivate them or you’re just wasting a bunch of people’s time.</p>
+<p><a href="2014-08-22-openssl-makefiles.html">Previously</a>.</p>
+</section>
+<section id="microcontrollers-are-fun" class="level2">
+<h2>Microcontrollers are fun</h2>
+<p>I’m in a microprocessors class this semester, and it’s awesome. It’s definitely among the hardest classes I’ve taken at CNU, but also one of the most rewarding. Among most programmers I meet, both hardware programming and C are seen as some crazy sort of <q>black magic</q>. I understand we all pine for the good ol’ days when C was taught to every budding programmer instead of <a href="http://www.joelonsoftware.com/articles/ThePerilsofJavaSchools.html">Java</a>, when Linus Torvalds’ <a href="http://grisha.org/blog/2013/04/02/linus-on-understanding-pointers/">comments on linked lists</a> actually made sense to people with CS degrees, but modern CS departments apparently don’t throw students into the deep end with nothing but a C compiler and an assembly-language manual anymore.</p>
+<p>Yeah, most people in the class weren’t ready for that. They freaked out at first. But, you know what? The students learned the material. Myself included. <a href="http://cnu.edu/pcs/faculty_staff/wang.asp">Dr. Wang</a> didn’t spoonfeed us; he just gave us hardware manuals and told us <q>when you get out in the industry, you’re not gonna have textbooks</q> and let everyone sink or swim.</p>
+<p>I spent this evening solving example problems from an exercise booklet on a <a href="https://www.microchip.com/wwwproducts/Devices.aspx?product=PIC16F877A">PIC16F877A microcontroller</a>. It was fun. I feel like I haven’t had fun programming in a while, but when you sit down and program hardware in C it can really reinvigorate love of the craft. The work wasn’t very interesting: make different LEDs light up depending on the voltage reading from a dial. Set a cutoff threshold whenever a button is pressed and light different LEDs depending on whether you’re above or below that threshold. Simple things, but the experience is rewarding. It reminds me of being in high school, writing my first Java classes to simulate the Monty Hall problem or whatever. There’s a sense of joy and wonder that programming can produce, and it’s when I find it that I do my best work.</p>
+</section>
+<section id="leaving-college-joining-palantir" class="level1">
+<h1>Leaving college, joining Palantir</h1>
+<p>I graduate in May, and I’m absolutely terrified. I took an internship with Palantir this summer, on their Mission Operations team, instead of taking the <q>safe</q> route taking a full-time offer (like I might have gotten with <a href="https://www.ssaihq.com/">SSAI</a>, who have given me arguably the most rewarding work experience of my lifetime applying bleeding-edge industry practices to the US government). As apprehensive as this leaves me, I’m really excited about joining Palantir.</p>
+<p>Why? I really can’t overstate the influence of the mission ops team lead in inspiring me to do this. Paraphrasing, this guy told me upfront:</p>
+<blockquote>
+<p>You seem good, but you’re kind of green. There are specific things about Linux that you didn’t know - out of genuine ignorance - and our goal is gonna be to teach you those things, so you’re capable enough to do your day-to-day tasks with us and not need support from anyone else. You’re not on the level we need <em>quite</em> yet, and that’s why we’re offering you an internship, but my goal is going to be to <em>get</em> you there and <em>make</em> you that good so you can succeed with us.</p>
+</blockquote>
+<p>Now, to understand why that kind of talk inspires me, you’ve gotta understand something about who I am. I’m naturally a bit arrogant. I founded the Linux user group at my school, and I built my first Arch system seven years ago with nothing but a paper printout of the <a href="https://wiki.archlinux.org/index.php/Beginners%27_guide">beginner’s guide</a> and a single desktop computer. I’ve been administering my own webservers for three years, and running other people’s Linux servers for money for two. At least among my peers at CNU, I’m simply <em>not used</em> to people knowing more than me about this operating system.</p>
+<p>But the people at Palantir are better than me. They showed me up in the interview process, but it’s not just that - being smart isn’t the only requirement to win my respect - they’re willing to teach me. And that kind of attitude is what makes me fall in love with a company.</p>
+<p>I’ll quote <a href="http://dcurt.is/the-compounding-returns-of-intelligence">one of their cofounders, Stephen Cohen</a>, to drive this point home:</p>
+<blockquote>
+<p>We tend to massively underestimate the compounding returns of intelligence. As humans, we need to solve big problems. If you graduate Stanford at 22 and Google recruits you, you’ll work a 9-to-5. It’s probably more like an 11-to-3 in terms of hard work. They’ll pay well. It’s relaxing. But what they are actually doing is paying you to accept a much lower intellectual growth rate. When you recognize that intelligence is compounding, the cost of that missing long-term compounding is enormous. They’re not giving you the best opportunity of your life. Then a scary thing can happen: You might realize one day that you’ve lost your competitive edge. You won’t be the best anymore. You won’t be able to fall in love with new stuff. Things are cushy where you are. You get complacent and stall. So, run your prospective engineering hires through that narrative. Then show them the alternative: working at your startup.</p>
+</blockquote>
+</section>
+<section class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>Physics, computer science, and engineering.<a href="#fnref1" class="footnote-back">↩</a></p></li>
+<li id="fn2"><p>To be fair, the C solution isn’t much worse:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode C"><code class="sourceCode c"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></a>
+<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="pp">#include </span><span class="im">&lt;string.h&gt;</span></a>
+<a class="sourceLine" id="cb2-3" data-line-number="3"><span class="pp">#include </span><span class="im">&lt;stdlib.h&gt;</span></a>
+<a class="sourceLine" id="cb2-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb2-5" data-line-number="5"><span class="pp">#define MAX_LINE 512</span></a>
+<a class="sourceLine" id="cb2-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb2-7" data-line-number="7"><span class="dt">int</span> main() {</a>
+<a class="sourceLine" id="cb2-8" data-line-number="8">        <span class="dt">char</span> *line = malloc(<span class="kw">sizeof</span>(<span class="dt">char</span>) * MAX_LINE);</a>
+<a class="sourceLine" id="cb2-9" data-line-number="9">        <span class="dt">int</span> count = <span class="dv">0</span>;</a>
+<a class="sourceLine" id="cb2-10" data-line-number="10">        <span class="cf">do</span> {</a>
+<a class="sourceLine" id="cb2-11" data-line-number="11">                scanf(<span class="st">&quot;%d</span><span class="sc">\n</span><span class="st">&quot;</span>, &amp;count);</a>
+<a class="sourceLine" id="cb2-12" data-line-number="12">                <span class="dt">char</span> *pt = malloc(<span class="kw">sizeof</span>(<span class="dt">char</span>) * count + <span class="dv">1</span>);</a>
+<a class="sourceLine" id="cb2-13" data-line-number="13">                <span class="dt">char</span> *ct = malloc(<span class="kw">sizeof</span>(<span class="dt">char</span>) * count + <span class="dv">1</span>);</a>
+<a class="sourceLine" id="cb2-14" data-line-number="14"></a>
+<a class="sourceLine" id="cb2-15" data-line-number="15">                <span class="dt">int</span> i;</a>
+<a class="sourceLine" id="cb2-16" data-line-number="16">                <span class="cf">for</span>(i = <span class="dv">0</span>; i &lt; count; i++)</a>
+<a class="sourceLine" id="cb2-17" data-line-number="17">                        scanf(<span class="st">&quot;%c &quot;</span>, pt + i);</a>
+<a class="sourceLine" id="cb2-18" data-line-number="18">                <span class="cf">for</span>(i = <span class="dv">0</span>; i &lt; count; i++)</a>
+<a class="sourceLine" id="cb2-19" data-line-number="19">                        scanf(<span class="st">&quot;%c &quot;</span>, ct + i);</a>
+<a class="sourceLine" id="cb2-20" data-line-number="20"></a>
+<a class="sourceLine" id="cb2-21" data-line-number="21">                scanf(<span class="st">&quot;%d &quot;</span>, &amp;count);</a>
+<a class="sourceLine" id="cb2-22" data-line-number="22"></a>
+<a class="sourceLine" id="cb2-23" data-line-number="23">                <span class="cf">for</span>(i = <span class="dv">0</span>; i &lt; count; i++) {</a>
+<a class="sourceLine" id="cb2-24" data-line-number="24">                        <span class="dt">char</span> *left;</a>
+<a class="sourceLine" id="cb2-25" data-line-number="25">                        <span class="dt">char</span> *right;</a>
+<a class="sourceLine" id="cb2-26" data-line-number="26">                        fgets(line, MAX_LINE, stdin);</a>
+<a class="sourceLine" id="cb2-27" data-line-number="27">                        <span class="cf">if</span> (line[<span class="dv">0</span>] == <span class="ch">&#39;P&#39;</span>) {</a>
+<a class="sourceLine" id="cb2-28" data-line-number="28">                                left = pt;</a>
+<a class="sourceLine" id="cb2-29" data-line-number="29">                                right = ct;</a>
+<a class="sourceLine" id="cb2-30" data-line-number="30">                                printf(<span class="st">&quot;CT: &quot;</span>);</a>
+<a class="sourceLine" id="cb2-31" data-line-number="31">                        } <span class="cf">else</span> {</a>
+<a class="sourceLine" id="cb2-32" data-line-number="32">                                left = ct;</a>
+<a class="sourceLine" id="cb2-33" data-line-number="33">                                right = pt;</a>
+<a class="sourceLine" id="cb2-34" data-line-number="34">                                printf(<span class="st">&quot;PT: &quot;</span>);</a>
+<a class="sourceLine" id="cb2-35" data-line-number="35">                        }</a>
+<a class="sourceLine" id="cb2-36" data-line-number="36">                        <span class="dt">int</span> j;</a>
+<a class="sourceLine" id="cb2-37" data-line-number="37">                        <span class="cf">for</span>(j = <span class="dv">4</span>; line[j] != <span class="ch">&#39;\n&#39;</span>; j++) {</a>
+<a class="sourceLine" id="cb2-38" data-line-number="38">                                <span class="dt">int</span> k;</a>
+<a class="sourceLine" id="cb2-39" data-line-number="39">                                <span class="cf">for</span>(k = <span class="dv">0</span>; left[k] != line[j]; k++);</a>
+<a class="sourceLine" id="cb2-40" data-line-number="40">                                printf(<span class="st">&quot;%c&quot;</span>, right[k]);</a>
+<a class="sourceLine" id="cb2-41" data-line-number="41">                        }</a>
+<a class="sourceLine" id="cb2-42" data-line-number="42">                        printf(<span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>);</a>
+<a class="sourceLine" id="cb2-43" data-line-number="43">                }</a>
+<a class="sourceLine" id="cb2-44" data-line-number="44">                free(pt);</a>
+<a class="sourceLine" id="cb2-45" data-line-number="45">                free(ct);</a>
+<a class="sourceLine" id="cb2-46" data-line-number="46">        } <span class="cf">while</span> (count != <span class="dv">0</span>);</a>
+<a class="sourceLine" id="cb2-47" data-line-number="47">        free(line);</a>
+<a class="sourceLine" id="cb2-48" data-line-number="48">        <span class="cf">return</span> <span class="dv">0</span>;</a>
+<a class="sourceLine" id="cb2-49" data-line-number="49">}</a></code></pre></div>
+<p>But there’s a bug in the official test data, and that code won’t work unless the following is fixed:</p>
+<pre class="sourceCode"><code>-5
++7
+ d e h l o r w
+ H J L O Q T V</code></pre>
+<a href="#fnref2" class="footnote-back">↩</a></li>
+</ol>
+</section>
+]]></summary>
+</entry>
+<entry>
+    <title>You don't need a great idea</title>
+    <link href="http://www.nathantypanski.com/blog/2015-01-17-great-implementation.html" />
+    <id>http://www.nathantypanski.com/blog/2015-01-17-great-implementation.html</id>
+    <published>2015-01-17T00:00:00Z</published>
+    <updated>2015-01-17T00:00:00Z</updated>
+    <summary type="html"><![CDATA[<div class="info">
+    <!--
+    <div class="snippets">
+        <i class="fa fa-calendar"></i> January 17, 2015 <i class="fa fa-cut" November  3, 2016></i> November  3, 2016
+    </div>
+    -->
+    
+</div>
+<p>This world has enough great ideas. You need a great implementation.</p>
+<p>A tremendous amount of my more introspective/thoughtful brainpower is spent considering great ideas. I think about the ones that are successful; I try to come up with ideas of my own; I repeatedly fail at the latter.</p>
+<p>One of my goals as a software developer is to someday design and implement a reasonably useful and well-used open-source API. It doesn’t even matter what for. I want to leave my mark by building something useful that other people can build useful things on top of. Maybe that goal is somewhat daft, but it motivates me and keeps me working to improve my abilities. The skills involved are not something I’m very good at, in part since I’m still in college and short of experience on the matter.<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a></p>
+<p>One of the factors that holds me back is the feeling that I don’t have any great new ideas. Why bother using some API I’ve written, when there are dozens (or even perhaps one or two) out there that do the job already? I can’t supply anything new on the ideas front, so where’s the room for my work?</p>
+<p>Let’s draw some parallels to real-life products. Google didn’t invent search; they simply did it better than anyone else. <a href="http://www.soylent.me/">Soylent</a> didn’t invent liquid food, they just made it more nutritious than <a href="https://en.wikipedia.org/wiki/Feeding_tube">the crap they feed you in hospitals</a>. <a href="https://pypi.python.org/pypi/blessings/">Blessings</a> was far from the first terminal GUI library, but it made things significantly easier to use.</p>
+<p>Usually, when I’m working with a sub-par piece of software, API, or <q>real-world</q> product, I’m not bothered by the concept of it. I usually like the concept. It’s the implementations that <a href="http://www.paulgraham.com/organic.html">are broken</a>, and that’s where you find room for improvement.</p>
+<section class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>This isn’t my <em>only</em> goal, or even necessarily one of my <em>main</em> ones, but it’s something I feel will be a milestone in my career as a dev. It’s an important stepping-stone in the transitional period from <q>someone who writes code</q> to <q>someone who builds solutions.</q><a href="#fnref1" class="footnote-back">↩</a></p></li>
+</ol>
+</section>
+]]></summary>
+</entry>
+<entry>
+    <title>Git: rebasing apart history</title>
+    <link href="http://www.nathantypanski.com/blog/2014-12-13-git-rebase-away-files.html" />
+    <id>http://www.nathantypanski.com/blog/2014-12-13-git-rebase-away-files.html</id>
+    <published>2014-12-13T00:00:00Z</published>
+    <updated>2014-12-13T00:00:00Z</updated>
+    <summary type="html"><![CDATA[<div class="info">
+    <!--
+    <div class="snippets">
+        <i class="fa fa-calendar"></i> December 13, 2014 <i class="fa fa-cut" December  3, 2016></i> December  3, 2016
+    </div>
+    -->
+    
+</div>
+<div id="toc"><h2>Contents</h2>
+<ul>
+<li><a href="#picking-a-rebase-target">Picking a rebase target</a></li>
+<li><a href="#cleaning-your-worktree">Cleaning your worktree</a></li>
+<li><a href="#blasting-apart-history">Blasting apart history</a><ul>
+<li><a href="#removing-unrelated-files">Removing unrelated files</a></li>
+<li><a href="#making-new-commits">Making new commits</a></li>
+</ul></li>
+<li><a href="#conclusion">Conclusion</a></li>
+</ul> </div>
+<p>I always appreciate it when people share some of the quirks of their development workflow, particularly with Git, since the version control monster is so powerful that it can be difficult to stumble your way through its features.</p>
+<p>Here’s something I do every so often: I’m working too quickly, and I add extra unrelated files to an otherwise granular commit. Then I have to fix it, but I usually don’t want to rewrite the commit message. What’s the solution?</p>
+<p>Here’s an example from my Emacs config:</p>
+<pre class="sourceCode"><code>Refs: [master]
+
+    eyecandy: just use zenburn theme
+
+---
+ .travis.yml                    | 11 +++++++++++
+ config/eyecandy/my-eyecandy.el | 22 +++-------------------
+ 2 files changed, 14 insertions(+), 19 deletions(-)</code></pre>
+<p>I was partway through an attempt at adding simple <a href="https://travis-ci.org/">travis</a> testing to the repo, but accidentally included that <code>.travis.yml</code> along with a batch of theme config changes.</p>
+<p>Obviously my personal text editor config files can’t get away with <a href="https://github.com/nathantypanski/emacs.d/commit/3597bfd5d1c1c561f019f7fce7ad6119b5edb07e">bad commits</a>!<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> I’ll have to fix that.</p>
+<p>There are a handful of ways I could do this, but the method I inevitably choose is <a href="http://git-scm.com/docs/git-rebase"><code>git rebase</code></a>. Called with the <code>--interactive</code> switch, <code>git rebase</code> gives you a list of commit messages since some point in the tree, and lets you modify and rewrite them as you see fit.</p>
+<p>What we’re going to do here is this:</p>
+<ul>
+<li>start an interactive rebase,</li>
+<li>remove <code>.travis.yml</code> from the commit shown above,</li>
+<li>amend the old commit,</li>
+<li>create a new commit adding <code>.travis.yml</code> to the repository.</li>
+</ul>
+<p>The reason I prefer using an interactive rebase is</p>
+<ol type="1">
+<li>I know how to do it,</li>
+<li>it differs less from my everyday git usage than the alternatives.<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a></li>
+</ol>
+<section id="picking-a-rebase-target" class="level2">
+<h2>Picking a rebase target</h2>
+<p>One of the most important choices before you start any interactive rebase is <q>how far back am I rebasing.</q> It’s only safe to rewrite the parts of history that haven’t been pushed to a remote yet,<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a> so the natural choice is to rebase against a remote.</p>
+<p>I’ll pretend that I’m working on a codebase with multiple people, purely for didactic purposes, and do a fetch before I get started:</p>
+<pre class="sourceCode"><code>~/dotfiles/emacs/.emacs.d/ » git fetch origin
+~/dotfiles/emacs/.emacs.d/ »</code></pre>
+<p>Since there was no output, that means I have the latest version of <code>origin</code>. Great! Let’s get started:</p>
+<pre class="sourceCode"><code>~/dotfiles/emacs/.emacs.d/ » git rebase -i origin/master
+Cannot rebase: You have unstaged changes.
+Please commit or stash them.</code></pre>
+<p>Woops.</p>
+</section>
+<section id="cleaning-your-worktree" class="level2">
+<h2>Cleaning your worktree</h2>
+<p>When you start an interactive rebase, you need to have a clean worktree. To get there, I used to run <code>git stash</code> before the rebase, and <code>git stash apply</code> afterwards to reapply my old changes after modifying the log. As it turns out, there’s a better way (from <code>man git-rebase</code>):</p>
+<pre class="sourceCode"><code>--[no-]autostash
+    Automatically create a temporary stash before the operation begins, and apply it
+    after the operation ends. This means that you can run rebase on a dirty worktree.
+    However, use with care: the final stash application after a successful rebase might
+    result in non-trivial conflicts.</code></pre>
+<p>As mentioned, stashes don’t necessarily apply cleanly after a rebase. This works best if you know that your unstaged changes won’t conflict with anything you’re rebasing. In my case, I only start rebases if I think my stash (if any) will apply cleanly, so I’m going to make this a default in my config:<a href="#fn4" class="footnote-ref" id="fnref4"><sup>4</sup></a></p>
+<pre class="sourceCode"><code>~/dotfiles/emacs/.emacs.d/ » git config --get rebase.autostash
+~/dotfiles/emacs/.emacs.d/ » git config --global rebase.autostash true
+~/dotfiles/emacs/.emacs.d/ » git config --get rebase.autostash
+true</code></pre>
+</section>
+<section id="blasting-apart-history" class="level2">
+<h2>Blasting apart history</h2>
+<p>Now we can get started, and Git will <code>stash</code> unstaged changes automatically before interactive rebases.</p>
+<pre class="sourceCode"><code>~/dotfiles/emacs/.emacs.d/ » git rebase -i origin/master</code></pre>
+<p>We’re dropped into the interactive rebase window:</p>
+<pre class="sourceCode"><code>pick 712edab eyecandy: just use zenburn theme
+
+# Rebase 8edc222..712edab onto 8edc222
+#
+# Commands:
+#  , pick = use commit
+#  , reword = use commit, but edit the commit message
+#  , edit = use commit, but stop for amending
+#  , squash = use commit, but meld into previous commit
+#  , fixup = like &quot;squash&quot;, but discard this commit&#39;s log message
+#  , exec = run command (the rest of the line) using shell
+#
+# These lines can be re-ordered; they are executed from top to bottom.
+#
+# If you remove a line here THAT COMMIT WILL BE LOST.
+#
+# However, if you remove everything, the rebase will be aborted.
+#
+# Note that empty commits are commented out</code></pre>
+<section id="removing-unrelated-files" class="level3">
+<h3>Removing unrelated files</h3>
+<p>I want to remove a file from <code>712edab</code>, so I change that commit to <code>edit</code>:</p>
+<pre class="sourceCode"><code>edit 712edab eyecandy: just use zenburn theme</code></pre>
+<p>and save the file. Now we’re back at the terminal:</p>
+<pre class="sourceCode"><code>~/dotfiles/emacs/.emacs.d/ » git rebase -i origin/master
+Created autostash: ce6634c
+HEAD is now at 712edab eyecandy: just use zenburn theme
+Stopped at 712edab4e039cf2bd784031f04a202eec5f2195a... eyecandy: just use zenburn theme
+You can amend the commit now, with
+
+        git commit --amend
+
+Once you are satisfied with your changes, run
+
+        git rebase --continue</code></pre>
+<p>This has dropped us into the history at a point in time <q>just after</q> <code>712edab</code> was committed. We can modify the files that were changed in that commit, and then use <code>git commit --amend</code> to replace the old commit with our new changes.</p>
+<p>In my case, I still want to keep my <code>.travis.yml</code> changes, but wish to move them into a separate commit. I’ll remove the file from Git’s index, but not my worktree, using <code>git rm --cached</code>.</p>
+<pre class="sourceCode"><code>~/dotfiles/emacs/.emacs.d/ » git rm --cached .travis.yml
+rm &#39;.travis.yml&#39;
+~/dotfiles/emacs/.emacs.d/ » git commit --amend</code></pre>
+</section>
+<section id="making-new-commits" class="level3">
+<h3>Making new commits</h3>
+<p>Note how the addition of <code>.travis.yml</code> is gone now:</p>
+<pre class="sourceCode"><code>eyecandy: just use zenburn theme
+
+# Changes to be committed:
+#       modified:   config/eyecandy/my-eyecandy.el
+#</code></pre>
+<p>But the file is still present on my machine:</p>
+<pre class="sourceCode"><code>[detached HEAD cc71d68] eyecandy: just use zenburn theme
+ Date: Sat Dec 13 20:45:54 2014 -0500
+ 1 file changed, 3 insertions(+), 19 deletions(-)
+~/dotfiles/emacs/.emacs.d/ » ls .travis.yml
+.travis.yml</code></pre>
+<p>Great! We’ve rewritten the commit to remove the unrelated changes. It’s worth noting that <code>edit</code> actions in a rebase still let you make new commits, unlike most <q>detached head</q> states in Git.</p>
+<p>So we can just add the file back in right here, and finish the rebase:</p>
+<pre class="sourceCode"><code>~/dotfiles/emacs/.emacs.d/ » git add .travis.yml
+~/dotfiles/emacs/.emacs.d/ » git commit -m &#39;test out travis CI for emacs&#39;
+[detached HEAD dab1f85] test out travis CI for emacs
+ 1 file changed, 11 insertions(+)
+ create mode 100644 .travis.yml
+~/dotfiles/emacs/.emacs.d/ » git rebase --continue
+Successfully rebased and updated refs/heads/master.
+Applied autostash.</code></pre>
+</section>
+</section>
+<section id="conclusion" class="level2">
+<h2>Conclusion</h2>
+<p>Now the repo is how I wanted it:</p>
+<pre class="sourceCode"><code>2014-12-14 03:46 Unknown         o Unstaged changes
+2014-12-13 22:42 Nathan Typanski o [master] test out travis CI for emacs
+2014-12-13 20:45 Nathan Typanski o eyecandy: just use zenburn theme
+2014-12-13 19:09 Nathan Typanski o {origin/master} evil: fancy smart indent behavior</code></pre>
+<p>This is just a little snapshot of my Git workflow. I wrote this post because I find myself constantly wondering if I’m using Git <q>the right way</q>, and find myself curious how other people solve problems like this one. Perhaps there’s a way to do this using only a handful of one-liners, and I’m going overkill by using <code>git rebase</code> for this kind of thing (it certainly feels that way).</p>
+<p>But then I realize there’s no One True Workflow with Git. Git usage is a <a href="https://en.wikipedia.org/wiki/State_function">state function</a>: we went from our initial state to our desired result state, and nobody cares how we got there. That’s the whole point.</p>
+</section>
+<section class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>Or I might not tolerate it in a few weeks. Ho, ho.<a href="#fnref1" class="footnote-back">↩</a></p></li>
+<li id="fn2"><p>If I have to hack apart a tree in Git, the easiest way for me to do it is usually inside of an interactive rebase. Unlike memorizing a bunch of esoteric one-liners, this lets me work on a repository like I’m always <q>at its tip</q> - which is the normal state of a Git repo when you’re working on new changes.<a href="#fnref2" class="footnote-back">↩</a></p></li>
+<li id="fn3"><p>You can get away with rewriting commits that are on a remote, but then you’re doomed to <code>git push -f</code>’ing all over said remote. Without good reason, this is a pretty bad idea. If you have coworkers, it’s a really bad idea.<a href="#fnref3" class="footnote-back">↩</a></p></li>
+<li id="fn4"><p>From the man page for <code>git rebase</code>:</p>
+<pre class="sourceCode"><code>CONFIGURATION
+       rebase.autostash
+                  If set to true enable --autostash option by default.</code></pre>
+<a href="#fnref4" class="footnote-back">↩</a></li>
+</ol>
+</section>
+]]></summary>
+</entry>
+<entry>
+    <title>Evil-mode configuration demo</title>
+    <link href="http://www.nathantypanski.com/blog/2014-12-08-demo-a-vim-like-emacs.html" />
+    <id>http://www.nathantypanski.com/blog/2014-12-08-demo-a-vim-like-emacs.html</id>
+    <published>2014-12-08T00:00:00Z</published>
+    <updated>2014-12-08T00:00:00Z</updated>
+    <summary type="html"><![CDATA[<div class="info">
+    <!--
+    <div class="snippets">
+        <i class="fa fa-calendar"></i> December  8, 2014 <i class="fa fa-cut" November  3, 2016></i> November  3, 2016
+    </div>
+    -->
+    
+</div>
+<p>In an effort to help out one of my readers, I made a quick Asciicast demo of the first few steps in my <a href="/blog/2014-08-03-a-vim-like-emacs-config.html">Towards a Vim-like Emacs</a> blog post. Since I figure at least a few others might be interested, I’ve reproduced it here:<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a></p>
+<script type="text/javascript" src="https://asciinema.org/a/14201.js" id="asciicast-14201" async></script>
+<section class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>Does anyone know how to download from Asciinema? If so, <a href="/contact.html">drop me a line</a>. I’d love to keep a backup copy of the stuff I upload there.</p>
+<p><strong>Update 2014/01/13:</strong> reader Gabriel Lazar informed me that the data is <a href="https://asciinema-bb-eu.s3.amazonaws.com/uploads/asciicast/stdout_frames/14201/stdout.json">available in JSON format</a> and playable, in theory, using a portion of the open-source <a href="https://github.com/asciinema/asciinema.org">asciinema.org code</a>. As an alternate backup solution, he suggests recording the playback of a screencast as a video. Thanks, Gabriel!<a href="#fnref1" class="footnote-back">↩</a></p></li>
+</ol>
+</section>
+]]></summary>
+</entry>
+<entry>
+    <title>Draw beautiful digital electronics timing diagrams in LaTeX</title>
+    <link href="http://www.nathantypanski.com/blog/2014-10-29-tikz-timing.html" />
+    <id>http://www.nathantypanski.com/blog/2014-10-29-tikz-timing.html</id>
+    <published>2014-10-29T00:00:00Z</published>
+    <updated>2014-10-29T00:00:00Z</updated>
+    <summary type="html"><![CDATA[<div class="info">
+    <!--
+    <div class="snippets">
+        <i class="fa fa-calendar"></i> October 29, 2014 <i class="fa fa-cut" November  3, 2016></i> November  3, 2016
+    </div>
+    -->
+    
+</div>
+<div id="toc"><h2>Contents</h2>
+<ul>
+<li><a href="#pci-read">PCI Read</a></li>
+<li><a href="#pci-interrupt-acknowledge">PCI Interrupt Acknowledge</a></li>
+<li><a href="#synchronous-serial-interface">Synchronous Serial Interface</a></li>
+</ul> </div>
+<p>Today, for one of my engineering courses, I had to create some <a href="http://en.wikipedia.org/wiki/Digital_timing_diagram">timing diagrams</a> to show certain parts of the PCI standard. If you’ve never had to draw your own timing diagrams before, then you probably haven’t realized that there is no obvious to quickly, easily draw waveforms for a bunch of signals.</p>
+<p>The solution I found is <a href="http://www.ctan.org/pkg/tikz-timing">tikz-timing</a>. An alternative is <a href="http://www.texample.net/tikz/examples/timing-diagram/">timing.sty</a>, which is simple and pretty enough in a pinch.</p>
+<p>I find the more advanced features of tikz-timing invaluable for versatility, though—there’s nothing like needing to talk about a signal transition in some text, and, oh yeah, just <em>drawing the signal in the text</em>.</p>
+<p>The only problem with tikz-timing is a shortage of examples. The <a href="http://mirrors.ibiblio.org/CTAN/graphics/pgf/contrib/tikz-timing/tikz-timing.pdf">package documentation</a> has but a handful, and they don’t look much like real-world timing diagrams. The texample.net <a href="http://www.texample.net/tikz/examples/more-tikz-timing-examples/">timing</a> <a href="http://www.texample.net/tikz/examples/tikz-timing/">diagrams</a> are just copied directly from that manual, which isn’t useful. So I figure I’ll post some realistic use cases.</p>
+<p>To get started, I included the package like this:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode latex"><code class="sourceCode latex"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="bu">\usepackage</span>{<span class="ex">tikz-timing</span>}[2014/10/29]</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="fu">\usetikztiminglibrary</span>[rising arrows]{clockarrows}</a></code></pre></div>
+<p>Then I defined a command so I could reference a bus:<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a></p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode latex"><code class="sourceCode latex"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="bu">\usepackage</span>{<span class="ex">xparse</span>} <span class="co">% NewDocumentCommand, IfValueTF, IFBooleanTF</span></a>
+<a class="sourceLine" id="cb2-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb2-3" data-line-number="3"><span class="co">% Reference a bus.</span></a>
+<a class="sourceLine" id="cb2-4" data-line-number="4"><span class="co">%</span></a>
+<a class="sourceLine" id="cb2-5" data-line-number="5"><span class="co">% Usage:</span></a>
+<a class="sourceLine" id="cb2-6" data-line-number="6"><span class="co">%</span></a>
+<a class="sourceLine" id="cb2-7" data-line-number="7"><span class="co">%     \busref[3::0]{C/BE}    -&gt;   C/BE[3::0]</span></a>
+<a class="sourceLine" id="cb2-8" data-line-number="8"><span class="co">%     \busref*{AD}           -&gt;   AD#</span></a>
+<a class="sourceLine" id="cb2-9" data-line-number="9"><span class="co">%     \busref*[3::0]{C/BE}   -&gt;   C/BE[3::0]#</span></a>
+<a class="sourceLine" id="cb2-10" data-line-number="10"><span class="co">%</span></a>
+<a class="sourceLine" id="cb2-11" data-line-number="11"><span class="fu">\NewDocumentCommand</span>{<span class="fu">\busref</span>}{som}{<span class="fu">\texttt</span>{<span class="co">%</span></a>
+<a class="sourceLine" id="cb2-12" data-line-number="12">#3<span class="co">%</span></a>
+<a class="sourceLine" id="cb2-13" data-line-number="13"><span class="fu">\IfValueTF</span>{#2}{[#2]}{}<span class="co">%</span></a>
+<a class="sourceLine" id="cb2-14" data-line-number="14"><span class="fu">\IfBooleanTF</span>{#1}{<span class="fu">\#</span>}{}<span class="co">%</span></a>
+<a class="sourceLine" id="cb2-15" data-line-number="15">}}</a></code></pre></div>
+<p>The PCI timing diagrams are drawn with reference to version 2.2 of the PCI specification. I added the <code>DEVSEL#</code> signal myself,<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a> and I’ve taken some slight liberties with the start and stop times of the signals (though they should still be accurate). One notable feature lacking in my diagrams is the delay cycles—most books you’ll read on PCI, in addition to the spec itself will include those directly on the diagram. I haven’t figured out how to do that kind of thing yet.</p>
+<section id="pci-read" class="level2">
+<h2>PCI Read</h2>
+<figure>
+<img src="/files/latex/tikz-timing/pci-read-thumb.png" alt="PCI read operation. LaTeX source." /><figcaption>PCI read operation. <a href="/files/latex/tikz-timing/pci-read.tex">LaTeX source</a>.</figcaption>
+</figure>
+<div class="sourceCode" id="cb3"><pre class="sourceCode latex"><code class="sourceCode latex"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw">\begin</span>{<span class="ex">tikztimingtable</span>}[<span class="co">%</span></a>
+<a class="sourceLine" id="cb3-2" data-line-number="2">    timing/dslope=0.1,</a>
+<a class="sourceLine" id="cb3-3" data-line-number="3">    timing/.style={x=5ex,y=2ex},</a>
+<a class="sourceLine" id="cb3-4" data-line-number="4">    x=5ex,</a>
+<a class="sourceLine" id="cb3-5" data-line-number="5">    timing/rowdist=3ex,</a>
+<a class="sourceLine" id="cb3-6" data-line-number="6">    timing/name/.style={font=<span class="fu">\sffamily\scriptsize</span>}</a>
+<a class="sourceLine" id="cb3-7" data-line-number="7">]</a>
+<a class="sourceLine" id="cb3-8" data-line-number="8"><span class="fu">\busref</span>{CLK}         &amp; 18{c} <span class="fu">\\</span></a>
+<a class="sourceLine" id="cb3-9" data-line-number="9"><span class="fu">\busref</span>*{FRAME}      &amp; 2u 6L H U <span class="fu">\\</span></a>
+<a class="sourceLine" id="cb3-10" data-line-number="10"><span class="fu">\busref</span>[31::0]{AD}   &amp; 2u 1D{addr} 1U{} 1D{<span class="ss">$d_1$</span>} D{<span class="ss">$d_1 &#39;$</span>} D{<span class="ss">$d_2$</span>} 2D{<span class="ss">$d_3$</span>} U <span class="fu">\\</span></a>
+<a class="sourceLine" id="cb3-11" data-line-number="11"><span class="fu">\busref</span>*[3::0]{C/BE} &amp; 2u 1D{0010} 6D{BE<span class="fu">\#</span>} U  <span class="fu">\\</span></a>
+<a class="sourceLine" id="cb3-12" data-line-number="12"><span class="fu">\busref</span>*{IRDY}       &amp; UU 4L HLH <span class="fu">\\</span></a>
+<a class="sourceLine" id="cb3-13" data-line-number="13"><span class="fu">\busref</span>*{TRDY}       &amp; UU HLH 3L H <span class="fu">\\</span></a>
+<a class="sourceLine" id="cb3-14" data-line-number="14"><span class="fu">\busref</span>*{DEVSEL}     &amp; 2U 6L H<span class="fu">\\</span></a>
+<a class="sourceLine" id="cb3-15" data-line-number="15"><span class="fu">\extracode</span></a>
+<a class="sourceLine" id="cb3-16" data-line-number="16"><span class="kw">\begin</span>{<span class="ex">pgfonlayer</span>}{background}</a>
+<a class="sourceLine" id="cb3-17" data-line-number="17"><span class="kw">\begin</span>{<span class="ex">scope</span>}[semitransparent ,semithick]</a>
+<a class="sourceLine" id="cb3-18" data-line-number="18"><span class="fu">\vertlines</span>[darkgray,dotted]{0.5,1.5 ,...,8.0}</a>
+<a class="sourceLine" id="cb3-19" data-line-number="19"><span class="kw">\end</span>{<span class="ex">scope</span>}</a>
+<a class="sourceLine" id="cb3-20" data-line-number="20"><span class="kw">\end</span>{<span class="ex">pgfonlayer</span>}</a>
+<a class="sourceLine" id="cb3-21" data-line-number="21"><span class="kw">\end</span>{<span class="ex">tikztimingtable</span>}</a></code></pre></div>
+<p>You can think of the <code>tikztimingtable</code> environment as two-column <a href="http://en.wikibooks.org/wiki/LaTeX/Tables">tables</a> with some special syntax for the righthand column. The gist of it is this: there are signal variants, and you create them by writing a letter that serves as a key. Each key has two variants: a half-duration lowercase one and a full-duration uppercase one.</p>
+<p>So to make the clock signal in the PCI read diagram, it’s 18 half-duration clock cycles, and we write that <code>18{c}</code>. The brackets there aren’t strictly necessary, but you can write them for clarity. Signal changes are separated by spaces if there’s any ambiguity about what argument goes with what transition.</p>
+<p>In the above example, I used these letters to make the signals:</p>
+<ul>
+<li><code>C</code>/<code>c</code>: clock</li>
+<li><code>U</code>/<code>u</code>: unknown</li>
+<li><code>D</code>/<code>d</code>: multiple values</li>
+<li><code>H</code>/<code>h</code>: hi</li>
+<li><code>L</code>/<code>l</code>: lo</li>
+</ul>
+<p>The other interesting option is including letters in the <code>D</code> timings. The way you do that is you add an argument in brackets following a <code>D</code> block, like <code>D{0000}</code> to draw a multi-signal timing with value <code>0000</code>.</p>
+<p>For invalid states I used <code>X</code> in the below example:</p>
+</section>
+<section id="pci-interrupt-acknowledge" class="level2">
+<h2>PCI Interrupt Acknowledge</h2>
+<p>When a PCI interrupt acknowledge starts, you have invalid values in the address/data line. They’re <em>knowable</em>, but it’s against the protocol to use them for anything. To show that I used an <code>X</code>, which draws a red line for an <em>undefined</em> don’t care. Or at least that’s how I interpreted it. Some people will just use shaded blocks for everything, and make no distinction between the two.</p>
+<figure>
+<img src="/files/latex/tikz-timing/pci-int-thumb.png" alt="PCI interrupt acknowledge. LaTeX source." /><figcaption>PCI interrupt acknowledge. <a href="/files/latex/tikz-timing/pci-int.tex">LaTeX source</a>.</figcaption>
+</figure>
+<div class="sourceCode" id="cb4"><pre class="sourceCode latex"><code class="sourceCode latex"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw">\begin</span>{<span class="ex">tikztimingtable</span>}[<span class="co">%</span></a>
+<a class="sourceLine" id="cb4-2" data-line-number="2">    timing/dslope=0.1,</a>
+<a class="sourceLine" id="cb4-3" data-line-number="3">    timing/.style={x=5ex,y=2ex},</a>
+<a class="sourceLine" id="cb4-4" data-line-number="4">    x=5ex,</a>
+<a class="sourceLine" id="cb4-5" data-line-number="5">    timing/rowdist=3ex,</a>
+<a class="sourceLine" id="cb4-6" data-line-number="6">    timing/name/.style={font=<span class="fu">\sffamily\scriptsize</span>}</a>
+<a class="sourceLine" id="cb4-7" data-line-number="7">]</a>
+<a class="sourceLine" id="cb4-8" data-line-number="8"><span class="fu">\busref</span>{CLK}         &amp; 10{C} <span class="fu">\\</span></a>
+<a class="sourceLine" id="cb4-9" data-line-number="9"><span class="fu">\busref</span>*{FRAME}      &amp; U h l L l h 4H 2U <span class="fu">\\</span></a>
+<a class="sourceLine" id="cb4-10" data-line-number="10"><span class="fu">\busref</span>[31::0]{AD}   &amp; U u 2X 2.5U 2D{<span class="ss">$v_i$</span>} 2U <span class="fu">\\</span></a>
+<a class="sourceLine" id="cb4-11" data-line-number="11"><span class="fu">\busref</span>*[3::0]{C/BE} &amp; U u 2D{0000} 4.5D{<span class="fu">\busref</span>*{BE}} 2U  <span class="fu">\\</span></a>
+<a class="sourceLine" id="cb4-12" data-line-number="12"><span class="fu">\busref</span>*{IRDY}       &amp; 3.5U 4.5L 2H <span class="fu">\\</span></a>
+<a class="sourceLine" id="cb4-13" data-line-number="13"><span class="fu">\busref</span>*{TRDY}       &amp; 3.5U 2.5H 2L 2H <span class="fu">\\</span></a>
+<a class="sourceLine" id="cb4-14" data-line-number="14"><span class="fu">\busref</span>*{DEVSEL}     &amp; 5U hl 2L h 1.5U <span class="fu">\\</span></a>
+<a class="sourceLine" id="cb4-15" data-line-number="15"><span class="fu">\extracode</span></a>
+<a class="sourceLine" id="cb4-16" data-line-number="16"><span class="kw">\begin</span>{<span class="ex">pgfonlayer</span>}{background}</a>
+<a class="sourceLine" id="cb4-17" data-line-number="17"><span class="kw">\begin</span>{<span class="ex">scope</span>}[semitransparent ,semithick]</a>
+<a class="sourceLine" id="cb4-18" data-line-number="18"><span class="fu">\vertlines</span>[darkgray,dotted]{1.0,3.0,...,9.0}</a>
+<a class="sourceLine" id="cb4-19" data-line-number="19"><span class="fu">\vertlines</span>[gray,dotted]{2.0,4.0,...,8.0}</a>
+<a class="sourceLine" id="cb4-20" data-line-number="20"><span class="kw">\end</span>{<span class="ex">scope</span>}</a>
+<a class="sourceLine" id="cb4-21" data-line-number="21"><span class="kw">\end</span>{<span class="ex">pgfonlayer</span>}</a>
+<a class="sourceLine" id="cb4-22" data-line-number="22"><span class="kw">\end</span>{<span class="ex">tikztimingtable</span>}</a></code></pre></div>
+</section>
+<section id="synchronous-serial-interface" class="level2">
+<h2>Synchronous Serial Interface</h2>
+<p><a href="http://en.wikipedia.org/wiki/Synchronous_Serial_Interface">Synchronous Serial Interface</a> (SSI) is another protocol I studied. I drew a genuinely oversimplified diagram of it, just for fun.</p>
+<figure>
+<img src="/files/latex/tikz-timing/ssi-thumb.png" alt="SSI protocol basic timing. LaTeX source." /><figcaption>SSI protocol basic timing. <a href="/files/latex/tikz-timing/ssi.tex">LaTeX source</a>.</figcaption>
+</figure>
+<div class="sourceCode" id="cb5"><pre class="sourceCode latex"><code class="sourceCode latex"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw">\begin</span>{<span class="ex">tikztimingtable</span>}[<span class="co">%</span></a>
+<a class="sourceLine" id="cb5-2" data-line-number="2">    timing/dslope=0.4,</a>
+<a class="sourceLine" id="cb5-3" data-line-number="3">    timing/.style={x=5ex,y=2ex},</a>
+<a class="sourceLine" id="cb5-4" data-line-number="4">    x=3ex,</a>
+<a class="sourceLine" id="cb5-5" data-line-number="5">    timing/rowdist=4ex,</a>
+<a class="sourceLine" id="cb5-6" data-line-number="6">    timing/c/rising arrows,</a>
+<a class="sourceLine" id="cb5-7" data-line-number="7">    timing/name/.style={font=<span class="fu">\sffamily\scriptsize</span>},</a>
+<a class="sourceLine" id="cb5-8" data-line-number="8">]</a>
+<a class="sourceLine" id="cb5-9" data-line-number="9"><span class="fu">\busref</span>{CLK}  &amp;  U8{C}H<span class="fu">\\</span></a>
+<a class="sourceLine" id="cb5-10" data-line-number="10"><span class="fu">\busref</span>{data} &amp; Hhh2D{msb};[dotted] 2D{};  2D{lsb}LH<span class="fu">\\</span></a>
+<a class="sourceLine" id="cb5-11" data-line-number="11"><span class="kw">\end</span>{<span class="ex">tikztimingtable</span>}</a></code></pre></div>
+<p>The images you saw on this page were compiled with <a href="http://www.tug.org/applications/pdftex/">pdfTeX</a> version <code>3.14159265-2.6-1.40.15 (TeX Live 2014/Arch Linux)</code> and converted from PDF to PNG with <a href="http://www.imagemagick.org/script/convert.php">ImageMagick convert</a>.</p>
+</section>
+<section class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>Defining commands for patterns of input is one of those tricks you pick up once you’ve used LaTeX for more than a handful of documents. The advantage of doing it this way is that if I want to change the convention used to represent the <a href="http://en.wikipedia.org/wiki/Logic_level">logic level</a> of my signals, I can just change it in one place and it gets updated in the rest of the document.<a href="#fnref1" class="footnote-back">↩</a></p></li>
+<li id="fn2"><p>So it might be wrong—go read the spec if you <em>really</em> care.<a href="#fnref2" class="footnote-back">↩</a></p></li>
+</ol>
+</section>
+]]></summary>
+</entry>
+<entry>
+    <title>Solving a second-order ODE with NumPy and SciPy</title>
+    <link href="http://www.nathantypanski.com/blog/2014-08-23-ode-solver-py.html" />
+    <id>http://www.nathantypanski.com/blog/2014-08-23-ode-solver-py.html</id>
+    <published>2014-08-23T00:00:00Z</published>
+    <updated>2014-08-23T00:00:00Z</updated>
+    <summary type="html"><![CDATA[<div class="info">
+    <!--
+    <div class="snippets">
+        <i class="fa fa-calendar"></i> August 23, 2014 <i class="fa fa-cut" November  3, 2016></i> November  3, 2016
+    </div>
+    -->
+    
+</div>
+<div id="toc"><h2>Contents</h2>
+<ul>
+<li><a href="#problem">Problem</a></li>
+<li><a href="#analytic-solution">Analytic solution</a></li>
+<li><a href="#python">Python</a></li>
+</ul> </div>
+<p>I was going through my ODE notes the other day and wondered if I could solve any of them with Python. I gave it a shot for one of the simpler equations, and here are my results (with analytic solution included for comparison).</p>
+<section id="problem" class="level2">
+<h2>Problem</h2>
+<p>Say we have the equation</p>
+<p><span class="math display">\[ y&#39;&#39; + y&#39; + 2y = 0, \]</span></p>
+<p>where <span class="math inline">\(y\)</span> is a function of <span class="math inline">\(t\)</span> and the initial values <span class="math inline">\(y(0) = 1\)</span>, <span class="math inline">\(y&#39;(0)=0\)</span>. Can we write an equation for <span class="math inline">\(y\)</span>, or at least get some answers about its behavior?</p>
+<p>In real life, this sort of problem often comes up when you’re dealing with a circuit containing a <a href="http://en.wikipedia.org/wiki/Capacitor">capacitor</a> that discharges through an <a href="http://en.wikipedia.org/wiki/Inductor">inductor</a> over time, and you want to analyze the voltage or current going through any given part of the circuit while this happens. Generally speaking, this is only one small part of a real-life circuit problem: you know that when you flip some switch, the circuit can be simplified to the above equation and that lets you solve it for some range <span class="math inline">\(t_1 &lt; t &lt; t_2\)</span>, where <span class="math inline">\(t_1\)</span> and <span class="math inline">\(t_2\)</span> are the time boundaries where you <em>didn’t</em> have the switch thrown.</p>
+<p>Our analytic solution will let us write an equation for <span class="math inline">\(y\)</span> that’s solvable for any time <span class="math inline">\(t\)</span>, but the numeric solution in Python will just give us answers in some range that we actually calculate. Depending on what we’re trying to do with the answer, the numeric solution might be all that we need.</p>
+</section>
+<section id="analytic-solution" class="level2">
+<h2>Analytic solution</h2>
+<p>If you’ve taken a class on ordinary differential equations, then you should recognize this as a second-order linear homogeneous ODE with constant coefficients. If you haven’t, no big deal then either. Regardless, I’ll go over the exact analytical answer, since it’s pretty easy to find in this case.</p>
+<p>An equation of the form <span class="math display">\[ \alpha y&#39;&#39;+\beta y&#39;+ \gamma y=0, \]</span> where <span class="math inline">\(\alpha\)</span>, <span class="math inline">\(\beta\)</span>, <span class="math inline">\(\gamma\)</span> are some constants, has a characteristic equation <span class="math display">\[\alpha r^2 + \beta r + \gamma=0.\]</span> Once we have this characteristic equation we can avoid actually doing any calculus and just solving that quadratic. So our characteristic equation here is <span class="math display">\[r^2+r+2=0\]</span> and its roots <span class="math inline">\(r_{1,2}\)</span> are <span class="math display">\[r_{1,2} = \frac{-1 \pm \sqrt{-7}}{2},\]</span> found using the quadratic equation <span class="math display">\[x=\frac{-b\pm \sqrt{b^2 -4ac}}{2a}.\]</span> Noting that <span class="math inline">\(r_{1,2}\)</span> are both complex, the general form for our solution here is thus<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> <span class="math display">\[y=e^{\alpha t}(c_1 \cos{\beta t} + c_2 \sin{\beta t}).\]</span></p>
+<p>Once we have the general form of our solution, we plug in the known values and then we have to solve for the constants using the initial values. So we have <span class="math display">\[y=e^{-\frac{t}{2}}\left(c_1\cos{\frac{\sqrt{7}t}{2}} + c_2\sin{\frac{\sqrt{7}t}{2}}\right),\]</span> and we need to find <span class="math inline">\(c_{1,2}\)</span> for that equation. If we try this for <span class="math inline">\(t=0\)</span>, <span class="math inline">\(y(0)=1\)</span> we find <span class="math display">\[ 1=e^{-\frac{0}{2}}(c_1 \cos{0} + c_2 \sin{0}), \]</span> so <span class="math inline">\(c_1=1\)</span>. Then for the second part of this we have to differentiate our solution first, finding that <span class="math display">\[y&#39; = \frac{-1}{2}e^{-\frac{t}{2}}\left(\cos{\frac{\sqrt{7}t}{2}} + c_2\sin{\frac{\sqrt{7}t}{2}}\right)
++ e^{-\frac{t}{2}}\left( -\frac{\sqrt{7}}{2} \sin{\frac{\sqrt{7}t}{2}}
++ c_2 \frac{\sqrt{7}}{2}\cos{\frac{\sqrt{7}t}{2}}\right)\]</span> which for <span class="math inline">\(t=0\)</span>, <span class="math inline">\(y&#39;(0)=0\)</span> reduces to <span class="math display">\[0=-\frac{1}{2}+c_2 \frac{\sqrt{7}}{2},\]</span> and thus <span class="math inline">\(c_2=\frac{1}{\sqrt{7}}\)</span> and our solution is <span class="math display">\[y=e^{-\frac{t}{2}}\left(\cos\frac{\sqrt 7 t}{2} + \frac{\sin \frac{\sqrt 7 t}{2}}{\sqrt 7}\right).\]</span></p>
+<p>Purely from an analytic standpoint we can tell that this is <a href="http://en.wikipedia.org/wiki/Harmonic_oscillator">harmonic oscillator</a> with a strong cosine term and a weak sine term that starts at 1 and eventually dampens, tending toward 0. That makes sense: it’s what you’d expect to see if you have a capacitor discharging and there’s nothing to supply energy back into the circuit over time.</p>
+</section>
+<section id="python" class="level2">
+<h2>Python</h2>
+<p>It turns out we can get a numerical solution to this kind of problem using Python’s excellent <a href="http://www.numpy.org/">NumPy</a> module and the <a href="http://scipy.org/">SciPy</a> toolkit without doing very much work at all. The <a href="http://docs.scipy.org/doc/scipy/reference/integrate.html"><code>scipy.integrate.odeint</code></a> function is of particular interest here. One problem: it only works for first-order ODEs of the form <span class="math display">\[\frac{\mathrm d y}{\mathrm d t} = f(y,t_0,\ldots), \]</span> so we need to do some twisting to get our original problem in that form.</p>
+<p>If we’re trying to solve <span class="math display">\[ y&#39;&#39; + y&#39; + 2y = 0, \]</span> we can transform this into a first-order ODE with some simple variable substitution. Define <span class="math inline">\(x_2(t)=y&#39;(t)\)</span> and <span class="math inline">\(x_1(t)=y(t)\)</span> for some equation <span class="math inline">\(y&#39;&#39; =Ay&#39;+By\)</span>. Then we have <span class="math inline">\(x_1&#39;=y&#39;=x_2\)</span> and <span class="math inline">\(x_2&#39;=y&#39;&#39;=Ax_1-Bx_2\)</span>. Thus we can simplify our original equation into a system of equations <span class="math display">\[\begin{align}
+x_1&#39; &amp;=x_2,\\
+x_2&#39; &amp;=Ax_1-Bx_2.\\
+\end{align}\]</span> In our original equation this means <span class="math display">\[ \begin{align}
+x_1&#39; &amp;= x_2, &amp; x_1(0) &amp;=1, \\
+x_2&#39; &amp;= -2x_1 - x_2, &amp; x_2(0) &amp;=0, \\
+\end{align} \]</span> which we can pretty much just plug into <code>scipy.integrate.odeint</code> directly.</p>
+<p>To do this we need to write a function that takes a matrix <span class="math inline">\(Y\)</span> and a time <span class="math inline">\(t\)</span> and returns a new matrix with the values of <span class="math inline">\(x_1&#39;, x_2&#39;\)</span> for that time. We can pretty much just ignore the <span class="math inline">\(t\)</span> argument and write</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="im">import</span> numpy <span class="im">as</span> np</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="im">from</span> scipy <span class="im">import</span> integrate</a>
+<a class="sourceLine" id="cb1-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="kw">def</span> solvr(Y, t):</a>
+<a class="sourceLine" id="cb1-5" data-line-number="5">    <span class="cf">return</span> [Y[<span class="dv">1</span>], <span class="dv">-2</span> <span class="op">*</span> Y[<span class="dv">0</span>]<span class="op">-</span>Y[<span class="dv">1</span>]]</a></code></pre></div>
+<p>Which is equivalent to our system of equations above, excluding the initial values.</p>
+<p>Then to get the solution:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">def</span> main():</a>
+<a class="sourceLine" id="cb2-2" data-line-number="2">    a_t <span class="op">=</span> np.arange(<span class="dv">0</span>, <span class="fl">25.0</span>, <span class="fl">0.01</span>)</a>
+<a class="sourceLine" id="cb2-3" data-line-number="3">    asol <span class="op">=</span> integrate.odeint(solvr, [<span class="dv">1</span>, <span class="dv">0</span>], a_t)</a>
+<a class="sourceLine" id="cb2-4" data-line-number="4">    <span class="bu">print</span>(asol)</a>
+<a class="sourceLine" id="cb2-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb2-6" data-line-number="6"><span class="cf">if</span> <span class="va">__name__</span> <span class="op">==</span> <span class="st">&#39;__main__&#39;</span>:</a>
+<a class="sourceLine" id="cb2-7" data-line-number="7">    main()</a></code></pre></div>
+<p>Running this at the command line will give a numeric value for <span class="math inline">\(y\)</span> (and <span class="math inline">\(y&#39;\)</span>, which we don’t care about) at each time <span class="math inline">\(t\)</span> in the range <span class="math inline">\(0 \leq t \leq 25\)</span>, in increments of 0.01. If we wanted a more exact solution, we could do this in smaller increments and get more numbers.</p>
+<p>If we stack our data up into a 3-column array in the <code>main()</code> function and write this to a CSV:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw">def</span> main():</a>
+<a class="sourceLine" id="cb3-2" data-line-number="2">    a_t <span class="op">=</span> np.arange(<span class="dv">0</span>, <span class="fl">25.0</span>, <span class="fl">0.01</span>)</a>
+<a class="sourceLine" id="cb3-3" data-line-number="3">    asol <span class="op">=</span> integrate.odeint(solvr, [<span class="dv">1</span>, <span class="dv">0</span>], a_t)</a>
+<a class="sourceLine" id="cb3-4" data-line-number="4">    astack <span class="op">=</span> np.c_[a_t, asol[:,<span class="dv">0</span>], asol[:, <span class="dv">1</span>]]</a>
+<a class="sourceLine" id="cb3-5" data-line-number="5">    np.savetxt(<span class="st">&#39;approx.csv&#39;</span>, astack, delimiter<span class="op">=</span><span class="st">&#39;,&#39;</span>, header<span class="op">=</span><span class="st">&#39;t, y, yd&#39;</span>, comments<span class="op">=</span><span class="st">&#39;&#39;</span>)</a></code></pre></div>
+<p>Then we can plot this in R.<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a></p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="op">&gt;</span><span class="st"> </span>approx &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&#39;approx.csv&#39;</span>)</a>
+<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="op">&gt;</span><span class="st"> </span><span class="kw">plot</span>(y <span class="op">~</span><span class="st"> </span>t, <span class="dt">data=</span>approx, <span class="dt">type=</span><span class="st">&#39;l&#39;</span>)</a></code></pre></div>
+<p><img src="/images/python-ode-blog.png" /></p>
+<p>I’ll add that the Python solution here is <em>not</em> just a mere plot of the analytic method. We could have done this for an equation even if we don’t remember how to solve it ourselves, as long as we’re able to reduce it to a first-order ODE system like here. SciPy has more advanced numeric solvers available, including the more generic <a href="http://docs.scipy.org/doc/scipy-0.13.0/reference/generated/scipy.integrate.ode.html"><code>scipy.integrate.ode</code></a> for dealing with more complicated equations.</p>
+<p>But overall, considering I had never used Python to solve this sort of thing before, I’m pretty impressed by how easy it was to work through this solution. I’m looking forward to pushing Python’s numeric/mathematical capabilities further in the future.</p>
+</section>
+<section class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>This equation might look duanting, but it is literally just straight-from-a-textbook material on these things. If you go look up <q>second-order homogeneous linear ODE with constant coefficients</q> you will find that for characteristic equations where both roots are complex, that is the general form of your solution. So when actually solving these analytically, you don’t think about it much more once you know whether the c.e. roots are complex.<a href="#fnref1" class="footnote-back">↩</a></p></li>
+<li id="fn2"><p>I know all the <q>cool kids</q> on the Python block are using <a href="http://matplotlib.org/">matplotlib</a>. I simply prefer R. I’ve used it more, and I find it easier to work with whenever there’s an actual <em>dataset</em> that I’m shifting around, not just pure numeric values.<a href="#fnref2" class="footnote-back">↩</a></p></li>
+</ol>
+</section>
+]]></summary>
+</entry>
+<entry>
+    <title>Benchmarking Mike Bland's OpenSSL Makefiles</title>
+    <link href="http://www.nathantypanski.com/blog/2014-08-22-openssl-makefiles.html" />
+    <id>http://www.nathantypanski.com/blog/2014-08-22-openssl-makefiles.html</id>
+    <published>2014-08-22T00:00:00Z</published>
+    <updated>2014-08-22T00:00:00Z</updated>
+    <summary type="html"><![CDATA[<div class="info">
+    <!--
+    <div class="snippets">
+        <i class="fa fa-calendar"></i> August 22, 2014 <i class="fa fa-cut" November  3, 2016></i> November  3, 2016
+    </div>
+    -->
+    
+</div>
+<div id="toc"><h2>Contents</h2>
+<ul>
+<li><a href="#motivation">Motivation</a></li>
+<li><a href="#r-analysis">R analysis</a><ul>
+<li><a href="#full-sequential-build">Full sequential build</a></li>
+<li><a href="#full-parallel-build">Full parallel build</a></li>
+<li><a href="#full-sequential-build-with-ccache">Full sequential build with ccache</a></li>
+<li><a href="#full-parallel-build-with-ccache">Full parallel build with ccache</a></li>
+</ul></li>
+<li><a href="#specs">Specs</a></li>
+<li><a href="#complications">Complications</a><ul>
+<li><a href="#make-links">make links</a></li>
+</ul></li>
+<li><a href="#conclusion">Conclusion</a></li>
+</ul> </div>
+<p><a href="http://mike-bland.com/">Mike Bland</a> has been <a href="https://github.com/mbland/openssl/commits/makefiles">hard at work</a> <a href="http://goo.gl/yhvCno">refactoring the build system</a> for OpenSSL. I wasn’t involved in developing these changes, but I do care about OpenSSL and the way the decision process happens there. I care about making sure its developers get the best <q>bang for their buck</q> out of their time, so that they can focus on the important issues.</p>
+<p>As my small contribution to this effort, I ran benchmarks and did statistical analysis of Mike’s builds to see if they <em>really are</em> faster than the old ones — and if so, to see just where these speedups manifest.</p>
+<p>The results are quite good.</p>
+<section id="motivation" class="level2">
+<h2>Motivation</h2>
+<p>The main reference point in the literature for Mike’s refactoring is the 1997 paper <a href="http://aegis.sourceforge.net/auug97.pdf">Recursive Make Considered Harmful</a>. That article makes all sorts of good points, and offers some solutions as well.</p>
+<p>But to summarize it, the two problems with recursive Make we’re concerned with:</p>
+<blockquote>
+<ul>
+<li>The inaccuracy of the dependencies, or the simple lack of dependencies, can result in a product which is incapable of building cleanly, requiring the build process to be carefully watched by a human.</li>
+<li>Related to the above, some projects are incapable of taking advantage of various <q>parallel make</q> impementations, because the build does patently silly things.</li>
+</ul>
+</blockquote>
+<p>I won’t go further into the details of why these refactors are helpful here. You can read about that in <a href="http://goo.gl/yhvCno">Mike’s writeup</a>, <a href="https://groups.google.com/d/topic/mailing.openssl.dev/F1CkO4WCrv8/discussion"><code>[openssl-dev]</code></a>, or the <a href="https://groups.google.com/d/topic/openssl-testing/AUJME_4xkWM/discussion"><code>[openssl-testing]</code></a> thread if you’re interested. What I’m going to cover is the benchmarks that I ran and which of my results are statistically significant.</p>
+<p>Why? Because I don’t like to see speed statistics without the data analysis to back them up. When someone comes around saying <q>hey, this way of doing it is faster</q> I want to see some sort of proof, repeated trials, and a significance test of some sort.</p>
+</section>
+<section id="r-analysis" class="level2">
+<h2>R analysis</h2>
+<p>You can find the full dataset created from my benchmarking in one <a href="/files/openssl-all-builds.csv">easy-to-use CSV file</a>.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="op">&gt;</span><span class="st"> </span>ssl &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&#39;all_builds.csv&#39;</span>)</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="op">&gt;</span><span class="st"> </span><span class="kw">head</span>(ssl)</a>
+<a class="sourceLine" id="cb1-3" data-line-number="3">  branch shortref command   real   user  sys ccache</a>
+<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="dv">1</span> master  a46149c    make <span class="fl">112.30</span>  <span class="fl">99.15</span> <span class="fl">8.07</span>  <span class="ot">FALSE</span></a>
+<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="dv">2</span> master  a46149c    make <span class="fl">118.95</span> <span class="fl">105.31</span> <span class="fl">8.58</span>  <span class="ot">FALSE</span></a>
+<a class="sourceLine" id="cb1-6" data-line-number="6"><span class="dv">3</span> master  a46149c    make <span class="fl">118.12</span> <span class="fl">104.59</span> <span class="fl">8.52</span>  <span class="ot">FALSE</span></a>
+<a class="sourceLine" id="cb1-7" data-line-number="7"><span class="dv">4</span> master  a46149c    make <span class="fl">117.28</span> <span class="fl">103.85</span> <span class="fl">8.22</span>  <span class="ot">FALSE</span></a>
+<a class="sourceLine" id="cb1-8" data-line-number="8"><span class="dv">5</span> master  a46149c    make <span class="fl">124.16</span> <span class="fl">109.49</span> <span class="fl">9.21</span>  <span class="ot">FALSE</span></a>
+<a class="sourceLine" id="cb1-9" data-line-number="9"><span class="dv">6</span> master  a46149c    make <span class="fl">121.17</span> <span class="fl">106.99</span> <span class="fl">8.71</span>  <span class="ot">FALSE</span></a></code></pre></div>
+<p>I ran builds with ccache and without it, so we’ll start by subsetting the data based on that.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="op">&gt;</span><span class="st"> </span>ccache &lt;-<span class="st"> </span>ssl[<span class="kw">which</span>(ssl<span class="op">$</span>ccache),]</a>
+<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="op">&gt;</span><span class="st"> </span>normal &lt;-<span class="st"> </span>ssl[<span class="kw">which</span>(<span class="op">!</span>ssl<span class="op">$</span>ccache),]</a></code></pre></div>
+<p>Then we can subset the data into the different types of builds:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="op">&gt;</span><span class="st"> </span>fullseq &lt;-<span class="st"> </span>normal[<span class="kw">which</span>(normal<span class="op">$</span>command <span class="op">==</span><span class="st"> &#39;make&#39;</span>),]</a>
+<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="op">&gt;</span><span class="st"> </span>fullpar &lt;-<span class="st"> </span>normal[<span class="kw">which</span>(normal<span class="op">$</span>command <span class="op">==</span><span class="st"> &#39;make -j4&#39;</span>),]</a>
+<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="op">&gt;</span><span class="st"> </span>fulltest &lt;-<span class="st"> </span>normal[<span class="kw">which</span>(normal<span class="op">$</span>command <span class="op">==</span></a>
+<a class="sourceLine" id="cb3-4" data-line-number="4"><span class="op">+</span><span class="st"> &#39;touch ssl/d1_both.c &amp;&amp; /usr/bin/time make&#39;</span>),]</a>
+<a class="sourceLine" id="cb3-5" data-line-number="5"><span class="op">&gt;</span><span class="st"> </span>fullseqcc &lt;-<span class="st"> </span>ccache[<span class="kw">which</span>(ccache<span class="op">$</span>command <span class="op">==</span><span class="st"> &#39;make&#39;</span>),]</a>
+<a class="sourceLine" id="cb3-6" data-line-number="6"><span class="op">&gt;</span><span class="st"> </span>fullparcc &lt;-<span class="st"> </span>ccache[<span class="kw">which</span>(ccache<span class="op">$</span>command <span class="op">==</span><span class="st"> &#39;make -j4&#39;</span>),]</a>
+<a class="sourceLine" id="cb3-7" data-line-number="7"><span class="op">&gt;</span><span class="st"> </span>fulltestcc &lt;-<span class="st"> </span>ccache[<span class="kw">which</span>(ccache<span class="op">$</span>command <span class="op">==</span><span class="st"> &#39;make test&#39;</span>),]</a></code></pre></div>
+<section id="full-sequential-build" class="level3">
+<h3>Full sequential build</h3>
+<p>These builds are just the regular <code>make clean &amp;&amp; /usr/bin/time -p make</code>. Since the single-makefile approach generally favors parallel more than sequential builds, it’s not surprising that we don’t see much improvement here.</p>
+<section id="master" class="level4">
+<h4>master</h4>
+<div class="sourceCode" id="cb4"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">      real            user             sys       </a>
+<a class="sourceLine" id="cb4-2" data-line-number="2"> Min.   <span class="op">:</span><span class="fl">112.3</span>   Min.   <span class="op">:</span><span class="st"> </span><span class="fl">99.15</span>   Min.   <span class="op">:</span><span class="fl">8.070</span>  </a>
+<a class="sourceLine" id="cb4-3" data-line-number="3"> 1st Qu.<span class="op">:</span><span class="fl">118.1</span>   1st Qu.<span class="op">:</span><span class="fl">104.15</span>   1st Qu.<span class="op">:</span><span class="fl">8.520</span>  </a>
+<a class="sourceLine" id="cb4-4" data-line-number="4"> Median <span class="op">:</span><span class="fl">119.2</span>   Median <span class="op">:</span><span class="fl">105.31</span>   Median <span class="op">:</span><span class="fl">8.710</span>  </a>
+<a class="sourceLine" id="cb4-5" data-line-number="5"> Mean   <span class="op">:</span><span class="fl">120.6</span>   Mean   <span class="op">:</span><span class="fl">106.50</span>   Mean   <span class="op">:</span><span class="fl">8.784</span>  </a>
+<a class="sourceLine" id="cb4-6" data-line-number="6"> 3rd Qu.<span class="op">:</span><span class="fl">122.3</span>   3rd Qu.<span class="op">:</span><span class="fl">107.80</span>   3rd Qu.<span class="op">:</span><span class="fl">9.210</span>  </a>
+<a class="sourceLine" id="cb4-7" data-line-number="7"> Max.   <span class="op">:</span><span class="fl">132.3</span>   Max.   <span class="op">:</span><span class="fl">117.17</span>   Max.   <span class="op">:</span><span class="fl">9.410</span></a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="op">&gt;</span><span class="st"> </span><span class="kw">plot</span>(<span class="kw">density</span>(fullseq[<span class="kw">which</span>(fullseq<span class="op">$</span>branch<span class="op">==</span><span class="st">&#39;master&#39;</span>),]<span class="op">$</span>real),</a>
+<a class="sourceLine" id="cb5-2" data-line-number="2">       <span class="dt">main=</span><span class="st">&#39;master build time density (real)&#39;</span>)</a></code></pre></div>
+<figure>
+<img src="/images/openssl-master-density.png" alt="Not exactly a normal distribution, but close enough for comfort" /><figcaption>Not exactly a normal distribution, but close enough for comfort</figcaption>
+</figure>
+</section>
+<section id="mbland-makefiles-00" class="level4">
+<h4>mbland-makefiles-00</h4>
+<div class="sourceCode" id="cb6"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">      real            user             sys       </a>
+<a class="sourceLine" id="cb6-2" data-line-number="2"> Min.   <span class="op">:</span><span class="fl">111.6</span>   Min.   <span class="op">:</span><span class="st"> </span><span class="fl">98.66</span>   Min.   <span class="op">:</span><span class="fl">7.880</span>  </a>
+<a class="sourceLine" id="cb6-3" data-line-number="3"> 1st Qu.<span class="op">:</span><span class="fl">115.2</span>   1st Qu.<span class="op">:</span><span class="fl">101.97</span>   1st Qu.<span class="op">:</span><span class="fl">8.160</span>  </a>
+<a class="sourceLine" id="cb6-4" data-line-number="4"> Median <span class="op">:</span><span class="fl">118.1</span>   Median <span class="op">:</span><span class="fl">104.52</span>   Median <span class="op">:</span><span class="fl">8.410</span>  </a>
+<a class="sourceLine" id="cb6-5" data-line-number="5"> Mean   <span class="op">:</span><span class="fl">118.0</span>   Mean   <span class="op">:</span><span class="fl">104.42</span>   Mean   <span class="op">:</span><span class="fl">8.482</span>  </a>
+<a class="sourceLine" id="cb6-6" data-line-number="6"> 3rd Qu.<span class="op">:</span><span class="fl">119.7</span>   3rd Qu.<span class="op">:</span><span class="fl">105.79</span>   3rd Qu.<span class="op">:</span><span class="fl">8.870</span>  </a>
+<a class="sourceLine" id="cb6-7" data-line-number="7"> Max.   <span class="op">:</span><span class="fl">125.6</span>   Max.   <span class="op">:</span><span class="fl">111.12</span>   Max.   <span class="op">:</span><span class="fl">9.060</span>  </a></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="op">&gt;</span><span class="st"> </span><span class="kw">plot</span>(<span class="kw">density</span>(</a>
+<a class="sourceLine" id="cb7-2" data-line-number="2"><span class="op">+</span><span class="st">   </span>fullseq[<span class="kw">which</span>(fullseq<span class="op">$</span>branch<span class="op">==</span><span class="st">&#39;mbland-makefiles-00&#39;</span>),]<span class="op">$</span>real),</a>
+<a class="sourceLine" id="cb7-3" data-line-number="3"><span class="op">+</span><span class="st">   </span><span class="dt">main=</span><span class="st">&#39;mbland-makefiles-00 build time density (real)&#39;</span>)</a></code></pre></div>
+<p><img src="/images/openssl-mbland-density.png" /></p>
+</section>
+<section id="comparison" class="level4">
+<h4>Comparison</h4>
+<div class="sourceCode" id="cb8"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="op">&gt;</span><span class="st"> </span><span class="kw">boxplot</span>(fullseq[<span class="kw">which</span>(fullseq<span class="op">$</span>branch<span class="op">==</span><span class="st">&#39;master&#39;</span>),]<span class="op">$</span>real,</a>
+<a class="sourceLine" id="cb8-2" data-line-number="2"><span class="op">+</span><span class="st"> </span>fullseq[<span class="kw">which</span>(fullseq<span class="op">$</span>branch<span class="op">==</span><span class="st">&#39;mbland-makefiles-00&#39;</span>),]<span class="op">$</span>real,</a>
+<a class="sourceLine" id="cb8-3" data-line-number="3"><span class="op">+</span><span class="st"> </span><span class="dt">ylab=</span><span class="st">&#39;time (real)&#39;</span>, <span class="dt">xlab=</span><span class="st">&#39;branch&#39;</span>,</a>
+<a class="sourceLine" id="cb8-4" data-line-number="4"><span class="op">+</span><span class="st"> </span><span class="dt">names=</span><span class="kw">c</span>(<span class="st">&#39;master&#39;</span>, <span class="st">&#39;mbland-makefiles-00&#39;</span>),</a>
+<a class="sourceLine" id="cb8-5" data-line-number="5"><span class="op">+</span><span class="st"> </span><span class="dt">main=</span><span class="st">&#39;Full sequential build&#39;</span>)</a></code></pre></div>
+<p><img src="/images/openssl-sequential-real.png" /></p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="op">&gt;</span><span class="st"> </span><span class="kw">t.test</span>(real <span class="op">~</span><span class="st"> </span>branch, <span class="dt">data=</span>fullseq)</a>
+<a class="sourceLine" id="cb9-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb9-3" data-line-number="3">	Welch Two Sample t<span class="op">-</span>test</a>
+<a class="sourceLine" id="cb9-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb9-5" data-line-number="5">data<span class="op">:</span><span class="st">  </span>real by branch</a>
+<a class="sourceLine" id="cb9-6" data-line-number="6">t =<span class="st"> </span><span class="fl">1.0478</span>, df =<span class="st"> </span><span class="fl">15.906</span>, p<span class="op">-</span>value =<span class="st"> </span><span class="fl">0.3104</span></a>
+<a class="sourceLine" id="cb9-7" data-line-number="7">alternative hypothesis<span class="op">:</span><span class="st"> </span>true difference <span class="cf">in</span> means is not equal to <span class="dv">0</span></a>
+<a class="sourceLine" id="cb9-8" data-line-number="8"><span class="dv">95</span> percent confidence interval<span class="op">:</span></a>
+<a class="sourceLine" id="cb9-9" data-line-number="9"><span class="st"> </span><span class="fl">-2.688901</span>  <span class="fl">7.940012</span></a>
+<a class="sourceLine" id="cb9-10" data-line-number="10">sample estimates<span class="op">:</span></a>
+<a class="sourceLine" id="cb9-11" data-line-number="11"><span class="st">             </span>mean <span class="cf">in</span> group master mean <span class="cf">in</span> group mbland<span class="op">-</span>makefiles<span class="dv">-00</span> </a>
+<a class="sourceLine" id="cb9-12" data-line-number="12">                         <span class="fl">120.6433</span>                          <span class="fl">118.0178</span> </a></code></pre></div>
+<p>Not surprisingly, the T-test is inconclusive. If you don’t have a multicore machine, odds are you won’t see a significant speedup from these patches.</p>
+</section>
+</section>
+<section id="full-parallel-build" class="level3">
+<h3>Full parallel build</h3>
+<p>Parallel builds are where you expect a single-makefile build system to really shine. When running these, it certainly <em>felt</em> faster.</p>
+<section id="master-1" class="level4">
+<h4>master</h4>
+<div class="sourceCode" id="cb10"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">      real            user            sys       </a>
+<a class="sourceLine" id="cb10-2" data-line-number="2"> Min.   <span class="op">:</span><span class="fl">79.24</span>   Min.   <span class="op">:</span><span class="fl">105.8</span>   Min.   <span class="op">:</span><span class="fl">8.190</span>  </a>
+<a class="sourceLine" id="cb10-3" data-line-number="3"> 1st Qu.<span class="op">:</span><span class="fl">80.10</span>   1st Qu.<span class="op">:</span><span class="fl">106.6</span>   1st Qu.<span class="op">:</span><span class="fl">8.690</span>  </a>
+<a class="sourceLine" id="cb10-4" data-line-number="4"> Median <span class="op">:</span><span class="fl">80.92</span>   Median <span class="op">:</span><span class="fl">107.2</span>   Median <span class="op">:</span><span class="fl">8.730</span>  </a>
+<a class="sourceLine" id="cb10-5" data-line-number="5"> Mean   <span class="op">:</span><span class="fl">81.24</span>   Mean   <span class="op">:</span><span class="fl">107.8</span>   Mean   <span class="op">:</span><span class="fl">8.814</span>  </a>
+<a class="sourceLine" id="cb10-6" data-line-number="6"> 3rd Qu.<span class="op">:</span><span class="fl">82.67</span>   3rd Qu.<span class="op">:</span><span class="fl">109.4</span>   3rd Qu.<span class="op">:</span><span class="fl">9.070</span>  </a>
+<a class="sourceLine" id="cb10-7" data-line-number="7"> Max.   <span class="op">:</span><span class="fl">83.66</span>   Max.   <span class="op">:</span><span class="fl">110.6</span>   Max.   <span class="op">:</span><span class="fl">9.190</span></a></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="op">&gt;</span><span class="st"> </span><span class="kw">plot</span>(<span class="kw">density</span>(fullpar[<span class="kw">which</span>(fullpar<span class="op">$</span>branch<span class="op">==</span><span class="st">&#39;master&#39;</span>),]<span class="op">$</span>real),</a>
+<a class="sourceLine" id="cb11-2" data-line-number="2"><span class="op">+</span><span class="st">      </span><span class="dt">main=</span><span class="st">&#39;master parallel build time density (real)&#39;</span>)</a></code></pre></div>
+<figure>
+<img src="/images/openssl-master-parallel-density.png" alt="This could actually pass for a normal distribution" /><figcaption>This could actually pass for a normal distribution</figcaption>
+</figure>
+</section>
+<section id="mbland-makefiles-00-1" class="level4">
+<h4>mbland-makefiles-00</h4>
+<div class="sourceCode" id="cb12"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1">    real            user            sys</a>
+<a class="sourceLine" id="cb12-2" data-line-number="2">Min.   <span class="op">:</span><span class="fl">45.10</span>   Min.   <span class="op">:</span><span class="fl">147.8</span>   Min.   <span class="op">:</span><span class="fl">11.08</span></a>
+<a class="sourceLine" id="cb12-3" data-line-number="3">1st Qu.<span class="op">:</span><span class="fl">46.90</span>   1st Qu.<span class="op">:</span><span class="fl">151.6</span>   1st Qu.<span class="op">:</span><span class="fl">11.44</span></a>
+<a class="sourceLine" id="cb12-4" data-line-number="4">Median <span class="op">:</span><span class="fl">47.68</span>   Median <span class="op">:</span><span class="fl">154.9</span>   Median <span class="op">:</span><span class="fl">11.70</span></a>
+<a class="sourceLine" id="cb12-5" data-line-number="5">Mean   <span class="op">:</span><span class="fl">48.36</span>   Mean   <span class="op">:</span><span class="fl">157.6</span>   Mean   <span class="op">:</span><span class="fl">11.75</span></a>
+<a class="sourceLine" id="cb12-6" data-line-number="6">3rd Qu.<span class="op">:</span><span class="fl">50.37</span>   3rd Qu.<span class="op">:</span><span class="fl">166.1</span>   3rd Qu.<span class="op">:</span><span class="fl">12.06</span></a>
+<a class="sourceLine" id="cb12-7" data-line-number="7">Max.   <span class="op">:</span><span class="fl">52.95</span>   Max.   <span class="op">:</span><span class="fl">166.8</span>   Max.   <span class="op">:</span><span class="fl">12.46</span></a></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1"><span class="op">&gt;</span><span class="st"> </span><span class="kw">plot</span>(<span class="kw">density</span>(fullpar[<span class="kw">which</span>(fullpar<span class="op">$</span>branch<span class="op">==</span><span class="st">&#39;mbland-makefiles-00&#39;</span>),]<span class="op">$</span>real),</a>
+<a class="sourceLine" id="cb13-2" data-line-number="2"><span class="op">+</span><span class="st">      </span><span class="dt">main=</span><span class="st">&#39;mbland-makefiles-00 parallel build time density (real)&#39;</span>)</a></code></pre></div>
+<p><img src="/images/openssl-mbland-parallel-density.png" /></p>
+</section>
+<section id="comparison-1" class="level4">
+<h4>Comparison</h4>
+<div class="sourceCode" id="cb14"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1"><span class="op">&gt;</span><span class="st"> </span><span class="kw">boxplot</span>(fullpar[<span class="kw">which</span>(fullpar<span class="op">$</span>branch<span class="op">==</span><span class="st">&#39;master&#39;</span>),]<span class="op">$</span>real,</a>
+<a class="sourceLine" id="cb14-2" data-line-number="2"><span class="op">+</span><span class="st"> </span>fullpar[<span class="kw">which</span>(fullpar<span class="op">$</span>branch<span class="op">==</span><span class="st">&#39;mbland-makefiles-00&#39;</span>),]<span class="op">$</span>real,</a>
+<a class="sourceLine" id="cb14-3" data-line-number="3"><span class="op">+</span><span class="st"> </span><span class="dt">ylab=</span><span class="st">&#39;time (real)&#39;</span>, <span class="dt">xlab=</span><span class="st">&#39;branch&#39;</span>,</a>
+<a class="sourceLine" id="cb14-4" data-line-number="4"><span class="op">+</span><span class="st"> </span><span class="dt">names=</span><span class="kw">c</span>(<span class="st">&#39;master&#39;</span>, <span class="st">&#39;mbland-makefiles-00&#39;</span>),</a>
+<a class="sourceLine" id="cb14-5" data-line-number="5"><span class="op">+</span><span class="st"> </span><span class="dt">main=</span><span class="st">&#39;Full parallel build&#39;</span>)</a></code></pre></div>
+<figure>
+<img src="/images/openssl-parallel-real.png" alt="Single-makefile structure performs excellently in parallel builds" /><figcaption>Single-makefile structure performs <em>excellently</em> in parallel builds</figcaption>
+</figure>
+<div class="sourceCode" id="cb15"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1"><span class="op">&gt;</span><span class="st"> </span><span class="kw">t.test</span>(real <span class="op">~</span><span class="st"> </span>branch, <span class="dt">data=</span>fullpar)</a>
+<a class="sourceLine" id="cb15-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb15-3" data-line-number="3">	Welch Two Sample t<span class="op">-</span>test</a>
+<a class="sourceLine" id="cb15-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb15-5" data-line-number="5">data<span class="op">:</span><span class="st">  </span>real by branch</a>
+<a class="sourceLine" id="cb15-6" data-line-number="6">t =<span class="st"> </span><span class="fl">31.1981</span>, df =<span class="st"> </span><span class="fl">13.113</span>, p<span class="op">-</span>value =<span class="st"> </span><span class="fl">1.084e-13</span></a>
+<a class="sourceLine" id="cb15-7" data-line-number="7">alternative hypothesis<span class="op">:</span><span class="st"> </span>true difference <span class="cf">in</span> means is not equal to <span class="dv">0</span></a>
+<a class="sourceLine" id="cb15-8" data-line-number="8"><span class="dv">95</span> percent confidence interval<span class="op">:</span></a>
+<a class="sourceLine" id="cb15-9" data-line-number="9"><span class="st"> </span><span class="fl">30.60205</span> <span class="fl">35.15128</span></a>
+<a class="sourceLine" id="cb15-10" data-line-number="10">sample estimates<span class="op">:</span></a>
+<a class="sourceLine" id="cb15-11" data-line-number="11"><span class="st">             </span>mean <span class="cf">in</span> group master mean <span class="cf">in</span> group mbland<span class="op">-</span>makefiles<span class="dv">-00</span> </a>
+<a class="sourceLine" id="cb15-12" data-line-number="12">                         <span class="fl">81.24000</span>                          <span class="fl">48.36333</span> </a></code></pre></div>
+<p>T-test yields favorable results. Looks like a 40% speedup. This is the best result on this whole page, since fast parallel builds after just this initial work can open doors for even better parallelization in the future.</p>
+</section>
+</section>
+<section id="full-sequential-build-with-ccache" class="level3">
+<h3>Full sequential build with ccache</h3>
+<p>While doing build benchmarks with ccache might seem a bit odd,<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> it actually makes sense: we should have data on how people might be building things in practice. If developers choose to use ccache when working, then they would want to know how this impacts <em>them</em>.</p>
+<section id="master-2" class="level4">
+<h4>master</h4>
+<div class="sourceCode" id="cb16"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1">      real            user            sys       </a>
+<a class="sourceLine" id="cb16-2" data-line-number="2"> Min.   <span class="op">:</span><span class="fl">15.94</span>   Min.   <span class="op">:</span><span class="fl">11.16</span>   Min.   <span class="op">:</span><span class="fl">1.650</span>  </a>
+<a class="sourceLine" id="cb16-3" data-line-number="3"> 1st Qu.<span class="op">:</span><span class="fl">16.00</span>   1st Qu.<span class="op">:</span><span class="fl">11.22</span>   1st Qu.<span class="op">:</span><span class="fl">1.695</span>  </a>
+<a class="sourceLine" id="cb16-4" data-line-number="4"> Median <span class="op">:</span><span class="fl">16.06</span>   Median <span class="op">:</span><span class="fl">11.38</span>   Median <span class="op">:</span><span class="fl">1.790</span>  </a>
+<a class="sourceLine" id="cb16-5" data-line-number="5"> Mean   <span class="op">:</span><span class="fl">16.17</span>   Mean   <span class="op">:</span><span class="fl">11.38</span>   Mean   <span class="op">:</span><span class="fl">1.778</span>  </a>
+<a class="sourceLine" id="cb16-6" data-line-number="6"> 3rd Qu.<span class="op">:</span><span class="fl">16.29</span>   3rd Qu.<span class="op">:</span><span class="fl">11.48</span>   3rd Qu.<span class="op">:</span><span class="fl">1.825</span>  </a>
+<a class="sourceLine" id="cb16-7" data-line-number="7"> Max.   <span class="op">:</span><span class="fl">16.63</span>   Max.   <span class="op">:</span><span class="fl">11.69</span>   Max.   <span class="op">:</span><span class="fl">1.940</span>  </a></code></pre></div>
+</section>
+<section id="mbland-makefiles-00-2" class="level4">
+<h4>mbland-makefiles-00</h4>
+<div class="sourceCode" id="cb17"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1">      real            user             sys       </a>
+<a class="sourceLine" id="cb17-2" data-line-number="2"> Min.   <span class="op">:</span><span class="fl">12.46</span>   Min.   <span class="op">:</span><span class="st"> </span><span class="fl">8.310</span>   Min.   <span class="op">:</span><span class="fl">1.400</span>  </a>
+<a class="sourceLine" id="cb17-3" data-line-number="3"> 1st Qu.<span class="op">:</span><span class="fl">12.48</span>   1st Qu.<span class="op">:</span><span class="st"> </span><span class="fl">8.537</span>   1st Qu.<span class="op">:</span><span class="fl">1.490</span>  </a>
+<a class="sourceLine" id="cb17-4" data-line-number="4"> Median <span class="op">:</span><span class="fl">12.55</span>   Median <span class="op">:</span><span class="st"> </span><span class="fl">8.595</span>   Median <span class="op">:</span><span class="fl">1.525</span>  </a>
+<a class="sourceLine" id="cb17-5" data-line-number="5"> Mean   <span class="op">:</span><span class="fl">13.23</span>   Mean   <span class="op">:</span><span class="st"> </span><span class="fl">9.090</span>   Mean   <span class="op">:</span><span class="fl">1.632</span>  </a>
+<a class="sourceLine" id="cb17-6" data-line-number="6"> 3rd Qu.<span class="op">:</span><span class="fl">12.72</span>   3rd Qu.<span class="op">:</span><span class="st"> </span><span class="fl">8.652</span>   3rd Qu.<span class="op">:</span><span class="fl">1.545</span>  </a>
+<a class="sourceLine" id="cb17-7" data-line-number="7"> Max.   <span class="op">:</span><span class="fl">16.58</span>   Max.   <span class="op">:</span><span class="fl">11.850</span>   Max.   <span class="op">:</span><span class="fl">2.310</span>  </a></code></pre></div>
+</section>
+<section id="comparison-2" class="level4">
+<h4>Comparison</h4>
+<div class="sourceCode" id="cb18"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" data-line-number="1"><span class="op">&gt;</span><span class="st"> </span><span class="kw">boxplot</span>(fullseqcc[<span class="kw">which</span>(fullseqcc<span class="op">$</span>branch<span class="op">==</span><span class="st">&#39;master&#39;</span>),]<span class="op">$</span>real,</a>
+<a class="sourceLine" id="cb18-2" data-line-number="2"><span class="op">+</span><span class="st"> </span>fullseqcc[<span class="kw">which</span>(fullseqcc<span class="op">$</span>branch<span class="op">==</span><span class="st">&#39;mbland-makefiles-00&#39;</span>),]<span class="op">$</span>real,</a>
+<a class="sourceLine" id="cb18-3" data-line-number="3"><span class="op">+</span><span class="st"> </span><span class="dt">ylab=</span><span class="st">&#39;time (real)&#39;</span>, <span class="dt">xlab=</span><span class="st">&#39;branch&#39;</span>,</a>
+<a class="sourceLine" id="cb18-4" data-line-number="4"><span class="op">+</span><span class="st"> </span><span class="dt">names=</span><span class="kw">c</span>(<span class="st">&#39;master&#39;</span>, <span class="st">&#39;mbland-makefiles-00&#39;</span>),</a>
+<a class="sourceLine" id="cb18-5" data-line-number="5"><span class="op">+</span><span class="st"> </span><span class="dt">main=</span><span class="st">&#39;Full sequential build with ccache&#39;</span>)</a></code></pre></div>
+<p><img src="/images/openssl-sequential-real-ccache.png" /></p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1"><span class="op">&gt;</span><span class="st"> </span><span class="kw">t.test</span>(real <span class="op">~</span><span class="st"> </span>branch, <span class="dt">data=</span>fullseqcc)</a>
+<a class="sourceLine" id="cb19-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb19-3" data-line-number="3">	Welch Two Sample t<span class="op">-</span>test</a>
+<a class="sourceLine" id="cb19-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb19-5" data-line-number="5">data<span class="op">:</span><span class="st">  </span>real by branch</a>
+<a class="sourceLine" id="cb19-6" data-line-number="6">t =<span class="st"> </span><span class="fl">4.3274</span>, df =<span class="st"> </span><span class="fl">5.265</span>, p<span class="op">-</span>value =<span class="st"> </span><span class="fl">0.006681</span></a>
+<a class="sourceLine" id="cb19-7" data-line-number="7">alternative hypothesis<span class="op">:</span><span class="st"> </span>true difference <span class="cf">in</span> means is not equal to <span class="dv">0</span></a>
+<a class="sourceLine" id="cb19-8" data-line-number="8"><span class="dv">95</span> percent confidence interval<span class="op">:</span></a>
+<a class="sourceLine" id="cb19-9" data-line-number="9"><span class="st"> </span><span class="fl">1.221215</span> <span class="fl">4.666119</span></a>
+<a class="sourceLine" id="cb19-10" data-line-number="10">sample estimates<span class="op">:</span></a>
+<a class="sourceLine" id="cb19-11" data-line-number="11"><span class="st">             </span>mean <span class="cf">in</span> group master mean <span class="cf">in</span> group mbland<span class="op">-</span>makefiles<span class="dv">-00</span> </a>
+<a class="sourceLine" id="cb19-12" data-line-number="12">                         <span class="fl">16.17067</span>                          <span class="fl">13.22700</span> </a></code></pre></div>
+<p>We see noticeable (and statistically significant) improvements in even the sequential build with ccache. However, considering we’re talking a difference of 13 vs. 16 seconds here, this may or may not matter to you.</p>
+<p>If you’re concerned with how ccache impacts actual performance <em>during development</em>, there’s some useful info on their site’s <a href="https://ccache.samba.org/performance.html">performance page</a>:</p>
+<blockquote>
+<p>It should also be noted that if the expected hit rate is low, there may be a net performance loss when using ccache because of the overhead of cache misses (typically 5%-20%). Also, if the build machine is short on memory compared to the amount of memory used by the build tools (compiler, linker, etc), usage of ccache could decrease performance due the fact that ccache’s cached files may flush other files from the OS’s disk cache. See this mailing list post by Christopher Tate for a good write-up on this issue. So to sum it up: it is probably wise to perform some measurements with and without ccache for your typical use case before enabling it!</p>
+</blockquote>
+</section>
+</section>
+<section id="full-parallel-build-with-ccache" class="level3">
+<h3>Full parallel build with ccache</h3>
+<section id="master-3" class="level4">
+<h4>master</h4>
+<div class="sourceCode" id="cb20"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" data-line-number="1">      real            user            sys       </a>
+<a class="sourceLine" id="cb20-2" data-line-number="2"> Min.   <span class="op">:</span><span class="fl">10.85</span>   Min.   <span class="op">:</span><span class="fl">9.420</span>   Min.   <span class="op">:</span><span class="fl">1.270</span>  </a>
+<a class="sourceLine" id="cb20-3" data-line-number="3"> 1st Qu.<span class="op">:</span><span class="fl">10.97</span>   1st Qu.<span class="op">:</span><span class="fl">9.555</span>   1st Qu.<span class="op">:</span><span class="fl">1.347</span>  </a>
+<a class="sourceLine" id="cb20-4" data-line-number="4"> Median <span class="op">:</span><span class="fl">11.14</span>   Median <span class="op">:</span><span class="fl">9.710</span>   Median <span class="op">:</span><span class="fl">1.420</span>  </a>
+<a class="sourceLine" id="cb20-5" data-line-number="5"> Mean   <span class="op">:</span><span class="fl">11.09</span>   Mean   <span class="op">:</span><span class="fl">9.670</span>   Mean   <span class="op">:</span><span class="fl">1.403</span>  </a>
+<a class="sourceLine" id="cb20-6" data-line-number="6"> 3rd Qu.<span class="op">:</span><span class="fl">11.22</span>   3rd Qu.<span class="op">:</span><span class="fl">9.768</span>   3rd Qu.<span class="op">:</span><span class="fl">1.462</span>  </a>
+<a class="sourceLine" id="cb20-7" data-line-number="7"> Max.   <span class="op">:</span><span class="fl">11.25</span>   Max.   <span class="op">:</span><span class="fl">9.890</span>   Max.   <span class="op">:</span><span class="fl">1.510</span></a></code></pre></div>
+</section>
+<section id="mbland-makefiles-00-3" class="level4">
+<h4>mbland-makefiles-00</h4>
+<div class="sourceCode" id="cb21"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1">      real            user            sys       </a>
+<a class="sourceLine" id="cb21-2" data-line-number="2"> Min.   <span class="op">:</span><span class="fl">5.315</span>   Min.   <span class="op">:</span><span class="fl">13.14</span>   Min.   <span class="op">:</span><span class="fl">2.220</span>  </a>
+<a class="sourceLine" id="cb21-3" data-line-number="3"> 1st Qu.<span class="op">:</span><span class="fl">5.433</span>   1st Qu.<span class="op">:</span><span class="fl">13.15</span>   1st Qu.<span class="op">:</span><span class="fl">2.240</span>  </a>
+<a class="sourceLine" id="cb21-4" data-line-number="4"> Median <span class="op">:</span><span class="fl">5.644</span>   Median <span class="op">:</span><span class="fl">13.19</span>   Median <span class="op">:</span><span class="fl">2.320</span>  </a>
+<a class="sourceLine" id="cb21-5" data-line-number="5"> Mean   <span class="op">:</span><span class="fl">5.550</span>   Mean   <span class="op">:</span><span class="fl">13.46</span>   Mean   <span class="op">:</span><span class="fl">2.317</span>  </a>
+<a class="sourceLine" id="cb21-6" data-line-number="6"> 3rd Qu.<span class="op">:</span><span class="fl">5.663</span>   3rd Qu.<span class="op">:</span><span class="fl">13.82</span>   3rd Qu.<span class="op">:</span><span class="fl">2.393</span>  </a>
+<a class="sourceLine" id="cb21-7" data-line-number="7"> Max.   <span class="op">:</span><span class="fl">5.667</span>   Max.   <span class="op">:</span><span class="fl">14.04</span>   Max.   <span class="op">:</span><span class="fl">2.410</span> </a></code></pre></div>
+</section>
+<section id="comparison-3" class="level4">
+<h4>Comparison</h4>
+<div class="sourceCode" id="cb22"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" data-line-number="1"><span class="op">&gt;</span><span class="st"> </span><span class="kw">boxplot</span>(fullseqcc[<span class="kw">which</span>(fullseqcc<span class="op">$</span>branch<span class="op">==</span><span class="st">&#39;master&#39;</span>),]<span class="op">$</span>real,</a>
+<a class="sourceLine" id="cb22-2" data-line-number="2"><span class="op">+</span><span class="st">       </span>fullseqcc[<span class="kw">which</span>(fullseqcc<span class="op">$</span>branch<span class="op">==</span><span class="st">&#39;mbland-makefiles-00&#39;</span>),]<span class="op">$</span>real,</a>
+<a class="sourceLine" id="cb22-3" data-line-number="3"><span class="op">+</span><span class="st">       </span><span class="dt">ylab=</span><span class="st">&#39;time (real)&#39;</span>, <span class="dt">xlab=</span><span class="st">&#39;branch&#39;</span>,</a>
+<a class="sourceLine" id="cb22-4" data-line-number="4"><span class="op">+</span><span class="st">       </span><span class="dt">names=</span><span class="kw">c</span>(<span class="st">&#39;master&#39;</span>, <span class="st">&#39;mbland-makefiles-00&#39;</span>),</a>
+<a class="sourceLine" id="cb22-5" data-line-number="5"><span class="op">+</span><span class="st">       </span><span class="dt">main=</span><span class="st">&#39;Full sequential build with ccache&#39;</span>)</a></code></pre></div>
+<p><img src="/images/openssl-parallel-real-ccache.png" /></p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" data-line-number="1"><span class="op">&gt;</span><span class="st"> </span><span class="kw">t.test</span>(real <span class="op">~</span><span class="st"> </span>branch, <span class="dt">data=</span>fullparcc)</a>
+<a class="sourceLine" id="cb23-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb23-3" data-line-number="3">	Welch Two Sample t<span class="op">-</span>test</a>
+<a class="sourceLine" id="cb23-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb23-5" data-line-number="5">data<span class="op">:</span><span class="st">  </span>real by branch</a>
+<a class="sourceLine" id="cb23-6" data-line-number="6">t =<span class="st"> </span><span class="fl">57.7511</span>, df =<span class="st"> </span><span class="fl">9.992</span>, p<span class="op">-</span>value =<span class="st"> </span><span class="fl">6.001e-14</span></a>
+<a class="sourceLine" id="cb23-7" data-line-number="7">alternative hypothesis<span class="op">:</span><span class="st"> </span>true difference <span class="cf">in</span> means is not equal to <span class="dv">0</span></a>
+<a class="sourceLine" id="cb23-8" data-line-number="8"><span class="dv">95</span> percent confidence interval<span class="op">:</span></a>
+<a class="sourceLine" id="cb23-9" data-line-number="9"><span class="st"> </span><span class="fl">5.326394</span> <span class="fl">5.753940</span></a>
+<a class="sourceLine" id="cb23-10" data-line-number="10">sample estimates<span class="op">:</span></a>
+<a class="sourceLine" id="cb23-11" data-line-number="11"><span class="st">             </span>mean <span class="cf">in</span> group master mean <span class="cf">in</span> group mbland<span class="op">-</span>makefiles<span class="dv">-00</span> </a>
+<a class="sourceLine" id="cb23-12" data-line-number="12">                        <span class="fl">11.090500</span>                          <span class="fl">5.550333</span> </a></code></pre></div>
+<p>More obviously so, the single-makefile parallel build with ccache is faster. These kinds of results are really encouraging: ccache can do its job better, work in parallel, and cut build time in half on an already quick build.</p>
+</section>
+</section>
+</section>
+<section id="specs" class="level2">
+<h2>Specs</h2>
+<pre class="sourceCode"><code>~$ gcc -v
+Using built-in specs.
+COLLECT_GCC=gcc
+COLLECT_LTO_WRAPPER=/usr/lib/gcc/x86_64-unknown-linux-gnu/4.9.1/lto-wrapper
+Target: x86_64-unknown-linux-gnu
+Configured with: /build/gcc/src/gcc-4.9.1/configure --prefix=/usr
+--libdir=/usr/lib --libexecdir=/usr/lib --mandir=/usr/share/man
+--infodir=/usr/share/info --with-bugurl=https://bugs.archlinux.org/
+--enable-languages=c,c++,ada,fortran,go,lto,objc,obj-c++ --enable-shared
+--enable-threads=posix --with-system-zlib --enable-__cxa_atexit
+--disable-libunwind-exceptions --enable-clocale=gnu --disable-libstdcxx-pch
+--disable-libssp --enable-gnu-unique-object --enable-linker-build-id
+--enable-cloog-backend=isl --disable-isl-version-check
+--disable-cloog-version-check --enable-lto --enable-plugin
+--enable-install-libiberty --with-linker-hash-style=gnu --disable-multilib
+--disable-werror --enable-checking=release
+Thread model: posix
+gcc version 4.9.1 (GCC) </code></pre>
+<pre class="sourceCode"><code>$ ccache -V | head -n1
+ccache version 3.1.9</code></pre>
+<pre class="sourceCode"><code>$ uname -a
+Linux dionysus 3.16.1-1-ARCH #1 SMP PREEMPT Thu Aug 14 07:40:19 CEST 2014 x86_64 GNU/Linux</code></pre>
+<pre class="sourceCode"><code>$ cat /proc/meminfo | head -n1
+MemTotal:        7952408 kB</code></pre>
+<pre class="sourceCode"><code>$ cat /proc/cpuinfo | egrep &quot;(model name|cache size|cpu cores)&quot; | head -n3
+model name	: Intel(R) Core(TM) i7-2620M CPU @ 2.70GHz
+cache size	: 4096 KB
+cpu cores	: 2</code></pre>
+</section>
+<section id="complications" class="level2">
+<h2>Complications</h2>
+<section id="make-links" class="level3">
+<h3>make links</h3>
+<p>Mike has noted in his <a href="http://goo.gl/yhvCno">Google Doc</a>:</p>
+<blockquote>
+<p>(In fact, firing up a new build instance on Arch Linux revealed a problem with <q>make links</q> I hadn’t previously noticed. Though I was running <q>make clean</q> often in my original OS X working directories, the links produced by <q>make clean</q> are not removed by that target. Hence, I’ve already pushed a fix for this issue that succeeds the mbland-makefiles-00 tag.)</p>
+</blockquote>
+<p>I’m not sure to what extent this affects the quality of my build benchmarks.</p>
+</section>
+</section>
+<section id="conclusion" class="level2">
+<h2>Conclusion</h2>
+<p>As far as I can tell, Mike’s makefile refactoring has definitely achieved a ~40% speedup for parallel builds of OpenSSL, even without ccache. That’s an 81 second build time versus a 48 second build time.</p>
+<p>As one StackOverflow member <a href="http://stackoverflow.com/questions/136650/long-compile-times-and-lost-productivity">writes</a>:<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a></p>
+<blockquote>
+<p>I believe Caper Jones discussed some studies in which anything greater than a 1 second delay broke people out of the zone (my gist), and that the time / productivity lost due to that small delay was really an order of magnitude larger than it appeared.</p>
+</blockquote>
+<p>If torial is correct in saying that, then build times really <em>do</em> have a significant impact on developers. Which makes this a big deal.</p>
+<p>Mike has a <a href="https://github.com/openssl/openssl/pull/160">pull request</a> for these changes pending on GitHub.</p>
+</section>
+<section class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>When I originally reported my results on openssl-dev, I just provided the ccache data without even realizing I had been using it. Aside from slight embarrassment on my part, that shouldn’t take away form the results.<a href="#fnref1" class="footnote-back">↩</a></p></li>
+<li id="fn2"><p>I’ve quoted that build time/dev performance statistic in <a href="http://nathantypanski.github.io/git-talk/">other contexts</a> as well. It really rings true to me.<a href="#fnref2" class="footnote-back">↩</a></p></li>
+</ol>
+</section>
+]]></summary>
+</entry>
+
+</feed>

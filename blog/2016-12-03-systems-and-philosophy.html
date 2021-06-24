@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+    <meta charset="UTF-8">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>Systems and philosophy</title>
+        <link rel="stylesheet" type="text/css" href="../css/default.css" />
+        
+    </head>
+    <body>
+        <div id="header">
+          <div id="logo">
+      <a href="../">
+        <img class="img" src="../images/log0.png" />
+      </a>
+</div>
+<div id="navigation">
+  <ul>
+    <li>
+      <a href="../blog.html">
+        Blog
+        <i class="fa fa-pencil"></i>
+      </a>
+    </li>
+    <li>
+      <a href="../pages.html">
+        Writing
+        <i class="fa fa-globe"></i>
+      </a>
+    </li>
+    <li>
+      <a href="../worklog.html">
+        Worklog
+        <i class="fa fa-bar-chart"></i>
+      </a>
+    </li>
+    <li>
+      <a href="../contact.html">
+        Contact
+        <i class="fa fa-envelope"></i>
+      </a>
+    </li>
+  </ul>
+</div>
+
+        </div>
+        <div id="metadata">
+            <ul class="meta">
+            
+                <li>tags: <em><a href="../tags/Linux.html">Linux</a>, <a href="../tags/zsh.html">zsh</a>, <a href="../tags/Bash.html">Bash</a>, <a href="../tags/free%20software.html">free software</a></em></li>
+            
+            
+            <li>posted: <em> December  3, 2016 </em></li>
+            <li>modified: <em> December  3, 2016 </em></li>
+            </ul>
+        </div>
+        <div id="content">
+            <h1>Systems and philosophy</h1>
+            <div class="info">
+    <!--
+    <div class="snippets">
+        <i class="fa fa-calendar"></i> December  3, 2016 <i class="fa fa-cut" December  3, 2016></i> December  3, 2016
+    </div>
+    -->
+    
+</div>
+<div id="toc"><h2>Contents</h2>
+<ul>
+<li><a href="#free-software-backoff">Free software backoff</a></li>
+<li><a href="#computer-brand">Computer brand</a></li>
+<li><a href="#programming-languages">Programming languages</a></li>
+<li><a href="#conclusion">Conclusion</a></li>
+</ul> </div>
+<p>When I started computing, I was heavy into customization. I wrote <a href="../blog/2012-06-03-powerusers.html">Powerusers</a>, which was about the intense customizations I had done to personalize my Arch Linux distribution. It felt sort of juvenile to spend that much time <a href="https://fun.irq.dk/funroll-loops.org/">ricing</a> my Linux distro. But it was fun. Linux and open-source were my hobbies; I did them in my free time and studied computer engineering as my main gig.</p>
+<p>At the time, I only really managed two Linux systems: my laptop and this webserver. So it was easy to get away with hacking the hell out of my own system, since I knew it well, and refusing to automate tasks like my webserver configuration because I ran it in more of a fire-and-forget style. Put <a href="https://www.nginx.com/resources/wiki/">nginx</a> in a <a href="https://wiki.archlinux.org/index.php/change_root">chroot</a> once and you’re done.</p>
+<p>Now I’m getting older, I manage Linux systems professionally, and my philosophies on customizaiton, among many other things, are starting to change. Here’s an example: my zsh config has <a href="https://github.com/nathantypanski/dotfiles/blob/15900ce524a20b117ba950eaf9dbf03d3c263849/zsh/.config/zsh/settings.zsh#L64"><code>setopt vi</code></a> in it. This means that on my local system, I have vi key bindings in my shell. But when I SSH into a remote host, it’s more likely than not that my shell will be Bash. It’s possible that the system maintainer hasn’t even installed zsh on it, or maybe won’t install it. But I can predictably, always, find Bash. Now I’m considering removing the vi bindings, or scrapping zsh entirely and moving back to Bash, just because that’s what I find on every single system that I encounter.<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a></p>
+<p>I can’t context-switch from vi to Emacs-like Bash keybindings very often. It gets quite confusing.</p>
+<blockquote>
+<ul>
+<li>What shell do you use?</li>
+<li>zsh.</li>
+<li>What? Just use Bash, dude.</li>
+<li>Why?</li>
+<li>Just use Bash.</li>
+</ul>
+</blockquote>
+<section id="free-software-backoff" class="level2">
+<h2>Free software backoff</h2>
+<p>What else has changed? Well, for a long time I was a very public advocate of using only <a href="https://www.gnu.org/philosophy/free-sw.en.html">free software</a>, at least to the fullest extent that I could manage. I wrote all my school papers in <a href="https://www.latex-project.org/">LaTeX</a>, which was the subject of some scorn from my professors when I could not submit <code>.doc</code> or <code>.docx</code> files. I still use LaTeX for some of my personal correspondence, but now I’m back to using Google Docs or <a href="https://www.atlassian.com/software/confluence">Confluence</a> for half of my things. It can be handy, sometimes, to have the editor get out of the way, and sometimes the benefit of collaborative work is worth the software philosophical tradeoff.</p>
+<p>However, I will add that free software solutions to the problem of collaborative document editing, at least in the case of wikis, exist. You can use <a href="https://github.com/jgm/gitit">Gitit</a>, which gives you a Git-backed wiki with Pandoc for document markup. Sure, it doesn’t have an LDAP connector, but it’s a wonderful system to write in, and something like Markdown is relatively easier to learn than MediaWiki markup.</p>
+</section>
+<section id="computer-brand" class="level2">
+<h2>Computer brand</h2>
+<p>Another switch: I use a Macbook. Not for my personal computing, but for my work stuff, ever since around September 2014. Getting used to OSX after spending something like 5 years running almost exclusively Arch Linux was a real change. But nearly every developer who I know in the industry uses OS X<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a>, and sometimes I just have to play by other people’s rules. I still put Arch on half of it, but to use that system I have to compile a <a href="https://aur.archlinux.org/packages/linux-macbook/">custom kernel</a> with Apple-specific patches to work around <a href="https://bugzilla.kernel.org/show_bug.cgi?id=103211">Bug 103211</a>. This takes an annoying amount of effort when I have more important things to be doing than customizing my Linux distro.</p>
+<p>Besides: when there’s an emergency, and I happen to be stranded in a coffee shop and need to access the internet immediately, not having to fumble around with <a href="https://wiki.archlinux.org/index.php/netctl">netctl</a> to access WiFi comes in handy. So, in those situations, I use OS X.</p>
+</section>
+<section id="programming-languages" class="level2">
+<h2>Programming languages</h2>
+<p>The other thing that has happened is my languages of choice have become a bit less dogmatic. I will probably always write Python, because it is ubiquitous, easy to write and read, and I know it quite well. But I’ve since <a href="../blog/2015-05-17-ruby.html">picked up Ruby</a>, worked on a Rails application, and now I’m a bit less dogmatic about languages in general. I’m no longer out there trying to get everyone to learn Haskell because strong static type systems and functional languages are just <em>so damn cool</em>. I understand when people look at <a href="https://www.rust-lang.org/en-US/">Rust</a> and tell me that high-level abstractions coupled with a serious type system and strong, compile-time guarantees of memory safety are not useful things to put in production or learn about (though I disagree with those people, and they probably enjoy writing Java).</p>
+</section>
+<section id="conclusion" class="level2">
+<h2>Conclusion</h2>
+<p>People who knew me in 2014-2015 might be convinced that I’ve sold out. I’ve reneged on my free software idealism, am slowly tending toward anti-customization, bought an iPhone, and am becoming complacent with my gradual absorption into the general tech monoculture. But in some ways, this is OK. I’ve picked up new skills, tried out new things, and I would bet that people now find me a bit easier to work with.</p>
+<p>The other bit is that I’ve moved more seriously into the private industry. When you’re just a student and researcher, it’s easy to be dogmatic about Linux and weird programming languages - especially when you’re broke and can’t afford to pay for computer programs. And when your day-to-day activities are math and electronics classes, it’s easy to go home and hack code in Haskell in your free time. But when you’re hacking code all day and working hard with complex Linux systems, sometimes nothing beats just being able to go home at the end of it, chill out, and watch Netflix on a MacBook.</p>
+<p>This isn’t some giant announcement that everything I believed in college was wrong and proprietary software has no ethical issues. It’s more of just an acknowledgement that life is fluid, and reality is dynamic and difficult. Sometimes this means making concessions. I am willing to do that, now, just as long as I learn some new things and can get the job done.</p>
+</section>
+<section class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>If you’re really hardcore, you could argue that <a href="https://en.wikipedia.org/wiki/Bourne_shell">Bourne Shell</a> is the most ubiquitous, and therefore I should use that.<a href="#fnref1" class="footnote-back">↩</a></p></li>
+<li id="fn2"><p>Something I’m not too happy about, but it’s the case.<a href="#fnref2" class="footnote-back">↩</a></p></li>
+</ol>
+</section>
+
+        </div>
+        <div id="footer">
+            <p>
+  Content © 2012-2021 Nathan Typanski
+  and licensed under a <br /><a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.
+  Opinions are my own and not the views of my employer.
+  <a href="../website.html">About this site.</a>
+<!-- p-->
+<p>
+  <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/80x15.png" /></a>
+</p>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-37825924-1', 'nathantypanski.com');
+  ga('send', 'pageview');
+
+</script>
+
+
+        </div>
+    </body>
+</html>

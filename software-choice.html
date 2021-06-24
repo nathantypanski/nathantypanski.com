@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html>
+    <meta charset="UTF-8">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>Software Choices</title>
+        <link rel="stylesheet" type="text/css" href="./css/default.css" />
+        
+    </head>
+    <body>
+        <div id="header">
+          <div id="logo">
+      <a href="./">
+        <img class="img" src="./images/log0.png" />
+      </a>
+</div>
+<div id="navigation">
+  <ul>
+    <li>
+      <a href="./blog.html">
+        Blog
+        <i class="fa fa-pencil"></i>
+      </a>
+    </li>
+    <li>
+      <a href="./pages.html">
+        Writing
+        <i class="fa fa-globe"></i>
+      </a>
+    </li>
+    <li>
+      <a href="./worklog.html">
+        Worklog
+        <i class="fa fa-bar-chart"></i>
+      </a>
+    </li>
+    <li>
+      <a href="./contact.html">
+        Contact
+        <i class="fa fa-envelope"></i>
+      </a>
+    </li>
+  </ul>
+</div>
+
+        </div>
+        <div id="metadata">
+            <ul class="meta">
+            
+                <li>tags: <em><a href="./tags/software.html">software</a>, <a href="./tags/philosophy.html">philosophy</a></em></li>
+            
+            <li>status: <em> log </em></li>
+            
+            
+            </ul>
+        </div>
+        <div id="content">
+            <h1>Software Choices</h1>
+            <div id="toc"><h2>Contents</h2>
+<ul>
+<li><a href="#philosophy">Philosophy</a><ul>
+<li><a href="#freedom">Freedom</a></li>
+<li><a href="#simplicity">Simplicity</a></li>
+<li><a href="#efficiency">Efficiency</a></li>
+</ul></li>
+<li><a href="#tools">Tools</a><ul>
+<li><a href="#operating-system">Operating system</a></li>
+<li><a href="#text-editors">Text editors</a></li>
+<li><a href="#file-manager">File manager</a></li>
+<li><a href="#window-manager">Window manager</a></li>
+<li><a href="#email">Email</a></li>
+<li><a href="#terminal">Terminal</a></li>
+<li><a href="#irc">irc</a></li>
+<li><a href="#shell">shell</a></li>
+<li><a href="#document-generation">Document generation</a></li>
+<li><a href="#document-viewers">Document viewers</a></li>
+<li><a href="#productivity">Productivity</a></li>
+<li><a href="#web">Web</a></li>
+</ul></li>
+</ul> </div>
+<section id="philosophy" class="level2">
+<h2>Philosophy</h2>
+<p>I have a certain philosophy to the software that I use. I strive to do more than just describe one program as <q>better</q> or <q>worse</q> than another, but to actually analyze the details behind those gut feelings:</p>
+<ul>
+<li>What makes me prefer one program over another?</li>
+<li>Why would I describe something as <q>better</q>? What is the underlying philosophy or design goal that makes me like the software?</li>
+</ul>
+<p>As such, I try to codify my values into a coherent view of the software world. I do this not only so that I <em>know what I want</em>, but also how to build things that I would like to use.</p>
+<section id="freedom" class="level3">
+<h3>Freedom</h3>
+<p>I prefer to use software that gives me <a href="https://en.wikipedia.org/wiki/Free_software">freedom</a>, because I care about having ownership of the tools I use every day. Occasionally I <a href="worklog.html">fix things</a> and send patches, and I think that process is important in fostering a community among software developers.</p>
+<p>Besides, I wish to own my software in the same sense that a writer owns her typewriter. If it breaks, she will fix it. She understands the mechanics of the machine, so that she can diagnose problems and fix them. There are no laws governing whether or not she may disassemble the typewriter. These are fundamental properties of ownership of everyday objects: they afford that a sufficiently adept individual may master her tools.</p>
+</section>
+<section id="simplicity" class="level3">
+<h3>Simplicity</h3>
+<p>In alignment with the Arch Linux philosophy of <a href="https://wiki.archlinux.org/index.php/The_Arch_Way#Simplicity">simplicty</a>, I prefer software that I can understand. The more open and obvious your software is, the more I appreciate it for what it does. Simple things connect well with other pieces of software - that’s the basic philosophy of the GNU core toolkit, and it applies to most other software you may find.</p>
+<p>As such, I try to avoid a desktop environment like Gnome or KDE. I find they’re not really necessary for me to use my computer - I spend most of my time hopping between terminals, a text editor, and a web browser anyway. I need software that lets me do that as efficiently as possible.</p>
+<p>A corollary to the fact that simple things connect well with other software is that simple software is more easily scriptable. People accustomed to writing software understand that automating tedious tasks is one of the reasons it is a useful skill. Think of <a href="http://git-scm.com/">Git</a> and all the wonderful tools people have built on top of it. The reason it is so easy to build things on top of Git is the fundamental simplicity of its data model and the programs that talk to it. The language might be difficult at first, yes, but from a technical standpoint Git is conceptually simple, both in design and execution.</p>
+</section>
+<section id="efficiency" class="level3">
+<h3>Efficiency</h3>
+<p>I prefer software that is fast. Of course, <em>ceteris paribus</em>, everyone will agree with me on that. But there are many tradeoffs made in software development, and among the most important decisions is how you manage performance.</p>
+<p>This doesn’t just mean software should be fast to run. Maybe it should be fast for the user, or more efficient to use, at the cost of being somewhat less performant.</p>
+<p>Prof. Charles Leiserson said in a <a href="https://www.youtube.com/watch?v=JPyuH4qXLZ0">lecture on algorithms</a> at MIT:<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a></p>
+<blockquote>
+<p>Performance is like money. It’s like currency. So you say, <q>what good does a stack of hundred dollar bills do for you? Wouldn’t you rather have food, or water, or shelter, or whatever?</q> And you’re willing to pay those hundred-dollar bills for that commodity, even though water is far more important for your living. Similarly, performance is what you pay for user-friendliness. It’s what you pay for security. You hear people say <q>I want greater functionality</q> - so people will program in Java, even though it’s much slower than C. And they’ll say <q>it costs me maybe a factor of 3 or something to program in Java, but Java’s worth it because it’s got all these object-oriented features and so forth, exception mechanisms, and so on.</q> And people are willing to pay a factor of 3 in performance. So that’s why you want performance: because you can use it to pay for these other things that you want.</p>
+</blockquote>
+<p>I prefer software that makes smart decisions about this time tradeoff. Oftentimes, the right way to go for me as a user is to just write software that is fast and simple, and then I will make it do what I need.</p>
+</section>
+</section>
+<section id="tools" class="level2">
+<h2>Tools</h2>
+<section id="operating-system" class="level3">
+<h3>Operating system</h3>
+<p>In college, I used Linux exclusively. Now I run Arch on my home laptop and dual boot OS X and Arch Linux on my work Macbook Pro.</p>
+<ul>
+<li><strong><a href="https://www.archlinux.org/">Arch Linux</a></strong>: Currently Arch Linux is my main OS.</li>
+<li><a href="https://www.debian.org/">Debian</a>: I used Debian, with a blend of Sid/testing, from January-June 2014.</li>
+</ul>
+</section>
+<section id="text-editors" class="level3">
+<h3>Text editors</h3>
+<p>I use both Emacs and Vim, which is an odd combination to hear someone mention.</p>
+<ul>
+<li><strong><a href="http://www.gnu.org/software/emacs/">Emacs</a></strong>: I have a post about my Emacs configuration <a href="blog/2014-07-02-switching-to-emacs.html">here</a>.</li>
+<li><a href="http://www.vim.org/">Vim</a>: I started using Vim in early 2012, long before Emacs. I still use it to edit configuration files and make one-off edits, though my primary development has switched to Emacs for its greater featureset.</li>
+<li><a href="https://en.wikipedia.org/wiki/Vi">vi</a>: used when I edit files as <code>root</code>, or when I’m installing Arch. Nowhere else.</li>
+</ul>
+</section>
+<section id="file-manager" class="level3">
+<h3>File manager</h3>
+<ul>
+<li><strong><a href="./blog/2014-08-03-a-vim-like-emacs-config.html#dired">Dired</a></strong> sees the heaviest use from me, since I’m usually already in Emacs if I’m doing real work.</li>
+<li><a href="http://ranger.nongnu.org/">Ranger</a> almost exclusively, but plain shell more often than that. I have a <a href="blog/2013-08-12-ranger.html">post about it</a>.</li>
+<li>On very rare occasions, I will open <a href="https://en.wikipedia.org/wiki/Thunar">Thunar</a> to satisfy Firefox’s <q>Open containing folder</q> button in the download list.</li>
+</ul>
+</section>
+<section id="window-manager" class="level3">
+<h3>Window manager</h3>
+<ul>
+<li>Current: <strong><a href="https://github.com/venam/2bwm">2bwm</a></strong></li>
+<li><a href="http://xmonad.org/">Xmonad</a>. Great tiling window manager. Written in <a href="http://www.haskell.org/haskellwiki/Haskell">Haskell</a>.</li>
+<li><a href="https://github.com/baskerville/bspwm">bspwm</a>. Nicer tiling features than Xmonad. Harder to customize: I find Haskell easier to work with than C.</li>
+</ul>
+</section>
+<section id="email" class="level3">
+<h3>Email</h3>
+<ul>
+<li><strong><a href="http://www.mutt.org/">mutt</a></strong> with <a href="http://isync.sourceforge.net/">isync</a> (a.k.a. <code>mbsync</code>) for offline IMAP.</li>
+</ul>
+</section>
+<section id="terminal" class="level3">
+<h3>Terminal</h3>
+<ul>
+<li><strong><a href="https://en.wikipedia.org/wiki/Rxvt-unicode">rxvt-unicode</a></strong>.</li>
+<li><a href="https://github.com/thestinger/termite">Termite</a> if I care less about resource usage and more about user friendliness.</li>
+</ul>
+<section id="multiplexer" class="level4">
+<h4>Multiplexer</h4>
+<ul>
+<li><strong><a href="http://tmux.sourceforge.net/">tmux</a></strong>.</li>
+</ul>
+</section>
+</section>
+<section id="irc" class="level3">
+<h3>irc</h3>
+<ul>
+<li><strong><a href="http://weechat.org/">Weechat</a></strong>. I’m in the minority among IRC users: I think <a href="http://www.irssi.org/">irssi</a> is too buggy and unreasonably convoluted.</li>
+</ul>
+</section>
+<section id="shell" class="level3">
+<h3>shell</h3>
+<ul>
+<li><strong><a href="http://www.zsh.org/">zsh</a></strong>. Preferable to Bash if you want a modern user interface in your terminal. I still stick to Bash for scripting, of course.</li>
+</ul>
+</section>
+<section id="document-generation" class="level3">
+<h3>Document generation</h3>
+<ul>
+<li><strong><a href="http://johnmacfarlane.net/pandoc/">Pandoc</a></strong> generally, with documents written in markdown.</li>
+<li><strong><a href="http://www.latex-project.org/">LaTeX</a></strong> for printed works, or things heavy in math or references.</li>
+</ul>
+</section>
+<section id="document-viewers" class="level3">
+<h3>Document viewers</h3>
+<ul>
+<li><strong><a href="http://pwmt.org/projects/zathura/">Zathura</a></strong> is the best PDF viewer I’ve found. It has Vim keybindings by default, is extremely lightweight, and supports multiple backends.</li>
+</ul>
+</section>
+<section id="productivity" class="level3">
+<h3>Productivity</h3>
+<ul>
+<li><strong><a href="http://ankisrs.net/">Anki</a></strong> (see <a href="./notetaking.html#memory">notes</a>)</li>
+<li><strong><a href="http://gitit.net/">Gitit</a></strong> (see <a href="./blog/2014-07-09-personal-wiki.html">blog post</a>)</li>
+</ul>
+</section>
+<section id="web" class="level3">
+<h3>Web</h3>
+<section id="browser" class="level4">
+<h4>Browser</h4>
+<ul>
+<li><strong><a href="https://www.mozilla.org">Firefox</a></strong>.</li>
+<li><a href="http://portix.bitbucket.org/dwb/">dwb</a></li>
+<li><a href="http://www.uzbl.org/">uzbl</a></li>
+</ul>
+</section>
+<section id="publishing" class="level4">
+<h4>Publishing</h4>
+<ul>
+<li><strong><a href="http://jaspervdj.be/hakyll/">Hakyll</a></strong>: see <a href="./website.html">About this site</a></li>
+<li><strong><a href="http://sass-lang.com/">SCSS</a></strong>: CSS is painful to write. I automate it a bit with something modern.</li>
+</ul>
+</section>
+</section>
+</section>
+<section class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>I transcribed more of it than just the quote here. The introduction to that part was:</p>
+<blockquote>
+<p>Ok, so then you can say <q>why bother</q> and <q>why study algorithms and performance?</q> Okay, if it’s at the bottom of the heap. Almost always people would rather have these other things than performance. You go off and you say to someone <q>would you rather have performance or more user-friendliness</q> and <q>more user-friendliness</q> is almost always more important than performance.</p>
+<p>Why do we care? Sometimes performance is correlated with user-friendliness. Nothing is more frustrating than sitting there waiting.</p>
+<blockquote>
+<p>[the class offers suggestions]</p>
+</blockquote>
+<p>So there’s several reasons that I think are important. One is that, often, performance measures the line between the feasible and the infeasible. So we heard some of these things: when there are real-time requirements, if it’s not fast enough, it’s simply not functional. Or if it uses too much memory, it’s simply not going to work for you. So what you find is that often times algorithms are on the cutting edge of entrepreneurship. If you’re talking about just reimplmenting things that other people did ten years ago, performance isn’t that important at some level. But if you’re talking about something nobody has done before, often the reason they haven’t done it is it’s too time-consuming, things don’t scale, and so forth.</p>
+</blockquote>
+<a href="#fnref1" class="footnote-back">↩</a></li>
+</ol>
+</section>
+
+        </div>
+        <div id="footer">
+            <p>
+  Content © 2012-2021 Nathan Typanski
+  and licensed under a <br /><a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.
+  Opinions are my own and not the views of my employer.
+  <a href="./website.html">About this site.</a>
+<!-- p-->
+<p>
+  <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/80x15.png" /></a>
+</p>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-37825924-1', 'nathantypanski.com');
+  ga('send', 'pageview');
+
+</script>
+
+
+        </div>
+    </body>
+</html>

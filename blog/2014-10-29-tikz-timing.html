@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+    <meta charset="UTF-8">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>Draw beautiful digital electronics timing diagrams in LaTeX</title>
+        <link rel="stylesheet" type="text/css" href="../css/default.css" />
+        
+    </head>
+    <body>
+        <div id="header">
+          <div id="logo">
+      <a href="../">
+        <img class="img" src="../images/log0.png" />
+      </a>
+</div>
+<div id="navigation">
+  <ul>
+    <li>
+      <a href="../blog.html">
+        Blog
+        <i class="fa fa-pencil"></i>
+      </a>
+    </li>
+    <li>
+      <a href="../pages.html">
+        Writing
+        <i class="fa fa-globe"></i>
+      </a>
+    </li>
+    <li>
+      <a href="../worklog.html">
+        Worklog
+        <i class="fa fa-bar-chart"></i>
+      </a>
+    </li>
+    <li>
+      <a href="../contact.html">
+        Contact
+        <i class="fa fa-envelope"></i>
+      </a>
+    </li>
+  </ul>
+</div>
+
+        </div>
+        <div id="metadata">
+            <ul class="meta">
+            
+                <li>tags: <em><a href="../tags/LaTeX.html">LaTeX</a>, <a href="../tags/engineering.html">engineering</a>, <a href="../tags/hardware.html">hardware</a></em></li>
+            
+            
+            <li>posted: <em> October 29, 2014 </em></li>
+            <li>modified: <em> November  3, 2016 </em></li>
+            </ul>
+        </div>
+        <div id="content">
+            <h1>Draw beautiful digital electronics timing diagrams in LaTeX</h1>
+            <div class="info">
+    <!--
+    <div class="snippets">
+        <i class="fa fa-calendar"></i> October 29, 2014 <i class="fa fa-cut" November  3, 2016></i> November  3, 2016
+    </div>
+    -->
+    
+</div>
+<div id="toc"><h2>Contents</h2>
+<ul>
+<li><a href="#pci-read">PCI Read</a></li>
+<li><a href="#pci-interrupt-acknowledge">PCI Interrupt Acknowledge</a></li>
+<li><a href="#synchronous-serial-interface">Synchronous Serial Interface</a></li>
+</ul> </div>
+<p>Today, for one of my engineering courses, I had to create some <a href="http://en.wikipedia.org/wiki/Digital_timing_diagram">timing diagrams</a> to show certain parts of the PCI standard. If you’ve never had to draw your own timing diagrams before, then you probably haven’t realized that there is no obvious to quickly, easily draw waveforms for a bunch of signals.</p>
+<p>The solution I found is <a href="http://www.ctan.org/pkg/tikz-timing">tikz-timing</a>. An alternative is <a href="http://www.texample.net/tikz/examples/timing-diagram/">timing.sty</a>, which is simple and pretty enough in a pinch.</p>
+<p>I find the more advanced features of tikz-timing invaluable for versatility, though—there’s nothing like needing to talk about a signal transition in some text, and, oh yeah, just <em>drawing the signal in the text</em>.</p>
+<p>The only problem with tikz-timing is a shortage of examples. The <a href="http://mirrors.ibiblio.org/CTAN/graphics/pgf/contrib/tikz-timing/tikz-timing.pdf">package documentation</a> has but a handful, and they don’t look much like real-world timing diagrams. The texample.net <a href="http://www.texample.net/tikz/examples/more-tikz-timing-examples/">timing</a> <a href="http://www.texample.net/tikz/examples/tikz-timing/">diagrams</a> are just copied directly from that manual, which isn’t useful. So I figure I’ll post some realistic use cases.</p>
+<p>To get started, I included the package like this:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode latex"><code class="sourceCode latex"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="bu">\usepackage</span>{<span class="ex">tikz-timing</span>}[2014/10/29]</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="fu">\usetikztiminglibrary</span>[rising arrows]{clockarrows}</a></code></pre></div>
+<p>Then I defined a command so I could reference a bus:<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a></p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode latex"><code class="sourceCode latex"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="bu">\usepackage</span>{<span class="ex">xparse</span>} <span class="co">% NewDocumentCommand, IfValueTF, IFBooleanTF</span></a>
+<a class="sourceLine" id="cb2-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb2-3" data-line-number="3"><span class="co">% Reference a bus.</span></a>
+<a class="sourceLine" id="cb2-4" data-line-number="4"><span class="co">%</span></a>
+<a class="sourceLine" id="cb2-5" data-line-number="5"><span class="co">% Usage:</span></a>
+<a class="sourceLine" id="cb2-6" data-line-number="6"><span class="co">%</span></a>
+<a class="sourceLine" id="cb2-7" data-line-number="7"><span class="co">%     \busref[3::0]{C/BE}    -&gt;   C/BE[3::0]</span></a>
+<a class="sourceLine" id="cb2-8" data-line-number="8"><span class="co">%     \busref*{AD}           -&gt;   AD#</span></a>
+<a class="sourceLine" id="cb2-9" data-line-number="9"><span class="co">%     \busref*[3::0]{C/BE}   -&gt;   C/BE[3::0]#</span></a>
+<a class="sourceLine" id="cb2-10" data-line-number="10"><span class="co">%</span></a>
+<a class="sourceLine" id="cb2-11" data-line-number="11"><span class="fu">\NewDocumentCommand</span>{<span class="fu">\busref</span>}{som}{<span class="fu">\texttt</span>{<span class="co">%</span></a>
+<a class="sourceLine" id="cb2-12" data-line-number="12">#3<span class="co">%</span></a>
+<a class="sourceLine" id="cb2-13" data-line-number="13"><span class="fu">\IfValueTF</span>{#2}{[#2]}{}<span class="co">%</span></a>
+<a class="sourceLine" id="cb2-14" data-line-number="14"><span class="fu">\IfBooleanTF</span>{#1}{<span class="fu">\#</span>}{}<span class="co">%</span></a>
+<a class="sourceLine" id="cb2-15" data-line-number="15">}}</a></code></pre></div>
+<p>The PCI timing diagrams are drawn with reference to version 2.2 of the PCI specification. I added the <code>DEVSEL#</code> signal myself,<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a> and I’ve taken some slight liberties with the start and stop times of the signals (though they should still be accurate). One notable feature lacking in my diagrams is the delay cycles—most books you’ll read on PCI, in addition to the spec itself will include those directly on the diagram. I haven’t figured out how to do that kind of thing yet.</p>
+<section id="pci-read" class="level2">
+<h2>PCI Read</h2>
+<figure>
+<img src="../files/latex/tikz-timing/pci-read-thumb.png" alt="PCI read operation. LaTeX source." /><figcaption>PCI read operation. <a href="../files/latex/tikz-timing/pci-read.tex">LaTeX source</a>.</figcaption>
+</figure>
+<div class="sourceCode" id="cb3"><pre class="sourceCode latex"><code class="sourceCode latex"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw">\begin</span>{<span class="ex">tikztimingtable</span>}[<span class="co">%</span></a>
+<a class="sourceLine" id="cb3-2" data-line-number="2">    timing/dslope=0.1,</a>
+<a class="sourceLine" id="cb3-3" data-line-number="3">    timing/.style={x=5ex,y=2ex},</a>
+<a class="sourceLine" id="cb3-4" data-line-number="4">    x=5ex,</a>
+<a class="sourceLine" id="cb3-5" data-line-number="5">    timing/rowdist=3ex,</a>
+<a class="sourceLine" id="cb3-6" data-line-number="6">    timing/name/.style={font=<span class="fu">\sffamily\scriptsize</span>}</a>
+<a class="sourceLine" id="cb3-7" data-line-number="7">]</a>
+<a class="sourceLine" id="cb3-8" data-line-number="8"><span class="fu">\busref</span>{CLK}         &amp; 18{c} <span class="fu">\\</span></a>
+<a class="sourceLine" id="cb3-9" data-line-number="9"><span class="fu">\busref</span>*{FRAME}      &amp; 2u 6L H U <span class="fu">\\</span></a>
+<a class="sourceLine" id="cb3-10" data-line-number="10"><span class="fu">\busref</span>[31::0]{AD}   &amp; 2u 1D{addr} 1U{} 1D{<span class="ss">$d_1$</span>} D{<span class="ss">$d_1 '$</span>} D{<span class="ss">$d_2$</span>} 2D{<span class="ss">$d_3$</span>} U <span class="fu">\\</span></a>
+<a class="sourceLine" id="cb3-11" data-line-number="11"><span class="fu">\busref</span>*[3::0]{C/BE} &amp; 2u 1D{0010} 6D{BE<span class="fu">\#</span>} U  <span class="fu">\\</span></a>
+<a class="sourceLine" id="cb3-12" data-line-number="12"><span class="fu">\busref</span>*{IRDY}       &amp; UU 4L HLH <span class="fu">\\</span></a>
+<a class="sourceLine" id="cb3-13" data-line-number="13"><span class="fu">\busref</span>*{TRDY}       &amp; UU HLH 3L H <span class="fu">\\</span></a>
+<a class="sourceLine" id="cb3-14" data-line-number="14"><span class="fu">\busref</span>*{DEVSEL}     &amp; 2U 6L H<span class="fu">\\</span></a>
+<a class="sourceLine" id="cb3-15" data-line-number="15"><span class="fu">\extracode</span></a>
+<a class="sourceLine" id="cb3-16" data-line-number="16"><span class="kw">\begin</span>{<span class="ex">pgfonlayer</span>}{background}</a>
+<a class="sourceLine" id="cb3-17" data-line-number="17"><span class="kw">\begin</span>{<span class="ex">scope</span>}[semitransparent ,semithick]</a>
+<a class="sourceLine" id="cb3-18" data-line-number="18"><span class="fu">\vertlines</span>[darkgray,dotted]{0.5,1.5 ,...,8.0}</a>
+<a class="sourceLine" id="cb3-19" data-line-number="19"><span class="kw">\end</span>{<span class="ex">scope</span>}</a>
+<a class="sourceLine" id="cb3-20" data-line-number="20"><span class="kw">\end</span>{<span class="ex">pgfonlayer</span>}</a>
+<a class="sourceLine" id="cb3-21" data-line-number="21"><span class="kw">\end</span>{<span class="ex">tikztimingtable</span>}</a></code></pre></div>
+<p>You can think of the <code>tikztimingtable</code> environment as two-column <a href="http://en.wikibooks.org/wiki/LaTeX/Tables">tables</a> with some special syntax for the righthand column. The gist of it is this: there are signal variants, and you create them by writing a letter that serves as a key. Each key has two variants: a half-duration lowercase one and a full-duration uppercase one.</p>
+<p>So to make the clock signal in the PCI read diagram, it’s 18 half-duration clock cycles, and we write that <code>18{c}</code>. The brackets there aren’t strictly necessary, but you can write them for clarity. Signal changes are separated by spaces if there’s any ambiguity about what argument goes with what transition.</p>
+<p>In the above example, I used these letters to make the signals:</p>
+<ul>
+<li><code>C</code>/<code>c</code>: clock</li>
+<li><code>U</code>/<code>u</code>: unknown</li>
+<li><code>D</code>/<code>d</code>: multiple values</li>
+<li><code>H</code>/<code>h</code>: hi</li>
+<li><code>L</code>/<code>l</code>: lo</li>
+</ul>
+<p>The other interesting option is including letters in the <code>D</code> timings. The way you do that is you add an argument in brackets following a <code>D</code> block, like <code>D{0000}</code> to draw a multi-signal timing with value <code>0000</code>.</p>
+<p>For invalid states I used <code>X</code> in the below example:</p>
+</section>
+<section id="pci-interrupt-acknowledge" class="level2">
+<h2>PCI Interrupt Acknowledge</h2>
+<p>When a PCI interrupt acknowledge starts, you have invalid values in the address/data line. They’re <em>knowable</em>, but it’s against the protocol to use them for anything. To show that I used an <code>X</code>, which draws a red line for an <em>undefined</em> don’t care. Or at least that’s how I interpreted it. Some people will just use shaded blocks for everything, and make no distinction between the two.</p>
+<figure>
+<img src="../files/latex/tikz-timing/pci-int-thumb.png" alt="PCI interrupt acknowledge. LaTeX source." /><figcaption>PCI interrupt acknowledge. <a href="../files/latex/tikz-timing/pci-int.tex">LaTeX source</a>.</figcaption>
+</figure>
+<div class="sourceCode" id="cb4"><pre class="sourceCode latex"><code class="sourceCode latex"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw">\begin</span>{<span class="ex">tikztimingtable</span>}[<span class="co">%</span></a>
+<a class="sourceLine" id="cb4-2" data-line-number="2">    timing/dslope=0.1,</a>
+<a class="sourceLine" id="cb4-3" data-line-number="3">    timing/.style={x=5ex,y=2ex},</a>
+<a class="sourceLine" id="cb4-4" data-line-number="4">    x=5ex,</a>
+<a class="sourceLine" id="cb4-5" data-line-number="5">    timing/rowdist=3ex,</a>
+<a class="sourceLine" id="cb4-6" data-line-number="6">    timing/name/.style={font=<span class="fu">\sffamily\scriptsize</span>}</a>
+<a class="sourceLine" id="cb4-7" data-line-number="7">]</a>
+<a class="sourceLine" id="cb4-8" data-line-number="8"><span class="fu">\busref</span>{CLK}         &amp; 10{C} <span class="fu">\\</span></a>
+<a class="sourceLine" id="cb4-9" data-line-number="9"><span class="fu">\busref</span>*{FRAME}      &amp; U h l L l h 4H 2U <span class="fu">\\</span></a>
+<a class="sourceLine" id="cb4-10" data-line-number="10"><span class="fu">\busref</span>[31::0]{AD}   &amp; U u 2X 2.5U 2D{<span class="ss">$v_i$</span>} 2U <span class="fu">\\</span></a>
+<a class="sourceLine" id="cb4-11" data-line-number="11"><span class="fu">\busref</span>*[3::0]{C/BE} &amp; U u 2D{0000} 4.5D{<span class="fu">\busref</span>*{BE}} 2U  <span class="fu">\\</span></a>
+<a class="sourceLine" id="cb4-12" data-line-number="12"><span class="fu">\busref</span>*{IRDY}       &amp; 3.5U 4.5L 2H <span class="fu">\\</span></a>
+<a class="sourceLine" id="cb4-13" data-line-number="13"><span class="fu">\busref</span>*{TRDY}       &amp; 3.5U 2.5H 2L 2H <span class="fu">\\</span></a>
+<a class="sourceLine" id="cb4-14" data-line-number="14"><span class="fu">\busref</span>*{DEVSEL}     &amp; 5U hl 2L h 1.5U <span class="fu">\\</span></a>
+<a class="sourceLine" id="cb4-15" data-line-number="15"><span class="fu">\extracode</span></a>
+<a class="sourceLine" id="cb4-16" data-line-number="16"><span class="kw">\begin</span>{<span class="ex">pgfonlayer</span>}{background}</a>
+<a class="sourceLine" id="cb4-17" data-line-number="17"><span class="kw">\begin</span>{<span class="ex">scope</span>}[semitransparent ,semithick]</a>
+<a class="sourceLine" id="cb4-18" data-line-number="18"><span class="fu">\vertlines</span>[darkgray,dotted]{1.0,3.0,...,9.0}</a>
+<a class="sourceLine" id="cb4-19" data-line-number="19"><span class="fu">\vertlines</span>[gray,dotted]{2.0,4.0,...,8.0}</a>
+<a class="sourceLine" id="cb4-20" data-line-number="20"><span class="kw">\end</span>{<span class="ex">scope</span>}</a>
+<a class="sourceLine" id="cb4-21" data-line-number="21"><span class="kw">\end</span>{<span class="ex">pgfonlayer</span>}</a>
+<a class="sourceLine" id="cb4-22" data-line-number="22"><span class="kw">\end</span>{<span class="ex">tikztimingtable</span>}</a></code></pre></div>
+</section>
+<section id="synchronous-serial-interface" class="level2">
+<h2>Synchronous Serial Interface</h2>
+<p><a href="http://en.wikipedia.org/wiki/Synchronous_Serial_Interface">Synchronous Serial Interface</a> (SSI) is another protocol I studied. I drew a genuinely oversimplified diagram of it, just for fun.</p>
+<figure>
+<img src="../files/latex/tikz-timing/ssi-thumb.png" alt="SSI protocol basic timing. LaTeX source." /><figcaption>SSI protocol basic timing. <a href="../files/latex/tikz-timing/ssi.tex">LaTeX source</a>.</figcaption>
+</figure>
+<div class="sourceCode" id="cb5"><pre class="sourceCode latex"><code class="sourceCode latex"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw">\begin</span>{<span class="ex">tikztimingtable</span>}[<span class="co">%</span></a>
+<a class="sourceLine" id="cb5-2" data-line-number="2">    timing/dslope=0.4,</a>
+<a class="sourceLine" id="cb5-3" data-line-number="3">    timing/.style={x=5ex,y=2ex},</a>
+<a class="sourceLine" id="cb5-4" data-line-number="4">    x=3ex,</a>
+<a class="sourceLine" id="cb5-5" data-line-number="5">    timing/rowdist=4ex,</a>
+<a class="sourceLine" id="cb5-6" data-line-number="6">    timing/c/rising arrows,</a>
+<a class="sourceLine" id="cb5-7" data-line-number="7">    timing/name/.style={font=<span class="fu">\sffamily\scriptsize</span>},</a>
+<a class="sourceLine" id="cb5-8" data-line-number="8">]</a>
+<a class="sourceLine" id="cb5-9" data-line-number="9"><span class="fu">\busref</span>{CLK}  &amp;  U8{C}H<span class="fu">\\</span></a>
+<a class="sourceLine" id="cb5-10" data-line-number="10"><span class="fu">\busref</span>{data} &amp; Hhh2D{msb};[dotted] 2D{};  2D{lsb}LH<span class="fu">\\</span></a>
+<a class="sourceLine" id="cb5-11" data-line-number="11"><span class="kw">\end</span>{<span class="ex">tikztimingtable</span>}</a></code></pre></div>
+<p>The images you saw on this page were compiled with <a href="http://www.tug.org/applications/pdftex/">pdfTeX</a> version <code>3.14159265-2.6-1.40.15 (TeX Live 2014/Arch Linux)</code> and converted from PDF to PNG with <a href="http://www.imagemagick.org/script/convert.php">ImageMagick convert</a>.</p>
+</section>
+<section class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>Defining commands for patterns of input is one of those tricks you pick up once you’ve used LaTeX for more than a handful of documents. The advantage of doing it this way is that if I want to change the convention used to represent the <a href="http://en.wikipedia.org/wiki/Logic_level">logic level</a> of my signals, I can just change it in one place and it gets updated in the rest of the document.<a href="#fnref1" class="footnote-back">↩</a></p></li>
+<li id="fn2"><p>So it might be wrong—go read the spec if you <em>really</em> care.<a href="#fnref2" class="footnote-back">↩</a></p></li>
+</ol>
+</section>
+
+        </div>
+        <div id="footer">
+            <p>
+  Content © 2012-2021 Nathan Typanski
+  and licensed under a <br /><a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.
+  Opinions are my own and not the views of my employer.
+  <a href="../website.html">About this site.</a>
+<!-- p-->
+<p>
+  <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/80x15.png" /></a>
+</p>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-37825924-1', 'nathantypanski.com');
+  ga('send', 'pageview');
+
+</script>
+
+
+        </div>
+    </body>
+</html>

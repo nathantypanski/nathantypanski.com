@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+    <meta charset="UTF-8">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>btrfs: No space left on device</title>
+        <link rel="stylesheet" type="text/css" href="../css/default.css" />
+        
+    </head>
+    <body>
+        <div id="header">
+          <div id="logo">
+      <a href="../">
+        <img class="img" src="../images/log0.png" />
+      </a>
+</div>
+<div id="navigation">
+  <ul>
+    <li>
+      <a href="../blog.html">
+        Blog
+        <i class="fa fa-pencil"></i>
+      </a>
+    </li>
+    <li>
+      <a href="../pages.html">
+        Writing
+        <i class="fa fa-globe"></i>
+      </a>
+    </li>
+    <li>
+      <a href="../worklog.html">
+        Worklog
+        <i class="fa fa-bar-chart"></i>
+      </a>
+    </li>
+    <li>
+      <a href="../contact.html">
+        Contact
+        <i class="fa fa-envelope"></i>
+      </a>
+    </li>
+  </ul>
+</div>
+
+        </div>
+        <div id="metadata">
+            <ul class="meta">
+            
+                <li>tags: <em><a href="../tags/Linux.html">Linux</a>, <a href="../tags/btrfs.html">btrfs</a></em></li>
+            
+            
+            <li>posted: <em> July 14, 2014 </em></li>
+            <li>modified: <em> December  3, 2016 </em></li>
+            </ul>
+        </div>
+        <div id="content">
+            <h1>btrfs: No space left on device</h1>
+            <div class="info">
+    <!--
+    <div class="snippets">
+        <i class="fa fa-calendar"></i> July 14, 2014 <i class="fa fa-cut" December  3, 2016></i> December  3, 2016
+    </div>
+    -->
+    
+</div>
+<div id="toc"><h2>Contents</h2>
+<ul>
+<li><a href="#solution">Solution</a></li>
+</ul> </div>
+<p>I’ve been using btrfs on a SSD for around six months now. I have a slightly unusual setup: btrfs on LVM, even though <a href="https://wiki.archlinux.org/index.php/Btrfs#Sub-volumes">btrfs lets you create subvolumes and resize them at will</a>. My reasoning was that I might not necessarily stick with btrfs, but I’d appreciate the flexibility to change my partition layouts and use other filesystems.</p>
+<p>Anywho, around a week ago, I started seeing messages like the following:</p>
+<pre class="pre sourceCode"><code>No space left on device</code></pre>
+<p>This was odd. <code>df -h</code> doesn’t report any full volumes. Doing <code>btrfs check</code> reports no errors, and playing around with my LVM settings didn’t change anything. What could be going wrong?</p>
+<pre class="pre sourceCode"><code>Filesystem              Size  Used Avail Use% Mounted on
+/dev/dm-0                15G  368M   13G   3% /
+udev                     10M     0   10M   0% /dev
+tmpfs                   1.6G  2.7M  1.6G   1% /run
+tmpfs                   3.8G  136K  3.8G   1% /dev/shm
+tmpfs                   3.8G     0  3.8G   0% /sys/fs/cgroup
+tmpfs                   5.0M     0  5.0M   0% /run/lock
+tmpfs                    16G  768K   16G   1% /tmp
+tmpfs                   100M  8.0K  100M   1% /run/user
+/dev/sda1               1.9G   42M  1.7G   3% /boot
+/dev/mapper/linux-opt    15G   19M   13G   1% /opt
+/dev/mapper/linux-var   7.5G  2.4G  4.4G  36% /var
+/dev/mapper/linux-usr    15G   11G  3.5G  75% /usr
+/dev/mapper/linux-home  299G  159G  138G  54% /home</code></pre>
+<p>I panicked for a bit, thinking my SSD was failing, before deleting a few gigabytes of downloaded files and forgetting about the problem like it never existed.</p>
+<p>But they came back.</p>
+<pre class="pre sourceCode"><code>cp: cannot create directory ‘linux-kernel/kernel/arch/um’: No space left on device
+cp: cannot create directory ‘linux-kernel/kernel/arch/ia64’: No space left on device
+cp: cannot create directory ‘linux-kernel/kernel/arch/parisc’: No space left on device
+cp: cannot create directory ‘linux-kernel/kernel/arch/unicore32’: No space left on device
+cp: cannot create directory ‘linux-kernel/kernel/arch/x86’: No space left on device
+cp: cannot create directory ‘linux-kernel/kernel/arch/powerpc’: No space left on device</code></pre>
+<p>I looked around everywhere. <code>tmpfs</code> wasn’t full, but I tried mounting it explicitly in <code>/etc/fstab</code> with 16GiB of space just to be sure.</p>
+<p>Eventually my system became unusable.</p>
+<section id="solution" class="level2">
+<h2>Solution</h2>
+<p>By some magic, I happened upon <a href="https://btrfs.wiki.kernel.org/index.php/Problem_FAQ#I_get_.22No_space_left_on_device.22_errors.2C_but_df_says_I.27ve_got_lots_of_space">this btrfs wiki page</a>. They warn about metadata. First, a verification that <code>home</code> isn’t full:</p>
+<pre class="pre sourceCode"><code>root@dionysus:/# btrfs filesystem show
+Label: 'home'  uuid: 4216df47-7fb8-442f-b432-5e732ab24166
+	Total devices 1 FS bytes used 147.94GiB
+	devid    1 size 298.02GiB used 298.02GiB path /dev/mapper/linux-home
+
+Btrfs v3.14.1</code></pre>
+<p>And surely enough:</p>
+<pre class="pre sourceCode"><code>root@dionysus:/# btrfs fi df /home
+Data, single: total=292.50GiB, used=145.70GiB
+System, DUP: total=8.00MiB, used=40.00KiB
+System, single: total=4.00MiB, used=0.00
+Metadata, DUP: total=2.75GiB, used=2.25GiB
+Metadata, single: total=8.00MiB, used=0.00
+unknown, single: total=512.00MiB, used=0.00</code></pre>
+<p>Note <code>Metadata, DUP</code> - that’s 81% usage. The btrfs wiki says that 75% or greater metadata space usage can cause <code>No space left on device</code> errors, even when the filesystem isn’t full.</p>
+<blockquote>
+<p>For now, a workaround is to run a partial balance:</p>
+<pre class="pre sourceCode"><code>$ sudo btrfs filesystem balance start -dusage=5 /mount/point</code></pre>
+</blockquote>
+<p>The <code>-dusage=5</code> bit means only chunks that are at most 5% used will be relocated.</p>
+<p>Running <code>btrfs filesystem balance</code> spreads usage across the disk and reclaims allocated but unused metadata chunks.</p>
+<pre class="pre sourceCode"><code>root@dionysus:/# btrfs fi balance start -dusage=5 -v /home
+Dumping filters: flags 0x1, state 0x0, force is off
+  DATA (flags 0x2): balancing, usage=5
+Done, had to relocate 0 out of 303 chunks</code></pre>
+<p>And now, the <code>Metadata, DUP</code> field shows 72% usage. Better, I suppose.</p>
+<pre class="pre sourceCode"><code>root@dionysus:/# btrfs fi df /home
+Data, single: total=285.50GiB, used=151.25GiB
+System, DUP: total=8.00MiB, used=40.00KiB
+System, single: total=4.00MiB, used=0.00
+Metadata, DUP: total=3.25GiB, used=2.34GiB
+Metadata, single: total=8.00MiB, used=0.00
+unknown, single: total=512.00MiB, used=0.00</code></pre>
+<p>I’ll be exploring this more if I see any more issues, and update this post with information. For reference, I run a custom Linux 3.15 release, and have built and booted the 3.16-rc1, rc2, and some in-between RCs.</p>
+</section>
+
+        </div>
+        <div id="footer">
+            <p>
+  Content © 2012-2021 Nathan Typanski
+  and licensed under a <br /><a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.
+  Opinions are my own and not the views of my employer.
+  <a href="../website.html">About this site.</a>
+<!-- p-->
+<p>
+  <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/80x15.png" /></a>
+</p>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-37825924-1', 'nathantypanski.com');
+  ga('send', 'pageview');
+
+</script>
+
+
+        </div>
+    </body>
+</html>

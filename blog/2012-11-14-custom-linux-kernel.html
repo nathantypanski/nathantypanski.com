@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+    <meta charset="UTF-8">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>Custom Linux Kernel</title>
+        <link rel="stylesheet" type="text/css" href="../css/default.css" />
+        
+    </head>
+    <body>
+        <div id="header">
+          <div id="logo">
+      <a href="../">
+        <img class="img" src="../images/log0.png" />
+      </a>
+</div>
+<div id="navigation">
+  <ul>
+    <li>
+      <a href="../blog.html">
+        Blog
+        <i class="fa fa-pencil"></i>
+      </a>
+    </li>
+    <li>
+      <a href="../pages.html">
+        Writing
+        <i class="fa fa-globe"></i>
+      </a>
+    </li>
+    <li>
+      <a href="../worklog.html">
+        Worklog
+        <i class="fa fa-bar-chart"></i>
+      </a>
+    </li>
+    <li>
+      <a href="../contact.html">
+        Contact
+        <i class="fa fa-envelope"></i>
+      </a>
+    </li>
+  </ul>
+</div>
+
+        </div>
+        <div id="metadata">
+            <ul class="meta">
+            
+                <li>tags: <em><a href="../tags/Linux.html">Linux</a>, <a href="../tags/kernel.html">kernel</a></em></li>
+            
+            
+            <li>posted: <em> November 14, 2012 </em></li>
+            <li>modified: <em> November  3, 2016 </em></li>
+            </ul>
+        </div>
+        <div id="content">
+            <h1>Custom Linux Kernel</h1>
+            <div class="info">
+    <!--
+    <div class="snippets">
+        <i class="fa fa-calendar"></i> November 14, 2012 <i class="fa fa-cut" November  3, 2016></i> November  3, 2016
+    </div>
+    -->
+    
+</div>
+<p>I compiled a custom version of the Linux kernel for my machine yesterday. It’s based on kernel version 3.6.6-1 (Arch distro), and, like any custom kernel, includes a variety of tweaks customized for my hardware.</p>
+<p>The <a href="https://wiki.archlinux.org/index.php/Arch_Build_System">Arch Build System</a> makes it really simple to compile packages from source. It includes a tree of <a href="https://wiki.archlinux.org/index.php/PKGBUILD">PKGBUILDS</a> that you can copy to your home directory (building as root is strongly unadvised) to compile software for your system.</p>
+<p>Why would you want to do this? Mostly, it’s for distribution and architecture-specific optimizations that are only available in packages compiled from source. In the case of the Linux kernel, there are literally hundreds of modules that go unused on my machine. For a pre-compiled kernel, it would scan through all of my hardware on every boot and check it against these modules to be sure that it shouldn’t load them.</p>
+<p>In addition, there are a number of cool tweaks in the config for people to play with.</p>
+<p>I also <a href="https://wiki.archlinux.org/index.php/Systemd">migrated to systemd</a> a few weeks ago. I remember a post or e-mail somewhere in which systemd caught a lot of flak for being untested, running against the tried-and-true sysvinit, but can’t seem to find it. <a href="https://www.archlinux.org/news/end-of-initscripts-support/">Arch Linux just made systemd official</a>, and honestly, I trust the devs on their decision.</p>
+<p>My boot has nearly tripled in speed, about which you’ll hear no complaints from me.</p>
+<p>Finally, I <a href="http://en.wikipedia.org/wiki/Zsh">switched from bash to zsh</a>. I haven’t come close to taking full advantage of it yet, but the ability to tab-complete filenames has to be the best thing in the world.</p>
+
+        </div>
+        <div id="footer">
+            <p>
+  Content © 2012-2021 Nathan Typanski
+  and licensed under a <br /><a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.
+  Opinions are my own and not the views of my employer.
+  <a href="../website.html">About this site.</a>
+<!-- p-->
+<p>
+  <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/80x15.png" /></a>
+</p>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-37825924-1', 'nathantypanski.com');
+  ga('send', 'pageview');
+
+</script>
+
+
+        </div>
+    </body>
+</html>

@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html>
+    <meta charset="UTF-8">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>Towards a Vim-like Emacs</title>
+        <link rel="stylesheet" type="text/css" href="../css/default.css" />
+        
+    </head>
+    <body>
+        <div id="header">
+          <div id="logo">
+      <a href="../">
+        <img class="img" src="../images/log0.png" />
+      </a>
+</div>
+<div id="navigation">
+  <ul>
+    <li>
+      <a href="../blog.html">
+        Blog
+        <i class="fa fa-pencil"></i>
+      </a>
+    </li>
+    <li>
+      <a href="../pages.html">
+        Writing
+        <i class="fa fa-globe"></i>
+      </a>
+    </li>
+    <li>
+      <a href="../worklog.html">
+        Worklog
+        <i class="fa fa-bar-chart"></i>
+      </a>
+    </li>
+    <li>
+      <a href="../contact.html">
+        Contact
+        <i class="fa fa-envelope"></i>
+      </a>
+    </li>
+  </ul>
+</div>
+
+        </div>
+        <div id="metadata">
+            <ul class="meta">
+            
+                <li>tags: <em><a href="../tags/Emacs.html">Emacs</a>, <a href="../tags/software.html">software</a>, <a href="../tags/Vim.html">Vim</a></em></li>
+            
+            
+            <li>posted: <em> August  3, 2014 </em></li>
+            <li>modified: <em> November  3, 2016 </em></li>
+            </ul>
+        </div>
+        <div id="content">
+            <h1>Towards a Vim-like Emacs</h1>
+            <div class="info">
+    <!--
+    <div class="snippets">
+        <i class="fa fa-calendar"></i> August  3, 2014 <i class="fa fa-cut" November  3, 2016></i> November  3, 2016
+    </div>
+    -->
+    
+</div>
+<div id="toc"><h2>Contents</h2>
+<ul>
+<li><a href="#first-some-terminology">First, some terminology</a></li>
+<li><a href="#package-archives">Package archives</a><ul>
+<li><a href="#installing-evil">Installing Evil</a></li>
+</ul></li>
+<li><a href="#modes">Modes</a></li>
+<li><a href="#binding-keys">Binding keys</a><ul>
+<li><a href="#quoting">Quoting</a></li>
+<li><a href="#maps-and-keys">Maps and keys</a></li>
+</ul></li>
+<li><a href="#lisp-navigation">Lisp navigation</a></li>
+<li><a href="#managing-buffers">Managing buffers</a><ul>
+<li><a href="#stealing-ibuffers-keymap">Stealing IBuffer’s keymap</a></li>
+<li><a href="#rebinding">Rebinding</a></li>
+<li><a href="#handling-lots-of-buffers">Handling lots of buffers</a></li>
+</ul></li>
+<li><a href="#separating-your-init-files">Separating your init files</a></li>
+<li><a href="#dired">Dired</a><ul>
+<li><a href="#dired-x">Dired-x</a></li>
+</ul></li>
+<li><a href="#evil-leader">Evil-Leader</a></li>
+<li><a href="#use-package">Use-package</a></li>
+<li><a href="#daemonizing-emacs">Daemonizing Emacs</a></li>
+<li><a href="#magit">Magit</a></li>
+<li><a href="#tips-and-tricks">Tips and tricks</a><ul>
+<li><a href="#avoid-using-customize">Avoid using customize</a></li>
+<li><a href="#ditch-the-terminal">Ditch the terminal</a></li>
+<li><a href="#hide-the-startup-messages">Hide the startup messages</a></li>
+<li><a href="#after">After</a></li>
+<li><a href="#better-word-wrapping">Better word wrapping</a></li>
+<li><a href="#enforce-trailing-newlines">Enforce trailing newlines</a></li>
+<li><a href="#hide-the-toolbar">Hide the toolbar</a></li>
+</ul></li>
+<li><a href="#my-config">My config</a></li>
+</ul> </div>
+<p>I’ve <a href="../blog/2014-07-02-switching-to-emacs.html">previously written</a> about my own process of transitioning from Vim to Emacs. It’s fairly high-level, however, and doesn’t cover the nitty-gritty: all those long, painful hours spent trying to smash Emacs into reasonable keybindings are lost. You get the retrospective, the analysis, but not the same benefit of hindsight I’ve gathered since I switched. Unfortunately, there aren’t many resources out there on how to do this <em>right</em>. People use Emacs. It’s a tool. Most of its users don’t write about it, and the percentage of Emacs users who try to emulate Vim and also write about it is even smaller.</p>
+<p>There is <a href="http://bling.github.io/">Bling</a>, the vim-airline developer, who switched and ultimately convinced me to give Emacs a shot. But his tips just scratch the surface of what’s necessary to replicate the finger-friendliness of a modern Vim workflow.</p>
+<p>It’s a well-known and overstated joke that the default Emacs bindings are bad. If you’re reading this post, you probably already agree with me here, but for the uninitiated: key combos are the devil. Any time you are pressing two keys at once, with the same hand, hundreds of times per day, you are setting yourself up for repetitive stress injury. As programmers, we need to take care of our hands or our careers will be over.</p>
+<p>This is going to be part-tutorial, part describing my configuration. With a little determination, this can take you from ground-zero to a working Evil configuration and generic development environment.</p>
+<p>This post is geared at the <strong>determined Vim user</strong> who is willing to give Evil a shot and likes having a heavily customized editor. It has a number of tasks that are intended to teach the right attitude and mindset required to keep working with Emacs on your own. These will get you familiar enough with reading documentation that you know where to look when you want to do something. It is also Elisp-focused, with no emphasis on the more <q>modern</q> customization features of Emacs that ultimately prevent new users from groking its internals.</p>
+<section id="first-some-terminology" class="level2">
+<h2>First, some terminology</h2>
+<p>When you first fire up Emacs, you need to learn how they reference certain objects and keybindings. This is pretty simple, but can be confusing if you don’t have the initial introduction.</p>
+<ul>
+<li><code>M-x</code> means <q>press the <code>&lt;ALT&gt;</code> key, then press <code>x</code> while still holding that down</q>. This brings up the Emacs command prompt, which gives you access to any of the functions that are declared <strong>interactive</strong> - that is, Elisp functions that may be run interactively by the user.
+<ul>
+<li>If someone gives you a command sequence like <code>M-x package-install &lt;RET&gt; evil &lt;RET&gt;</code>, that means to do the <code>M-x</code> keybinding, type <code>package-install</code>, press enter, then type <code>evil</code> and press enter. Often the second <code>&lt;RET&gt;</code> will be omitted and taken as implicit.</li>
+</ul></li>
+<li>A <strong>buffer</strong> is a place where text may go. This is distinct from a <strong>window</strong> which is a visual area on screen which displays a buffer.</li>
+<li>A <strong>frame</strong> is another Emacs window in your window manager that is attached to the same Emacs process.</li>
+</ul>
+<p>That’s it for the basics. Let’s see where we can go from here.</p>
+</section>
+<section id="package-archives" class="level2">
+<h2>Package archives</h2>
+<p>In order to install packages from things besides the default repos, you need to define a variable called <code>package-archives</code> with the URLs of the package sources in it. You do this in your <code>init.el</code> file, which is located at <code>~/.emacs.d/init.el</code> by default.</p>
+<pre class="sourceCode"><code>(setq package-archives '((&quot;melpa&quot; . &quot;http://melpa.milkbox.net/packages/&quot;)
+                         (&quot;org&quot; . &quot;http://orgmode.org/elpa/&quot;)
+                         (&quot;gnu&quot; . &quot;http://elpa.gnu.org/packages/&quot;)))</code></pre>
+<p><a href="http://melpa.milkbox.net/">MELPA</a> is the most important source for up-to-date Emacs packages. It’s kind of like the <a href="../blog/2014-07-25-all-your-daemons.html">Arch Linux</a> of Emacs package archives - it builds directly from upstream all the time, and it works with the builtin Emacs package manager.</p>
+<p>Also, below the above code, you’ll need to initialize the package manager.</p>
+<pre class="sourceCode"><code>(require 'package)
+(package-initialize)</code></pre>
+<p>Once you’ve added the above to that file, you can evaluate each of these expressions inside Emacs with <code>C-x C-e</code>. To evaluate an expression, position the cursor outside and following the expression and hit that keybinding. This runs the command <code>eval-last-sexp</code>, which evaluates the <a href="http://en.wikipedia.org/wiki/S-expression">symbolic expression</a> before your cursor and pretty-prints the output.</p>
+<p>You’ll need to do this in order (i.e., evaluate the <code>setq</code> expression first), or it won’t work.</p>
+<section id="installing-evil" class="level3">
+<h3>Installing Evil</h3>
+<p>Once the above is finished, you can install <code>evil-mode</code> with <code>M-x package-install &lt;RET&gt; evil &lt;RET&gt;</code>. The compilation log that pops up at the bottom of the screen can be killed with <code>C-x 4 0</code>. That runs the function <code>kill-buffer-and-window</code>, which you can also call interactively at the <code>M-x</code> prompt. More on that later.</p>
+<p>After that, Evil will be installed into the <code>~/.emacs.d</code> directory. To enable it, type <code>M-x evil-mode</code>. Now all your Vim bindings work, as long as you don’t kill Emacs.</p>
+<p>You probably want to enable Evil more permanently. Add the following to the bottom of your <code>~/.emacs.d/init.el</code> file:</p>
+<pre class="sourceCode"><code>(require 'evil)
+(evil-mode 1)</code></pre>
+<p>This will automatically enable <code>evil-mode</code> every time you start Emacs. It’s important that it goes at the bottom of the file. Evil relies on starting up after the rest of your packages, so that it can detect them and overlay its keybindings appropriately.</p>
+<p>If you break your configuration, restart Emacs with:</p>
+<pre class="sourceCode"><code>$ emacs --debug-init</code></pre>
+<p>to get debug information on your init files. Don’t feel bad if you have to use Vim to fix them in the meantime. Don’t get worried thinking Evil is not a <q>first-class citizen</q> in Emacs: this is an editor built to be ripped to pieces by the competent user.</p>
+<p>The interesting part of Emacs is its Lisp engine. It’s the scores of reusable functions for automating your interaction with code. Keybindings are just one way of calling these things.</p>
+</section>
+</section>
+<section id="modes" class="level2">
+<h2>Modes</h2>
+<p>Like Vim, Emacs uses the word <q>modes</q> to refer to an element of state in its editor. Unlike Vim, this is not referring to <em>modal editing</em>, but rather to the composition of various modules that make up your current editing environment.</p>
+<p>A <strong>major mode</strong> defines your primary interaction with a buffer in Emacs. There can only be one of these active at once, and they are not all necessarily for editing text. For example, <code>dired</code> is a major mode for editing directories, and <code>magit</code> is a Git interaction interface. An important major mode to be aware of is <code>fundamental mode</code>, which is a major mode with no discerning features besides the ability to type text into a buffer.</p>
+<p><strong>Minor modes</strong> are compositional - there can be more than one of them, and minor modes loaded after others can override the settings of a previous one. Evil is one such example of a minor mode.</p>
+<section id="states" class="level4">
+<h4>States</h4>
+<p>Evil uses the term <em>state</em> to refer to what Vim calls a <q>mode</q>. There are more states than these, but here are a few to get you going:</p>
+<ul>
+<li><code>evil-emacs-state</code><a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a></li>
+<li><code>evil-insert-state</code></li>
+<li><code>evil-normal-state</code></li>
+<li><code>evil-visual-state</code></li>
+</ul>
+<p>Each of these can be called interactively with <code>M-x</code> to enable them. The way Evil works is each of these states is bound to a different keymap, and those keymaps change the meanings of your keys to call different functions when they are pressed. This affords you the ability to remap bindings across different states, where they will only work when <code>evil-mode</code> is enabled and Evil is also in the right state to activate the keymap.</p>
+<p>Use <code>ESC</code>, <code>i</code>, <code>v</code>, etc. as you would in Vim to switch between Evil states. Then play around with using <code>M-x</code> to toggle the different states before moving on.</p>
+</section>
+</section>
+<section id="binding-keys" class="level2">
+<h2>Binding keys</h2>
+<p>Let’s get started by adding some bindings to Evil. We want switching between windows to be easy, so we can bind the following:</p>
+<pre class="sourceCode"><code>(define-key evil-normal-state-map (kbd &quot;C-h&quot;) 'evil-window-left)
+(define-key evil-normal-state-map (kbd &quot;C-j&quot;) 'evil-window-down)
+(define-key evil-normal-state-map (kbd &quot;C-k&quot;) 'evil-window-up)
+(define-key evil-normal-state-map (kbd &quot;C-l&quot;) 'evil-window-right)</code></pre>
+<p>This binds <code>&lt;CTRL&gt;-hjkl</code> to window movement commands when Evil is in normal state.</p>
+<p>There are a number of interesting things about these expressions. First, position your cursor over the word <code>define-key</code> and call <code>M-x describe-function</code>. It will provide the default value of the thing under your cursor, so you can just press <code>RET</code> again to bring up a buffer with help information. Read the help information it gives you, then move on. The buffer that appears will be in <code>help-mode</code>, which does not have Evil bindings, but you can use <code>q</code> to close it and keep working.</p>
+<p>The proper term in Emacs for <q>your cursor</q> would be <strong>point</strong>. This is used extensively in the help documentation, so it’s worth remembering. The <q>thing</q> at point that provided the default argument for <code>describe-function</code> was a <strong>symbol</strong>.<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a> A symbol is basically any thing in Emacs Lisp which has a <em>name</em> and can be hashed into a lookup table, where it then becomes an <strong>object</strong> in Lisp. These objects could be anything: functions, data, or text, for example, but symbols are interesting because we can give them names and refer to them later somehow.</p>
+<p>From the <a href="http://www.gnu.org/software/emacs/manual/html_node/elisp/Symbols.html">official manual</a>:</p>
+<blockquote>
+<p>You can test whether an arbitrary Lisp object is a symbol with <code>symbolp</code>:</p>
+<p>— Function: <strong>symbolp</strong> <em>object</em></p>
+<p>This function returns <code>t</code> if <em>object</em> is a symbol, <code>nil</code> otherwise.</p>
+</blockquote>
+<p>Now, use <code>M-x apropos RET point RET</code> and skim through the list that pops up. If you have Evil working properly, you can use <code>:q</code> to close that window when you’re done with it.</p>
+<section id="quoting" class="level3">
+<h3>Quoting</h3>
+<p>Readers with keen eyes may have noticed that one of the arguments in the above code has an apostrophe (<code>'</code>) before it. This is because <code>evil-window-left</code> is a function’s name, and we want to be able to call it later by binding it to a key. Putting an apostrophe before it when passing it as an argument to a function means we’re passing the <strong>quoted</strong> form of <code>evil-window-left</code> to <code>define-key</code>, not what it evaluates to.</p>
+<p>Since our intent is to pass the <em>symbol</em> <code>'evil-window-left</code> into <code>define-key</code>, and not the evaluated form of <code>evil-window-left</code> itself, this is the right thing to do.</p>
+<p>All arguments in Elisp expressions, without quoting, will be evaluated before they are passed into a function call. Quoting lets us avoid that and pass their symbols instead.</p>
+</section>
+<section id="maps-and-keys" class="level3">
+<h3>Maps and keys</h3>
+<p>The two other arguments to each of those keybindings were unquoted. The keymap, <code>evil-normal-state-map</code>, goes directly into the function, since the purpose of <code>define-key</code> is to modify that map. The expression <code>(kbd &quot;C-h&quot;)</code> is actually another separate function call that happens before the outside expression is evaluated. If we use <code>M-x describe-function</code> to look at the help documentation for <code>kbd</code>, we see:</p>
+<pre class="sourceCode"><code>kbd is a compiled Lisp function in `subr.el'.
+
+(kbd KEYS)
+
+Convert KEYS to the internal Emacs key representation.
+KEYS should be a string constant in the format used for
+saving keyboard macros (see `edmacro-mode').</code></pre>
+<p>We need to use the <code>kbd</code> function to describe our keybindings, since they contain an extra operator (the <code>&lt;CTRL&gt;</code> key). While single character bindings can be looked up in keymaps directly, a key sequence like <code>C-h</code> is not stored in the map in that form.</p>
+<p>You can look at the value of <code>(kbd &quot;C-h&quot;)</code> by typing it on a line below those bindings, and then evaluating it with <code>C-x C-e</code> as before. In the <strong>minibuffer</strong>, the text area with a blank line at the bottom of the screen, <code>&quot;^H&quot;</code> is displayed. That tells you that the expression</p>
+<pre class="sourceCode"><code>(define-key evil-normal-state-map (kbd &quot;C-h&quot;) 'evil-window-left)</code></pre>
+<p>is internally binding <code>&quot;^H&quot;</code> to <code>evil-window-left</code>, but don’t doing that yourself—the way it’s shown in the minibuffer is still a <em>displayed form</em>, which is different from the hashed value it eventually becomes.</p>
+</section>
+</section>
+<section id="lisp-navigation" class="level2">
+<h2>Lisp navigation</h2>
+<p>Accessing help documentation using <code>M-x describe-function</code> is pretty awesome, but the interface for doing it is fairly clunky. We can make it better using <code>elisp-sime-nav-mode</code>, the <a href="http://common-lisp.net/project/slime/">superior Lisp interaction mode</a> for Emacs. You can install it with <code>M-x package-install RET elisp-slime-nav</code>.</p>
+<p>Slime mode needs to be enabled for it to be used. To do this, we will define a function that we’ll tie to the hook for <code>emacs-lisp-mode</code>. A <strong>hook</strong> is a function that gets evaluated when something predefined happens in your editor. Most modes have hooks already configured, and all you will need to do is add functions to call with them using <code>add-hook</code> for them to become useful.</p>
+<p>First we <code>require</code> the package <code>elisp-slime-nav</code>, which ensures that it is loaded when Emacs starts:</p>
+<pre class="sourceCode"><code>(require 'elisp-slime-nav)</code></pre>
+<p>Then we define our function:<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a></p>
+<pre class="sourceCode"><code>(defun my-lisp-hook ()
+  (elisp-slime-nav-mode)
+  (turn-on-eldoc-mode)
+  )</code></pre>
+<p>Add that into your init file after the <code>require</code> call. Note that the function definition is prefixed by <code>my-</code>. While not all Emacs packages do this, Elisp does not have namespaces like Python or Ruby does. To counteract this, convention is to define all of your functions prefixed by your package name, and for personal code using <code>my-</code> is not uncommon.</p>
+<p>Then, we add it to to the <code>emacs-lisp-mode-hook</code> using <code>add-hook</code>:</p>
+<pre class="sourceCode"><code>(add-hook 'emacs-lisp-mode-hook 'my-lisp-hook)</code></pre>
+<p>This makes <code>elisp-slime-nav-mode</code> and <code>turn-on-eldoc-mode</code><a href="#fn4" class="footnote-ref" id="fnref4"><sup>4</sup></a> get called every time <code>emacs-lisp-mode</code> is enabled. Now go ahead and evaluate these with <code>C-x C-e</code>. To make this easier, you can surround the block in a <code>(progn)</code>, which makes the whole thing get treated as one big expression for evaluation:</p>
+<pre class="sourceCode"><code>(progn
+  (require 'elisp-slime-nav)
+  (defun my-lisp-hook ()
+    (elisp-slime-nav-mode)
+    (turn-on-eldoc-mode)
+    )
+  (add-hook 'emacs-lisp-mode-hook 'my-lisp-hook)
+)</code></pre>
+<p>While the <code>(progn)</code> here doesn’t serve any practical purpose, it might help you group blocks of code for evaluation while you’re hacking at them.</p>
+<p>Since <code>emacs-lisp-mode</code> is already running (you’re in a <code>.el</code> file), you can force your hook’s evaluation by typing <code>(my-lisp-hook)</code> into the buffer and evaluating it manually.</p>
+<p>You’ll notice that when you hover over functions now, <code>eldoc-mode</code> shows their signature in the minibuffer. If you want to see the help information like we’d been doing manually before, though, you still need to type <code>describe-function</code> into the <code>M-x</code> prompt. Now that we have Slime, we can simplify this with another keybinding:<a href="#fn5" class="footnote-ref" id="fnref5"><sup>5</sup></a></p>
+<pre class="sourceCode"><code>(evil-define-key 'normal emacs-lisp-mode-map (kbd &quot;K&quot;)
+  'elisp-slime-nav-describe-elisp-thing-at-point)</code></pre>
+<p>Evaluating the above will do contextual lookup on the thing at point whenever you press <code>K</code> in Evil’s normal state.</p>
+<p>The syntax here is different from when we defined the <a href="../blog/2014-08-03-a-vim-like-emacs-config.html#binding-keys">window movement bindings</a> earlier. This is because we want to define <code>K</code> to call <code>elisp-slime-nav-describe-elisp-thing-at-point</code> only when we are in <code>emacs-lisp-mode-map</code> and Evil is in normal state. The <code>evil-define-key</code> function lets us do this, by providing arguments for both the Evil state and the keymap for the binding to be active in.</p>
+<p>Now you have the tools necessary to explore Emacs Lisp code without getting lost. Doing documentation lookups on everything you see that you don’t understand is a great way to start familiarizing yourself with Elisp code.</p>
+<p>Before we move on, lookup the descriptions for <code>progn</code>, <code>require</code>, <code>add-hook</code>, and <code>emacs-lisp-mode-hook</code> and read them. Don’t be afraid if you encounter words you don’t understand. Seeing the bigger picture in all the lingo takes time, but just doing this will help you start to understand it.</p>
+</section>
+<section id="managing-buffers" class="level2">
+<h2>Managing buffers</h2>
+<p>You can list the buffers that are currently open by typing <code>M-x list-buffers</code>. Using the bindings we defined earlier, you can switch to the window that is opened and hit <code>q</code> to close it when you’re done. To switch to one of these buffers, typing <code>M-x switch-to-buffer</code> will bring up a minibuffer prompt where you can type the name of a buffer to switch to it.</p>
+<p>For a better listing, you can use <code>M-x ibuffer</code>.</p>
+<figure>
+<img src="../images/2014-08-ibuffer.png" alt="IBuffer with the default settings" /><figcaption>IBuffer with the default settings</figcaption>
+</figure>
+<p>The default bindings you should care about right now are:</p>
+<ul>
+<li><code>n</code> and <code>p</code> to go to the next and previous buffers.</li>
+<li><code>d</code> (marking the buffer for deletion), then <code>x</code> on a buffer will make it go away.</li>
+<li><code>RET</code> while a buffer name is at point will take you to that buffer.</li>
+</ul>
+<p>IBuffer has all sorts of useful features for browsing, filtering, and editing open buffers. But at least for a Vim user, its keybindings won’t at all be intuitive. Typing <code>j</code> accidentally will call <code>jump-to-buffer</code>, which is almost certainly not what you want. If you felt like typing the name of the buffer at a prompt, you probably wouldn’t have opened IBuffer to begin with!</p>
+<p>Aside from being unnatural for Vim users, the interface to IBuffer isn’t actually that bad. The keybindings are mostly single-key sequences, unlike more poorly-designed Emacs modes, and the functions allow for quick actions that will save you tons of work.</p>
+<section id="stealing-ibuffers-keymap" class="level3">
+<h3>Stealing IBuffer’s keymap</h3>
+<p>When I previously wrote about my experience switching to Evil, I mentioned there are a <a href="../blog/2014-07-02-switching-to-emacs.html#new-habits">couple of different ways</a> to deal with major mode keymaps being inconsistent with Evil. I’ll be covering the full remapping approach here, since it has a few benefits:</p>
+<ul>
+<li>Your major modes will be more tightly integrated with Evil.</li>
+<li>You’ll have the ability to redefine keys at will, easily and quickly.</li>
+<li>Remapping keys this way offers a chance at better understanding the functions in a major mode, which might just be missed otherwise. For core components of Emacs, like IBuffer and dired, building a more useful keymap can be a rewarding learning experience in itself.</li>
+</ul>
+<p>With <code>ibuffer</code> open, type <code>M-x describe-mode</code> to pull up the help info below.</p>
+<figure>
+<img src="../images/2014-08-ibuffer-link.png" alt="A link to ibuffer.el in help-mode" /><figcaption>A link to <code>ibuffer.el</code> in <code>help-mode</code></figcaption>
+</figure>
+<p>Following that link<a href="#fn6" class="footnote-ref" id="fnref6"><sup>6</sup></a> will take you to the source code for IBuffer. Somewhere in there, you’ll find the keymap:</p>
+<figure>
+<img src="../images/2014-08-ibuffer-default-map.png" alt="Default IBuffer keymap" /><figcaption>Default IBuffer keymap</figcaption>
+</figure>
+<p>Any one of these major mode keymaps is bound to be really large, so I won’t reproduce it here. The idea is to redefine these into a map within Evil, so IBuffer will respect your Evil keymaps and still have its functionality. The <code>evil-define-key</code> function we used earlier has the option of taking an unlimited number of arguments. Now, copy lines like the following out of <code>ibuffer.el</code>:</p>
+<pre class="sourceCode"><code>(define-key map (kbd &quot;m&quot;) 'ibuffer-mark-forward)
+(define-key map (kbd &quot;t&quot;) 'ibuffer-toggle-marks)
+(define-key map (kbd &quot;u&quot;) 'ibuffer-unmark-forward)
+(define-key map (kbd &quot;=&quot;) 'ibuffer-diff-with-file)
+(define-key map (kbd &quot;j&quot;) 'ibuffer-jump-to-buffer)
+(define-key map (kbd &quot;M-g&quot;) 'ibuffer-jump-to-buffer)
+(define-key map (kbd &quot;M-s a C-s&quot;) 'ibuffer-do-isearch)
+(define-key map (kbd &quot;M-s a M-C-s&quot;) 'ibuffer-do-isearch-regexp)
+;; ...</code></pre>
+<p>and drop them into <code>~/.emacs.d/init.el</code>, after <code>(require 'evil)</code>, like follows:</p>
+<pre class="sourceCode"><code>(evil-define-key 'normal ibuffer-mode-map
+  (kbd &quot;m&quot;) 'ibuffer-mark-forward
+  (kbd &quot;t&quot;) 'ibuffer-toggle-marks
+  (kbd &quot;u&quot;) 'ibuffer-unmark-forward
+  (kbd &quot;=&quot;) 'ibuffer-diff-with-file
+  (kbd &quot;j&quot;) 'ibuffer-jump-to-buffer
+  (kbd &quot;M-g&quot;) 'ibuffer-jump-to-buffer
+  (kbd &quot;M-s a C-s&quot;) 'ibuffer-do-isearch
+  (kbd &quot;M-s a M-C-s&quot;) 'ibuffer-do-isearch-regexp
+  ;; ...
+  )</code></pre>
+<p>I used a Vim macro and visual block selection to do the rewrite into <code>evil-define-key</code> form for me, and it only took about a minute to perform.</p>
+<p>To ensure IBuffer will use Evil’s keybindings, add the line</p>
+<pre class="sourceCode"><code>(evil-set-initial-state 'ibuffer-mode 'normal)</code></pre>
+<p>to your init file. You can use this to set Evil’s initial state for any major mode - before you know what to bind in a mode, sometimes using Emacs state isn’t a bad idea.</p>
+<p>Now, if you try to actually use this configuration, it won’t work.<a href="#fn7" class="footnote-ref" id="fnref7"><sup>7</sup></a> The reason is we need to ensure the Evil bindings are not applied until <em>after</em> IBuffer is loaded, since it needs to do some special setup. The solution here is to surround the bindings in an <code>eval-after-load</code> block, like follows:</p>
+<pre class="sourceCode"><code>(eval-after-load 'ibuffer
+  '(progn
+     (evil-set-initial-state 'ibuffer-mode 'normal)
+     (evil-define-key 'normal ibuffer-mode-map
+       (kbd &quot;m&quot;) 'ibuffer-mark-forward
+       (kbd &quot;t&quot;) 'ibuffer-toggle-marks
+       (kbd &quot;u&quot;) 'ibuffer-unmark-forward
+       (kbd &quot;=&quot;) 'ibuffer-diff-with-file
+       (kbd &quot;j&quot;) 'ibuffer-jump-to-buffer
+       (kbd &quot;M-g&quot;) 'ibuffer-jump-to-buffer
+       (kbd &quot;M-s a C-s&quot;) 'ibuffer-do-isearch
+       (kbd &quot;M-s a M-C-s&quot;) 'ibuffer-do-isearch-regexp
+       ;; ...
+       )
+     )
+   )</code></pre>
+<p>This ensures your custom keymap does not try to set itself until after ibuffer has already initialized it properly.</p>
+<p>Your goal after this section is to read the help information for <code>eval-after-load</code>, as well as for some of the IBuffer bindings. Just pick ones that seem interesting, and again - don’t worry if you don’t understand things. Just read a few of them anyway.</p>
+<p>Once you’ve done your reading, get the custom keymap to work by evaluating the block with <code>C-x C-e</code>, and ensure it’s functional in <code>evil-normal-state</code> by calling <code>M-x evil-normal-state</code> manually within IBuffer.</p>
+</section>
+<section id="rebinding" class="level3">
+<h3>Rebinding</h3>
+<p>You might think it’s crazy to place all of this configuration in one lone init file. We’ll get to that in the next section. For now, keeping things in <code>init.el</code> will get the job done and let us focus on keybindings.</p>
+<p>The obvious thing to do, now that we’ve copied the keymap, is to add proper <code>hjkl</code> bindings. Usually in major modes like this you want to bind <code>j</code> and <code>k</code> to <code>evil-next-line</code> and <code>evil-previous-line</code>, respectively.</p>
+<ul>
+<li>Since <code>J</code> wasn’t taken, I changed <code>ibuffer-jump-to-buffer</code> to <code>J</code> and rebound <code>j</code> to <code>evil-next-line</code>.</li>
+<li>The binding for <code>k</code> is less obvious: it’s tied to <code>ibuffer-do-kill-lines</code>.</li>
+</ul>
+<p>Looking at the help documentation:</p>
+<blockquote>
+<p><code>ibuffer-do-kill-lines</code> is an interactive autoloaded compiled Lisp function in <code>ibuf-ext.el</code>.</p>
+<p><code>(ibuffer-do-kill-lines)</code></p>
+<p>Hide all of the currently marked lines.</p>
+</blockquote>
+<p>IBuffer has a marking system that lets you select multiple buffers on which to perform actions. Personally, I don’t care very much for hiding marked lines, so I simply removed that binding. Now we have</p>
+<pre class="sourceCode"><code>    (kbd &quot;j&quot;) 'evil-next-line
+    (kbd &quot;k&quot;) 'evil-previous-line</code></pre>
+<p>bound, which covers the absolute basics. But what about <code>l</code>? I’m used to <a href="../blog/2013-08-12-ranger.html">ranger</a>, a Vim-inspired file manager, where <code>l</code> takes you <q>into</q> the current item. In IBuffer, <code>l</code> is bound to <code>ibuffer-redisplay</code>, a useless function that redisplays the current buffers without loading new ones.<a href="#fn8" class="footnote-ref" id="fnref8"><sup>8</sup></a> Deleting that line lets us rebind it to</p>
+<pre class="sourceCode"><code>    (kbd &quot;l&quot;) 'ibuffer-visit-buffer</code></pre>
+<p>and now we can navigate IBuffer much more naturally.</p>
+<p>Another Ranger replication: by default, <code>ibuffer-toggle-marks</code> is bound to <code>t</code>, and <code>v</code> is bound to <code>ibuffer-do-view</code>, which opens the buffer at point fullscreen and hides the others. I never need to do that, so I’ve added</p>
+<pre class="sourceCode"><code>    (kbd &quot;v&quot;) 'ibuffer-toggle-marks</code></pre>
+<p>to my config.</p>
+<p>I’ll add that it’s not really necessary to duplicate the entire keymap in your init file. As you’d guess, you only need to explicitly define keys in Evil if:</p>
+<ul>
+<li>Evil would overwrite them otherwise, replacing them with something useless</li>
+<li>You need to change them</li>
+</ul>
+<p>If neither of these apply, then you can get rid of the bindings. But pasting them in to start with, then trimming the bindings down to what you’re actually interested in gives you the chance to examine the default keymap and rebind things that sound useful.</p>
+</section>
+<section id="handling-lots-of-buffers" class="level3">
+<h3>Handling lots of buffers</h3>
+<p>Over time, when you use Emacs you’ll end up with a lot of garbage buffers. Tons of different commands will open scratch buffers to show you things and never kill them. Eventually you’ll need to learn to filter IBuffer’s output so it’s actually relevant to you, and quickly group and delete buffers that aren’t.</p>
+<p>Typing <code>/</code> in the IBuffer window starts a filter command. I’ll list the default filter commands here, but remember that you can rebind them.</p>
+<table style="width:78%;">
+<colgroup>
+<col style="width: 38%" />
+<col style="width: 38%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td><strong>key</strong></td>
+<td><strong>action</strong></td>
+</tr>
+<tr class="even">
+<td><code>/ n</code></td>
+<td>Filter by name</td>
+</tr>
+<tr class="odd">
+<td><code>/ e</code></td>
+<td>Filter by extension</td>
+</tr>
+<tr class="even">
+<td><code>/ f</code></td>
+<td>Filter by filename</td>
+</tr>
+<tr class="odd">
+<td><code>/ s</code></td>
+<td>Save filters</td>
+</tr>
+<tr class="even">
+<td><code>/ !</code></td>
+<td>Negate filter</td>
+</tr>
+<tr class="odd">
+<td><code>/ g</code></td>
+<td>Make filters into group</td>
+</tr>
+<tr class="even">
+<td><code>/ S</code></td>
+<td>Save filter groups</td>
+</tr>
+<tr class="odd">
+<td><code>/ r</code></td>
+<td>Switch to saved filters</td>
+</tr>
+<tr class="even">
+<td><code>/ R</code></td>
+<td>Switch to saved filter group</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="separating-your-init-files" class="level2">
+<h2>Separating your init files</h2>
+<p>As I said before, putting everything in one init file gets old after a while. Emacs has a variable called <code>load-path</code> that you can use to customize where it looks for files. This is similar to the <code>$PATH</code> variable in most UNIX-derived shells.</p>
+<p>Adding the following to the beginning of your <code>~/.emacs.d/init.el</code> file will make Elisp files in the directory <code>~/.emacs.d/config</code> available for loading:</p>
+<pre class="sourceCode"><code>(add-to-list 'load-path (concat user-emacs-directory &quot;config&quot;))</code></pre>
+<p>If you use <code>K</code> in Evil’s normal state to look up the definition of <code>concat</code>, you’ll see:</p>
+<blockquote>
+<p><code>(concat &amp;rest SEQUENCES)</code></p>
+<p>Concatenate all the arguments and make the result a string. The result is a string whose elements are the elements of all the arguments.</p>
+</blockquote>
+<p>Since this won’t be the last time you see it, I suggest reading the docs for <code>add-to-list</code> as well.</p>
+<p>You can use <code>M-x describe-variable</code> to see the definition of <code>user-emacs-directory</code> or <code>load-path</code>. It will also tell you the variable’s value. Hitting <code>K</code> with the symbol at point will also take you to this, but it’s good to do it the hard way at least once.</p>
+<p>Now you can create a file, <code>~/.emacs.d/config/my-ibuffer.el</code>, and move your IBuffer configuration over there. It won’t be loadable by default, though, unless you declare it at the bottom of the file:</p>
+<pre class="sourceCode"><code>;; code goes here
+
+(provide 'my-ibuffer)</code></pre>
+<p>Then, in <code>~/.emacs.d/init.el</code>, you’ll need to <code>require</code> the file, as we did with Evil and Slime, for it to be loaded automatically.</p>
+<pre class="sourceCode"><code>(require 'my-ibuffer)</code></pre>
+<p>Now your IBuffer settings will be loaded at startup, but they won’t clutter your main init file.</p>
+</section>
+<section id="dired" class="level2">
+<h2>Dired</h2>
+<p><a href="https://www.gnu.org/software/emacs/manual/html_node/emacs/Dired.html">Dired</a> is one of Emacs’ killer apps - a full-featured file manager built in to the editor. No package installation necessary. But the default bindings in Evil get some core things wrong, and not just in respect to my Vim-like preferences.</p>
+<p>Dired is very good about using single-key bindings for the most important things. Changing them to be better is easy: you just have to know what functions to bind.</p>
+<p>First, opening a subdirectory in Dired spawns a new Dired buffer. The sane action, <code>dired-find-alternate-file</code>, is locked behind a feature gate that will prompt you the first time you use it. I rebound <code>l</code> to <code>dired-find-alternate-file</code>, which means that moving <q>forward</q> into a new Dired buffer happens in the same buffer (or window) as the current one. This does wonders in not cluttering up my buffer list with dead Dired exploration.</p>
+<p>Repeating the steps used to build a new keymap for IBuffer, we can hack apart the Dired maps similarily so.</p>
+<pre class="sourceCode"><code>  (evil-define-key 'normal dired-mode-map &quot;h&quot; 'dired-up-directory)
+  (evil-define-key 'normal dired-mode-map &quot;l&quot; 'dired-find-alternate-file)
+  (evil-define-key 'normal dired-mode-map &quot;o&quot; 'dired-sort-toggle-or-edit)
+  (evil-define-key 'normal dired-mode-map &quot;v&quot; 'dired-toggle-marks)
+  (evil-define-key 'normal dired-mode-map &quot;m&quot; 'dired-mark)
+  (evil-define-key 'normal dired-mode-map &quot;u&quot; 'dired-unmark)
+  (evil-define-key 'normal dired-mode-map &quot;U&quot; 'dired-unmark-all-marks)
+  (evil-define-key 'normal dired-mode-map &quot;c&quot; 'dired-create-directory)
+  (evil-define-key 'normal dired-mode-map &quot;n&quot; 'evil-search-next)
+  (evil-define-key 'normal dired-mode-map &quot;N&quot; 'evil-search-previous)
+  (evil-define-key 'normal dired-mode-map &quot;q&quot; 'kill-this-buffer)</code></pre>
+<p>You’ll notice the mark toggling is rebound to <code>v</code> here as well, which gives me a somewhat consistent interface between <code>ranger</code>, Dired, and IBuffer.</p>
+<p>Rebinding <code>n</code> is another important thing here. By default, <code>n</code> and <code>p</code> are used for navigation within Dired, but with <code>hjkl</code> bindings set that’s not really useful. Changing <code>n</code> and <code>N</code> to Evil’s search commands gives us Vim-like searching within the file manager.</p>
+<p>Another thing to note about the above code is that I’ve made each binding an explicit expression. This is useful when you’re just testing new keybindings - if you might want to change them and play around until you find something that works, you want to be able to evaluate each expression independently. If we feel like evaluating these all at the same time, we can just surround them in a <code>(progn)</code> block, or visual select the code and use <code>M-x eval-region</code> to do so.</p>
+<p>One problem with this config is that while <code>l</code> will use <code>dired-find-alternate-file</code>, <code>h</code> will keep the old Dired buffers around. To fix this, we need to write a function that will jump up one directory, and close the old Dired buffer.</p>
+<pre class="sourceCode"><code>(defun my-dired-up-directory ()
+  &quot;Take dired up one directory, but behave like dired-find-alternate-file&quot;
+  (interactive)
+  (let ((old (current-buffer)))
+    (dired-up-directory)
+    (kill-buffer old)
+    ))</code></pre>
+<p>Rebinding <code>h</code> to our new function makes buffer navigation behave much closer to other Vim-like file browsers.</p>
+<pre class="sourceCode"><code>(evil-define-key 'normal dired-mode-map &quot;h&quot; 'my-dired-up-directory)</code></pre>
+<section id="dired-x" class="level3">
+<h3>Dired-x</h3>
+<p>Many incredibly useful Dired features are disabled by default, like <code>dired-jump</code>, which jumps to a Dired buffer in the same place as the current file.</p>
+<p>Adding the following to your init file will enable these <q>advanced</q> features, making Dired a much nicer environment to work in:</p>
+<pre class="sourceCode"><code>(require 'dired-x)</code></pre>
+<p>Some of my Dired-related keybindings, like <code>dired-jump</code> below, require <code>dired-x</code> loaded to work.</p>
+</section>
+</section>
+<section id="evil-leader" class="level2">
+<h2>Evil-Leader</h2>
+<p><a href="https://github.com/cofi/evil-leader">Evil-Leader</a> lets you define a leader key within Evil. I use <code>,</code> as my Evil leader key, where <code>\</code> is reserved as the leader key for Emacs (per Bling’s <a href="http://bling.github.io/blog/2013/10/27/emacs-as-my-leader-vim-survival-guide/">Emacs as my &lt;Leader&gt;</a> post series). As usual, <code>M-x package-install RET evil-leader</code> will install this for you.</p>
+<p>You should <code>require</code> Evil-Leader and run <code>(global-evil-leader-mode)</code> <em>before</em> Evil is loaded, or otherwise it won’t work in buffers like <code>*scratch*</code> and <code>*messages*</code>.</p>
+<p>The first obvious thing to do is to bind <code>w</code> and <code>q</code> to save and quit functions, as many people do in Vim:</p>
+<pre class="sourceCode"><code>(evil-leader/set-leader &quot;,&quot;)
+(evil-leader/set-key &quot;w&quot; 'save-buffer)
+(evil-leader/set-key &quot;q&quot; 'kill-buffer-and-window)</code></pre>
+<p>Some other useful Evil-Leader bindings that work with all the packages we’ve seen so far:</p>
+<pre class="sourceCode"><code>(evil-leader/set-key &quot;h&quot; 'dired-jump)
+(evil-leader/set-key &quot;v&quot; 'split-window-right)
+(evil-leader/set-key &quot;e&quot; 'pp-eval-last-sexp)
+(evil-leader/set-key &quot;,&quot; 'other-window)
+(evil-leader/set-key &quot;b&quot; 'ibuffer)
+(evil-leader/set-key &quot;x&quot; 'helm-M-x)</code></pre>
+<p>With these set, we can eliminate two-key combos in most of our daily editing tasks.</p>
+</section>
+<section id="use-package" class="level2">
+<h2>Use-package</h2>
+<p>As you start collecting Emacs plugins, your startup times will begin to grow. In addition, your ability to deploy on multiple machines (which may not have those plugins installed) and handle dependencies properly will decrease significantly over time.</p>
+<p><a href="https://github.com/jwiegley/use-package">Use-package</a> lets you avoid that problem by automating the bad parts of configuring a package, and establishing deferred bindings so that you can evaluate code after a given package is loaded, and trigger a package loading on the evaluation of arbitrary commands or opening of arbitrary filetypes.</p>
+<p>With it, the top section of my init file looks like this:</p>
+<pre class="sourceCode"><code>(require 'package)
+(package-initialize)
+(setq package-enable-at-startup nil)
+
+(add-to-list 'load-path (concat user-emacs-directory &quot;config&quot;))
+(setq package-archives '((&quot;melpa&quot; . &quot;http://melpa.milkbox.net/packages/&quot;)
+                         (&quot;org&quot; . &quot;http://orgmode.org/elpa/&quot;)
+                         (&quot;gnu&quot; . &quot;http://elpa.gnu.org/packages/&quot;)))
+
+(unless (package-installed-p 'use-package)
+    (package-refresh-contents)
+    (package-install 'use-package))
+(require 'use-package)</code></pre>
+<p>The effect of this is that it automatically downloads and installs <code>use-package</code> from MELPA if it isn’t already present. Then you can use <code>:ensure</code> within a <code>use-package</code> declaration to do the same for packages you would normally install manually.</p>
+<pre class="sourceCode"><code>(use-package evil-leader
+      :commands (evil-leader-mode)
+      :ensure evil-leader
+      :demand evil-leader
+      :init
+      (global-evil-leader-mode)
+      :config
+      (progn
+        (evil-leader/set-leader &quot;,&quot;)
+        ;; bindings from earlier
+        )
+      )</code></pre>
+<p>There’s pretty detailed help in the README on GitHub, but I’ll summarize some of it here:</p>
+<table style="width:35%;">
+<colgroup>
+<col style="width: 16%" />
+<col style="width: 18%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td><strong>argument</strong></td>
+<td><strong>meaning</strong></td>
+</tr>
+<tr class="even">
+<td><code>:ensure</code></td>
+<td>Automatically fetch and install the package if it is not already installed.</td>
+</tr>
+<tr class="odd">
+<td><code>:mode</code></td>
+<td>Defer the loading until a given file extension is found.</td>
+</tr>
+<tr class="even">
+<td><code>:commands</code></td>
+<td>Define the given commands, but don’t load the package until they are called.</td>
+</tr>
+<tr class="odd">
+<td><code>:init</code></td>
+<td>Command to be executed immediatley when the expression is found.</td>
+</tr>
+<tr class="even">
+<td><code>:config</code></td>
+<td>Commands to be executed after the package is loaded.</td>
+</tr>
+</tbody>
+</table>
+<p>The colons are necessary because these are <em>optional, named arguments</em> to an Elisp expression. You could use <code>use-package</code> with nothing but the first argument, although that wouldn’t be very different from using <code>require</code>.</p>
+<p>Also note that you generally want <code>:init</code> and <code>:config</code> to be wrapped in a <code>(progn)</code>, since they only take one command normally.</p>
+<p>Your task for this section is to go get the previous code into Use-Package.</p>
+</section>
+<section id="daemonizing-emacs" class="level2">
+<h2>Daemonizing Emacs</h2>
+<p>I use the following <a href="../blog/2014-07-25-all-your-daemons.html">systemd unit</a> to start an Emacs daemon when my machine boots:</p>
+<pre class="sourceCode"><code>[Unit]
+Description=Emacs daemon
+
+[Service]
+Type=forking
+WorkingDirectory=%h
+ExecStart=/usr/bin/emacs --daemon
+Restart=no
+
+[Install]
+WantedBy=console.target</code></pre>
+<p>Then you can make a simple script like</p>
+<pre class="sourceCode"><code>#!/bin/sh
+/usr/bin/emacsclient -c $@</code></pre>
+<p>And use that to spawn Emacs. It will just attach itself to the server process, allowing for instant startup.</p>
+<p>Non-systemd users can still use <code>emacs --daemon</code> in an init script somewhere for the same effect.</p>
+</section>
+<section id="magit" class="level2">
+<h2>Magit</h2>
+<p>I’ve talked about Magit before. It’s the only Git interface I’ve ever liked for doing actual work, and I found it 3 years after I started using Git.</p>
+<p>Giving it proper <code>jk</code> bindings is simple:</p>
+<pre class="sourceCode"><code>(use-package magit
+  :ensure magit
+  :config
+  (progn
+    (evil-set-initial-state 'magit-mode 'normal)
+    (evil-set-initial-state 'magit-status-mode 'normal)
+    (evil-set-initial-state 'magit-diff-mode 'normal)
+    (evil-set-initial-state 'magit-log-mode 'normal)
+    (evil-define-key 'normal magit-mode-map
+        &quot;j&quot; 'magit-goto-next-section
+        &quot;k&quot; 'magit-goto-previous-section)
+    (evil-define-key 'normal magit-log-mode-map
+        &quot;j&quot; 'magit-goto-next-section
+        &quot;k&quot; 'magit-goto-previous-section)
+    (evil-define-key 'normal magit-diff-mode-map
+        &quot;j&quot; 'magit-goto-next-section
+        &quot;k&quot; 'magit-goto-previous-section)))</code></pre>
+</section>
+<section id="tips-and-tricks" class="level2">
+<h2>Tips and tricks</h2>
+<section id="avoid-using-customize" class="level3">
+<h3>Avoid using customize</h3>
+<p><a href="https://www.gnu.org/software/emacs/manual/html_node/emacs/Easy-Customization.html">Easy customization</a> is a <q>feature</q> where Emacs autogenerates lisp code for you, then places that in a specific file with your graphical customizations.</p>
+<p>Since this breaks customizing Emacs programmatically, I recommend avoiding it in most cases. It’s better to use Customize to browse for useful settings and copy the generated code into your real init files, that way you’re free to modify it.</p>
+</section>
+<section id="ditch-the-terminal" class="level3">
+<h3>Ditch the terminal</h3>
+<p>It’s a little-known fact among hardcore <a href="http://tmux.sourceforge.net/">tmux</a> users that window managers serve a useful purpose besides displaying a web browser. That was how I felt, at least. I used Vim inside the shell, since the graphical version was annoying: it had a different font, clunky menus, and I couldn’t use tmux’s copy-paste functions to move text around.</p>
+<p>If you’re moving to Emacs full-time, be prepared to change that mindset. Emacs is better to use in a graphical window. It will actually play nicely with your graphical environment.</p>
+<p>Typing <code>M-x new-frame</code> opens a new window (in your window manager, not Emacs) that is attached to the same Emacs process. This behavior gives you the best of both worlds: you can use Emacs and split it up however you’d like to, but you can take advantage of the fancy features of your <a href="../software-choice.html#window-manager">window manager</a>.</p>
+<p>Just trust me. Give it a shot. I promise it’s better.</p>
+</section>
+<section id="hide-the-startup-messages" class="level3">
+<h3>Hide the startup messages</h3>
+<pre class="sourceCode"><code>(setq inhibit-splash-screen t
+      inhibit-startup-echo-area-message t
+      inhibit-startup-message t)</code></pre>
+</section>
+<section id="after" class="level3">
+<h3>After</h3>
+<p>Useful when managing package dependencies and controlling load order. Taken from <a href="http://milkbox.net/note/single-file-master-emacs-configuration/">milkbox</a>:</p>
+<pre class="sourceCode"><code>(defmacro after (feature &amp;rest body)
+  &quot;After FEATURE is loaded, evaluate BODY.&quot;
+  (declare (indent defun))
+  `(eval-after-load ,feature
+     '(progn ,@body)))</code></pre>
+</section>
+<section id="better-word-wrapping" class="level3">
+<h3>Better word wrapping</h3>
+<p>Emacs has a long history of being terrible at word wrapping. The situation has improved lately, however, and visual line mode gives you sane word wrapping in almost all cases.</p>
+<pre class="sourceCode"><code>(visual-line-mode 1)</code></pre>
+</section>
+<section id="enforce-trailing-newlines" class="level3">
+<h3>Enforce trailing newlines</h3>
+<p>Some software (e.g., <a href="http://www.newsbeuter.org/">newsbeuter</a>) breaks if you don’t provide a trailing newline.</p>
+<pre class="sourceCode"><code>(setq require-final-newline t)</code></pre>
+</section>
+<section id="hide-the-toolbar" class="level3">
+<h3>Hide the toolbar</h3>
+<p>The toolbar is useful at first, but once you’re familiar with the major mode you’re working in, you might want to disable it to preserve vertical space.</p>
+<pre class="sourceCode"><code>(tool-bar-mode -1)</code></pre>
+</section>
+</section>
+<section id="my-config" class="level2">
+<h2>My config</h2>
+<p>My config files are on <a href="https://github.com/nathantypanski/emacs.d">GitHub</a> if you want to explore where I’ve gone with this. Caution that they don’t follow this post exactly, and they may not work on everyone’s system or be broken due to versioning (I build Emacs from the latest upstream source every couple weeks).</p>
+</section>
+<section class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p><code>evil-emacs-state</code> uses Emacs keybindings exclusively.<a href="#fnref1" class="footnote-back">↩</a></p></li>
+<li id="fn2"><p>Note that not everything in a given buffer is a <em>symbol</em>, even though everything in Elisp is an <em>object</em>. Since you were looking up a function definition, it <em>was</em> a symbol, but symbol refers exclusively to those objects that have names.<a href="#fnref2" class="footnote-back">↩</a></p></li>
+<li id="fn3"><p>Often you’ll see people defining hooks using a <code>lambda</code> construct. This is counterproductive, since once you add a hook to a list it can be complicated to get it out. If you messed anything up with your lambda, you can have a hard time removing it. Giving all of your hooks explicit names lets you remove them easily with <code>remove-hook</code> without restarting your Emacs session.<a href="#fnref3" class="footnote-back">↩</a></p></li>
+<li id="fn4"><p>As of Emacs 24.4, <code>turn-on-eldoc-mode</code> is a deprecated alias for <code>eldoc-mode</code>, which should be used instead.<a href="#fnref4" class="footnote-back">↩</a></p></li>
+<li id="fn5"><p>One reader wrote to me, finding that the code I provide here did not work for him.</p>
+<blockquote>
+<p>I can see the elisp-slime description appearing at the bottom section, but when I press K it seems like it’s running another function. I’ve also tried mapping it to <q>T</q>, but I’m not able to get it working (but by running elisp-slime-nav-describe-elisp-thing-at-point from the M-x, (or : when in evil-normal-mode) it works perfectly)</p>
+</blockquote>
+<p>When he changed it to the following, it worked:</p>
+<pre class="sourceCode"><code>(evil-define-key 'normal emacs-lisp-mode-map &quot;K&quot;
+  'elisp-slime-nav-describe-elisp-thing-at-point)</code></pre>
+<p>So readers who have issue with my code might want to try binding to <code>K</code> per above.<a href="#fnref5" class="footnote-back">↩</a></p></li>
+<li id="fn6"><p>A friend of mine pointed out that his version of Emacs (24.4, I believe) did not incldue a <a href="http://emacslife.com/how-to-read-emacs-lisp.html#sec-6-1">jump-to-source link</a> in his <code>describe-mode</code> help window. While this was <a href="http://lists.gnu.org/archive/html/emacs-bug-tracker/2011-03/msg00147.html">reported as a bug</a> back in 2011, I was fairly certain that it has since been resolved …</p>
+<p>I tried this out and, indeed, the same was true for me: either the feature had been removed, or our Emacs’ packages were built incorrectly (e.g., without the source files). I think it’s possible to fix this by <a href="https://gist.github.com/nathantypanski/e006ff1b2240ecb4901a/revisions">modifying the package source</a> for whatever distro one is using to not strip the <code>.el.gz</code> files, but trying this on my own system has thus far not solved the issue.<a href="#fnref6" class="footnote-back">↩</a></p></li>
+<li id="fn7"><p>I got errors about the <code>R</code> in <code>R E T</code> not being a valid prefix key when I was testing this. YMMV.<a href="#fnref7" class="footnote-back">↩</a></p></li>
+<li id="fn8"><p>ibuffer does not refresh itself by default. You need to call <code>ibuffer-update</code> for new buffers to be shown.<a href="#fnref8" class="footnote-back">↩</a></p></li>
+</ol>
+</section>
+
+        </div>
+        <div id="footer">
+            <p>
+  Content © 2012-2021 Nathan Typanski
+  and licensed under a <br /><a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.
+  Opinions are my own and not the views of my employer.
+  <a href="../website.html">About this site.</a>
+<!-- p-->
+<p>
+  <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/80x15.png" /></a>
+</p>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-37825924-1', 'nathantypanski.com');
+  ga('send', 'pageview');
+
+</script>
+
+
+        </div>
+    </body>
+</html>
