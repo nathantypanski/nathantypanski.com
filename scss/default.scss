@@ -64,7 +64,7 @@ $inline_code_font_size: 10pt;
   @if $point == laptop {
      @media (min-width: $body_width + $sidebar_width * 3.8) { @content ; }
   }
-  @else if $point == tablet {
+  @else if $point == mobileonly {
     @media (min-width: $body_width + $sidebar_width ) { @content ; }
   }
 }
@@ -76,6 +76,7 @@ $inline_code_font_size: 10pt;
     font-family: 'Lora', serif;
     font-style: inherit;
     font-size: 100%;
+    font: inherit;
     border: none;
     padding: 0;
     margin: 0;
@@ -98,23 +99,22 @@ body {
         right: auto;
     }
     width: 90%;
-    @include breakpoint(tablet) {
-        width: $body_width;
-    }
-    @include breakpoint(laptop) {
-        width: $body_width;
-    }
     p {
         margin: {
             top: $paragraph_top_margin;
             bottom: $paragraph_bottom_margin;
         }
     }
+    @include breakpoint(mobileonly) {
+        width: $body_width;
+    }
+    @include breakpoint(laptop) {
+        width: $body_width;
+    }
 }
 
 
 h1, h2, h3, h4, h5, h6 {
-    text-align: center;
     font: {
         family: $title_family;
         weight: normal;
@@ -128,7 +128,7 @@ h1, h2, h3, h4, h5, h6 {
         top: $h_top_margin;
         bottom: $h_bottom_margin;
     }
-    @include breakpoint(tablet) {
+    @include breakpoint(mobileonly) {
         text-align: left;
         margin: {
             left: $header_offset;
@@ -276,7 +276,7 @@ div {
 
 div#logo {
     text-align: center;
-    @include breakpoint(tablet) {
+    @include breakpoint(mobileonly) {
         text-align: left;
         float: left;
         margin: {
@@ -332,7 +332,7 @@ div#logo {
         }
         list-style-type: lower;
     }
-    @include breakpoint(tablet) {
+    @include breakpoint(mobileonly) {
         width: $sidebar_width;
         float: right;
         margin: {
@@ -364,7 +364,7 @@ div#logo {
 div#header {
     margin: 0;
     position: relative;
-    @include breakpoint(tablet) {
+    @include breakpoint(mobileonly) {
     }
     @include breakpoint(laptop) {
         width: $sidebar_width;
@@ -398,7 +398,7 @@ div#navigation {
         color: $icon_color;
         margin-right: 2px;
     }
-    @include breakpoint(tablet) {
+    @include breakpoint(mobileonly) {
         text-align: right;
         li {
             list-style: none;
