@@ -3,3 +3,7 @@ packages:
 - .
 extra-deps: []
 resolver: lts-12.9
+nix:
+  enable: true
+#  packages: [sass, zlib.dev]
+  shell-file: shell.nix
