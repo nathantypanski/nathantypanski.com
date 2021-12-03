@@ -1,7 +1,10 @@
 {-# LANGUAGE OverloadedStrings #-}
 import Data.Monoid (mappend, (<>))
 import Hakyll
+import Data.Text (Text)
+import Text.Pandoc as Pandoc
 import Text.Pandoc.Options as Pandoc.Options
+import Text.Pandoc.Templates as Pandoc.Templates
 
 pandocWriterOptions :: Pandoc.Options.WriterOptions
 pandocWriterOptions = defaultHakyllWriterOptions
@@ -29,10 +32,15 @@ pandocReaderOptions = defaultHakyllReaderOptions
       defaultExtensions = readerExtensions defaultHakyllReaderOptions
       ext = defaultExtensions `mappend` myExtensions
 
+tocTemplate :: Pandoc.Templates.Template Text
+tocTemplate = either error id $ either (error . show) id $
+    Pandoc.runPure $ Pandoc.runWithDefaultPartials $
+    Pandoc.compileTemplate "" "$if(toc)$<div id=\"toc\"><h2>Contents</h2>\n$toc$ </div>\n$endif$$body$"
+
 tocWriterOptions :: Pandoc.Options.WriterOptions
 tocWriterOptions = pandocWriterOptions
     { writerTableOfContents = True
-    , writerTemplate = Just "$if(toc)$<div id=\"toc\"><h2>Contents</h2>\n$toc$ </div>\n$endif$$body$"
+    , writerTemplate = Just tocTemplate
     , writerHTMLMathMethod = MathJax ""
     }
 
