@@ -4,7 +4,7 @@ tags: JWT, JWS, evil
 math: true
 ----
 
-JWS is the kind of thing where you could be forgiven for thinking "hey, everyone's using this, so it must be good!" JWTs are built on JWS, and lots of people use those. JWS is standardized by the IETF in [RFC7515](https://datatracker.ietf.org/doc/html/rfc7515). If you are investigating ways to sign REST API requests with JSON bodies, JWS is probably one of the first things you'll look at. I'm hoping that by the time you're done with this post, you'll do something else. If you just want to know what that "something else" is, skip to [how to sign REST API requests][How to sign REST API requests].
+JWS is the kind of thing where you could be forgiven for thinking "hey, everyone's using this, so it must be good!" JWTs are built on JWS, and lots of people use those. JWS is standardized by the IETF in [RFC7515](https://datatracker.ietf.org/doc/html/rfc7515). If you are investigating ways to sign REST API requests with JSON bodies, JWS is probably one of the first things you'll look at. I'm hoping that by the time you're done with this post, you'll do something else. If you just want to know what that "something else" is, skip to [how to sign REST API requests][A better way to sign JSON].
 
 In this post, I will show how the JWS standard encourages implementations to structure their validation logic in an insecure manner. Thus JWTs, being built upon a rotten foundation, are themselves insecure---or at least very difficult to implement securely. Then I will provide suggestions on alternatives to JWS.
 
