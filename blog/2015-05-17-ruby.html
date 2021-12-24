@@ -47,11 +47,12 @@
         <div id="metadata">
             <ul class="meta">
             
-                <li>tags: <em><a href="../tags/Ruby.html">Ruby</a>, <a href="../tags/Python.html">Python</a></em></li>
+                <li>tags: <em><a title="All pages tagged 'Ruby'." href="../tags/Ruby.html">Ruby</a>, <a title="All pages tagged 'Python'." href="../tags/Python.html">Python</a></em></li>
             
             
             <li>posted: <em> May 17, 2015 </em></li>
-            <li>modified: <em> December  3, 2016 </em></li>
+            <li>modified: <em> December 03, 2016
+ </em></li>
             </ul>
         </div>
         <div id="content">
@@ -59,14 +60,17 @@
             <div class="info">
     <!--
     <div class="snippets">
-        <i class="fa fa-calendar"></i> May 17, 2015 <i class="fa fa-cut" December  3, 2016></i> December  3, 2016
+        <i class="fa fa-calendar"></i> May 17, 2015 <i class="fa fa-cut" December 03, 2016
+></i> December 03, 2016
+
     </div>
     -->
     
 </div>
 <div id="toc"><h2>Contents</h2>
 <ul>
-<li><a href="#toy-script-comparisons">Toy script comparisons</a><ul>
+<li><a href="#toy-script-comparisons">Toy script comparisons</a>
+<ul>
 <li><a href="#running-sum">Running sum</a></li>
 <li><a href="#oop">OOP</a></li>
 <li><a href="#hidden">Hidden</a></li>
@@ -82,92 +86,92 @@
 <section id="running-sum" class="level3">
 <h3>Running sum</h3>
 <p>In Ruby, the tendency is to iterate over a number of variables with the <code>#each</code> method, and then you pass in a block that gets called on each of the elements. What’s immediately noticeable here is that Ruby blocks are way more powerful than Python’s anonymous callalbles (<code>lambdas</code>).</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode Ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">#!/usr/bin/env ruby</span></a>
-<a class="sourceLine" id="cb1-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb1-3" data-line-number="3">running_sum = []</a>
-<a class="sourceLine" id="cb1-4" data-line-number="4">args = []</a>
-<a class="sourceLine" id="cb1-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb1-6" data-line-number="6">[<span class="dv">1</span>,<span class="dv">5</span>,<span class="dv">7</span>].each <span class="kw">do</span> |x|</a>
-<a class="sourceLine" id="cb1-7" data-line-number="7">  args &lt;&lt; x</a>
-<a class="sourceLine" id="cb1-8" data-line-number="8">  <span class="kw">if</span> running_sum.size &gt; <span class="dv">0</span> <span class="kw">then</span></a>
-<a class="sourceLine" id="cb1-9" data-line-number="9">    running_sum &lt;&lt; running_sum.last + x</a>
-<a class="sourceLine" id="cb1-10" data-line-number="10">  <span class="kw">else</span></a>
-<a class="sourceLine" id="cb1-11" data-line-number="11">    running_sum &lt;&lt; x</a>
-<a class="sourceLine" id="cb1-12" data-line-number="12">  <span class="kw">end</span></a>
-<a class="sourceLine" id="cb1-13" data-line-number="13"><span class="kw">end</span></a>
-<a class="sourceLine" id="cb1-14" data-line-number="14"></a>
-<a class="sourceLine" id="cb1-15" data-line-number="15">puts <span class="st">&quot;Running sum: </span><span class="ot">#{</span>running_sum<span class="ot">}</span><span class="st"> from </span><span class="ot">#{</span>args<span class="ot">}</span><span class="st">.&quot;</span></a></code></pre></div>
-<div class="sourceCode" id="cb2"><pre class="sourceCode Python"><code class="sourceCode python"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="co">#!/usr/bin/env python3</span></a>
-<a class="sourceLine" id="cb2-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb2-3" data-line-number="3">running_sum <span class="op">=</span> []</a>
-<a class="sourceLine" id="cb2-4" data-line-number="4">args <span class="op">=</span> []</a>
-<a class="sourceLine" id="cb2-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb2-6" data-line-number="6"><span class="cf">for</span> n <span class="kw">in</span> [<span class="dv">1</span>, <span class="dv">5</span>, <span class="dv">7</span>]:</a>
-<a class="sourceLine" id="cb2-7" data-line-number="7">    args.append(args)</a>
-<a class="sourceLine" id="cb2-8" data-line-number="8">    <span class="cf">if</span> running_sum:</a>
-<a class="sourceLine" id="cb2-9" data-line-number="9">        running_sum.append(running_sum[<span class="op">-</span><span class="dv">1</span>] <span class="op">+</span> n)</a>
-<a class="sourceLine" id="cb2-10" data-line-number="10">    <span class="cf">else</span>:</a>
-<a class="sourceLine" id="cb2-11" data-line-number="11">        running_sum.append(n)</a>
-<a class="sourceLine" id="cb2-12" data-line-number="12"></a>
-<a class="sourceLine" id="cb2-13" data-line-number="13"><span class="bu">print</span>(<span class="st">&quot;Running sum: </span><span class="sc">{}</span><span class="st"> from </span><span class="sc">{}</span><span class="st">.&quot;</span>.<span class="bu">format</span>(running_sum, args))</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode Ruby"><code class="sourceCode ruby"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="cf">#!/usr/bin/env ruby</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>running_sum <span class="kw">=</span> <span class="kw">[]</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>args <span class="kw">=</span> <span class="kw">[]</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="kw">[</span><span class="dv">1</span>,<span class="dv">5</span>,<span class="dv">7</span><span class="kw">]</span><span class="at">.each</span> <span class="cf">do</span> <span class="kw">|</span>x<span class="kw">|</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  args <span class="kw">&lt;&lt;</span> x</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> running_sum<span class="at">.size</span> <span class="kw">&gt;</span> <span class="dv">0</span> <span class="cf">then</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    running_sum <span class="kw">&lt;&lt;</span> running_sum<span class="at">.last</span> <span class="kw">+</span> x</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="cf">else</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    running_sum <span class="kw">&lt;&lt;</span> x</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="cf">end</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="cf">end</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="fu">puts</span> <span class="st">&quot;Running sum: </span><span class="sc">#{</span>running_sum<span class="sc">}</span><span class="st"> from </span><span class="sc">#{</span>args<span class="sc">}</span><span class="st">.&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode Python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/usr/bin/env python3</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>running_sum <span class="op">=</span> []</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>args <span class="op">=</span> []</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> n <span class="kw">in</span> [<span class="dv">1</span>, <span class="dv">5</span>, <span class="dv">7</span>]:</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    args.append(args)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> running_sum:</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>        running_sum.append(running_sum[<span class="op">-</span><span class="dv">1</span>] <span class="op">+</span> n)</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>        running_sum.append(n)</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;Running sum: </span><span class="sc">{}</span><span class="st"> from </span><span class="sc">{}</span><span class="st">.&quot;</span>.<span class="bu">format</span>(running_sum, args))</span></code></pre></div>
 <p>At face value, the two aren’t very different, but these examples illustrate a fundamental difference between the attitudes toward iteration: Python uses <code>for</code> loops for everything, but Rubyists will do everything in their power to avoid using them.</p>
 </section>
 <section id="oop" class="level3">
 <h3>OOP</h3>
 <p>Ruby classes seem to be both less verbose and syntactically simpler than Python classes. Both languages have a <q>message passing</q> way of calling instance methods: in Python, with <code>getattr(object, name)</code> and in Ruby via <code>#send()</code>. Mixins, via <code>modules</code>, are the coolest advantage Ruby seems to have over Python, where the closest equivalent is boring old implementation inheritance.</p>
 <p>Both languages have an equivalent for getters and setters. In Python, this is done via a decorator, but in Ruby it seems to be a language builtin.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode Ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw">#!/usr/bin/env ruby</span></a>
-<a class="sourceLine" id="cb3-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="kw">module</span> <span class="dt">Nameable</span></a>
-<a class="sourceLine" id="cb3-4" data-line-number="4">  <span class="kw">def</span> name=(name)</a>
-<a class="sourceLine" id="cb3-5" data-line-number="5">    puts <span class="st">&quot;changed name to </span><span class="ot">#{</span>name<span class="ot">}</span><span class="st">&quot;</span></a>
-<a class="sourceLine" id="cb3-6" data-line-number="6">    <span class="ot">@name</span> = name</a>
-<a class="sourceLine" id="cb3-7" data-line-number="7">  <span class="kw">end</span></a>
-<a class="sourceLine" id="cb3-8" data-line-number="8"></a>
-<a class="sourceLine" id="cb3-9" data-line-number="9">  <span class="kw">def</span> name</a>
-<a class="sourceLine" id="cb3-10" data-line-number="10">    <span class="ot">@name</span></a>
-<a class="sourceLine" id="cb3-11" data-line-number="11">  <span class="kw">end</span></a>
-<a class="sourceLine" id="cb3-12" data-line-number="12"><span class="kw">end</span></a>
-<a class="sourceLine" id="cb3-13" data-line-number="13"></a>
-<a class="sourceLine" id="cb3-14" data-line-number="14"><span class="kw">class</span> <span class="dt">Dog</span></a>
-<a class="sourceLine" id="cb3-15" data-line-number="15">  include <span class="dt">Nameable</span></a>
-<a class="sourceLine" id="cb3-16" data-line-number="16"></a>
-<a class="sourceLine" id="cb3-17" data-line-number="17">  <span class="kw">def</span> initialize(name)</a>
-<a class="sourceLine" id="cb3-18" data-line-number="18">    <span class="ot">@name</span> = name</a>
-<a class="sourceLine" id="cb3-19" data-line-number="19">  <span class="kw">end</span></a>
-<a class="sourceLine" id="cb3-20" data-line-number="20"></a>
-<a class="sourceLine" id="cb3-21" data-line-number="21">  <span class="kw">def</span> bark</a>
-<a class="sourceLine" id="cb3-22" data-line-number="22">    puts <span class="st">'Woof!'</span></a>
-<a class="sourceLine" id="cb3-23" data-line-number="23">  <span class="kw">end</span></a>
-<a class="sourceLine" id="cb3-24" data-line-number="24"><span class="kw">end</span></a>
-<a class="sourceLine" id="cb3-25" data-line-number="25"></a>
-<a class="sourceLine" id="cb3-26" data-line-number="26">fido = <span class="dt">Dog</span>.new(<span class="st">'Fido'</span>)</a>
-<a class="sourceLine" id="cb3-27" data-line-number="27">fido.send(<span class="st">'bark'</span>)</a>
-<a class="sourceLine" id="cb3-28" data-line-number="28">fido.name = <span class="st">'Cheese'</span></a>
-<a class="sourceLine" id="cb3-29" data-line-number="29">puts fido.name</a></code></pre></div>
-<div class="sourceCode" id="cb4"><pre class="sourceCode Python"><code class="sourceCode python"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="co">#!/usr/bin/env python3</span></a>
-<a class="sourceLine" id="cb4-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb4-3" data-line-number="3"><span class="kw">class</span> Nameable(<span class="bu">object</span>):</a>
-<a class="sourceLine" id="cb4-4" data-line-number="4">    <span class="at">@property</span></a>
-<a class="sourceLine" id="cb4-5" data-line-number="5">    <span class="kw">def</span> name(<span class="va">self</span>):</a>
-<a class="sourceLine" id="cb4-6" data-line-number="6">        <span class="cf">return</span> <span class="va">self</span>._name</a>
-<a class="sourceLine" id="cb4-7" data-line-number="7"></a>
-<a class="sourceLine" id="cb4-8" data-line-number="8">    <span class="at">@name.setter</span></a>
-<a class="sourceLine" id="cb4-9" data-line-number="9">    <span class="kw">def</span> name(<span class="va">self</span>, value):</a>
-<a class="sourceLine" id="cb4-10" data-line-number="10">        <span class="bu">print</span>(<span class="st">'Changed name to </span><span class="sc">{}</span><span class="st">'</span>.<span class="bu">format</span>(value))</a>
-<a class="sourceLine" id="cb4-11" data-line-number="11">        <span class="va">self</span>._name <span class="op">=</span> value</a>
-<a class="sourceLine" id="cb4-12" data-line-number="12"></a>
-<a class="sourceLine" id="cb4-13" data-line-number="13"><span class="kw">class</span> Dog(Nameable):</a>
-<a class="sourceLine" id="cb4-14" data-line-number="14">    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, name):</a>
-<a class="sourceLine" id="cb4-15" data-line-number="15">        <span class="va">self</span>._name <span class="op">=</span> name</a>
-<a class="sourceLine" id="cb4-16" data-line-number="16"></a>
-<a class="sourceLine" id="cb4-17" data-line-number="17">    <span class="kw">def</span> bark(<span class="va">self</span>):</a>
-<a class="sourceLine" id="cb4-18" data-line-number="18">        <span class="bu">print</span>(<span class="st">&quot;Woof!&quot;</span>)</a>
-<a class="sourceLine" id="cb4-19" data-line-number="19"></a>
-<a class="sourceLine" id="cb4-20" data-line-number="20">fido <span class="op">=</span> Dog(<span class="st">'Fido'</span>)</a>
-<a class="sourceLine" id="cb4-21" data-line-number="21">fido.bark()</a>
-<a class="sourceLine" id="cb4-22" data-line-number="22">fido.name <span class="op">=</span> <span class="st">'Cheese'</span></a>
-<a class="sourceLine" id="cb4-23" data-line-number="23"><span class="bu">print</span>(fido.name)</a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode Ruby"><code class="sourceCode ruby"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="cf">#!/usr/bin/env ruby</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="cf">module</span> <span class="dt">Nameable</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">def</span> name<span class="kw">=</span>(name)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">puts</span> <span class="st">&quot;changed name to </span><span class="sc">#{</span>name<span class="sc">}</span><span class="st">&quot;</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="ot">@name</span> <span class="kw">=</span> name</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="cf">end</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  <span class="cf">def</span> name</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    <span class="ot">@name</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>  <span class="cf">end</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="cf">end</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="cf">class</span> <span class="dt">Dog</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">include</span> <span class="dt">Nameable</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>  <span class="cf">def</span> initialize(name)</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>    <span class="ot">@name</span> <span class="kw">=</span> name</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>  <span class="cf">end</span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>  <span class="cf">def</span> bark</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>    <span class="fu">puts</span> <span class="vs">'Woof!'</span></span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>  <span class="cf">end</span></span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a><span class="cf">end</span></span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>fido <span class="kw">=</span> <span class="dt">Dog</span><span class="at">.new</span>(<span class="vs">'Fido'</span>)</span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>fido<span class="at">.send</span>(<span class="vs">'bark'</span>)</span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>fido<span class="at">.name</span> <span class="kw">=</span> <span class="vs">'Cheese'</span></span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a><span class="fu">puts</span> fido<span class="at">.name</span></span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode Python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/usr/bin/env python3</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Nameable(<span class="bu">object</span>):</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">@property</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> name(<span class="va">self</span>):</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">self</span>._name</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">@name.setter</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> name(<span class="va">self</span>, value):</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">'Changed name to </span><span class="sc">{}</span><span class="st">'</span>.<span class="bu">format</span>(value))</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>._name <span class="op">=</span> value</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Dog(Nameable):</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, name):</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>._name <span class="op">=</span> name</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> bark(<span class="va">self</span>):</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">&quot;Woof!&quot;</span>)</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>fido <span class="op">=</span> Dog(<span class="st">'Fido'</span>)</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>fido.bark()</span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>fido.name <span class="op">=</span> <span class="st">'Cheese'</span></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(fido.name)</span></code></pre></div>
 </section>
 <section id="hidden" class="level3">
 <h3>Hidden</h3>
@@ -176,64 +180,64 @@
 <pre class="sourceCode"><code>'hidden.rb':'xdotool windowactivate 0xc003ec windowraise 0xc003ec'
 '[nathan@dionysus][~/dotfiles]%':'xdotool windowactivate 0xc0085c windowraise 0xc0085c'</code></pre>
 <p>Which obviously isn’t sufficient for easily raising the windows. A potential fix to this is building a wrapper for <a href="http://tools.suckless.org/dmenu/">dmenu</a> that lets you easily raise hidden windows.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode Ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw">#!/usr/bin/env ruby</span></a>
-<a class="sourceLine" id="cb6-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb6-3" data-line-number="3">hidden_windows = <span class="st">`hidden -c`</span>.split(<span class="ot">/\n/</span>)</a>
-<a class="sourceLine" id="cb6-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb6-5" data-line-number="5">map = {}</a>
-<a class="sourceLine" id="cb6-6" data-line-number="6">hidden_windows.each <span class="kw">do</span> |line|</a>
-<a class="sourceLine" id="cb6-7" data-line-number="7">    match = <span class="ot">/'(.*)':'(.*)'/</span>.match(line)</a>
-<a class="sourceLine" id="cb6-8" data-line-number="8">    key = match[<span class="dv">1</span>]</a>
-<a class="sourceLine" id="cb6-9" data-line-number="9">    val = match[<span class="dv">2</span>]</a>
-<a class="sourceLine" id="cb6-10" data-line-number="10">    <span class="kw">while</span> map.has_key? key</a>
-<a class="sourceLine" id="cb6-11" data-line-number="11">        key = key + <span class="ch">'*'</span></a>
-<a class="sourceLine" id="cb6-12" data-line-number="12">    <span class="kw">end</span></a>
-<a class="sourceLine" id="cb6-13" data-line-number="13">    map[key] = val</a>
-<a class="sourceLine" id="cb6-14" data-line-number="14"><span class="kw">end</span></a>
-<a class="sourceLine" id="cb6-15" data-line-number="15"></a>
-<a class="sourceLine" id="cb6-16" data-line-number="16">choice = <span class="dv">nil</span></a>
-<a class="sourceLine" id="cb6-17" data-line-number="17"></a>
-<a class="sourceLine" id="cb6-18" data-line-number="18"><span class="dt">IO</span>.popen(<span class="st">'dmenu'</span>, <span class="st">'r+'</span>) <span class="kw">do</span> |dmenu|</a>
-<a class="sourceLine" id="cb6-19" data-line-number="19">    map.keys.each <span class="kw">do</span> |name|</a>
-<a class="sourceLine" id="cb6-20" data-line-number="20">        dmenu.write(name)</a>
-<a class="sourceLine" id="cb6-21" data-line-number="21">        dmenu.write(<span class="st">&quot;\n&quot;</span>)</a>
-<a class="sourceLine" id="cb6-22" data-line-number="22">    <span class="kw">end</span></a>
-<a class="sourceLine" id="cb6-23" data-line-number="23">    dmenu.close_write</a>
-<a class="sourceLine" id="cb6-24" data-line-number="24">    choice = dmenu.gets.rstrip</a>
-<a class="sourceLine" id="cb6-25" data-line-number="25"><span class="kw">end</span></a>
-<a class="sourceLine" id="cb6-26" data-line-number="26"></a>
-<a class="sourceLine" id="cb6-27" data-line-number="27"><span class="dt">IO</span>.popen(map[choice])</a></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode Ruby"><code class="sourceCode ruby"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="cf">#!/usr/bin/env ruby</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>hidden_windows <span class="kw">=</span> <span class="in">`hidden -c`</span><span class="at">.split</span>(<span class="ss">/\n/</span>)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>map <span class="kw">=</span> <span class="kw">{}</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>hidden_windows<span class="at">.each</span> <span class="cf">do</span> <span class="kw">|</span>line<span class="kw">|</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    match <span class="kw">=</span> <span class="ss">/'(.*)':'(.*)'/</span><span class="at">.match</span>(line)</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    key <span class="kw">=</span> match<span class="kw">[</span><span class="dv">1</span><span class="kw">]</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    val <span class="kw">=</span> match<span class="kw">[</span><span class="dv">2</span><span class="kw">]</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span> map<span class="at">.has_key?</span> key</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>        key <span class="kw">=</span> key <span class="kw">+</span> <span class="ch">'*'</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>    map<span class="kw">[</span>key<span class="kw">]</span> <span class="kw">=</span> val</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="cf">end</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>choice <span class="kw">=</span> <span class="dv">nil</span></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a><span class="cn">IO</span><span class="at">.popen</span>(<span class="vs">'dmenu'</span>, <span class="vs">'r+'</span>) <span class="cf">do</span> <span class="kw">|</span>dmenu<span class="kw">|</span></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>    map<span class="at">.keys.each</span> <span class="cf">do</span> <span class="kw">|</span>name<span class="kw">|</span></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>        dmenu<span class="at">.write</span>(name)</span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>        dmenu<span class="at">.write</span>(<span class="st">&quot;\n&quot;</span>)</span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>    dmenu<span class="at">.close_write</span></span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>    choice <span class="kw">=</span> dmenu<span class="at">.gets.rstrip</span></span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a><span class="cf">end</span></span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a><span class="cn">IO</span><span class="at">.popen</span>(map<span class="kw">[</span>choice<span class="kw">]</span>)</span></code></pre></div>
 <p>In Python:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode Python"><code class="sourceCode python"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="co">#!/usr/bin/env python3</span></a>
-<a class="sourceLine" id="cb7-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb7-3" data-line-number="3"><span class="im">import</span> subprocess</a>
-<a class="sourceLine" id="cb7-4" data-line-number="4"><span class="im">import</span> re</a>
-<a class="sourceLine" id="cb7-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb7-6" data-line-number="6"><span class="kw">def</span> main():</a>
-<a class="sourceLine" id="cb7-7" data-line-number="7">    hidden_windows <span class="op">=</span> subprocess.check_output([<span class="st">'hidden'</span>, <span class="st">'-c'</span>])</a>
-<a class="sourceLine" id="cb7-8" data-line-number="8">    hidden_windows <span class="op">=</span> hidden_windows.splitlines()</a>
-<a class="sourceLine" id="cb7-9" data-line-number="9">    hidden_map <span class="op">=</span> {}</a>
-<a class="sourceLine" id="cb7-10" data-line-number="10">    search <span class="op">=</span> re.<span class="bu">compile</span>(<span class="st">&quot;^'(.*)':'(.*)'$&quot;</span>)</a>
-<a class="sourceLine" id="cb7-11" data-line-number="11">    <span class="cf">for</span> window <span class="kw">in</span> hidden_windows:</a>
-<a class="sourceLine" id="cb7-12" data-line-number="12">        window <span class="op">=</span> window.decode(<span class="st">'utf-8'</span>)</a>
-<a class="sourceLine" id="cb7-13" data-line-number="13">        match <span class="op">=</span> search.match(<span class="bu">str</span>(window))</a>
-<a class="sourceLine" id="cb7-14" data-line-number="14">        name, tool <span class="op">=</span> match.group(<span class="dv">1</span>), match.group(<span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb7-15" data-line-number="15">        <span class="cf">while</span> name <span class="kw">in</span> hidden_map:</a>
-<a class="sourceLine" id="cb7-16" data-line-number="16">            name <span class="op">+=</span> <span class="st">'*'</span></a>
-<a class="sourceLine" id="cb7-17" data-line-number="17">        hidden_map[name] <span class="op">=</span> tool</a>
-<a class="sourceLine" id="cb7-18" data-line-number="18">    dmenu <span class="op">=</span> subprocess.check_output([<span class="st">'dmenu'</span>],</a>
-<a class="sourceLine" id="cb7-19" data-line-number="19">            <span class="bu">input</span><span class="op">=</span><span class="bu">bytes</span>(<span class="st">'</span><span class="ch">\n</span><span class="st">'</span>.join(hidden_map.keys()), encoding<span class="op">=</span><span class="st">'utf-8'</span>))</a>
-<a class="sourceLine" id="cb7-20" data-line-number="20">    subprocess.call(hidden_map[dmenu.rstrip().decode(<span class="st">'utf-8'</span>)], shell<span class="op">=</span><span class="va">True</span>)</a>
-<a class="sourceLine" id="cb7-21" data-line-number="21"></a>
-<a class="sourceLine" id="cb7-22" data-line-number="22"></a>
-<a class="sourceLine" id="cb7-23" data-line-number="23"><span class="cf">if</span> <span class="va">__name__</span> <span class="op">==</span> <span class="st">'__main__'</span>:</a>
-<a class="sourceLine" id="cb7-24" data-line-number="24">    main()</a></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode Python"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/usr/bin/env python3</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> subprocess</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> re</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> main():</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    hidden_windows <span class="op">=</span> subprocess.check_output([<span class="st">'hidden'</span>, <span class="st">'-c'</span>])</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    hidden_windows <span class="op">=</span> hidden_windows.splitlines()</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    hidden_map <span class="op">=</span> {}</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    search <span class="op">=</span> re.<span class="bu">compile</span>(<span class="st">&quot;^'(.*)':'(.*)'$&quot;</span>)</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> window <span class="kw">in</span> hidden_windows:</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>        window <span class="op">=</span> window.decode(<span class="st">'utf-8'</span>)</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>        match <span class="op">=</span> search.match(<span class="bu">str</span>(window))</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>        name, tool <span class="op">=</span> match.group(<span class="dv">1</span>), match.group(<span class="dv">2</span>)</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>        <span class="cf">while</span> name <span class="kw">in</span> hidden_map:</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>            name <span class="op">+=</span> <span class="st">'*'</span></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>        hidden_map[name] <span class="op">=</span> tool</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>    dmenu <span class="op">=</span> subprocess.check_output([<span class="st">'dmenu'</span>],</span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>            <span class="bu">input</span><span class="op">=</span><span class="bu">bytes</span>(<span class="st">'</span><span class="ch">\n</span><span class="st">'</span>.join(hidden_map.keys()), encoding<span class="op">=</span><span class="st">'utf-8'</span>))</span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>    subprocess.call(hidden_map[dmenu.rstrip().decode(<span class="st">'utf-8'</span>)], shell<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="va">__name__</span> <span class="op">==</span> <span class="st">'__main__'</span>:</span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>    main()</span></code></pre></div>
 <p>The advantages Ruby has here are its simpler means of spawning and interacting with subprocesses, and the far prettier Regex syntax, both of which are inspired by Perl. Python, by contrast, has a clunkier regex engine that requires an import, a call to <code>re.compile</code>, and another call to <code>regex.match(...)</code> in order to use it.</p>
 <p>The other thing you notice here is the <code>bytes</code> handling. Subprocess output returns <code>bytes</code> objects in Python, and they have to be decoded into <code>utf-8</code> before I can do much with them.</p>
 <p>This results in a far more verbose Python solution.</p>
 <p>It’s also worth mentioning that the subprocess interface in Ruby is handled through an RAII-style block. In Python’s case, it looks like <a href="https://bugs.python.org/issue10554"><code>Popen</code> objects can be used in <code>with</code> statements</a>:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode Python"><code class="sourceCode python"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="cf">with</span> Popen([<span class="st">&quot;ifconfig&quot;</span>], stdout<span class="op">=</span>PIPE) <span class="im">as</span> proc:</a>
-<a class="sourceLine" id="cb8-2" data-line-number="2">    log.write(proc.stdout.read())</a></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode Python"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> Popen([<span class="st">&quot;ifconfig&quot;</span>], stdout<span class="op">=</span>PIPE) <span class="im">as</span> proc:</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    log.write(proc.stdout.read())</span></code></pre></div>
 <p>but that leaves the clunky <code>Popen</code> interface to worry about. Personally I can never remember what <code>stdout=PIPE</code> actually does, or which of those given modes I should be using for my process. In Ruby, I get to use <a href="http://man7.org/linux/man-pages/man3/fopen.3.html"><code>fopen(3)</code> arguments</a> to describe how I’d like to handle fds on the subprocess. That’s an interface I’m already familiar with, and it’s intutitive.</p>
 </section>
 </section>

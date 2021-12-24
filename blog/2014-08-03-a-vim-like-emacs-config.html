@@ -47,11 +47,12 @@
         <div id="metadata">
             <ul class="meta">
             
-                <li>tags: <em><a href="../tags/Emacs.html">Emacs</a>, <a href="../tags/software.html">software</a>, <a href="../tags/Vim.html">Vim</a></em></li>
+                <li>tags: <em><a title="All pages tagged 'Emacs'." href="../tags/Emacs.html">Emacs</a>, <a title="All pages tagged 'software'." href="../tags/software.html">software</a>, <a title="All pages tagged 'Vim'." href="../tags/Vim.html">Vim</a></em></li>
             
             
             <li>posted: <em> August  3, 2014 </em></li>
-            <li>modified: <em> November  3, 2016 </em></li>
+            <li>modified: <em> March 22, 2015
+ </em></li>
             </ul>
         </div>
         <div id="content">
@@ -59,7 +60,9 @@
             <div class="info">
     <!--
     <div class="snippets">
-        <i class="fa fa-calendar"></i> August  3, 2014 <i class="fa fa-cut" November  3, 2016></i> November  3, 2016
+        <i class="fa fa-calendar"></i> August  3, 2014 <i class="fa fa-cut" March 22, 2015
+></i> March 22, 2015
+
     </div>
     -->
     
@@ -67,29 +70,34 @@
 <div id="toc"><h2>Contents</h2>
 <ul>
 <li><a href="#first-some-terminology">First, some terminology</a></li>
-<li><a href="#package-archives">Package archives</a><ul>
+<li><a href="#package-archives">Package archives</a>
+<ul>
 <li><a href="#installing-evil">Installing Evil</a></li>
 </ul></li>
 <li><a href="#modes">Modes</a></li>
-<li><a href="#binding-keys">Binding keys</a><ul>
+<li><a href="#binding-keys">Binding keys</a>
+<ul>
 <li><a href="#quoting">Quoting</a></li>
 <li><a href="#maps-and-keys">Maps and keys</a></li>
 </ul></li>
 <li><a href="#lisp-navigation">Lisp navigation</a></li>
-<li><a href="#managing-buffers">Managing buffers</a><ul>
+<li><a href="#managing-buffers">Managing buffers</a>
+<ul>
 <li><a href="#stealing-ibuffers-keymap">Stealing IBuffer’s keymap</a></li>
 <li><a href="#rebinding">Rebinding</a></li>
 <li><a href="#handling-lots-of-buffers">Handling lots of buffers</a></li>
 </ul></li>
 <li><a href="#separating-your-init-files">Separating your init files</a></li>
-<li><a href="#dired">Dired</a><ul>
+<li><a href="#dired">Dired</a>
+<ul>
 <li><a href="#dired-x">Dired-x</a></li>
 </ul></li>
 <li><a href="#evil-leader">Evil-Leader</a></li>
 <li><a href="#use-package">Use-package</a></li>
 <li><a href="#daemonizing-emacs">Daemonizing Emacs</a></li>
 <li><a href="#magit">Magit</a></li>
-<li><a href="#tips-and-tricks">Tips and tricks</a><ul>
+<li><a href="#tips-and-tricks">Tips and tricks</a>
+<ul>
 <li><a href="#avoid-using-customize">Avoid using customize</a></li>
 <li><a href="#ditch-the-terminal">Ditch the terminal</a></li>
 <li><a href="#hide-the-startup-messages">Hide the startup messages</a></li>
@@ -153,7 +161,7 @@
 <h4>States</h4>
 <p>Evil uses the term <em>state</em> to refer to what Vim calls a <q>mode</q>. There are more states than these, but here are a few to get you going:</p>
 <ul>
-<li><code>evil-emacs-state</code><a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a></li>
+<li><code>evil-emacs-state</code><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></li>
 <li><code>evil-insert-state</code></li>
 <li><code>evil-normal-state</code></li>
 <li><code>evil-visual-state</code></li>
@@ -171,7 +179,7 @@
 (define-key evil-normal-state-map (kbd &quot;C-l&quot;) 'evil-window-right)</code></pre>
 <p>This binds <code>&lt;CTRL&gt;-hjkl</code> to window movement commands when Evil is in normal state.</p>
 <p>There are a number of interesting things about these expressions. First, position your cursor over the word <code>define-key</code> and call <code>M-x describe-function</code>. It will provide the default value of the thing under your cursor, so you can just press <code>RET</code> again to bring up a buffer with help information. Read the help information it gives you, then move on. The buffer that appears will be in <code>help-mode</code>, which does not have Evil bindings, but you can use <code>q</code> to close it and keep working.</p>
-<p>The proper term in Emacs for <q>your cursor</q> would be <strong>point</strong>. This is used extensively in the help documentation, so it’s worth remembering. The <q>thing</q> at point that provided the default argument for <code>describe-function</code> was a <strong>symbol</strong>.<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a> A symbol is basically any thing in Emacs Lisp which has a <em>name</em> and can be hashed into a lookup table, where it then becomes an <strong>object</strong> in Lisp. These objects could be anything: functions, data, or text, for example, but symbols are interesting because we can give them names and refer to them later somehow.</p>
+<p>The proper term in Emacs for <q>your cursor</q> would be <strong>point</strong>. This is used extensively in the help documentation, so it’s worth remembering. The <q>thing</q> at point that provided the default argument for <code>describe-function</code> was a <strong>symbol</strong>.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> A symbol is basically any thing in Emacs Lisp which has a <em>name</em> and can be hashed into a lookup table, where it then becomes an <strong>object</strong> in Lisp. These objects could be anything: functions, data, or text, for example, but symbols are interesting because we can give them names and refer to them later somehow.</p>
 <p>From the <a href="http://www.gnu.org/software/emacs/manual/html_node/elisp/Symbols.html">official manual</a>:</p>
 <blockquote>
 <p>You can test whether an arbitrary Lisp object is a symbol with <code>symbolp</code>:</p>
@@ -187,7 +195,7 @@
 </section>
 <section id="maps-and-keys" class="level3">
 <h3>Maps and keys</h3>
-<p>The two other arguments to each of those keybindings were unquoted. The keymap, <code>evil-normal-state-map</code>, goes directly into the function, since the purpose of <code>define-key</code> is to modify that map. The expression <code>(kbd &quot;C-h&quot;)</code> is actually another separate function call that happens before the outside expression is evaluated. If we use <code>M-x describe-function</code> to look at the help documentation for <code>kbd</code>, we see:</p>
+<p>The two other arguments to each of those keybindings were unquoted. The keymap, <code>evil-normal-state-map</code>, goes directly into the function, since the purpose of <code>define-key</code> is to modify that map. The expression <code>(kbd "C-h")</code> is actually another separate function call that happens before the outside expression is evaluated. If we use <code>M-x describe-function</code> to look at the help documentation for <code>kbd</code>, we see:</p>
 <pre class="sourceCode"><code>kbd is a compiled Lisp function in `subr.el'.
 
 (kbd KEYS)
@@ -196,9 +204,9 @@ Convert KEYS to the internal Emacs key representation.
 KEYS should be a string constant in the format used for
 saving keyboard macros (see `edmacro-mode').</code></pre>
 <p>We need to use the <code>kbd</code> function to describe our keybindings, since they contain an extra operator (the <code>&lt;CTRL&gt;</code> key). While single character bindings can be looked up in keymaps directly, a key sequence like <code>C-h</code> is not stored in the map in that form.</p>
-<p>You can look at the value of <code>(kbd &quot;C-h&quot;)</code> by typing it on a line below those bindings, and then evaluating it with <code>C-x C-e</code> as before. In the <strong>minibuffer</strong>, the text area with a blank line at the bottom of the screen, <code>&quot;^H&quot;</code> is displayed. That tells you that the expression</p>
+<p>You can look at the value of <code>(kbd "C-h")</code> by typing it on a line below those bindings, and then evaluating it with <code>C-x C-e</code> as before. In the <strong>minibuffer</strong>, the text area with a blank line at the bottom of the screen, <code>"^H"</code> is displayed. That tells you that the expression</p>
 <pre class="sourceCode"><code>(define-key evil-normal-state-map (kbd &quot;C-h&quot;) 'evil-window-left)</code></pre>
-<p>is internally binding <code>&quot;^H&quot;</code> to <code>evil-window-left</code>, but don’t doing that yourself—the way it’s shown in the minibuffer is still a <em>displayed form</em>, which is different from the hashed value it eventually becomes.</p>
+<p>is internally binding <code>"^H"</code> to <code>evil-window-left</code>, but don’t doing that yourself—the way it’s shown in the minibuffer is still a <em>displayed form</em>, which is different from the hashed value it eventually becomes.</p>
 </section>
 </section>
 <section id="lisp-navigation" class="level2">
@@ -207,7 +215,7 @@ saving keyboard macros (see `edmacro-mode').</code></pre>
 <p>Slime mode needs to be enabled for it to be used. To do this, we will define a function that we’ll tie to the hook for <code>emacs-lisp-mode</code>. A <strong>hook</strong> is a function that gets evaluated when something predefined happens in your editor. Most modes have hooks already configured, and all you will need to do is add functions to call with them using <code>add-hook</code> for them to become useful.</p>
 <p>First we <code>require</code> the package <code>elisp-slime-nav</code>, which ensures that it is loaded when Emacs starts:</p>
 <pre class="sourceCode"><code>(require 'elisp-slime-nav)</code></pre>
-<p>Then we define our function:<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a></p>
+<p>Then we define our function:<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p>
 <pre class="sourceCode"><code>(defun my-lisp-hook ()
   (elisp-slime-nav-mode)
   (turn-on-eldoc-mode)
@@ -215,7 +223,7 @@ saving keyboard macros (see `edmacro-mode').</code></pre>
 <p>Add that into your init file after the <code>require</code> call. Note that the function definition is prefixed by <code>my-</code>. While not all Emacs packages do this, Elisp does not have namespaces like Python or Ruby does. To counteract this, convention is to define all of your functions prefixed by your package name, and for personal code using <code>my-</code> is not uncommon.</p>
 <p>Then, we add it to to the <code>emacs-lisp-mode-hook</code> using <code>add-hook</code>:</p>
 <pre class="sourceCode"><code>(add-hook 'emacs-lisp-mode-hook 'my-lisp-hook)</code></pre>
-<p>This makes <code>elisp-slime-nav-mode</code> and <code>turn-on-eldoc-mode</code><a href="#fn4" class="footnote-ref" id="fnref4"><sup>4</sup></a> get called every time <code>emacs-lisp-mode</code> is enabled. Now go ahead and evaluate these with <code>C-x C-e</code>. To make this easier, you can surround the block in a <code>(progn)</code>, which makes the whole thing get treated as one big expression for evaluation:</p>
+<p>This makes <code>elisp-slime-nav-mode</code> and <code>turn-on-eldoc-mode</code><a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> get called every time <code>emacs-lisp-mode</code> is enabled. Now go ahead and evaluate these with <code>C-x C-e</code>. To make this easier, you can surround the block in a <code>(progn)</code>, which makes the whole thing get treated as one big expression for evaluation:</p>
 <pre class="sourceCode"><code>(progn
   (require 'elisp-slime-nav)
   (defun my-lisp-hook ()
@@ -226,7 +234,7 @@ saving keyboard macros (see `edmacro-mode').</code></pre>
 )</code></pre>
 <p>While the <code>(progn)</code> here doesn’t serve any practical purpose, it might help you group blocks of code for evaluation while you’re hacking at them.</p>
 <p>Since <code>emacs-lisp-mode</code> is already running (you’re in a <code>.el</code> file), you can force your hook’s evaluation by typing <code>(my-lisp-hook)</code> into the buffer and evaluating it manually.</p>
-<p>You’ll notice that when you hover over functions now, <code>eldoc-mode</code> shows their signature in the minibuffer. If you want to see the help information like we’d been doing manually before, though, you still need to type <code>describe-function</code> into the <code>M-x</code> prompt. Now that we have Slime, we can simplify this with another keybinding:<a href="#fn5" class="footnote-ref" id="fnref5"><sup>5</sup></a></p>
+<p>You’ll notice that when you hover over functions now, <code>eldoc-mode</code> shows their signature in the minibuffer. If you want to see the help information like we’d been doing manually before, though, you still need to type <code>describe-function</code> into the <code>M-x</code> prompt. Now that we have Slime, we can simplify this with another keybinding:<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a></p>
 <pre class="sourceCode"><code>(evil-define-key 'normal emacs-lisp-mode-map (kbd &quot;K&quot;)
   'elisp-slime-nav-describe-elisp-thing-at-point)</code></pre>
 <p>Evaluating the above will do contextual lookup on the thing at point whenever you press <code>K</code> in Evil’s normal state.</p>
@@ -239,7 +247,7 @@ saving keyboard macros (see `edmacro-mode').</code></pre>
 <p>You can list the buffers that are currently open by typing <code>M-x list-buffers</code>. Using the bindings we defined earlier, you can switch to the window that is opened and hit <code>q</code> to close it when you’re done. To switch to one of these buffers, typing <code>M-x switch-to-buffer</code> will bring up a minibuffer prompt where you can type the name of a buffer to switch to it.</p>
 <p>For a better listing, you can use <code>M-x ibuffer</code>.</p>
 <figure>
-<img src="../images/2014-08-ibuffer.png" alt="IBuffer with the default settings" /><figcaption>IBuffer with the default settings</figcaption>
+<img src="../images/2014-08-ibuffer.png" alt="IBuffer with the default settings" /><figcaption aria-hidden="true">IBuffer with the default settings</figcaption>
 </figure>
 <p>The default bindings you should care about right now are:</p>
 <ul>
@@ -259,11 +267,11 @@ saving keyboard macros (see `edmacro-mode').</code></pre>
 </ul>
 <p>With <code>ibuffer</code> open, type <code>M-x describe-mode</code> to pull up the help info below.</p>
 <figure>
-<img src="../images/2014-08-ibuffer-link.png" alt="A link to ibuffer.el in help-mode" /><figcaption>A link to <code>ibuffer.el</code> in <code>help-mode</code></figcaption>
+<img src="../images/2014-08-ibuffer-link.png" alt="A link to ibuffer.el in help-mode" /><figcaption aria-hidden="true">A link to <code>ibuffer.el</code> in <code>help-mode</code></figcaption>
 </figure>
-<p>Following that link<a href="#fn6" class="footnote-ref" id="fnref6"><sup>6</sup></a> will take you to the source code for IBuffer. Somewhere in there, you’ll find the keymap:</p>
+<p>Following that link<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a> will take you to the source code for IBuffer. Somewhere in there, you’ll find the keymap:</p>
 <figure>
-<img src="../images/2014-08-ibuffer-default-map.png" alt="Default IBuffer keymap" /><figcaption>Default IBuffer keymap</figcaption>
+<img src="../images/2014-08-ibuffer-default-map.png" alt="Default IBuffer keymap" /><figcaption aria-hidden="true">Default IBuffer keymap</figcaption>
 </figure>
 <p>Any one of these major mode keymaps is bound to be really large, so I won’t reproduce it here. The idea is to redefine these into a map within Evil, so IBuffer will respect your Evil keymaps and still have its functionality. The <code>evil-define-key</code> function we used earlier has the option of taking an unlimited number of arguments. Now, copy lines like the following out of <code>ibuffer.el</code>:</p>
 <pre class="sourceCode"><code>(define-key map (kbd &quot;m&quot;) 'ibuffer-mark-forward)
@@ -291,7 +299,7 @@ saving keyboard macros (see `edmacro-mode').</code></pre>
 <p>To ensure IBuffer will use Evil’s keybindings, add the line</p>
 <pre class="sourceCode"><code>(evil-set-initial-state 'ibuffer-mode 'normal)</code></pre>
 <p>to your init file. You can use this to set Evil’s initial state for any major mode - before you know what to bind in a mode, sometimes using Emacs state isn’t a bad idea.</p>
-<p>Now, if you try to actually use this configuration, it won’t work.<a href="#fn7" class="footnote-ref" id="fnref7"><sup>7</sup></a> The reason is we need to ensure the Evil bindings are not applied until <em>after</em> IBuffer is loaded, since it needs to do some special setup. The solution here is to surround the bindings in an <code>eval-after-load</code> block, like follows:</p>
+<p>Now, if you try to actually use this configuration, it won’t work.<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a> The reason is we need to ensure the Evil bindings are not applied until <em>after</em> IBuffer is loaded, since it needs to do some special setup. The solution here is to surround the bindings in an <code>eval-after-load</code> block, like follows:</p>
 <pre class="sourceCode"><code>(eval-after-load 'ibuffer
   '(progn
      (evil-set-initial-state 'ibuffer-mode 'normal)
@@ -329,7 +337,7 @@ saving keyboard macros (see `edmacro-mode').</code></pre>
 <p>IBuffer has a marking system that lets you select multiple buffers on which to perform actions. Personally, I don’t care very much for hiding marked lines, so I simply removed that binding. Now we have</p>
 <pre class="sourceCode"><code>    (kbd &quot;j&quot;) 'evil-next-line
     (kbd &quot;k&quot;) 'evil-previous-line</code></pre>
-<p>bound, which covers the absolute basics. But what about <code>l</code>? I’m used to <a href="../blog/2013-08-12-ranger.html">ranger</a>, a Vim-inspired file manager, where <code>l</code> takes you <q>into</q> the current item. In IBuffer, <code>l</code> is bound to <code>ibuffer-redisplay</code>, a useless function that redisplays the current buffers without loading new ones.<a href="#fn8" class="footnote-ref" id="fnref8"><sup>8</sup></a> Deleting that line lets us rebind it to</p>
+<p>bound, which covers the absolute basics. But what about <code>l</code>? I’m used to <a href="../blog/2013-08-12-ranger.html">ranger</a>, a Vim-inspired file manager, where <code>l</code> takes you <q>into</q> the current item. In IBuffer, <code>l</code> is bound to <code>ibuffer-redisplay</code>, a useless function that redisplays the current buffers without loading new ones.<a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a> Deleting that line lets us rebind it to</p>
 <pre class="sourceCode"><code>    (kbd &quot;l&quot;) 'ibuffer-visit-buffer</code></pre>
 <p>and now we can navigate IBuffer much more naturally.</p>
 <p>Another Ranger replication: by default, <code>ibuffer-toggle-marks</code> is bound to <code>t</code>, and <code>v</code> is bound to <code>ibuffer-do-view</code>, which opens the buffer at point fullscreen and hides the others. I never need to do that, so I’ve added</p>
@@ -630,25 +638,25 @@ WantedBy=console.target</code></pre>
 <h2>My config</h2>
 <p>My config files are on <a href="https://github.com/nathantypanski/emacs.d">GitHub</a> if you want to explore where I’ve gone with this. Caution that they don’t follow this post exactly, and they may not work on everyone’s system or be broken due to versioning (I build Emacs from the latest upstream source every couple weeks).</p>
 </section>
-<section class="footnotes">
+<section class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr />
 <ol>
-<li id="fn1"><p><code>evil-emacs-state</code> uses Emacs keybindings exclusively.<a href="#fnref1" class="footnote-back">↩</a></p></li>
-<li id="fn2"><p>Note that not everything in a given buffer is a <em>symbol</em>, even though everything in Elisp is an <em>object</em>. Since you were looking up a function definition, it <em>was</em> a symbol, but symbol refers exclusively to those objects that have names.<a href="#fnref2" class="footnote-back">↩</a></p></li>
-<li id="fn3"><p>Often you’ll see people defining hooks using a <code>lambda</code> construct. This is counterproductive, since once you add a hook to a list it can be complicated to get it out. If you messed anything up with your lambda, you can have a hard time removing it. Giving all of your hooks explicit names lets you remove them easily with <code>remove-hook</code> without restarting your Emacs session.<a href="#fnref3" class="footnote-back">↩</a></p></li>
-<li id="fn4"><p>As of Emacs 24.4, <code>turn-on-eldoc-mode</code> is a deprecated alias for <code>eldoc-mode</code>, which should be used instead.<a href="#fnref4" class="footnote-back">↩</a></p></li>
-<li id="fn5"><p>One reader wrote to me, finding that the code I provide here did not work for him.</p>
+<li id="fn1" role="doc-endnote"><p><code>evil-emacs-state</code> uses Emacs keybindings exclusively.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2" role="doc-endnote"><p>Note that not everything in a given buffer is a <em>symbol</em>, even though everything in Elisp is an <em>object</em>. Since you were looking up a function definition, it <em>was</em> a symbol, but symbol refers exclusively to those objects that have names.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3" role="doc-endnote"><p>Often you’ll see people defining hooks using a <code>lambda</code> construct. This is counterproductive, since once you add a hook to a list it can be complicated to get it out. If you messed anything up with your lambda, you can have a hard time removing it. Giving all of your hooks explicit names lets you remove them easily with <code>remove-hook</code> without restarting your Emacs session.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4" role="doc-endnote"><p>As of Emacs 24.4, <code>turn-on-eldoc-mode</code> is a deprecated alias for <code>eldoc-mode</code>, which should be used instead.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5" role="doc-endnote"><p>One reader wrote to me, finding that the code I provide here did not work for him.</p>
 <blockquote>
 <p>I can see the elisp-slime description appearing at the bottom section, but when I press K it seems like it’s running another function. I’ve also tried mapping it to <q>T</q>, but I’m not able to get it working (but by running elisp-slime-nav-describe-elisp-thing-at-point from the M-x, (or : when in evil-normal-mode) it works perfectly)</p>
 </blockquote>
 <p>When he changed it to the following, it worked:</p>
 <pre class="sourceCode"><code>(evil-define-key 'normal emacs-lisp-mode-map &quot;K&quot;
   'elisp-slime-nav-describe-elisp-thing-at-point)</code></pre>
-<p>So readers who have issue with my code might want to try binding to <code>K</code> per above.<a href="#fnref5" class="footnote-back">↩</a></p></li>
-<li id="fn6"><p>A friend of mine pointed out that his version of Emacs (24.4, I believe) did not incldue a <a href="http://emacslife.com/how-to-read-emacs-lisp.html#sec-6-1">jump-to-source link</a> in his <code>describe-mode</code> help window. While this was <a href="http://lists.gnu.org/archive/html/emacs-bug-tracker/2011-03/msg00147.html">reported as a bug</a> back in 2011, I was fairly certain that it has since been resolved …</p>
-<p>I tried this out and, indeed, the same was true for me: either the feature had been removed, or our Emacs’ packages were built incorrectly (e.g., without the source files). I think it’s possible to fix this by <a href="https://gist.github.com/nathantypanski/e006ff1b2240ecb4901a/revisions">modifying the package source</a> for whatever distro one is using to not strip the <code>.el.gz</code> files, but trying this on my own system has thus far not solved the issue.<a href="#fnref6" class="footnote-back">↩</a></p></li>
-<li id="fn7"><p>I got errors about the <code>R</code> in <code>R E T</code> not being a valid prefix key when I was testing this. YMMV.<a href="#fnref7" class="footnote-back">↩</a></p></li>
-<li id="fn8"><p>ibuffer does not refresh itself by default. You need to call <code>ibuffer-update</code> for new buffers to be shown.<a href="#fnref8" class="footnote-back">↩</a></p></li>
+<p>So readers who have issue with my code might want to try binding to <code>K</code> per above.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6" role="doc-endnote"><p>A friend of mine pointed out that his version of Emacs (24.4, I believe) did not incldue a <a href="http://emacslife.com/how-to-read-emacs-lisp.html#sec-6-1">jump-to-source link</a> in his <code>describe-mode</code> help window. While this was <a href="http://lists.gnu.org/archive/html/emacs-bug-tracker/2011-03/msg00147.html">reported as a bug</a> back in 2011, I was fairly certain that it has since been resolved …</p>
+<p>I tried this out and, indeed, the same was true for me: either the feature had been removed, or our Emacs’ packages were built incorrectly (e.g., without the source files). I think it’s possible to fix this by <a href="https://gist.github.com/nathantypanski/e006ff1b2240ecb4901a/revisions">modifying the package source</a> for whatever distro one is using to not strip the <code>.el.gz</code> files, but trying this on my own system has thus far not solved the issue.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn7" role="doc-endnote"><p>I got errors about the <code>R</code> in <code>R E T</code> not being a valid prefix key when I was testing this. YMMV.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn8" role="doc-endnote"><p>ibuffer does not refresh itself by default. You need to call <code>ibuffer-update</code> for new buffers to be shown.<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 

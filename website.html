@@ -47,7 +47,7 @@
         <div id="metadata">
             <ul class="meta">
             
-                <li>tags: <em><a href="./tags/info.html">info</a></em></li>
+                <li>tags: <em><a title="All pages tagged 'info'." href="./tags/info.html">info</a></em></li>
             
             
             
@@ -64,13 +64,13 @@
 <section id="compilation" class="level2">
 <h2>Compilation</h2>
 <p>I compile the site generator in a <a href="http://www.haskell.org/cabal/users-guide/installing-packages.html#developing-with-sandboxes">cabal sandbox</a> to isolate its dependencies from the rest of my system, by running <code>cabal build</code> at the shell. I run <code>./site watch</code> while I’m editing so I get a local preview, and then when I’m done I deploy via <a href="https://en.wikipedia.org/wiki/Rsync">rsync</a>. I use a script like the following to deploy:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="co">#!/bin/bash</span></a>
-<a class="sourceLine" id="cb1-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="fu">git</span> checkout master <span class="kw">&amp;&amp;\</span></a>
-<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="fu">git</span> push<span class="kw">&amp;&amp;\</span></a>
-<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="ex">./site</span> clean <span class="kw">&amp;&amp;\</span></a>
-<a class="sourceLine" id="cb1-6" data-line-number="6"><span class="ex">./site</span> build <span class="kw">&amp;&amp;\</span></a>
-<a class="sourceLine" id="cb1-7" data-line-number="7"><span class="fu">rsync</span> --checksum -ave <span class="st">'ssh'</span> \_site/* [redacted]:/srv/http/nathantypanski.com</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/bin/bash</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> checkout master <span class="kw">&amp;&amp;</span><span class="dt">\</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> push<span class="kw">&amp;&amp;</span><span class="dt">\</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="ex">./site</span> clean <span class="kw">&amp;&amp;</span><span class="dt">\</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="ex">./site</span> build <span class="kw">&amp;&amp;</span><span class="dt">\</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">rsync</span> <span class="at">--checksum</span> <span class="at">-ave</span> <span class="st">'ssh'</span> <span class="dt">\_</span>site/<span class="pp">*</span> [redacted]:/srv/http/nathantypanski.com</span></code></pre></div>
 <p>This makes the website really easy to maintain. It is just a bunch of markdown files that generate a bunch of HTML files that can be served as a static site. No backing database, no content management system, just a bunch of files on a computer.</p>
 </section>
 

@@ -47,11 +47,12 @@
         <div id="metadata">
             <ul class="meta">
             
-                <li>tags: <em><a href="../tags/Linux.html">Linux</a>, <a href="../tags/Debian.html">Debian</a></em></li>
+                <li>tags: <em><a title="All pages tagged 'Linux'." href="../tags/Linux.html">Linux</a>, <a title="All pages tagged 'Debian'." href="../tags/Debian.html">Debian</a></em></li>
             
             
             <li>posted: <em> January 19, 2014 </em></li>
-            <li>modified: <em> November  3, 2016 </em></li>
+            <li>modified: <em> March 22, 2015
+ </em></li>
             </ul>
         </div>
         <div id="content">
@@ -59,7 +60,9 @@
             <div class="info">
     <!--
     <div class="snippets">
-        <i class="fa fa-calendar"></i> January 19, 2014 <i class="fa fa-cut" November  3, 2016></i> November  3, 2016
+        <i class="fa fa-calendar"></i> January 19, 2014 <i class="fa fa-cut" March 22, 2015
+></i> March 22, 2015
+
     </div>
     -->
     
@@ -102,7 +105,7 @@ deb http://cdn.debian.net/debian experimental main</code></pre>
 <ul>
 <li><code>deb</code> or <code>deb-src</code> describes whether you are getting binaries or source packages from the archive.</li>
 <li>Then comes the URL.</li>
-<li>Then you have the <q>distribution</q>. This can either be the release codename (e.g. <code>squeeze</code>, <code>wheezy</code>) or the release class—<code>stable</code>, <code>testing</code>, etc. My first point of confusion came here. I wanted to use <q>Jessie</q>, the current testing distribution—but how does <code>testing/updates</code> differ from <code>jessie/updates</code>? Are there updates for one, but not the other? Why can (or can I?) use both <code>jessie/updates</code> and <code>jessie-updates</code>, as seen in my config file?</li>
+<li>Then you have the <q>distribution</q>. This can either be the release codename (e.g. <code>squeeze</code>, <code>wheezy</code>) or the release class—<code>stable</code>, <code>testing</code>, etc. My first point of confusion came here. I wanted to use <q>Jessie</q>, the current testing distribution—but how does <code>testing/updates</code> differ from <code>jessie/updates</code>? Are there updates for one, but not the other? Why can (or can I?) use both <code>jessie/updates</code> and <code>jessie-updates</code>, as seen in my config file?</li>
 <li>Then come <q>components</q>. These are like <q>sub-branches</q> of an archive for a particular release. In this sense, they are akin to Arch’s repositories, if only one of them existed. I think if I hadn’t been coming from a rolling-release distribution, this might have made more intuitive sense to me. But personally, I just want to be able to specify all packages from Testing’s <code>main</code>, <code>contrib</code>, and <code>non-free</code> components, with the added ability to cherry-pick packages like <code>iceweasel</code> (Debian’s rebranding of Firefox) from <code>unstable</code>. Instead, I have to muddle with <code>/updates</code> distributions in addition to the main ones.</li>
 </ul>
 <p>As it turns out, <code>/updates</code> isn’t necessary for <code>[testing]</code> users, but you are supposed to keep <code>release-codename/updates</code> around in case you wish to roll over to the codename release once it goes live. This makes sense, but it was confusing at first.</p>

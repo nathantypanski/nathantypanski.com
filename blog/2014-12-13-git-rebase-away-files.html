@@ -47,11 +47,12 @@
         <div id="metadata">
             <ul class="meta">
             
-                <li>tags: <em><a href="../tags/Git.html">Git</a>, <a href="../tags/workflow.html">workflow</a></em></li>
+                <li>tags: <em><a title="All pages tagged 'Git'." href="../tags/Git.html">Git</a>, <a title="All pages tagged 'workflow'." href="../tags/workflow.html">workflow</a></em></li>
             
             
             <li>posted: <em> December 13, 2014 </em></li>
-            <li>modified: <em> December  3, 2016 </em></li>
+            <li>modified: <em> December 03, 2016
+ </em></li>
             </ul>
         </div>
         <div id="content">
@@ -59,7 +60,9 @@
             <div class="info">
     <!--
     <div class="snippets">
-        <i class="fa fa-calendar"></i> December 13, 2014 <i class="fa fa-cut" December  3, 2016></i> December  3, 2016
+        <i class="fa fa-calendar"></i> December 13, 2014 <i class="fa fa-cut" December 03, 2016
+></i> December 03, 2016
+
     </div>
     -->
     
@@ -68,7 +71,8 @@
 <ul>
 <li><a href="#picking-a-rebase-target">Picking a rebase target</a></li>
 <li><a href="#cleaning-your-worktree">Cleaning your worktree</a></li>
-<li><a href="#blasting-apart-history">Blasting apart history</a><ul>
+<li><a href="#blasting-apart-history">Blasting apart history</a>
+<ul>
 <li><a href="#removing-unrelated-files">Removing unrelated files</a></li>
 <li><a href="#making-new-commits">Making new commits</a></li>
 </ul></li>
@@ -86,7 +90,7 @@
  config/eyecandy/my-eyecandy.el | 22 +++-------------------
  2 files changed, 14 insertions(+), 19 deletions(-)</code></pre>
 <p>I was partway through an attempt at adding simple <a href="https://travis-ci.org/">travis</a> testing to the repo, but accidentally included that <code>.travis.yml</code> along with a batch of theme config changes.</p>
-<p>Obviously my personal text editor config files can’t get away with <a href="https://github.com/nathantypanski/emacs.d/commit/3597bfd5d1c1c561f019f7fce7ad6119b5edb07e">bad commits</a>!<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> I’ll have to fix that.</p>
+<p>Obviously my personal text editor config files can’t get away with <a href="https://github.com/nathantypanski/emacs.d/commit/3597bfd5d1c1c561f019f7fce7ad6119b5edb07e">bad commits</a>[^badcommit] I’ll have to fix that.</p>
 <p>There are a handful of ways I could do this, but the method I inevitably choose is <a href="http://git-scm.com/docs/git-rebase"><code>git rebase</code></a>. Called with the <code>--interactive</code> switch, <code>git rebase</code> gives you a list of commit messages since some point in the tree, and lets you modify and rewrite them as you see fit.</p>
 <p>What we’re going to do here is this:</p>
 <ul>
@@ -98,11 +102,11 @@
 <p>The reason I prefer using an interactive rebase is</p>
 <ol type="1">
 <li>I know how to do it,</li>
-<li>it differs less from my everyday git usage than the alternatives.<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a></li>
+<li>it differs less from my everyday git usage than the alternatives.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></li>
 </ol>
 <section id="picking-a-rebase-target" class="level2">
 <h2>Picking a rebase target</h2>
-<p>One of the most important choices before you start any interactive rebase is <q>how far back am I rebasing.</q> It’s only safe to rewrite the parts of history that haven’t been pushed to a remote yet,<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a> so the natural choice is to rebase against a remote.</p>
+<p>One of the most important choices before you start any interactive rebase is <q>how far back am I rebasing.</q> It’s only safe to rewrite the parts of history that haven’t been pushed to a remote yet,<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> so the natural choice is to rebase against a remote.</p>
 <p>I’ll pretend that I’m working on a codebase with multiple people, purely for didactic purposes, and do a fetch before I get started:</p>
 <pre class="sourceCode"><code>~/dotfiles/emacs/.emacs.d/ » git fetch origin
 ~/dotfiles/emacs/.emacs.d/ »</code></pre>
@@ -120,7 +124,7 @@ Please commit or stash them.</code></pre>
     after the operation ends. This means that you can run rebase on a dirty worktree.
     However, use with care: the final stash application after a successful rebase might
     result in non-trivial conflicts.</code></pre>
-<p>As mentioned, stashes don’t necessarily apply cleanly after a rebase. This works best if you know that your unstaged changes won’t conflict with anything you’re rebasing. In my case, I only start rebases if I think my stash (if any) will apply cleanly, so I’m going to make this a default in my config:<a href="#fn4" class="footnote-ref" id="fnref4"><sup>4</sup></a></p>
+<p>As mentioned, stashes don’t necessarily apply cleanly after a rebase. This works best if you know that your unstaged changes won’t conflict with anything you’re rebasing. In my case, I only start rebases if I think my stash (if any) will apply cleanly, so I’m going to make this a default in my config:<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p>
 <pre class="sourceCode"><code>~/dotfiles/emacs/.emacs.d/ » git config --get rebase.autostash
 ~/dotfiles/emacs/.emacs.d/ » git config --global rebase.autostash true
 ~/dotfiles/emacs/.emacs.d/ » git config --get rebase.autostash
@@ -208,17 +212,16 @@ Applied autostash.</code></pre>
 <p>This is just a little snapshot of my Git workflow. I wrote this post because I find myself constantly wondering if I’m using Git <q>the right way</q>, and find myself curious how other people solve problems like this one. Perhaps there’s a way to do this using only a handful of one-liners, and I’m going overkill by using <code>git rebase</code> for this kind of thing (it certainly feels that way).</p>
 <p>But then I realize there’s no One True Workflow with Git. Git usage is a <a href="https://en.wikipedia.org/wiki/State_function">state function</a>: we went from our initial state to our desired result state, and nobody cares how we got there. That’s the whole point.</p>
 </section>
-<section class="footnotes">
+<section class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr />
 <ol>
-<li id="fn1"><p>Or I might not tolerate it in a few weeks. Ho, ho.<a href="#fnref1" class="footnote-back">↩</a></p></li>
-<li id="fn2"><p>If I have to hack apart a tree in Git, the easiest way for me to do it is usually inside of an interactive rebase. Unlike memorizing a bunch of esoteric one-liners, this lets me work on a repository like I’m always <q>at its tip</q> - which is the normal state of a Git repo when you’re working on new changes.<a href="#fnref2" class="footnote-back">↩</a></p></li>
-<li id="fn3"><p>You can get away with rewriting commits that are on a remote, but then you’re doomed to <code>git push -f</code>’ing all over said remote. Without good reason, this is a pretty bad idea. If you have coworkers, it’s a really bad idea.<a href="#fnref3" class="footnote-back">↩</a></p></li>
-<li id="fn4"><p>From the man page for <code>git rebase</code>:</p>
+<li id="fn1" role="doc-endnote"><p>If I have to hack apart a tree in Git, the easiest way for me to do it is usually inside of an interactive rebase. Unlike memorizing a bunch of esoteric one-liners, this lets me work on a repository like I’m always <q>at its tip</q> - which is the normal state of a Git repo when you’re working on new changes.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2" role="doc-endnote"><p>You can get away with rewriting commits that are on a remote, but then you’re doomed to <code>git push -f</code>’ing all over said remote. Without good reason, this is a pretty bad idea. If you have coworkers, it’s a really bad idea.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3" role="doc-endnote"><p>From the man page for <code>git rebase</code>:</p>
 <pre class="sourceCode"><code>CONFIGURATION
        rebase.autostash
                   If set to true enable --autostash option by default.</code></pre>
-<a href="#fnref4" class="footnote-back">↩</a></li>
+<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></li>
 </ol>
 </section>
 

@@ -47,11 +47,12 @@
         <div id="metadata">
             <ul class="meta">
             
-                <li>tags: <em><a href="../tags/Emacs.html">Emacs</a>, <a href="../tags/Vim.html">Vim</a></em></li>
+                <li>tags: <em><a title="All pages tagged 'Emacs'." href="../tags/Emacs.html">Emacs</a>, <a title="All pages tagged 'Vim'." href="../tags/Vim.html">Vim</a></em></li>
             
             
             <li>posted: <em> July  2, 2014 </em></li>
-            <li>modified: <em> December  3, 2016 </em></li>
+            <li>modified: <em> December 03, 2016
+ </em></li>
             </ul>
         </div>
         <div id="content">
@@ -59,7 +60,9 @@
             <div class="info">
     <!--
     <div class="snippets">
-        <i class="fa fa-calendar"></i> July  2, 2014 <i class="fa fa-cut" December  3, 2016></i> December  3, 2016
+        <i class="fa fa-calendar"></i> July  2, 2014 <i class="fa fa-cut" December 03, 2016
+></i> December 03, 2016
+
     </div>
     -->
     
@@ -104,13 +107,13 @@
 <p>There are occasional problems in the emulation that Evil offers. They’re not massive, and I can’t remember any off the top of my head, but they exist. Thankfully, Evil has an <a href="https://gitorious.org/evil">active devteam</a> that works hard to fix them.</p>
 <p>The other big issue happens when you start digging into Emacs features. Usually they come with Emacs bindings, and you’ll be confused about how to use them. You have a couple options for overcoming this:</p>
 <ul>
-<li>Learn the Emacs bindings. I do this for some plugins, like <a href="https://github.com/magit/magit">Magit</a>, where they’re not so much <q>Emacs bindings</q> as they are just <q>keybindings</q>. Magit’s bindings are actually more Vim-like than even <a href="https://github.com/tpope/vim-fugitive">Fugitive</a>’s:
+<li><p>Learn the Emacs bindings. I do this for some plugins, like <a href="https://github.com/magit/magit">Magit</a>, where they’re not so much <q>Emacs bindings</q> as they are just <q>keybindings</q>. Magit’s bindings are actually more Vim-like than even <a href="https://github.com/tpope/vim-fugitive">Fugitive</a>’s:</p>
 <ul>
 <li>Every binding in the Magit windows is part of a key sequence. For example, when I look at my Git status window, and press <code>l</code>, that indicates that I want to do a <q>log action</q> and it’s followed by another single key indicating the exact thing I’d like performed. There’s even a handy popup buffer that lists my available choices:</li>
 </ul>
 <p><img src="../images/emacs-magit-log-status.png" /></p>
 <p>All of the common Git operations are bound to single key sequences like this: there’s no <code>C-g-M-X-^&lt;CTRL&gt;&lt;Menu&gt;</code> in sight.</p></li>
-<li>Rebind keys yourself. This is good for features that you use often, though it means writing your own keybindings. It’s not a huge task, and it’s aided by the fact that your available operations are functions and you can search for them (<code>M-x apropos-command</code>), but this takes time.</li>
+<li><p>Rebind keys yourself. This is good for features that you use often, though it means writing your own keybindings. It’s not a huge task, and it’s aided by the fact that your available operations are functions and you can search for them (<code>M-x apropos-command</code>), but this takes time.</p></li>
 <li><p>Let Evil overlay Vim bindings into the plugin. This has varying levels of success. For one, it won’t (by default) override keys that are already bound in the Emacs plugin (<q>Major mode</q> as they’re called - Evil uses the term <q>state</q> to refer to Vim modes). This means you can end up with <code>h</code>, <code>j</code>, and <code>l</code> bound in a major mode, but <code>k</code> does something different - like kill the commit in a Git rebase - and this can be unnerving.</p></li>
 </ul>
 <p>All in all, I’ve found the keybinding issues in major modes to be workable. Per <a href="http://bling.github.io/blog/2013/10/27/emacs-as-my-leader-vim-survival-guide/">Emacs as my &lt;Leader&gt;</a>, a fantastic post from the author of <a href="https://github.com/bling/vim-airline"><code>vim-airline</code></a>, I’ve bound <code>\</code> to <q>take me to Emacs state</q> and learned enough Emacs idioms to find my way around in new modes.</p>

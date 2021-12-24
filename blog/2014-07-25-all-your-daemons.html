@@ -47,11 +47,12 @@
         <div id="metadata">
             <ul class="meta">
             
-                <li>tags: <em><a href="../tags/Linux.html">Linux</a>, <a href="../tags/systemd.html">systemd</a>, <a href="../tags/daemons.html">daemons</a></em></li>
+                <li>tags: <em><a title="All pages tagged 'Linux'." href="../tags/Linux.html">Linux</a>, <a title="All pages tagged 'systemd'." href="../tags/systemd.html">systemd</a>, <a title="All pages tagged 'daemons'." href="../tags/daemons.html">daemons</a></em></li>
             
             
             <li>posted: <em> July 25, 2014 </em></li>
-            <li>modified: <em> November  3, 2016 </em></li>
+            <li>modified: <em> March 22, 2015
+ </em></li>
             </ul>
         </div>
         <div id="content">
@@ -59,14 +60,17 @@
             <div class="info">
     <!--
     <div class="snippets">
-        <i class="fa fa-calendar"></i> July 25, 2014 <i class="fa fa-cut" November  3, 2016></i> November  3, 2016
+        <i class="fa fa-calendar"></i> July 25, 2014 <i class="fa fa-cut" March 22, 2015
+></i> March 22, 2015
+
     </div>
     -->
     
 </div>
 <div id="toc"><h2>Contents</h2>
 <ul>
-<li><a href="#why-go-back">Why go back?</a><ul>
+<li><a href="#why-go-back">Why go back?</a>
+<ul>
 <li><a href="#systemd">systemd</a></li>
 <li><a href="#understanding">Understanding</a></li>
 <li><a href="#arch-build-system">Arch Build System</a></li>
@@ -85,7 +89,7 @@
 <p>Even though it was something I complained about in Arch, the one big thing I ended up missing was systemd. Arch makes systemd a first-class citizen. Debian has been in the middle of an official switch for months, but it still feels painful and not fully thought out. In retrospect, this makes sense: Arch has been on systemd for <em>years</em>, and Debian only announced systemd as the official init system <a href="https://lists.debian.org/debian-ctte/2014/02/msg00405.html">back in February</a>.</p>
 <p>Of course, Debian has systemd. Jessie had the 204 release for most of the time I was using it. I’m back on Arch now, running systemd 215. As someone who uses my computer as a laptop and not, you know, a server, systemd user sessions are among the most useful features it has to offer.</p>
 <p>Not long ago, I posted a <a href="2014-07-09-personal-wiki.html">horrible script for daemonizing</a> my personal wiki. It barely worked. Sometimes it would cause <code>ps</code> to bug and report problems, which I was told to submit to the developers. Unfortunately, the line reported for causing the bug was the same line that was supposed to display information about the bug. I also have no idea where I’m supposed to report the bug - <a href="http://sourceforge.net/p/procps-ng/tickets/?source=navbar">here at SourceForge</a>? Who knows.</p>
-<p>In lieu of writing a better script, something that uses <code>mkdir</code> for PID locks,<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> I started to miss the sheer beauty of letting systemd manage my user-level init. To me, it’s a simple fact that using shell scripts to spawn daemons for, say X startup is archaic, awful, and prone to errors.</p>
+<p>In lieu of writing a better script, something that uses <code>mkdir</code> for PID locks,<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> I started to miss the sheer beauty of letting systemd manage my user-level init. To me, it’s a simple fact that using shell scripts to spawn daemons for, say X startup is archaic, awful, and prone to errors.</p>
 <p>On Arch, I can do this:</p>
 <pre class="sourceCode"><code>$ userctl start gitit</code></pre>
 <p>and it spawns my wiki process, keeps logs, and monitors its status like any other daemon. I’ve aliased <code>userctl</code> to <code>systemctl --user</code>, since it’s way easier to type and makes more sense in my head.</p>
@@ -105,7 +109,7 @@ WantedBy=console.target</code></pre>
 <ul>
 <li><code>[Unit]</code>: generic information about the unit. Often contains dependency information - but not in this simple case. <code>systemd.unit (5)</code> has the details.
 <ul>
-<li><code>Description</code>: name displayed in UI. For example, this is the name displayed when I type <code>systemctl status gitit</code>.<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a></li>
+<li><code>Description</code>: name displayed in UI. For example, this is the name displayed when I type <code>systemctl status gitit</code>.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></li>
 </ul></li>
 <li><code>[Service]</code>: Info about the process. See <code>systemd.service (5)</code> for the nitty-gritty.
 <ul>
@@ -135,7 +139,7 @@ WantedBy=console.target</code></pre>
 </section>
 <section id="arch-wiki" class="level3">
 <h3>Arch Wiki</h3>
-<p>The <a href="https://wiki.archlinux.org/">Arch Wiki</a> is fantastic. I tell people it’s the best wiki in the Linux ecosystem. I’m pretty sure that I’m right about that one. Lots of people, including myself,<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a> really work hard to keep it up to date on the latest software in the Linux world. Today I was able to get <a href="https://wiki.archlinux.org/index.php/Nftables">nftables</a> up and running in a few minutes thanks to their documentation.</p>
+<p>The <a href="https://wiki.archlinux.org/">Arch Wiki</a> is fantastic. I tell people it’s the best wiki in the Linux ecosystem. I’m pretty sure that I’m right about that one. Lots of people, including myself,<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> really work hard to keep it up to date on the latest software in the Linux world. Today I was able to get <a href="https://wiki.archlinux.org/index.php/Nftables">nftables</a> up and running in a few minutes thanks to their documentation.</p>
 </section>
 </section>
 <section id="concerns" class="level2">
@@ -149,16 +153,16 @@ WantedBy=console.target</code></pre>
 <p>I think I’ll be happy with Arch. Everything I’ve seen so far has shown me that it’s thoroughly alive and better than ever.</p>
 <p>But I’m sure in a few months I’ll have more to say. Maybe one day I’ll put some real effort into Gentoo or one of the BSDs.</p>
 </section>
-<section class="footnotes">
+<section class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr />
 <ol>
-<li id="fn1"><p>Using regular files as locks is a bad idea. The problem is that there is no way to build a <a href="http://en.wikipedia.org/wiki/Test-and-set">test and set</a> with regular files - on Unix-like systems, you can’t both <em>check if a file exists</em> and <em>create it if it doesn’t exist</em> in an atomic manner. The <code>mkdir</code> command, on the other hand, has all the properties we need to build this concurrency primitive:</p>
+<li id="fn1" role="doc-endnote"><p>Using regular files as locks is a bad idea. The problem is that there is no way to build a <a href="http://en.wikipedia.org/wiki/Test-and-set">test and set</a> with regular files - on Unix-like systems, you can’t both <em>check if a file exists</em> and <em>create it if it doesn’t exist</em> in an atomic manner. The <code>mkdir</code> command, on the other hand, has all the properties we need to build this concurrency primitive:</p>
 <ul>
 <li>Failing and returning an exit status if the directory exists,</li>
 <li>Creating the directory if it doesn’t exist.</li>
 </ul>
-<p>The problem you can run into with regular files is that if the file <em>does</em> exist, when you try to spawn a new process and create a lockfile in that place, another process could have spawned in the time between when you deleted the lockfile and when you’re writing the new one. This means your daemonizing system will eventually fail, and your system will be broken.<a href="#fnref1" class="footnote-back">↩</a></p></li>
-<li id="fn2"><p>Example output:</p>
+<p>The problem you can run into with regular files is that if the file <em>does</em> exist, when you try to spawn a new process and create a lockfile in that place, another process could have spawned in the time between when you deleted the lockfile and when you’re writing the new one. This means your daemonizing system will eventually fail, and your system will be broken.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2" role="doc-endnote"><p>Example output:</p>
 <pre class="sourceCode"><code>$ userctl status gitit
 ● gitit.service - my personal wiki
    Loaded: loaded (/home/nathan/.config/systemd/user/gitit.service; enabled)
@@ -168,8 +172,8 @@ WantedBy=console.target</code></pre>
            └─4905 /home/nathan/.cabal/bin/gitit -f /home/nathan/.gitit/my.conf
 
 Jul 25 21:21:16 dionysus systemd[388]: Started my personal wiki.</code></pre>
-<a href="#fnref2" class="footnote-back">↩</a></li>
-<li id="fn3"><p>I made <a href="https://wiki.archlinux.org/index.php/Special:Contributions/Ndt">16 contributions</a> even during the 6 months I used Debian primarily. I still had Arch on a VPS of mine, but that system doesn’t see modification very often.<a href="#fnref3" class="footnote-back">↩</a></p></li>
+<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></li>
+<li id="fn3" role="doc-endnote"><p>I made <a href="https://wiki.archlinux.org/index.php/Special:Contributions/Ndt">16 contributions</a> even during the 6 months I used Debian primarily. I still had Arch on a VPS of mine, but that system doesn’t see modification very often.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 

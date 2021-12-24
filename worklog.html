@@ -47,7 +47,7 @@
         <div id="metadata">
             <ul class="meta">
             
-                <li>tags: <em><a href="./tags/log.html">log</a></em></li>
+                <li>tags: <em><a title="All pages tagged 'log'." href="./tags/log.html">log</a></em></li>
             
             <li>status: <em> wip </em></li>
             
@@ -59,7 +59,8 @@
             <div id="toc"><h2>Contents</h2>
 <ul>
 <li><a href="#mongodb">MongoDB</a></li>
-<li><a href="#rust">Rust</a><ul>
+<li><a href="#rust">Rust</a>
+<ul>
 <li><a href="#rust-class">Rust class</a></li>
 <li><a href="#rust-langrust">rust-lang/rust</a></li>
 <li><a href="#guidelines">Guidelines</a></li>
@@ -68,7 +69,8 @@
 <li><a href="#rust-nightly-archlinux">rust-nightly-archlinux</a></li>
 <li><a href="#rust-url">rust-url</a></li>
 </ul></li>
-<li><a href="#python">Python</a><ul>
+<li><a href="#python">Python</a>
+<ul>
 <li><a href="#ranger">Ranger</a></li>
 <li><a href="#python-mode">python-mode</a></li>
 <li><a href="#pandas">Pandas</a></li>
@@ -77,16 +79,19 @@
 <li><a href="#python-iwlib">python-iwlib</a></li>
 <li><a href="#fuzzywuzzy">fuzzywuzzy</a></li>
 </ul></li>
-<li><a href="#haskell">Haskell</a><ul>
+<li><a href="#haskell">Haskell</a>
+<ul>
 <li><a href="#sandbox-move">sandbox-move</a></li>
 </ul></li>
-<li><a href="#arch-linux">Arch Linux</a><ul>
+<li><a href="#arch-linux">Arch Linux</a>
+<ul>
 <li><a href="#displaylink">DisplayLink</a></li>
 <li><a href="#security">Security</a></li>
 <li><a href="#iptables">iptables</a></li>
 <li><a href="#packages">Packages</a></li>
 </ul></li>
-<li><a href="#my-projects">My projects</a><ul>
+<li><a href="#my-projects">My projects</a>
+<ul>
 <li><a href="#this-website">This website</a></li>
 <li><a href="#cnulug">CNULUG</a></li>
 <li><a href="#dotfiles">Dotfiles</a></li>
@@ -95,7 +100,8 @@
 <li><a href="#zombierl">ZombieRL</a></li>
 <li><a href="#mgmt">MGMT</a></li>
 </ul></li>
-<li><a href="#other">Other</a><ul>
+<li><a href="#other">Other</a>
+<ul>
 <li><a href="#nasa">NASA</a></li>
 <li><a href="#large-scale-development-culture-change-google-and-the-us-government">Large Scale Development Culture Change: Google and the US Government</a></li>
 <li><a href="#latex-wikibook">LaTeX WikiBook</a></li>
@@ -203,7 +209,7 @@
 <h3>Pandas</h3>
 <p><a href="https://github.com/pydata/pandas">Pandas</a> is a Python data analysis library.</p>
 <ul>
-<li><a href="https://github.com/pydata/pandas/pull/7831">CI: fix typos in readme</a><a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a></li>
+<li><a href="https://github.com/pydata/pandas/pull/7831">CI: fix typos in readme</a><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></li>
 </ul>
 </section>
 <section id="tabview" class="level3">
@@ -251,10 +257,10 @@
 <section id="displaylink" class="level3">
 <h3>DisplayLink</h3>
 <ul>
-<li>When I got a USB DisplayLink monitor back in 2013, there weren’t really any resources on how to set it up on a modern Linux machine. There were kernel drivers for it (<code>udlfb</code> and the - at the time - staging driver <code>udl</code>) but nothing on how to make them work with X. Supposedly Fedora could do it, but that turned out to be a dead end: nobody ever wrote something about it.</li>
-<li>I started <a href="https://bbs.archlinux.org/viewtopic.php?id=164385">this forum thread</a> about DisplayLink, in hopes of some solutions. Once I figured out to do <a href="https://bbs.archlinux.org/viewtopic.php?pid=1298516#p1298516"><code>--setprovideroutputsource</code></a> we started to make progress.</li>
-<li>Over the course of this I filled out the <a href="https://wiki.archlinux.org/index.php/DisplayLink">DisplayLink wiki page</a> with working information. It’s now pretty well-maintained by others, and is currently (22/06/2014) the second result on Google for <q>linux displaylink</q>.</li>
-<li><p>Still, in March 2014 Pluggable<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a> <a href="http://plugable.com/2014/03/06/displaylink-usb-2-0-graphics-adapters-on-linux-2014-edition">wrote</a>:</p>
+<li><p>When I got a USB DisplayLink monitor back in 2013, there weren’t really any resources on how to set it up on a modern Linux machine. There were kernel drivers for it (<code>udlfb</code> and the - at the time - staging driver <code>udl</code>) but nothing on how to make them work with X. Supposedly Fedora could do it, but that turned out to be a dead end: nobody ever wrote something about it.</p></li>
+<li><p>I started <a href="https://bbs.archlinux.org/viewtopic.php?id=164385">this forum thread</a> about DisplayLink, in hopes of some solutions. Once I figured out to do <a href="https://bbs.archlinux.org/viewtopic.php?pid=1298516#p1298516"><code>--setprovideroutputsource</code></a> we started to make progress.</p></li>
+<li><p>Over the course of this I filled out the <a href="https://wiki.archlinux.org/index.php/DisplayLink">DisplayLink wiki page</a> with working information. It’s now pretty well-maintained by others, and is currently (22/06/2014) the second result on Google for <q>linux displaylink</q>.</p></li>
+<li><p>Still, in March 2014 Pluggable<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> <a href="http://plugable.com/2014/03/06/displaylink-usb-2-0-graphics-adapters-on-linux-2014-edition">wrote</a>:</p>
 <blockquote>
 <p>Multi-monitor on Linux, especially with multiple graphics cards and USB graphics adapters, remains problematic. You can find many distros and configurations where it just won’t work. We’d recommend staying away unless you’re an advanced Linux user who is willing to play with different distros, install optional components and do hand configuration. Unfortunately, it’s just not plug and play yet today, as it is on Windows.</p>
 </blockquote></li>
@@ -393,11 +399,11 @@
 <p>I’ll hopefully be doing more wrt coding on it soon; my scratchpad <a href="https://github.com/nathantypanski/PDEs">is on GitHub</a>.</p>
 </section>
 </section>
-<section class="footnotes">
+<section class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr />
 <ol>
-<li id="fn1"><p>I got credited in the <a href="http://pandas.pydata.org/pandas-docs/version/0.15.0/release.html">pandas 0.15.0 release notes</a> for this little fix. Yay!<a href="#fnref1" class="footnote-back">↩</a></p></li>
-<li id="fn2"><p>Authors of the first Displaylink linux drivers, I think.<a href="#fnref2" class="footnote-back">↩</a></p></li>
+<li id="fn1" role="doc-endnote"><p>I got credited in the <a href="http://pandas.pydata.org/pandas-docs/version/0.15.0/release.html">pandas 0.15.0 release notes</a> for this little fix. Yay!<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2" role="doc-endnote"><p>Authors of the first Displaylink linux drivers, I think.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 

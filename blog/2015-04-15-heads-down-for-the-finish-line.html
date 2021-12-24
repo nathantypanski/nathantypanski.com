@@ -47,11 +47,12 @@
         <div id="metadata">
             <ul class="meta">
             
-                <li>tags: <em><a href="../tags/life.html">life</a>, <a href="../tags/Red%20Hat.html">Red Hat</a>, <a href="../tags/algorithms.html">algorithms</a>, <a href="../tags/Palantir.html">Palantir</a>, <a href="../tags/Red%20Hat.html">Red Hat</a>, <a href="../tags/microcontrollers.html">microcontrollers</a>, <a href="../tags/hardware.html">hardware</a>, <a href="../tags/Arch%20Linux.html">Arch Linux</a>, <a href="../tags/Linux.html">Linux</a>, <a href="../tags/jobs.html">jobs</a></em></li>
+                <li>tags: <em><a title="All pages tagged 'life'." href="../tags/life.html">life</a>, <a title="All pages tagged 'Red Hat'." href="../tags/Red%20Hat.html">Red Hat</a>, <a title="All pages tagged 'algorithms'." href="../tags/algorithms.html">algorithms</a>, <a title="All pages tagged 'Palantir'." href="../tags/Palantir.html">Palantir</a>, <a title="All pages tagged 'Red Hat'." href="../tags/Red%20Hat.html">Red Hat</a>, <a title="All pages tagged 'microcontrollers'." href="../tags/microcontrollers.html">microcontrollers</a>, <a title="All pages tagged 'hardware'." href="../tags/hardware.html">hardware</a>, <a title="All pages tagged 'Arch Linux'." href="../tags/Arch%20Linux.html">Arch Linux</a>, <a title="All pages tagged 'Linux'." href="../tags/Linux.html">Linux</a>, <a title="All pages tagged 'jobs'." href="../tags/jobs.html">jobs</a></em></li>
             
             
             <li>posted: <em> April 15, 2015 </em></li>
-            <li>modified: <em> November  3, 2016 </em></li>
+            <li>modified: <em> April 15, 2015
+ </em></li>
             </ul>
         </div>
         <div id="content">
@@ -59,7 +60,9 @@
             <div class="info">
     <!--
     <div class="snippets">
-        <i class="fa fa-calendar"></i> April 15, 2015 <i class="fa fa-cut" November  3, 2016></i> November  3, 2016
+        <i class="fa fa-calendar"></i> April 15, 2015 <i class="fa fa-cut" April 15, 2015
+></i> April 15, 2015
+
     </div>
     -->
     
@@ -77,7 +80,7 @@
 <p>So let’s do a breakdown of the past few months; maybe somehow I can justify the silence.</p>
 <section id="red-hat" class="level2">
 <h2>Red Hat</h2>
-<p><a href="https://fedoraproject.org/wiki/User:Spot">Tom Callaway</a> from Red Hat <a href="http://blog.pcs.cnu.edu/?p=254">came to speak on March 24</a> for CNU’s PCSE<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> department and the <a href="http://cnulug.org/">LUG I founded</a>. That was awesome. I don’t think anything could validate a newly-founded Linux user group more than having industry leaders come joke with you about tiling window managers. Quoting Tom:</p>
+<p><a href="https://fedoraproject.org/wiki/User:Spot">Tom Callaway</a> from Red Hat <a href="http://blog.pcs.cnu.edu/?p=254">came to speak on March 24</a> for CNU’s PCSE<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> department and the <a href="http://cnulug.org/">LUG I founded</a>. That was awesome. I don’t think anything could validate a newly-founded Linux user group more than having industry leaders come joke with you about tiling window managers. Quoting Tom:</p>
 <blockquote>
 <p>The venn diagram between people who use tiling window managers and people who know Haskell is just a circle.</p>
 </blockquote>
@@ -96,25 +99,25 @@ B C D
 2
 PT: abc
 CT: BCDDCB</code></pre>
-<p>You’re supposed to encrypt the plaintext blocks, and decrypt the cyphertext blocks. Normally I’d solve this in Bash:<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a></p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode Bash"><code class="sourceCode bash"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="co">#!/bin/bash</span></a>
-<a class="sourceLine" id="cb4-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb4-3" data-line-number="3"><span class="kw">while</span> <span class="bu">read</span> -r <span class="va">cypher_count</span>; <span class="kw">do</span></a>
-<a class="sourceLine" id="cb4-4" data-line-number="4">    [[ <span class="va">${cypher_count}</span> <span class="ex">-eq</span> 0 ]] <span class="kw">&amp;&amp;</span> <span class="bu">break</span></a>
-<a class="sourceLine" id="cb4-5" data-line-number="5">    <span class="bu">read</span> -r <span class="va">plaintext</span></a>
-<a class="sourceLine" id="cb4-6" data-line-number="6">    <span class="bu">read</span> -r <span class="va">cyphertext</span></a>
-<a class="sourceLine" id="cb4-7" data-line-number="7">    <span class="bu">read</span> -r <span class="va">count</span></a>
-<a class="sourceLine" id="cb4-8" data-line-number="8">    <span class="kw">for</span> <span class="ex">_</span> in <span class="va">$(</span><span class="fu">seq</span> <span class="va">${count})</span><span class="kw">;</span> <span class="kw">do</span></a>
-<a class="sourceLine" id="cb4-9" data-line-number="9">        <span class="bu">read</span> -r <span class="va">line</span></a>
-<a class="sourceLine" id="cb4-10" data-line-number="10">        <span class="kw">if [[</span> <span class="va">${line:0:2}</span> <span class="ot">==</span> <span class="st">'PT'</span><span class="kw"> ]]</span>; <span class="kw">then</span></a>
-<a class="sourceLine" id="cb4-11" data-line-number="11">            <span class="bu">echo</span> -n <span class="st">&quot;CT: &quot;</span></a>
-<a class="sourceLine" id="cb4-12" data-line-number="12">            <span class="bu">echo</span> <span class="va">${line:4}</span> <span class="kw">|</span> <span class="fu">tr</span> <span class="st">&quot;</span><span class="va">$plaintext</span><span class="st">&quot;</span> <span class="st">&quot;</span><span class="va">$cyphertext</span><span class="st">&quot;</span></a>
-<a class="sourceLine" id="cb4-13" data-line-number="13">        <span class="kw">else</span></a>
-<a class="sourceLine" id="cb4-14" data-line-number="14">            <span class="bu">echo</span> -n <span class="st">&quot;PT: &quot;</span></a>
-<a class="sourceLine" id="cb4-15" data-line-number="15">            <span class="bu">echo</span> <span class="va">${line:4}</span> <span class="kw">|</span> <span class="fu">tr</span> <span class="st">&quot;</span><span class="va">$cyphertext</span><span class="st">&quot;</span> <span class="st">&quot;</span><span class="va">$plaintext</span><span class="st">&quot;</span></a>
-<a class="sourceLine" id="cb4-16" data-line-number="16">        <span class="kw">fi</span></a>
-<a class="sourceLine" id="cb4-17" data-line-number="17">    <span class="kw">done</span></a>
-<a class="sourceLine" id="cb4-18" data-line-number="18"><span class="kw">done</span></a></code></pre></div>
+<p>You’re supposed to encrypt the plaintext blocks, and decrypt the cyphertext blocks. Normally I’d solve this in Bash:<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode Bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/bin/bash</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> <span class="bu">read</span> <span class="at">-r</span> <span class="va">cypher_count</span><span class="kw">;</span> <span class="cf">do</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">[[</span> <span class="va">${cypher_count}</span> <span class="ot">-eq</span> 0 <span class="kw">]]</span> <span class="kw">&amp;&amp;</span> <span class="cf">break</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">read</span> <span class="at">-r</span> <span class="va">plaintext</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="bu">read</span> <span class="at">-r</span> <span class="va">cyphertext</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    <span class="bu">read</span> <span class="at">-r</span> <span class="va">count</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> _ <span class="kw">in</span> <span class="va">$(</span><span class="fu">seq</span> <span class="va">${count})</span><span class="kw">;</span> <span class="cf">do</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>        <span class="bu">read</span> <span class="at">-r</span> <span class="va">line</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="kw">[[</span> <span class="va">${line</span><span class="op">:</span><span class="dv">0</span><span class="op">:</span><span class="dv">2</span><span class="va">}</span> <span class="ot">==</span> <span class="st">'PT'</span> <span class="kw">]];</span> <span class="cf">then</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>            <span class="bu">echo</span> <span class="at">-n</span> <span class="st">&quot;CT: &quot;</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>            <span class="bu">echo</span> <span class="va">${line</span><span class="op">:</span><span class="dv">4</span><span class="va">}</span> <span class="kw">|</span> <span class="fu">tr</span> <span class="st">&quot;</span><span class="va">$plaintext</span><span class="st">&quot;</span> <span class="st">&quot;</span><span class="va">$cyphertext</span><span class="st">&quot;</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>            <span class="bu">echo</span> <span class="at">-n</span> <span class="st">&quot;PT: &quot;</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>            <span class="bu">echo</span> <span class="va">${line</span><span class="op">:</span><span class="dv">4</span><span class="va">}</span> <span class="kw">|</span> <span class="fu">tr</span> <span class="st">&quot;</span><span class="va">$cyphertext</span><span class="st">&quot;</span> <span class="st">&quot;</span><span class="va">$plaintext</span><span class="st">&quot;</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>        <span class="cf">fi</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">done</span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="cf">done</span></span></code></pre></div>
 <p>Problems 1 and 5 were semi-interesting graph problems, but why bother with those when there are nice and easy text substitution problems to play with?</p>
 <p>Anyway, I’m actually pretty embarrassed by the win. My team solved the above text translation problem and the Sudoku problem (problem 3). Neither of those are particularly difficult, or require any sort of serious algorithms knowledge to solve. They’re more like run-of-the-mill programming challenges. We were about 90% of the way through problem 2, another simple text processing/sorting problem, when the timer rang.</p>
 <p>Main lesson learned: brush up on I/O in whatever language I’m choosing before the next algorithms competition. We could have performed a <em>lot</em> better if we spent less time fumbling around with a <code>BufferedReader</code> and more time thinking about algorithms.</p>
@@ -151,66 +154,66 @@ CT: BCDDCB</code></pre>
 <p>We tend to massively underestimate the compounding returns of intelligence. As humans, we need to solve big problems. If you graduate Stanford at 22 and Google recruits you, you’ll work a 9-to-5. It’s probably more like an 11-to-3 in terms of hard work. They’ll pay well. It’s relaxing. But what they are actually doing is paying you to accept a much lower intellectual growth rate. When you recognize that intelligence is compounding, the cost of that missing long-term compounding is enormous. They’re not giving you the best opportunity of your life. Then a scary thing can happen: You might realize one day that you’ve lost your competitive edge. You won’t be the best anymore. You won’t be able to fall in love with new stuff. Things are cushy where you are. You get complacent and stall. So, run your prospective engineering hires through that narrative. Then show them the alternative: working at your startup.</p>
 </blockquote>
 </section>
-<section class="footnotes">
+<section class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr />
 <ol>
-<li id="fn1"><p>Physics, computer science, and engineering.<a href="#fnref1" class="footnote-back">↩</a></p></li>
-<li id="fn2"><p>To be fair, the C solution isn’t much worse:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode C"><code class="sourceCode c"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></a>
-<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="pp">#include </span><span class="im">&lt;string.h&gt;</span></a>
-<a class="sourceLine" id="cb2-3" data-line-number="3"><span class="pp">#include </span><span class="im">&lt;stdlib.h&gt;</span></a>
-<a class="sourceLine" id="cb2-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb2-5" data-line-number="5"><span class="pp">#define MAX_LINE 512</span></a>
-<a class="sourceLine" id="cb2-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb2-7" data-line-number="7"><span class="dt">int</span> main() {</a>
-<a class="sourceLine" id="cb2-8" data-line-number="8">        <span class="dt">char</span> *line = malloc(<span class="kw">sizeof</span>(<span class="dt">char</span>) * MAX_LINE);</a>
-<a class="sourceLine" id="cb2-9" data-line-number="9">        <span class="dt">int</span> count = <span class="dv">0</span>;</a>
-<a class="sourceLine" id="cb2-10" data-line-number="10">        <span class="cf">do</span> {</a>
-<a class="sourceLine" id="cb2-11" data-line-number="11">                scanf(<span class="st">&quot;%d</span><span class="sc">\n</span><span class="st">&quot;</span>, &amp;count);</a>
-<a class="sourceLine" id="cb2-12" data-line-number="12">                <span class="dt">char</span> *pt = malloc(<span class="kw">sizeof</span>(<span class="dt">char</span>) * count + <span class="dv">1</span>);</a>
-<a class="sourceLine" id="cb2-13" data-line-number="13">                <span class="dt">char</span> *ct = malloc(<span class="kw">sizeof</span>(<span class="dt">char</span>) * count + <span class="dv">1</span>);</a>
-<a class="sourceLine" id="cb2-14" data-line-number="14"></a>
-<a class="sourceLine" id="cb2-15" data-line-number="15">                <span class="dt">int</span> i;</a>
-<a class="sourceLine" id="cb2-16" data-line-number="16">                <span class="cf">for</span>(i = <span class="dv">0</span>; i &lt; count; i++)</a>
-<a class="sourceLine" id="cb2-17" data-line-number="17">                        scanf(<span class="st">&quot;%c &quot;</span>, pt + i);</a>
-<a class="sourceLine" id="cb2-18" data-line-number="18">                <span class="cf">for</span>(i = <span class="dv">0</span>; i &lt; count; i++)</a>
-<a class="sourceLine" id="cb2-19" data-line-number="19">                        scanf(<span class="st">&quot;%c &quot;</span>, ct + i);</a>
-<a class="sourceLine" id="cb2-20" data-line-number="20"></a>
-<a class="sourceLine" id="cb2-21" data-line-number="21">                scanf(<span class="st">&quot;%d &quot;</span>, &amp;count);</a>
-<a class="sourceLine" id="cb2-22" data-line-number="22"></a>
-<a class="sourceLine" id="cb2-23" data-line-number="23">                <span class="cf">for</span>(i = <span class="dv">0</span>; i &lt; count; i++) {</a>
-<a class="sourceLine" id="cb2-24" data-line-number="24">                        <span class="dt">char</span> *left;</a>
-<a class="sourceLine" id="cb2-25" data-line-number="25">                        <span class="dt">char</span> *right;</a>
-<a class="sourceLine" id="cb2-26" data-line-number="26">                        fgets(line, MAX_LINE, stdin);</a>
-<a class="sourceLine" id="cb2-27" data-line-number="27">                        <span class="cf">if</span> (line[<span class="dv">0</span>] == <span class="ch">'P'</span>) {</a>
-<a class="sourceLine" id="cb2-28" data-line-number="28">                                left = pt;</a>
-<a class="sourceLine" id="cb2-29" data-line-number="29">                                right = ct;</a>
-<a class="sourceLine" id="cb2-30" data-line-number="30">                                printf(<span class="st">&quot;CT: &quot;</span>);</a>
-<a class="sourceLine" id="cb2-31" data-line-number="31">                        } <span class="cf">else</span> {</a>
-<a class="sourceLine" id="cb2-32" data-line-number="32">                                left = ct;</a>
-<a class="sourceLine" id="cb2-33" data-line-number="33">                                right = pt;</a>
-<a class="sourceLine" id="cb2-34" data-line-number="34">                                printf(<span class="st">&quot;PT: &quot;</span>);</a>
-<a class="sourceLine" id="cb2-35" data-line-number="35">                        }</a>
-<a class="sourceLine" id="cb2-36" data-line-number="36">                        <span class="dt">int</span> j;</a>
-<a class="sourceLine" id="cb2-37" data-line-number="37">                        <span class="cf">for</span>(j = <span class="dv">4</span>; line[j] != <span class="ch">'\n'</span>; j++) {</a>
-<a class="sourceLine" id="cb2-38" data-line-number="38">                                <span class="dt">int</span> k;</a>
-<a class="sourceLine" id="cb2-39" data-line-number="39">                                <span class="cf">for</span>(k = <span class="dv">0</span>; left[k] != line[j]; k++);</a>
-<a class="sourceLine" id="cb2-40" data-line-number="40">                                printf(<span class="st">&quot;%c&quot;</span>, right[k]);</a>
-<a class="sourceLine" id="cb2-41" data-line-number="41">                        }</a>
-<a class="sourceLine" id="cb2-42" data-line-number="42">                        printf(<span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>);</a>
-<a class="sourceLine" id="cb2-43" data-line-number="43">                }</a>
-<a class="sourceLine" id="cb2-44" data-line-number="44">                free(pt);</a>
-<a class="sourceLine" id="cb2-45" data-line-number="45">                free(ct);</a>
-<a class="sourceLine" id="cb2-46" data-line-number="46">        } <span class="cf">while</span> (count != <span class="dv">0</span>);</a>
-<a class="sourceLine" id="cb2-47" data-line-number="47">        free(line);</a>
-<a class="sourceLine" id="cb2-48" data-line-number="48">        <span class="cf">return</span> <span class="dv">0</span>;</a>
-<a class="sourceLine" id="cb2-49" data-line-number="49">}</a></code></pre></div>
+<li id="fn1" role="doc-endnote"><p>Physics, computer science, and engineering.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2" role="doc-endnote"><p>To be fair, the C solution isn’t much worse:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode C"><code class="sourceCode c"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;string.h&gt;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;stdlib.h&gt;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="pp">#define MAX_LINE 512</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>        <span class="dt">char</span> <span class="op">*</span>line <span class="op">=</span> malloc<span class="op">(</span><span class="kw">sizeof</span><span class="op">(</span><span class="dt">char</span><span class="op">)</span> <span class="op">*</span> MAX_LINE<span class="op">);</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>        <span class="dt">int</span> count <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">do</span> <span class="op">{</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>                scanf<span class="op">(</span><span class="st">&quot;%d</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">,</span> <span class="op">&amp;</span>count<span class="op">);</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>                <span class="dt">char</span> <span class="op">*</span>pt <span class="op">=</span> malloc<span class="op">(</span><span class="kw">sizeof</span><span class="op">(</span><span class="dt">char</span><span class="op">)</span> <span class="op">*</span> count <span class="op">+</span> <span class="dv">1</span><span class="op">);</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>                <span class="dt">char</span> <span class="op">*</span>ct <span class="op">=</span> malloc<span class="op">(</span><span class="kw">sizeof</span><span class="op">(</span><span class="dt">char</span><span class="op">)</span> <span class="op">*</span> count <span class="op">+</span> <span class="dv">1</span><span class="op">);</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>                <span class="dt">int</span> i<span class="op">;</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>                <span class="cf">for</span><span class="op">(</span>i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> count<span class="op">;</span> i<span class="op">++)</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>                        scanf<span class="op">(</span><span class="st">&quot;%c &quot;</span><span class="op">,</span> pt <span class="op">+</span> i<span class="op">);</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>                <span class="cf">for</span><span class="op">(</span>i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> count<span class="op">;</span> i<span class="op">++)</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>                        scanf<span class="op">(</span><span class="st">&quot;%c &quot;</span><span class="op">,</span> ct <span class="op">+</span> i<span class="op">);</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>                scanf<span class="op">(</span><span class="st">&quot;%d &quot;</span><span class="op">,</span> <span class="op">&amp;</span>count<span class="op">);</span></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>                <span class="cf">for</span><span class="op">(</span>i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> count<span class="op">;</span> i<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>                        <span class="dt">char</span> <span class="op">*</span>left<span class="op">;</span></span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>                        <span class="dt">char</span> <span class="op">*</span>right<span class="op">;</span></span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>                        fgets<span class="op">(</span>line<span class="op">,</span> MAX_LINE<span class="op">,</span> stdin<span class="op">);</span></span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>                        <span class="cf">if</span> <span class="op">(</span>line<span class="op">[</span><span class="dv">0</span><span class="op">]</span> <span class="op">==</span> <span class="ch">'P'</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>                                left <span class="op">=</span> pt<span class="op">;</span></span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>                                right <span class="op">=</span> ct<span class="op">;</span></span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>                                printf<span class="op">(</span><span class="st">&quot;CT: &quot;</span><span class="op">);</span></span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>                        <span class="op">}</span> <span class="cf">else</span> <span class="op">{</span></span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>                                left <span class="op">=</span> ct<span class="op">;</span></span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>                                right <span class="op">=</span> pt<span class="op">;</span></span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>                                printf<span class="op">(</span><span class="st">&quot;PT: &quot;</span><span class="op">);</span></span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>                        <span class="op">}</span></span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>                        <span class="dt">int</span> j<span class="op">;</span></span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>                        <span class="cf">for</span><span class="op">(</span>j <span class="op">=</span> <span class="dv">4</span><span class="op">;</span> line<span class="op">[</span>j<span class="op">]</span> <span class="op">!=</span> <span class="ch">'\n'</span><span class="op">;</span> j<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a>                                <span class="dt">int</span> k<span class="op">;</span></span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a>                                <span class="cf">for</span><span class="op">(</span>k <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> left<span class="op">[</span>k<span class="op">]</span> <span class="op">!=</span> line<span class="op">[</span>j<span class="op">];</span> k<span class="op">++);</span></span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a>                                printf<span class="op">(</span><span class="st">&quot;%c&quot;</span><span class="op">,</span> right<span class="op">[</span>k<span class="op">]);</span></span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a>                        <span class="op">}</span></span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a>                        printf<span class="op">(</span><span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">);</span></span>
+<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a>                <span class="op">}</span></span>
+<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a>                free<span class="op">(</span>pt<span class="op">);</span></span>
+<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a>                free<span class="op">(</span>ct<span class="op">);</span></span>
+<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span> <span class="cf">while</span> <span class="op">(</span>count <span class="op">!=</span> <span class="dv">0</span><span class="op">);</span></span>
+<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a>        free<span class="op">(</span>line<span class="op">);</span></span>
+<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 <p>But there’s a bug in the official test data, and that code won’t work unless the following is fixed:</p>
 <pre class="sourceCode"><code>-5
 +7
  d e h l o r w
  H J L O Q T V</code></pre>
-<a href="#fnref2" class="footnote-back">↩</a></li>
+<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></li>
 </ol>
 </section>
 

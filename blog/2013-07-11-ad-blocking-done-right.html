@@ -47,11 +47,12 @@
         <div id="metadata">
             <ul class="meta">
             
-                <li>tags: <em><a href="../tags/privacy.html">privacy</a>, <a href="../tags/privoxy.html">privoxy</a>, <a href="../tags/proxy.html">proxy</a></em></li>
+                <li>tags: <em><a title="All pages tagged 'privacy'." href="../tags/privacy.html">privacy</a>, <a title="All pages tagged 'privoxy'." href="../tags/privoxy.html">privoxy</a>, <a title="All pages tagged 'proxy'." href="../tags/proxy.html">proxy</a></em></li>
             
             
             <li>posted: <em> July 11, 2013 </em></li>
-            <li>modified: <em> May 25, 2014 </em></li>
+            <li>modified: <em> March 27, 2014
+ </em></li>
             </ul>
         </div>
         <div id="content">
@@ -59,7 +60,9 @@
             <div class="info">
     <!--
     <div class="snippets">
-        <i class="fa fa-calendar"></i> July 11, 2013 <i class="fa fa-cut" May 25, 2014></i> May 25, 2014
+        <i class="fa fa-calendar"></i> July 11, 2013 <i class="fa fa-cut" March 27, 2014
+></i> March 27, 2014
+
     </div>
     -->
     
@@ -91,9 +94,9 @@
 <p>All content that enters your web browser is now at the mercy of your filtering software. This includes cookies, HTTP headers, and even DNS requests if you’re willing to go the <a href="http://en.wikipedia.org/wiki/SOCKS">SOCKS</a> route.</p>
 <p>Privoxy is completely customizable, in all of these areas, from both simple and well-documented configuration files or a web interface that is disabled by default. It offers multiple levels of default configurations, from basic, very safe settings to filtering-rich configuration to all-out complete control over HTTP behavior.</p>
 <p>To use it, you just start the service, then change your browser’s proxy settings to point HTTP and HTTPS traffic to</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="ex">localhost</span>:8118</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">localhost:8118</span></span></code></pre></div>
 <p>Then you will want to edit the configuration files. Then, to configure blocking, you can use <a href="http://andrwe.org/scripting/bash/privoxy-blocklist">privoxy-blocklist.sh</a> and set it as a cronjob if you want regular updates. Otherwise, Privoxy provides great defaults at the medium level of filtering, and user customizations can be added in the file</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="ex">/etc/privoxy/user.action</span></a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">/etc/privoxy/user.action</span></span></code></pre></div>
 <p>in the form of regex + actions as documented in the default action file. Ideas can be found in the various adblocking filterlists out there, but the final decisions are yours.</p>
 <p>This is the method I use, since it forces me to regularly spend time in the privoxy configurations, tweaking and improving the more advanced features that are provided. I suggest playing around with <a href="https://panopticlick.eff.org/">Panopticlick</a> and <a href="http://www.wireshark.org/">wireshark</a> to get an all-around idea of how your browser is behaving, then adjusting the privoxy settings to taste.</p>
 <p>If you are not willing to tinker with this software, then the improvement gained over Adblock Plus is worthwhile but minimal. But for the power user or system administrator, the difference is huge.</p>

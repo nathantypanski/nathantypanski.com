@@ -47,11 +47,12 @@
         <div id="metadata">
             <ul class="meta">
             
-                <li>tags: <em><a href="../tags/wiki.html">wiki</a>, <a href="../tags/workflow.html">workflow</a></em></li>
+                <li>tags: <em><a title="All pages tagged 'wiki'." href="../tags/wiki.html">wiki</a>, <a title="All pages tagged 'workflow'." href="../tags/workflow.html">workflow</a></em></li>
             
             
             <li>posted: <em> July  9, 2014 </em></li>
-            <li>modified: <em> November  3, 2016 </em></li>
+            <li>modified: <em> March 22, 2015
+ </em></li>
             </ul>
         </div>
         <div id="content">
@@ -59,7 +60,9 @@
             <div class="info">
     <!--
     <div class="snippets">
-        <i class="fa fa-calendar"></i> July  9, 2014 <i class="fa fa-cut" November  3, 2016></i> November  3, 2016
+        <i class="fa fa-calendar"></i> July  9, 2014 <i class="fa fa-cut" March 22, 2015
+></i> March 22, 2015
+
     </div>
     -->
     
@@ -67,7 +70,8 @@
 <div id="toc"><h2>Contents</h2>
 <ul>
 <li><a href="#what-i-want">What I want</a></li>
-<li><a href="#gitit">Gitit</a><ul>
+<li><a href="#gitit">Gitit</a>
+<ul>
 <li><a href="#installing">Installing</a></li>
 <li><a href="#customizing">Customizing</a></li>
 </ul></li>
@@ -90,13 +94,13 @@
 <section id="gitit" class="level2">
 <h2>Gitit</h2>
 <p>Oh wait. I’ve seen this before.</p>
-<p><a href="#gitit">Gitit</a> does all that. It’s written in Haskell<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> and pages only get updated when I commit them. I can write pages in LaTeX, markdown, or anything else supported by Pandoc. I get an API that I can mess with. The server backend is <a href="http://happstack.com/page/view-page-slug/1/happstack">Happstack</a>. Why haven’t I been using this?<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a></p>
+<p><a href="#gitit">Gitit</a> does all that. It’s written in Haskell<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> and pages only get updated when I commit them. I can write pages in LaTeX, markdown, or anything else supported by Pandoc. I get an API that I can mess with. The server backend is <a href="http://happstack.com/page/view-page-slug/1/happstack">Happstack</a>. Why haven’t I been using this?<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
 <section id="installing" class="level3">
 <h3>Installing</h3>
 <p>I could’ve installed it with <code>cabal</code> like a good Haskeller, but it was in the Debian repos and I don’t need it on multiple servers yet. So I did:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb1-1" data-line-number="1">$ <span class="fu">sudo</span> aptitude install gitit</a>
-<a class="sourceLine" id="cb1-2" data-line-number="2">$ <span class="fu">mkdir</span> ~/wiki <span class="kw">&amp;&amp;</span> <span class="bu">cd</span> ~/wiki</a>
-<a class="sourceLine" id="cb1-3" data-line-number="3">$ <span class="ex">gitit</span></a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> sudo aptitude install gitit</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> mkdir ~/wiki <span class="kw">&amp;&amp;</span> <span class="bu">cd</span> ~/wiki</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> gitit</span></code></pre></div>
 <p>and I had a wiki.</p>
 </section>
 <section id="customizing" class="level3">
@@ -108,36 +112,36 @@
 <p>nohup yourScript.sh script args&amp;</p>
 </blockquote>
 <p>There’s a script provided that uses pidfiles to ensure it only ran once. I feel like this is something I’ll eventually hack into a set of personal scripts, so I whipped out the following:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="co"># Grep for a process name, excluding grep from the output.</span></a>
-<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="kw">function</span><span class="fu"> psgrep()</span> <span class="kw">{</span></a>
-<a class="sourceLine" id="cb2-3" data-line-number="3">    <span class="fu">ps</span> aux <span class="kw">|</span> <span class="fu">grep</span> <span class="va">$1</span> <span class="kw">|</span> <span class="fu">grep</span> -v grep</a>
-<a class="sourceLine" id="cb2-4" data-line-number="4"><span class="kw">}</span></a>
-<a class="sourceLine" id="cb2-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb2-6" data-line-number="6"><span class="co"># Spawn a daemonized script ($1) only if it is not already started.</span></a>
-<a class="sourceLine" id="cb2-7" data-line-number="7"><span class="co"># If $2 is provided, this will run the daemon in that folder.</span></a>
-<a class="sourceLine" id="cb2-8" data-line-number="8"><span class="kw">function</span><span class="fu"> daemonize_script ()</span> <span class="kw">{</span></a>
-<a class="sourceLine" id="cb2-9" data-line-number="9">    <span class="kw">if [[</span> <span class="ot">-z</span> <span class="va">$(</span><span class="ex">psgrep</span> <span class="va">$1)</span><span class="kw"> ]]</span>; <span class="kw">then</span></a>
-<a class="sourceLine" id="cb2-10" data-line-number="10">        <span class="kw">if [[</span> <span class="ot">-n</span> <span class="va">$2</span><span class="kw"> ]]</span>; <span class="kw">then</span></a>
-<a class="sourceLine" id="cb2-11" data-line-number="11">            <span class="va">olddir=$(</span><span class="bu">pwd</span><span class="va">)</span></a>
-<a class="sourceLine" id="cb2-12" data-line-number="12">            <span class="bu">cd</span> <span class="va">$2</span></a>
-<a class="sourceLine" id="cb2-13" data-line-number="13">        <span class="kw">fi</span></a>
-<a class="sourceLine" id="cb2-14" data-line-number="14">        <span class="fu">nohup</span> <span class="va">$1</span> <span class="op">&gt;</span> /dev/null <span class="op">2&gt;&amp;1</span> <span class="kw">&amp;</span></a>
-<a class="sourceLine" id="cb2-15" data-line-number="15">        <span class="kw">if [[</span> <span class="ot">-n</span> <span class="va">$2</span><span class="kw"> ]]</span>; <span class="kw">then</span></a>
-<a class="sourceLine" id="cb2-16" data-line-number="16">            <span class="bu">cd</span> <span class="va">$olddir</span></a>
-<a class="sourceLine" id="cb2-17" data-line-number="17">        <span class="kw">fi</span></a>
-<a class="sourceLine" id="cb2-18" data-line-number="18">    <span class="kw">fi</span></a>
-<a class="sourceLine" id="cb2-19" data-line-number="19"><span class="kw">}</span></a>
-<a class="sourceLine" id="cb2-20" data-line-number="20"></a>
-<a class="sourceLine" id="cb2-21" data-line-number="21"><span class="ex">daemonize_script</span> gitit ~/wiki</a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Grep for a process name, excluding grep from the output.</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span><span class="fu"> psgrep()</span> <span class="kw">{</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ps</span> aux <span class="kw">|</span> <span class="fu">grep</span> <span class="va">$1</span> <span class="kw">|</span> <span class="fu">grep</span> <span class="at">-v</span> grep</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="kw">}</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Spawn a daemonized script ($1) only if it is not already started.</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co"># If $2 is provided, this will run the daemon in that folder.</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span><span class="fu"> daemonize_script ()</span> <span class="kw">{</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="kw">[[</span> <span class="ot">-z</span> <span class="va">$(</span><span class="ex">psgrep</span> <span class="va">$1)</span> <span class="kw">]];</span> <span class="cf">then</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="kw">[[</span> <span class="ot">-n</span> <span class="va">$2</span> <span class="kw">]];</span> <span class="cf">then</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>            <span class="va">olddir</span><span class="op">=</span><span class="va">$(</span><span class="bu">pwd</span><span class="va">)</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>            <span class="bu">cd</span> <span class="va">$2</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>        <span class="cf">fi</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>        <span class="fu">nohup</span> <span class="va">$1</span> <span class="op">&gt;</span> /dev/null <span class="dv">2</span><span class="op">&gt;&amp;</span><span class="dv">1</span> <span class="kw">&amp;</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="kw">[[</span> <span class="ot">-n</span> <span class="va">$2</span> <span class="kw">]];</span> <span class="cf">then</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>            <span class="bu">cd</span> <span class="va">$olddir</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>        <span class="cf">fi</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">fi</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="kw">}</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a><span class="ex">daemonize_script</span> gitit ~/wiki</span></code></pre></div>
 <p>This starts <code>gitit</code> once, when I start my computer, and then not again.</p>
 <p>Just using <code>grep</code> like this doesn’t work if you have other processes running that have that name in them. So this is pretty weak and not as useful as pidfiles, but it got the job done as a workaround.</p>
 <p>Then I realized I didn’t want <code>~/wiki</code> to have a bunch of gitit stuff in it - I just wanted the pages and Git repo. The repository is in there by default - but how to separate the Gitit data wasn’t obvious.</p>
-<p>My first shot was just to move Gitit to <code>~/.gitit</code> and symlink <code>~/.gitit/wikidata</code> to <code>~/wiki</code>, which worked when I ran it manually, but it broke my simple zsh script. To complicate things more, I also needed to start Gitit with a custom config file,<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a> which has to be passed as an argument like <code>gitit -f my.conf</code>. I <em>could</em> make this work with multiple arguments, but …</p>
+<p>My first shot was just to move Gitit to <code>~/.gitit</code> and symlink <code>~/.gitit/wikidata</code> to <code>~/wiki</code>, which worked when I ran it manually, but it broke my simple zsh script. To complicate things more, I also needed to start Gitit with a custom config file,<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> which has to be passed as an argument like <code>gitit -f my.conf</code>. I <em>could</em> make this work with multiple arguments, but …</p>
 <p>Adding a <code>start_gitit</code> script to my <code>~/bin</code> folder solved this:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="co">#!/usr/bin/env bash</span></a>
-<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="ex">gitit</span> -f <span class="va">$HOME</span>/.gitit/my.conf</a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/usr/bin/env bash</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ex">gitit</span> <span class="at">-f</span> <span class="va">$HOME</span>/.gitit/my.conf</span></code></pre></div>
 <p>So now I’m calling</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="ex">daemonize_script</span> ~/bin/start_gitit ~/.gitit</a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">daemonize_script</span> ~/bin/start_gitit ~/.gitit</span></code></pre></div>
 <p>and that gets the job done. I’m looking forward to spending more time with my daemonizing scripts, since I know they’re worthless as-is, but eventually might prove a useful thing to have around.</p>
 </section>
 </section>
@@ -169,12 +173,12 @@
 </ul></li>
 </ul>
 </section>
-<section class="footnotes">
+<section class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr />
 <ol>
-<li id="fn1"><p>Like Pandoc and <a href="http://jaspervdj.be/hakyll/">Hakyll</a>, which I use for this website.<a href="#fnref1" class="footnote-back">↩</a></p></li>
-<li id="fn2"><p>There was one feature it was missing when I tried it out last time. I can’t remember it anymore. It must not have mattered much.<a href="#fnref2" class="footnote-back">↩</a></p></li>
-<li id="fn3"><p>There isn’t a way to let anyone edit the wiki without a config file. I’m just hosting this locally for myself, so I have no need for a user account system and might eventually figure out a way to remove it.<a href="#fnref3" class="footnote-back">↩</a></p></li>
+<li id="fn1" role="doc-endnote"><p>Like Pandoc and <a href="http://jaspervdj.be/hakyll/">Hakyll</a>, which I use for this website.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2" role="doc-endnote"><p>There was one feature it was missing when I tried it out last time. I can’t remember it anymore. It must not have mattered much.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3" role="doc-endnote"><p>There isn’t a way to let anyone edit the wiki without a config file. I’m just hosting this locally for myself, so I have no need for a user account system and might eventually figure out a way to remove it.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 
