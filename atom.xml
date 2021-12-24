@@ -35,7 +35,7 @@
 <li><a href="#protocols-should-be-defensive-against-implementations">Protocols should be defensive against implementations</a></li>
 <li><a href="#a-better-way-to-sign-json">A better way to sign JSON</a></li>
 </ul> </div>
-<p>JWS is the kind of thing where you could be forgiven for thinking <q>hey, everyone’s using this, so it must be good!</q> JWTs are built on JWS, and lots of people use those. JWS is standardized by the IETF in <a href="https://datatracker.ietf.org/doc/html/rfc7515">RFC7515</a>. If you are investigating ways to sign REST API requests with JSON bodies, JWS is probably one of the first things you’ll look at. I’m hoping that by the time you’re done with this post, you’ll do something else. If you just want to know what that <q>something else</q> is, skip to <a href="#a-better-way-to-sign-json">how to sign REST API requests</a>.</p>
+<p>JWS is the kind of thing where you could be forgiven for thinking <q>hey, everyone’s using this, so it must be good!</q> JWTs are built on JWS, and lots of people use those. JWS is standardized by the IETF in <a href="https://datatracker.ietf.org/doc/html/rfc7515">RFC7515</a>. If you are investigating ways to sign REST API requests with JSON bodies, JWS is probably one of the first things you’ll look at. I’m hoping that by the time you’re done with this post, you’ll do something else. If you just want to know what that <q>something else</q> is, skip to <a href="#a-better-way-to-sign-json">the bottom</a>.</p>
 <p>In this post, I will show how the JWS standard encourages implementations to structure their validation logic in an insecure manner. Thus JWTs, being built upon a rotten foundation, are themselves insecure—or at least very difficult to implement securely. Then I will provide suggestions on alternatives to JWS.</p>
 <p>Here’s an example JWS from that RFC:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
@@ -197,262 +197,6 @@
 <p>are <a href="https://www.imperialviolet.org/2014/06/27/streamingencryption.html">dangerous</a>. But this problem can be resolved by using <code>signify</code> to sign the encrypted blobs, and always verifying data before decrypting it.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
-]]></summary>
-</entry>
-<entry>
-    <title>2021-12-24-jws-nightmare</title>
-    <link href="http://www.nathantypanski.com/blog/2021-12-24-jws-nightmare.html" />
-    <id>http://www.nathantypanski.com/blog/2021-12-24-jws-nightmare.html</id>
-    <published>2021-12-24T00:00:00Z</published>
-    <updated>2021-12-24T00:00:00Z</updated>
-    <summary type="html"><![CDATA[<div class="info">
-    <!--
-    <div class="snippets">
-        <i class="fa fa-calendar"></i> December 24, 2021 <i class="fa fa-cut" ></i> 
-    </div>
-    -->
-    
-</div>
-<meta charset="UTF-8">
-<div id="header">
-<div id="logo">
-<a href="../"><img src="../images/log0.png" class="img" /></a>
-</div>
-<div id="navigation">
-<ul>
-<li><a href="../blog.html">Blog <em></em></a></li>
-<li><a href="../pages.html">Writing <em></em></a></li>
-<li><a href="../worklog.html">Worklog <em></em></a></li>
-<li><a href="../contact.html">Contact <em></em></a></li>
-</ul>
-</div>
-</div>
-<div id="metadata">
-<ul>
-<li>tags: <em><a href="../tags/JWT.html" title="All pages tagged &#39;JWT&#39;.">JWT</a>, <a href="../tags/JWS.html" title="All pages tagged &#39;JWS&#39;.">JWS</a>, <a href="../tags/evil.html" title="All pages tagged &#39;evil&#39;.">evil</a></em></li>
-<li>posted: <em>December 24, 2021</em></li>
-<li>modified: <em>Dec 24, 2021</em></li>
-</ul>
-</div>
-<div id="content">
-<section id="jws-is-a-nightmare" class="level1">
-<h1>JWS is a nightmare</h1>
-<div class="info">
-<!--
-    <div class="snippets">
-        <i class="fa fa-calendar"></i> December 24, 2021 <i class="fa fa-cut" Dec 24, 2021
-></i> Dec 24, 2021
-
-    </div>
-    -->
-</div>
-<div id="toc">
-<section id="contents" class="level2">
-<h2>Contents</h2>
-<ul>
-<li><a href="#cryptographic-doom">Cryptographic doom</a></li>
-<li><a href="#verifying-a-jws">Verifying a JWS</a>
-<ul>
-<li><a href="#attacker-controlled-algorithms">Attacker-controlled algorithms</a></li>
-</ul></li>
-<li><a href="#protocols-should-be-defensive-against-implementations">Protocols should be defensive against implementations</a></li>
-<li><a href="#a-better-way-to-sign-json">A better way to sign JSON</a></li>
-</ul>
-</section>
-</div>
-<p>JWS is the kind of thing where you could be forgiven for thinking <q>hey, everyone’s using this, so it must be good!</q> JWTs are built on JWS, and lots of people use those. JWS is standardized by the IETF in <a href="https://datatracker.ietf.org/doc/html/rfc7515">RFC7515</a>. If you are investigating ways to sign REST API requests with JSON bodies, JWS is probably one of the first things you’ll look at. I’m hoping that by the time you’re done with this post, you’ll do something else. If you just want to know what that <q>something else</q> is, skip to <a href="#a-better-way-to-sign-json">how to sign REST API requests</a>.</p>
-<p>In this post, I will show how the JWS standard encourages implementations to structure their validation logic in an insecure manner. Thus JWTs, being built upon a rotten foundation, are themselves insecure—or at least very difficult to implement securely. Then I will provide suggestions on alternatives to JWS.</p>
-<p>Here’s an example JWS from that RFC:</p>
-<div id="cb1" class="sourceCode">
-<div class="sourceCode" id="cb1"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a> <span class="dt">&quot;payload&quot;</span><span class="fu">:</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;eyJpc3MiOiJqb2UiLA0KICJleHAiOjEzMDA4MTkzODAsDQogImh0dHA6Ly9leGFtcGxlLmNvbS9pc19yb290Ijp0cnVlfQ&quot;</span><span class="fu">,</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a> <span class="dt">&quot;protected&quot;</span><span class="fu">:</span><span class="st">&quot;eyJhbGciOiJFUzI1NiJ9&quot;</span><span class="fu">,</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a> <span class="dt">&quot;header&quot;</span><span class="fu">:</span> <span class="fu">{</span><span class="dt">&quot;kid&quot;</span><span class="fu">:</span><span class="st">&quot;e9bc097a-ce51-4036-9562-d2ade882db0d&quot;</span><span class="fu">},</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a> <span class="dt">&quot;signature&quot;</span><span class="fu">:</span> <span class="st">&quot;DtEhU3ljbEg8L38VWAfUAqOyKAM6-Xx-F4GawxaepmXFCgfTjDxw5djxLa8ISlSApmWQxfKTUJqPP3-Kg6NU1Q&quot;</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
-</div>
-<p>The payload and <code>protected</code> fields are base64-encoded without padding. The <code>payload</code> looks like this:</p>
-<div id="cb2" class="sourceCode">
-<div class="sourceCode" id="cb2"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span><span class="dt">&quot;iss&quot;</span><span class="fu">:</span><span class="st">&quot;joe&quot;</span><span class="fu">,</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a> <span class="dt">&quot;exp&quot;</span><span class="fu">:</span><span class="dv">1300819380</span><span class="fu">,</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a> <span class="dt">&quot;http://example.com/is_root&quot;</span><span class="fu">:</span><span class="kw">true</span><span class="fu">}</span></span></code></pre></div>
-</div>
-<p>And here’s the <code>protected</code> field:</p>
-<div id="cb3" class="sourceCode">
-<div class="sourceCode" id="cb3"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span><span class="dt">&quot;alg&quot;</span><span class="fu">:</span><span class="st">&quot;ES256&quot;</span><span class="fu">}</span></span></code></pre></div>
-</div>
-<p>ES256 is the ECDSA P-256 SHA-256 digital signature algorithm.</p>
-<section id="cryptographic-doom" class="level2">
-<h2>Cryptographic doom</h2>
-<p>Moxie Marlinspike coined the <a href="https://moxie.org/2011/12/13/the-cryptographic-doom-principle.html"><em>cryptographic doom principle</em></a> in 2011 to refer to a pattern he had seen in implementations of message authentication codes (MACs). It generalizes the kinds of flaws found in <a href="https://www.iacr.org/cryptodb/archive/2002/EUROCRYPT/2850/2850.pdf">Vaudenay’s famous 2002 paper</a> and <a href="https://www.isg.rhul.ac.uk/~kp/SandPfinal.pdf">SSH plaintext recovery</a> into a principle:</p>
-<blockquote>
-<p>If you have to perform any cryptographic operation before verifying the MAC on a message you’ve received, it will somehow inevitably lead to doom.</p>
-</blockquote>
-<p>An extraordinarily common example of cryptographic doom is to calculate MACs based on plaintext in an encrypted message payload. To check the authenticity of a message, recipients must necessarily decrypt the message. In Vaudenay’s attack, we exploit this construction to recover plaintext from encrypted messages, using only a single bit of information in servers’ responses (padding error or MAC error).</p>
-<p>In other words, when designing cryptographic protocols, we should <strong>strive to authenticate data as early as possible.</strong> Keep that in mind as you read the rest of this post.</p>
-</section>
-<section id="verifying-a-jws" class="level2">
-<h2>Verifying a JWS</h2>
-<p>Let’s take another look at the example JWS object from earlier.</p>
-<div id="cb4" class="sourceCode">
-<div class="sourceCode" id="cb4"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a> <span class="dt">&quot;payload&quot;</span><span class="fu">:</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;eyJpc3MiOiJqb2UiLA0KICJleHAiOjEzMDA4MTkzODAsDQogImh0dHA6Ly9leGFtcGxlLmNvbS9pc19yb290Ijp0cnVlfQ&quot;</span><span class="fu">,</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a> <span class="dt">&quot;protected&quot;</span><span class="fu">:</span><span class="st">&quot;eyJhbGciOiJFUzI1NiJ9&quot;</span><span class="fu">,</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a> <span class="dt">&quot;header&quot;</span><span class="fu">:</span> <span class="fu">{</span><span class="dt">&quot;kid&quot;</span><span class="fu">:</span><span class="st">&quot;e9bc097a-ce51-4036-9562-d2ade882db0d&quot;</span><span class="fu">},</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a> <span class="dt">&quot;signature&quot;</span><span class="fu">:</span> <span class="st">&quot;DtEhU3ljbEg8L38VWAfUAqOyKAM6-Xx-F4GawxaepmXFCgfTjDxw5djxLa8ISlSApmWQxfKTUJqPP3-Kg6NU1Q&quot;</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
-</div>
-<p>In order to verify this, we need to do the following:</p>
-<ol type="1">
-<li><p><code>base64urldecode()</code> the <code>protected</code> attribute.</p></li>
-<li><p>Deserialize the <code>protected</code> attribute into JSON.</p></li>
-<li><p>Calculate the JOSE header as the union of the <code>protected</code> object and the JWS (<q>unprotected</q>) object.</p></li>
-<li><p>Verify that the implementation understands and can process the algorithm and any fields in the <code>crit</code> header.</p></li>
-<li><p><code>base64urldecode()</code> the <code>payload</code> attribute.</p></li>
-<li><p><code>base64urldecode()</code> the <code>signature</code> attribute.</p></li>
-<li><p>Determine the verification algorithm to use by extracting it from the decoded <code>protected</code> header.</p></li>
-<li><p>Construct the JWS signing input by concatenating encoded <code>protected</code> and <code>payload</code> headers together with a <q>.</q> character.</p>
-<p><span class="math display">\[ \begin{aligned} &amp; \texttt{ascii}(\texttt{base64urlencode}(\texttt{utf-8}(\texttt{protected}))) \\ &amp; \qquad || \quad ``.” \\ &amp; \qquad || \quad \texttt{base64urldecode}(\texttt{payload}) \end{aligned} \]</span></p></li>
-<li><p>Using the algorithm from (8), verify the JWS.</p></li>
-</ol>
-<p>Every step in this list prior to (9) is an opportunity for attackers to modify objects that are deserialized into JSON, control the algorithm in use by the system, and generally mess around where we expect contents to be integrity-protected.</p>
-<p>Moreover, the fact that we are required to perform so many deserialization, decoding, and conditional algorithm selection operations prior to JWS verification invites implementations to make bad decisions about error handling. It might be tempting, to an implementor of JWS verification, to return <q>helpful</q> error messages about the validity of the JSON objects inside at step (5) before moving on to verification.</p>
-<p>We should strive to introduce minimal transformations prior to signature verification. By requiring deserialization into JSON objects, the design invites implementations to perform early deserialization into application objects, potentially exposing themselves to <a href="https://github.com/advisories?query=cwe%3A502">major deserialization bugs</a> with untrusted input data.</p>
-<section id="attacker-controlled-algorithms" class="level3">
-<h3>Attacker-controlled algorithms</h3>
-<p>As <a href="https://auth0.com/blog/critical-vulnerabilities-in-json-web-token-libraries/">Auth0 discovered in late 2020</a>, allowing the attacker to control the algorithm used for signing affords them a number of options to bypass signature checks.</p>
-<p>In the simplest case, setting the <code>algorithm</code> field to <code>none</code> and using an empty signature value (<code>""</code>) results in successful verification for any key.</p>
-<p>The more complex attack requires the victim to use public key encryption algorithms and publish the public key. If the server supports <code>RS256</code> RSA signatures, attackers can encode the public key into PEM and use it as an HMAC key to sign a message with the <code>HS256</code> algorithm. Unless the library (or server) strictly enforces the algorithm to use for each key ID, it will pass validation.<a href="#fn1" id="fnref1" class="footnote-ref"><sup>1</sup></a></p>
-<p>The solution to this is to distrust the client’s provided algorithm. If we’re verifying a client’s JWS, then we probably already have their public key. From this key, we can derive the algorithm in use for the client (or store it, in our database, along with the key and <code>kid</code>). When we are presented with a new JWS to verify, we should use the algorithm specified for this key.</p>
-<p>The final version of the JWS RFC now includes a section on <a href="https://datatracker.ietf.org/doc/html/rfc7515#section-10.7">algorithm protection</a> addressing this issue, but it fails to be presecriptive about mitigations. According to the RFC, implementations can choose to</p>
-<ul>
-<li>only support algorithms that are not vulnerable to substitution attacks,</li>
-<li>require the <code>alg</code> header be carried in the JWS protected header,</li>
-<li>or include a field containing the algorithm in the application payload, and match it with the <code>alg</code> header.</li>
-</ul>
-<p>Unfortunately, none of these mitigations include deriving the algorithm from the <code>kid</code> parameter, by far the most obviously correct mitigation.</p>
-<section id="paseto" class="level4">
-<h4>PASETO</h4>
-<p><a href="https://github.com/paseto-standard/paseto-spec">PASETO</a> is an alternative JWT-like design that attempts to fix the algorithm selection bug. It uses protocol versions to specify algorithms, which is a generally-accepted good practice, and supports sound cryptographic algorithms like Ed25519. Unlike JWS, it does not support extensions by means of a <code>crit</code> parameter. In fact, it only allows two options:</p>
-<ol type="1">
-<li><code>version</code>, indicating the ciphersuite to use.</li>
-<li><code>purpose</code>, where a value of <code>local</code> means symmetric-key encryption and <code>public</code>means public-key signatures.</li>
-</ol>
-<p>Unfortunately, the PASETO design invites <a href="https://mailarchive.ietf.org/arch/msg/cfrg/Yd85GHaPfkUYvCsWAdikByQsiLQ/">remarkably similar bugs to JWS</a>, since attackers may control the protocol version instead of the algorithm directly. Now the PASETO spec includes <a href="https://github.com/paseto-standard/paseto-spec/blob/master/docs/02-Implementation-Guide/03-Algorithm-Lucidity.md">warnings to strongly type the algorithm in use</a>, just like JWS.</p>
-</section>
-</section>
-</section>
-<section id="protocols-should-be-defensive-against-implementations" class="level2">
-<h2>Protocols should be defensive against implementations</h2>
-<p>I’m not a cryptographer, so when I’m forced to grapple with something involving cryptography, I like it to be so stupid simple that it’s obviously correct. If I’m reviewing code that includes cryptography parts, I want it to be so obviously flawless that there’s no debate—even among relative amateurs—about its correctness.</p>
-<p>Primitives should be outsourced to sound, well-regarded libraries where possible. In fact, as much as we can should build upon a battle-tested, fuzzed, expertly-developed implementation.</p>
-<p>When designing security protocols, we should be making this kind of dead-simple implementation as easy and obvious as possible for software. Now, I’m not talking about <em>primitives</em> here, although certain modern primitives are <a href="https://ed25519.cr.yp.to/python/ed25519.py">remarkably simple</a>. I mean that the composition of primitives into a functioning security protocol should, to the extent possible, by extremely obvious.</p>
-<p>A major mistake we see again and again in the first generation of internet security protocols is kitchen-sink design. SSL/TLS with its configurable ciphersuites, the Eldritch horror of PGP email signatures, and other early security standards are victims of this. SSL/TLS assumes that implementations can correctly handle things like ciphersuite negotiation. PGP is a <a href="https://blog.cryptographyengineering.com/2014/08/13/whats-matter-with-pgp/">graveyard</a> of this type of <a href="https://latacora.micro.blog/2019/07/16/the-pgp-problem.html">complexity</a>. JWS, despite its marketing as <q>just signed JSON objects,</q> is the polar opposite of obvious protocol. It exposes algorithm selection to the client, verification requires multiple steps of deserialization, encoding, and serialization, and it is far too extensible for its own good.</p>
-<p>Modern tools are going the other way. <a href="https://jedisct1.github.io/minisign/">Minisign</a>, <a href="https://www.openbsd.org/papers/bsdcan-signify.html">OpenBSD Signify</a> and <a href="https://age-encryption.org/v1">age</a> are relentlessly simple, electing to do one thing well and no more.<a href="#fn2" id="fnref2" class="footnote-ref"><sup>2</sup></a> Facebook <a href="https://eprint.iacr.org/2018/413.pdf">crypto auth tokens</a> use a clever construction of nested MACs to support per-service auth tokens without explicit key sharing, but it’s still simple enough that you can implement it by nesting library calls.</p>
-</section>
-<section id="a-better-way-to-sign-json" class="level2">
-<h2>A better way to sign JSON</h2>
-<p>Most mistakes in request signing protocols stem from serializing, parsing, and decoding the object <a href="https://www.daemonology.net/blog/2008-12-18-AWS-signature-version-1-is-insecure.html">prior to verification</a>. Don’t do those steps. Most of the time it doesn’t matter.</p>
-<p>If you need <q>deniability</q>—unforgeability of messages by the server, then use Ed25519. This is unnecessary for most web APIs, but it is important in some cases, like <a href="https://shufflesharding.com/posts/aws-sigv4-and-sigv4a">AWS multi-region access points</a>. If you trust the server, then use HMAC-SHA256, a symmetric authentication algorithm. <strong>Do not support both of these at once</strong>. Think long and hard about what is appropriate for your application.</p>
-<p>Have clients serialize the JSON object they wish to sign into a bytestring <code>json_bytes</code>. Now your signature algorithm becomes just:</p>
-<p><span class="math display">\[ \texttt{sign}(\texttt{json_bytes},\ \texttt{key}).\]</span></p>
-<p>And verification?</p>
-<p><span class="math display">\[ \texttt{verify}(\texttt{json_bytes},\ \texttt{key}).\]</span></p>
-<p>This is the method recommended by Latacora Security in <a href="https://latacora.micro.blog/2019/07/24/how-not-to.html">How (not) to sign a JSON object</a>.</p>
-<p>Notice that verification does not require deserialization, nor character decoding! If the payload is a JSON object, we can safely deserialize it after verification. If you want, you can use <a href="https://www.openbsd.org/papers/bsdcan-signify.html">OpenBSD Signify</a> so that clients have readily available CLI and library tooling support.</p>
-<p>Now, this has the downside that two identical JSON objects may not result in identical signatures. Fortunately, this does not generally matter, and in any case it probably matters less than the correctness of your cryptographic system. If you need to check the equality of two requests, you can generally verify, deserialize, canonicalize and compare them inside your application server logic as necessary. Plus, this way when you find a bug in your canonicalization logic, you can fix it without forcing your clients to update.</p>
-</section>
-<section class="footnotes footnotes-end-of-document" role="doc-endnotes">
-<hr />
-<ol>
-<li><div id="fn1">
-<p>The following code has two major problems. The first is that we are returning <q>helpful</q> error messages related to the application <a href="#cryptographic-doom">prior to header verification</a>, potentially leaking bits of information an attacker can use to exploit our application. The second is that we allow the <q>algorithm</q> field to be attacker-controlled, leaving us open to <a href="#attacker-controlled-algorithms">algorithm selection attacks</a>.</p>
-<div id="cb5" class="sourceCode">
-<div class="sourceCode" id="cb5"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> verify_jws(jws_string):</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    jws <span class="op">=</span> json.loads(string)</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Decode protected.</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    protected_decoded <span class="op">=</span> base64urldecode(jws[<span class="st">&#39;protected&#39;</span>])</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Deserialize protected into JSON.</span></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    protected <span class="op">=</span> json.loads(protected_decoded)</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Calculate the JOSE header.</span></span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    jose <span class="op">=</span> jws <span class="op">|</span> protected</span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Verify that the implementation understands and can process any fields in</span></span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>    <span class="co"># the &quot;crit&quot; header.</span></span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> header <span class="kw">in</span> protected[<span class="st">&#39;crit&#39;</span>]:</span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="kw">not</span> header <span class="kw">in</span> supported_critical_headers:</span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>            <span class="cf">raise</span> JWSError(<span class="st">&#39;Unsupported Header&#39;</span>)</span>
-<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Verify expected headers are present</span></span>
-<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="kw">not</span> <span class="st">&#39;exp&#39;</span> <span class="kw">in</span> protected[<span class="st">&#39;crit&#39;</span>]:</span>
-<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>        <span class="cf">raise</span> JWSError(<span class="st">&#39;expected &quot;exp&quot; header&#39;</span>)</span>
-<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="kw">not</span> <span class="st">&#39;nbf&#39;</span> <span class="kw">in</span> protected[<span class="st">&#39;crit&#39;</span>]:</span>
-<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>        <span class="cf">raise</span> JWSError(<span class="st">&#39;expected &quot;exp&quot; header&#39;</span>)</span>
-<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Decode the &quot;payload&quot; attribute</span></span>
-<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>    payload_decoded <span class="op">=</span> base64urldecode(jws[<span class="st">&#39;payload&#39;</span>])</span>
-<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>    payload <span class="op">=</span> json.loads(payload_decoded)</span>
-<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Decode the &quot;signature&quot; attribute</span></span>
-<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>    signature <span class="op">=</span> base64urldecode(jws[<span class="st">&#39;signature&#39;</span>])</span>
-<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Reject invalid timestamps</span></span>
-<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>    expiration <span class="op">=</span> datetime.utcfromtimestamp(<span class="bu">int</span>(payload[<span class="st">&#39;exp&#39;</span>]))</span>
-<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a>    not_before <span class="op">=</span> datetime.utcfromtimestamp(<span class="bu">int</span>(payload[<span class="st">&#39;nbf&#39;</span>]))</span>
-<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a>    now <span class="op">=</span> datetime.now()</span>
-<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> now <span class="op">&gt;</span> expiration:</span>
-<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a>        <span class="cf">raise</span> JWSError(<span class="st">&quot;JWS is expired&quot;</span>)</span>
-<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> not_before <span class="op">&gt;</span> now:</span>
-<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a>        <span class="cf">raise</span> JWSError(<span class="st">&quot;JWS is not valid yet&quot;</span>)</span>
-<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Verify the application can handle the supplied request.</span></span>
-<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Raises UnsupportedAttributesError if invalid.</span></span>
-<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a>    validate_attributes(jose)</span>
-<span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-44"><a href="#cb5-44" aria-hidden="true" tabindex="-1"></a>    algorithm <span class="op">=</span> protected[<span class="st">&#39;algorithm&#39;</span>]</span>
-<span id="cb5-45"><a href="#cb5-45" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="kw">not</span> algorithm <span class="kw">in</span> supported_algorithms:</span>
-<span id="cb5-46"><a href="#cb5-46" aria-hidden="true" tabindex="-1"></a>        msg <span class="op">=</span> <span class="st">&quot;</span><span class="sc">{0}</span><span class="st"> is unsupported&quot;</span>.<span class="bu">format</span>(algorithm)</span>
-<span id="cb5-47"><a href="#cb5-47" aria-hidden="true" tabindex="-1"></a>        <span class="cf">raise</span> JWSUnsupportedAlgorithmError(msg)</span>
-<span id="cb5-48"><a href="#cb5-48" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-49"><a href="#cb5-49" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Calculate the signature payload.</span></span>
-<span id="cb5-50"><a href="#cb5-50" aria-hidden="true" tabindex="-1"></a>    signature_payload <span class="op">=</span> (base64url(protected_decoded.encode(<span class="st">&#39;utf-8&#39;</span>))</span>
-<span id="cb5-51"><a href="#cb5-51" aria-hidden="true" tabindex="-1"></a>                        <span class="op">+</span> <span class="st">&#39;.&#39;</span> <span class="op">+</span> base64url(payload_decoded)).encode(<span class="st">&#39;ascii&#39;</span>)</span>
-<span id="cb5-52"><a href="#cb5-52" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-53"><a href="#cb5-53" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Verify with the provided algorithm.</span></span>
-<span id="cb5-54"><a href="#cb5-54" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> verify_payload(algorithm, signature_payload)</span></code></pre></div>
-</div>
-<a href="#fnref1" class="footnote-back">↩︎</a>
-</div></li>
-<li><div id="fn2">
-<p>Unfortunately, this simplicity can be to a fault. The new <code>age</code> encryption tool does not support public key authentication, meaning constructs such as</p>
-<div id="cb6" class="sourceCode">
-<div class="sourceCode" id="cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> curl <span class="st">&quot;</span><span class="va">${ENCRYPTED_TARBALL_URL}</span><span class="st">&quot;</span> age <span class="at">--decrypt</span> <span class="kw">|</span> <span class="fu">tar</span> xf</span></code></pre></div>
-</div>
-<p>are <a href="https://www.imperialviolet.org/2014/06/27/streamingencryption.html">dangerous</a>. But this problem can be resolved by using <code>signify</code> to sign the encrypted blobs, and always verifying data before decrypting it.<a href="#fnref2" class="footnote-back">↩︎</a></p>
-</div></li>
-</ol>
-</section>
-</section>
-</div>
-<div id="footer">
-<p>Content © 2012-2021 Nathan Typanski and licensed under a<br />
-<a href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>. Opinions are my own and not the views of my employer. <a href="../website.html">About this site.</a> <!-- p--></p>
-<p><a href="http://creativecommons.org/licenses/by/4.0/"><img src="https://i.creativecommons.org/l/by/4.0/80x15.png" style="border-width:0" alt="Creative Commons License" /></a></p>
-<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-  ga('create', 'UA-37825924-1', 'nathantypanski.com');
-  ga('send', 'pageview');
-
-</script>
-</div>
 ]]></summary>
 </entry>
 <entry>
@@ -1292,6 +1036,94 @@ Applied autostash.</code></pre>
 <ol>
 <li id="fn1" role="doc-endnote"><p>Defining commands for patterns of input is one of those tricks you pick up once you’ve used LaTeX for more than a handful of documents. The advantage of doing it this way is that if I want to change the convention used to represent the <a href="http://en.wikipedia.org/wiki/Logic_level">logic level</a> of my signals, I can just change it in one place and it gets updated in the rest of the document.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn2" role="doc-endnote"><p>So it might be wrong—go read the spec if you <em>really</em> care.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+]]></summary>
+</entry>
+<entry>
+    <title>Solving a second-order ODE with NumPy and SciPy</title>
+    <link href="http://www.nathantypanski.com/blog/2014-08-23-ode-solver-py.html" />
+    <id>http://www.nathantypanski.com/blog/2014-08-23-ode-solver-py.html</id>
+    <published>2014-08-23T00:00:00Z</published>
+    <updated>2014-08-23T00:00:00Z</updated>
+    <summary type="html"><![CDATA[<div class="info">
+    <!--
+    <div class="snippets">
+        <i class="fa fa-calendar"></i> August 23, 2014 <i class="fa fa-cut" March 22, 2015
+></i> March 22, 2015
+
+    </div>
+    -->
+    
+</div>
+<div id="toc"><h2>Contents</h2>
+<ul>
+<li><a href="#problem">Problem</a></li>
+<li><a href="#analytic-solution">Analytic solution</a></li>
+<li><a href="#python">Python</a></li>
+</ul> </div>
+<p>I was going through my ODE notes the other day and wondered if I could solve any of them with Python. I gave it a shot for one of the simpler equations, and here are my results (with analytic solution included for comparison).</p>
+<section id="problem" class="level2">
+<h2>Problem</h2>
+<p>Say we have the equation</p>
+<p><span class="math display">\[ y&#39;&#39; + y&#39; + 2y = 0, \]</span></p>
+<p>where <span class="math inline">\(y\)</span> is a function of <span class="math inline">\(t\)</span> and the initial values <span class="math inline">\(y(0) = 1\)</span>, <span class="math inline">\(y&#39;(0)=0\)</span>. Can we write an equation for <span class="math inline">\(y\)</span>, or at least get some answers about its behavior?</p>
+<p>In real life, this sort of problem often comes up when you’re dealing with a circuit containing a <a href="http://en.wikipedia.org/wiki/Capacitor">capacitor</a> that discharges through an <a href="http://en.wikipedia.org/wiki/Inductor">inductor</a> over time, and you want to analyze the voltage or current going through any given part of the circuit while this happens. Generally speaking, this is only one small part of a real-life circuit problem: you know that when you flip some switch, the circuit can be simplified to the above equation and that lets you solve it for some range <span class="math inline">\(t_1 &lt; t &lt; t_2\)</span>, where <span class="math inline">\(t_1\)</span> and <span class="math inline">\(t_2\)</span> are the time boundaries where you <em>didn’t</em> have the switch thrown.</p>
+<p>Our analytic solution will let us write an equation for <span class="math inline">\(y\)</span> that’s solvable for any time <span class="math inline">\(t\)</span>, but the numeric solution in Python will just give us answers in some range that we actually calculate. Depending on what we’re trying to do with the answer, the numeric solution might be all that we need.</p>
+</section>
+<section id="analytic-solution" class="level2">
+<h2>Analytic solution</h2>
+<p>If you’ve taken a class on ordinary differential equations, then you should recognize this as a second-order linear homogeneous ODE with constant coefficients. If you haven’t, no big deal then either. Regardless, I’ll go over the exact analytical answer, since it’s pretty easy to find in this case.</p>
+<p>An equation of the form <span class="math display">\[ \alpha y&#39;&#39;+\beta y&#39;+ \gamma y=0, \]</span> where <span class="math inline">\(\alpha\)</span>, <span class="math inline">\(\beta\)</span>, <span class="math inline">\(\gamma\)</span> are some constants, has a characteristic equation <span class="math display">\[\alpha r^2 + \beta r + \gamma=0.\]</span> Once we have this characteristic equation we can avoid actually doing any calculus and just solving that quadratic. So our characteristic equation here is <span class="math display">\[r^2+r+2=0\]</span> and its roots <span class="math inline">\(r_{1,2}\)</span> are <span class="math display">\[r_{1,2} = \frac{-1 \pm \sqrt{-7}}{2},\]</span> found using the quadratic equation <span class="math display">\[x=\frac{-b\pm \sqrt{b^2 -4ac}}{2a}.\]</span> Noting that <span class="math inline">\(r_{1,2}\)</span> are both complex, the general form for our solution here is thus<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> <span class="math display">\[y=e^{\alpha t}(c_1 \cos{\beta t} + c_2 \sin{\beta t}).\]</span></p>
+<p>Once we have the general form of our solution, we plug in the known values and then we have to solve for the constants using the initial values. So we have <span class="math display">\[y=e^{-\frac{t}{2}}\left(c_1\cos{\frac{\sqrt{7}t}{2}} + c_2\sin{\frac{\sqrt{7}t}{2}}\right),\]</span> and we need to find <span class="math inline">\(c_{1,2}\)</span> for that equation. If we try this for <span class="math inline">\(t=0\)</span>, <span class="math inline">\(y(0)=1\)</span> we find <span class="math display">\[ 1=e^{-\frac{0}{2}}(c_1 \cos{0} + c_2 \sin{0}), \]</span> so <span class="math inline">\(c_1=1\)</span>. Then for the second part of this we have to differentiate our solution first, finding that <span class="math display">\[y&#39; = \frac{-1}{2}e^{-\frac{t}{2}}\left(\cos{\frac{\sqrt{7}t}{2}} + c_2\sin{\frac{\sqrt{7}t}{2}}\right)
++ e^{-\frac{t}{2}}\left( -\frac{\sqrt{7}}{2} \sin{\frac{\sqrt{7}t}{2}}
++ c_2 \frac{\sqrt{7}}{2}\cos{\frac{\sqrt{7}t}{2}}\right)\]</span> which for <span class="math inline">\(t=0\)</span>, <span class="math inline">\(y&#39;(0)=0\)</span> reduces to <span class="math display">\[0=-\frac{1}{2}+c_2 \frac{\sqrt{7}}{2},\]</span> and thus <span class="math inline">\(c_2=\frac{1}{\sqrt{7}}\)</span> and our solution is <span class="math display">\[y=e^{-\frac{t}{2}}\left(\cos\frac{\sqrt 7 t}{2} + \frac{\sin \frac{\sqrt 7 t}{2}}{\sqrt 7}\right).\]</span></p>
+<p>Purely from an analytic standpoint we can tell that this is <a href="http://en.wikipedia.org/wiki/Harmonic_oscillator">harmonic oscillator</a> with a strong cosine term and a weak sine term that starts at 1 and eventually dampens, tending toward 0. That makes sense: it’s what you’d expect to see if you have a capacitor discharging and there’s nothing to supply energy back into the circuit over time.</p>
+</section>
+<section id="python" class="level2">
+<h2>Python</h2>
+<p>It turns out we can get a numerical solution to this kind of problem using Python’s excellent <a href="http://www.numpy.org/">NumPy</a> module and the <a href="http://scipy.org/">SciPy</a> toolkit without doing very much work at all. The <a href="http://docs.scipy.org/doc/scipy/reference/integrate.html"><code>scipy.integrate.odeint</code></a> function is of particular interest here. One problem: it only works for first-order ODEs of the form <span class="math display">\[\frac{\mathrm d y}{\mathrm d t} = f(y,t_0,\ldots), \]</span> so we need to do some twisting to get our original problem in that form.</p>
+<p>If we’re trying to solve <span class="math display">\[ y&#39;&#39; + y&#39; + 2y = 0, \]</span> we can transform this into a first-order ODE with some simple variable substitution. Define <span class="math inline">\(x_2(t)=y&#39;(t)\)</span> and <span class="math inline">\(x_1(t)=y(t)\)</span> for some equation <span class="math inline">\(y&#39;&#39; =Ay&#39;+By\)</span>. Then we have <span class="math inline">\(x_1&#39;=y&#39;=x_2\)</span> and <span class="math inline">\(x_2&#39;=y&#39;&#39;=Ax_1-Bx_2\)</span>. Thus we can simplify our original equation into a system of equations <span class="math display">\[\begin{align}
+x_1&#39; &amp;=x_2,\\
+x_2&#39; &amp;=Ax_1-Bx_2.\\
+\end{align}\]</span> In our original equation this means <span class="math display">\[ \begin{align}
+x_1&#39; &amp;= x_2, &amp; x_1(0) &amp;=1, \\
+x_2&#39; &amp;= -2x_1 - x_2, &amp; x_2(0) &amp;=0, \\
+\end{align} \]</span> which we can pretty much just plug into <code>scipy.integrate.odeint</code> directly.</p>
+<p>To do this we need to write a function that takes a matrix <span class="math inline">\(Y\)</span> and a time <span class="math inline">\(t\)</span> and returns a new matrix with the values of <span class="math inline">\(x_1&#39;, x_2&#39;\)</span> for that time. We can pretty much just ignore the <span class="math inline">\(t\)</span> argument and write</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy <span class="im">import</span> integrate</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> solvr(Y, t):</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> [Y[<span class="dv">1</span>], <span class="op">-</span><span class="dv">2</span> <span class="op">*</span> Y[<span class="dv">0</span>]<span class="op">-</span>Y[<span class="dv">1</span>]]</span></code></pre></div>
+<p>Which is equivalent to our system of equations above, excluding the initial values.</p>
+<p>Then to get the solution:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> main():</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    a_t <span class="op">=</span> np.arange(<span class="dv">0</span>, <span class="fl">25.0</span>, <span class="fl">0.01</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    asol <span class="op">=</span> integrate.odeint(solvr, [<span class="dv">1</span>, <span class="dv">0</span>], a_t)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(asol)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="va">__name__</span> <span class="op">==</span> <span class="st">&#39;__main__&#39;</span>:</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    main()</span></code></pre></div>
+<p>Running this at the command line will give a numeric value for <span class="math inline">\(y\)</span> (and <span class="math inline">\(y&#39;\)</span>, which we don’t care about) at each time <span class="math inline">\(t\)</span> in the range <span class="math inline">\(0 \leq t \leq 25\)</span>, in increments of 0.01. If we wanted a more exact solution, we could do this in smaller increments and get more numbers.</p>
+<p>If we stack our data up into a 3-column array in the <code>main()</code> function and write this to a CSV:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> main():</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    a_t <span class="op">=</span> np.arange(<span class="dv">0</span>, <span class="fl">25.0</span>, <span class="fl">0.01</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    asol <span class="op">=</span> integrate.odeint(solvr, [<span class="dv">1</span>, <span class="dv">0</span>], a_t)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    astack <span class="op">=</span> np.c_[a_t, asol[:,<span class="dv">0</span>], asol[:, <span class="dv">1</span>]]</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    np.savetxt(<span class="st">&#39;approx.csv&#39;</span>, astack, delimiter<span class="op">=</span><span class="st">&#39;,&#39;</span>, header<span class="op">=</span><span class="st">&#39;t, y, yd&#39;</span>, comments<span class="op">=</span><span class="st">&#39;&#39;</span>)</span></code></pre></div>
+<p>Then we can plot this in R.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> approx <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&#39;approx.csv&#39;</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">plot</span>(y <span class="sc">~</span> t, <span class="at">data=</span>approx, <span class="at">type=</span><span class="st">&#39;l&#39;</span>)</span></code></pre></div>
+<p><img src="/images/python-ode-blog.png" /></p>
+<p>I’ll add that the Python solution here is <em>not</em> just a mere plot of the analytic method. We could have done this for an equation even if we don’t remember how to solve it ourselves, as long as we’re able to reduce it to a first-order ODE system like here. SciPy has more advanced numeric solvers available, including the more generic <a href="http://docs.scipy.org/doc/scipy-0.13.0/reference/generated/scipy.integrate.ode.html"><code>scipy.integrate.ode</code></a> for dealing with more complicated equations.</p>
+<p>But overall, considering I had never used Python to solve this sort of thing before, I’m pretty impressed by how easy it was to work through this solution. I’m looking forward to pushing Python’s numeric/mathematical capabilities further in the future.</p>
+</section>
+<section class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1" role="doc-endnote"><p>This equation might look duanting, but it is literally just straight-from-a-textbook material on these things. If you go look up <q>second-order homogeneous linear ODE with constant coefficients</q> you will find that for characteristic equations where both roots are complex, that is the general form of your solution. So when actually solving these analytically, you don’t think about it much more once you know whether the c.e. roots are complex.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2" role="doc-endnote"><p>I know all the <q>cool kids</q> on the Python block are using <a href="http://matplotlib.org/">matplotlib</a>. I simply prefer R. I’ve used it more, and I find it easier to work with whenever there’s an actual <em>dataset</em> that I’m shifting around, not just pure numeric values.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 ]]></summary>
