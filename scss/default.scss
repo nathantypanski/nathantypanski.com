@@ -57,18 +57,18 @@ $codeborder: #989CB3;
 
 $inline_code_font_size: 10pt;
 
-@mixin breakpoint($point) {
-  @if $point == desktop {
-     @media (min-width: 68em) { @content ; }
-  }
-  @if $point == laptop {
-     @media (min-width: $body_width + $sidebar_width * 3.8) { @content ; }
-  }
-  @else if $point == mobileonly {
-    @media (min-width: $body_width + $sidebar_width ) { @content ; }
-  }
-}
+$desktop_width = $body_width + $sidebar_width * 3.8
 
+@mixin phone {
+    @media (min-width: 300px) and (max-width = $desktop_width - 1px) {
+        @content
+    }
+}
+@mixin desktop {
+    @media (min-width: $desktop_width) {
+        @content
+    }
+}
 
 /* STYLE RESET */
 * {
@@ -105,10 +105,10 @@ body {
             bottom: $paragraph_bottom_margin;
         }
     }
-    @include breakpoint(mobileonly) {
+    @include desktop {
         width: $body_width;
     }
-    @include breakpoint(laptop) {
+    @include phone {
         width: $body_width;
     }
 }
@@ -124,11 +124,13 @@ h1, h2, h3, h4, h5, h6 {
         color: #274257;
         text-decoration: None;
     }
-    margin: {
-        top: $h_top_margin;
-        bottom: $h_bottom_margin;
+    @include desktop {
+        margin: {
+            top: $h_top_margin;
+            bottom: $h_bottom_margin;
+        }
     }
-    @include breakpoint(mobileonly) {
+    @include phone {
         text-align: left;
         margin: {
             left: $header_offset;
@@ -276,7 +278,7 @@ div {
 
 div#logo {
     text-align: center;
-    @include breakpoint(mobileonly) {
+    @include phone {
         text-align: left;
         float: left;
         margin: {
@@ -286,7 +288,7 @@ div#logo {
             right: 0;
         }
     }
-    @include breakpoint(laptop) {
+    @include desktop {
         text-align: center;
         float: right;
         margin: {
@@ -332,7 +334,7 @@ div#logo {
         }
         list-style-type: lower;
     }
-    @include breakpoint(mobileonly) {
+    @include phone {
         width: $sidebar_width;
         float: right;
         margin: {
@@ -348,7 +350,7 @@ div#logo {
             right: 0.5em;
         }
     }
-    @include breakpoint(laptop) {
+    @include desktop {
         width: $sidebar_width;
         position: absolute;
         top: $title_top_margin + $title_bottom_margin;
@@ -364,9 +366,9 @@ div#logo {
 div#header {
     margin: 0;
     position: relative;
-    @include breakpoint(mobileonly) {
+    @include phone {
     }
-    @include breakpoint(laptop) {
+    @include desktop {
         width: $sidebar_width;
         position: absolute;
         top: $title_top_margin + $title_bottom_margin;
@@ -398,13 +400,13 @@ div#navigation {
         color: $icon_color;
         margin-right: 2px;
     }
-    @include breakpoint(mobileonly) {
+    @include phone {
         text-align: right;
         li {
             list-style: none;
         }
     }
-    @include breakpoint(laptop) {
+    @include desktop {
         li {
             margin-bottom: $toc_edge_distance / 2.5;
         }
@@ -422,7 +424,7 @@ div#metadata
         weight: normal;
     }
     margin-bottom: -3em;
-    @include breakpoint(laptop) {
+    @include desktop {
         top: $title_bottom_margin;
         right: $toc_edge_distance;
         position: absolute;
@@ -591,3 +593,6 @@ pre.sourceCode
     background: $codebg;
 }
 
+strong {
+    font-weight: bold;
+}
