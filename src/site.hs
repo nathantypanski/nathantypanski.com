@@ -203,7 +203,7 @@ mathCtx :: Context String
 mathCtx = field "mathjax" $ \item -> do
     metadata <- getMetadataField (itemIdentifier item) "math"
     return $ case metadata of
-        Just "true" -> "<script type=\"text/x-mathjax-config\">MathJax.Hub.Config({jax: [\"input/TeX\", \"output/HTML-CSS\"], TeX: {extensions: [\"AMSmath.js\",\"AMSsymbols.js\"]}})</script><script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>"
+        Just "true" -> "<script type=\"text/x-mathjax-config\">MathJax.Hub.Config({jax: [\"input/TeX\", \"output/HTML-CSS\"], TeX: {extensions: [\"AMSmath.js\",\"AMSsymbols.js\"]}})</script><script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>"
         _  -> ""
 
 tagsCtx :: Tags -> Context String

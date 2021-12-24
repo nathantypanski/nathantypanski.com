@@ -17,7 +17,7 @@ $background: #ffffff;
 $toc_background: $background;
 $toc_border: #eee;
 $toc_line_height: 1.3;
-$quote_border: #eee;
+$quote_border: #989CB3;
 $quote_background: #f0f0f0;
 $normal_font_size: 13pt;
 $toc_edge_distance: 2em;
@@ -57,10 +57,10 @@ $codeborder: #989CB3;
 
 $inline_code_font_size: 10pt;
 
-$desktop_width = $body_width + $sidebar_width * 3.8
+$desktop_width: $body_width + $sidebar_width * 3.8;
 
 @mixin phone {
-    @media (min-width: 300px) and (max-width = $desktop_width - 1px) {
+    @media (min-width: 300px) and (max-width = $desktop_width - 1em) {
         @content
     }
 }
@@ -153,13 +153,13 @@ h1 {
 }
 
 h2 {
-    font-size: $normal_font_size * 1.4;
+    font-size: $normal_font_size * 1.5;
     color: $h2_color;
     font-weight: bold;
 }
 
 h3 {
-    font-size: $normal_font_size * 1.2;
+    font-size: $normal_font_size * 1.3;
     color: $h3_color;
 }
 
@@ -167,8 +167,9 @@ h4 {
     font: {
         weight: normal;
         style: italic;
-        size: $normal_font_size * 1.1;
+        size: $normal_font_size * 1.2;
     }
+
     color: #606060;
     text-decoration: None;
 }
@@ -183,7 +184,7 @@ li, dd {
 blockquote {
     background: $quote_background;
     border: {
-        left:   8px solid $quote_border;
+        left:   0.3em solid $quote_border;
         right:  0px solid $quote_border;
         top:    0px solid $quote_border;
         bottom: 0px solid $quote_border;
@@ -191,11 +192,11 @@ blockquote {
     padding: {
         left:   1em;
         right:  1em;
-        bottom: 0em;
-        top:    0em;
+        bottom: 0.1em;
+        top:    0.1em;
     }
     margin: {
-        left:   1em;
+        left:   2em;
         right:  2em;
         bottom: 0px;
         top:    0px;
@@ -506,12 +507,24 @@ a {
     }
 }
 
+div {
+    .sourceCode {
+        padding: 0;
+        margin: {
+            top: 0em;
+            bottom: 0em;
+            left: 0em;
+            right: 0em;
+        }
+    }
+}
+
 .sourceCode {
     padding: {
-        top:    0.5em;
-        bottom: 0.5em;
-        left:   1.0em;
-        right:  1.0em;
+        top:    0em;
+        bottom: 0em;
+        left:   1em;
+        right:  1em;
     }
     span {
         font-family: $monospace_family;
@@ -531,11 +544,10 @@ a {
     }
 }
 
-tr.sourceCode, td.lineNumbers, td.sourceCode, table.sourceCode
-pre {
-    margin: 0;
-    padding: 0;
-    border: 0;
+tr.sourceCode, td.lineNumbers, td.sourceCode, table.sourceCode pre {
+    margin: 0px;
+    padding: 0px;
+    border: 0px;
     vertical-align: baseline;
     border: none;
     background: $codebg;
@@ -552,12 +564,12 @@ code {
     line-height: $paragraph_line_height;
     font-family: $monospace_family;
     background: $codebg;
-    border: 0px solid $codeborder;
+    border: 1px dashed $codeborder;
     padding: {
-        top:    0;
-        bottom: 0;
-        left:   0;
-        right:  0;
+        top:    2px;
+        bottom: 2px;
+        left:   2px;
+        right:  2px;
     }
 }
 
@@ -578,11 +590,12 @@ pre.sourceCode
         padding: 0px;
         margin: 0px;
     }
+    padding: 1em;
     margin: {
         top:    1em;
         bottom: 1em;
-        left:   -2.5%;
-        right:  0em;
+        left:   -1.5em;
+        right:  -1.5em;
     }
     border: {
         top:    0;
