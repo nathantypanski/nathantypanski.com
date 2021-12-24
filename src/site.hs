@@ -1,7 +1,11 @@
 {-# LANGUAGE OverloadedStrings #-}
 import Data.Monoid (mappend, (<>))
 import Hakyll
+import System.Process
 import Data.Text (Text)
+import Data.Maybe (fromMaybe)
+import Data.List (find)
+import Control.Monad (foldM)
 import Text.Pandoc as Pandoc
 import Text.Pandoc.Options as Pandoc.Options
 import Text.Pandoc.Templates as Pandoc.Templates
@@ -47,6 +51,7 @@ tocWriterOptions = pandocWriterOptions
 main :: IO ()
 main = hakyllWith config $ do
     tags <- buildTags ("blog/*" .||. "pages/*") (fromCapture "tags/*.html")
+    modifications <- buildModifications "**"
 
     tagsRules tags $ \tag pattern -> do
         let title = "tag: " ++ tag
@@ -54,7 +59,7 @@ main = hakyllWith config $ do
         compile $ do
             posts <- loadAll pattern
             let ctx = constField "title" title <>
-                      listField "posts" (postCtx <> tagsCtx tags) (return posts)
+                      listField "posts" (postCtx modifications <> tagsCtx tags) (return posts)
                       <> defaultContext
             makeItem ""
                 >>= loadAndApplyTemplate "templates/tag-list.html" ctx
@@ -122,7 +127,7 @@ main = hakyllWith config $ do
 
     match "blog/*" $ do
         route $ setExtension "html"
-        let context = postCtx <> tagsCtx tags <> defaultCtx
+        let context = postCtx modifications <> tagsCtx tags <> defaultCtx
         compile $
             pandocCompilerWith pandocReaderOptions tocWriterOptions
             >>= loadAndApplyTemplate "templates/post.html" context
@@ -136,7 +141,7 @@ main = hakyllWith config $ do
             posts <- recentFirst =<< loadAll "blog/*"
             let archiveCtx =
                     constField     "rssblog" "" `mappend`
-                    listField      "posts" postCtx (return posts) `mappend`
+                    listField      "posts" (postCtx modifications) (return posts) `mappend`
                     constField     "title" "Blog" `mappend`
                     defaultCtx
 
@@ -148,7 +153,7 @@ main = hakyllWith config $ do
     create ["atom.xml"] $ do
         route idRoute
         compile $ do
-            let feedCtx = postCtx `mappend` bodyField "description"
+            let feedCtx = (postCtx modifications) `mappend` bodyField "description"
             posts <- fmap (take 10) . recentFirst =<<
                 loadAllSnapshots "blog/*" "content"
             renderAtom myFeedConfiguration feedCtx posts
@@ -168,7 +173,7 @@ main = hakyllWith config $ do
         compile $ do
             posts <- recentFirst =<< loadAll "blog/*"
             let indexCtx =
-                    listField "posts" postCtx (return posts) `mappend`
+                    listField "posts" (postCtx modifications) (return posts) `mappend`
                     constField "title" "Home"                `mappend`
                     defaultCtx
 
@@ -209,11 +214,27 @@ mathCtx = field "mathjax" $ \item -> do
 tagsCtx :: Tags -> Context String
 tagsCtx = tagsField "tagLinks"
 
-postCtx :: Context String
-postCtx =
-    modificationTimeField "modified" "%B %e, %Y" <>
-    dateField "date" "%B %e, %Y" <>
-    defaultCtx
+postCtx :: [(Identifier, String)] -> Context String
+postCtx times =
+    modificationCtx times
+    <> dateField "date" "%B %e, %Y"
+    <> defaultCtx
+
+buildModifications ::  Pattern -> Rules [(Identifier, String)]
+buildModifications pattern = do
+    ids <- getMatches pattern
+    pairs <- preprocess $ foldM getLastModified [] ids
+    return pairs
+    where
+        getLastModified l id' = do
+            t <- readProcess "git"
+                ["log", "-1", "--format=%ad", "--date=format:%b %d, %Y", "--", (toFilePath id')] ""
+            return $ (id', t) : l
+
+modificationCtx :: [(Identifier, String)] -> Context String
+modificationCtx modificationTimes = field "modified" $ \item -> do
+    let time = find (\x -> (fst x) == (itemIdentifier item)) modificationTimes >>= return . snd 
+    return $ fromMaybe "no recent modifications" $ time
 
 defaultCtx :: Context String
 defaultCtx = defaultContext <> mathCtx
