@@ -228,12 +228,12 @@ buildModifications pattern = do
     where
         getLastModified l id' = do
             t <- readProcess "git"
-                ["log", "-1", "--format=%ad", "--date=format:%b %d, %Y", "--", (toFilePath id')] ""
+                ["log", "-1", "--format=%ad", "--date=format:%B %d, %Y", "--", (toFilePath id')] ""
             return $ (id', t) : l
 
 modificationCtx :: [(Identifier, String)] -> Context String
 modificationCtx modificationTimes = field "modified" $ \item -> do
-    let time = find (\x -> (fst x) == (itemIdentifier item)) modificationTimes >>= return . snd 
+    let time = find (\x -> (fst x) == (itemIdentifier item)) modificationTimes >>= return . snd
     return $ fromMaybe "no recent modifications" $ time
 
 defaultCtx :: Context String
