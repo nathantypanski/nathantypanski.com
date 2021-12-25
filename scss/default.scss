@@ -11,7 +11,7 @@
 @import "scss/stacked";
 @import "scss/icons";
 
-$body_width: 50em;
+$body_width: 50rem;
 $default_color: #101010;
 $background: #ffffff;
 $toc_background: $background;
@@ -19,20 +19,20 @@ $toc_border: #eee;
 $toc_line_height: 1.3;
 $quote_border: #989CB3;
 $quote_background: #f0f0f0;
-$normal_font_size: 13pt;
-$toc_edge_distance: 2em;
+$normal_font_size: 1.5rem;
+$toc_edge_distance: 2rem;
 
 $h2_color: #303030;
 $h3_color: #404040;
-$header_offset: -8.0pt;
-$title_top_margin: 1.5em;
-$title_bottom_margin: 1.0em;
-$h_top_margin: 1.0em;
-$h_bottom_margin: 0.5em;
+$header_offset: -1rem;
+$title_top_margin: 1.5rem;
+$title_bottom_margin: 1.0rem;
+$h_top_margin: 1.0rem;
+$h_bottom_margin: 0.5rem;
 
 $paragraph_line_height: 1.6;
-$paragraph_top_margin: 1em;
-$paragraph_bottom_margin: 1em;
+$paragraph_top_margin: 1rem;
+$paragraph_bottom_margin: 1rem;
 
 $icon_color: #B0B0B0;
 $link: #2A75A9;
@@ -40,32 +40,38 @@ $link_visited: #274257;
 $link_hover: #7EB5D6;
 $link_home: #5F819D !important;
 
-$footnote_font_size: 8pt;
+$footnote_font_size: 0.8rem;
 $footnote_border: 1px solid $toc_border;
-$footnote_top_margin: 2em;
+$footnote_top_margin: 2rem;
 
 $title_family: 'Droid Serif', serif;
 $body_family: 'Lora', serif;
 $monospace_family: 'Lucida Console', 'Droid Sans Mono', monospace;
 $rss_color: #ff6600;
 $rss_hover_color: #ee5500;
-$sidebar_width: 10em;
-$header_top_pad: 1.2em;
+$sidebar_width: 10rem;
+$header_top_pad: 1.2rem;
 
 $codebg: #F7F5FF;
 $codeborder: #989CB3;
 
-$inline_code_font_size: 10pt;
+$inline_code_font_size: 0.7rem;
 
-$desktop_width: $body_width + $sidebar_width * 3.8;
+$desktop_width: 80rem;
+$tablet_width: 60rem;
 
 @mixin phone {
-    @media (min-width: 300px) and (max-width = $desktop_width - 1em) {
+    @media screen and (max-width = $desktop_width - 1rem) {
+        @content
+    }
+}
+@mixin tablet {
+    @media screen and (min-width: $tablet_width) and (max-width: $desktop_width) {
         @content
     }
 }
 @mixin desktop {
-    @media (min-width: $desktop_width) {
+    @media screen and (min-width: $desktop_width) {
         @content
     }
 }
@@ -98,17 +104,17 @@ body {
         left: auto;
         right: auto;
     }
-    width: 90%;
     p {
         margin: {
             top: $paragraph_top_margin;
             bottom: $paragraph_bottom_margin;
         }
     }
-    @include desktop {
-        width: $body_width;
+    width: 90%;
+    @include tablet {
+        width: 90%;
     }
-    @include phone {
+    @include desktop {
         width: $body_width;
     }
 }
@@ -131,10 +137,6 @@ h1, h2, h3, h4, h5, h6 {
         }
     }
     @include phone {
-        text-align: left;
-        margin: {
-            left: $header_offset;
-        }
     }
 }
 
@@ -176,28 +178,28 @@ h4 {
 
 li, dd {
     margin: {
-        left: 20px;
-        right: 20px;
+        left: 3rem;
+        right: 3rem;
     }
 }
 
 blockquote {
     background: $quote_background;
     border: {
-        left:   0.3em solid $quote_border;
+        left:   0.3rem solid $quote_border;
         right:  0px solid $quote_border;
         top:    0px solid $quote_border;
         bottom: 0px solid $quote_border;
     }
     padding: {
-        left:   1em;
-        right:  1em;
-        bottom: 0.1em;
-        top:    0.1em;
+        left:   1rem;
+        right:  1rem;
+        bottom: 0.1rem;
+        top:    0.1rem;
     }
     margin: {
-        left:   2em;
-        right:  2em;
+        left:   2rem;
+        right:  2rem;
         bottom: 0px;
         top:    0px;
     }
@@ -219,7 +221,7 @@ em {
 
 .footnote-ref {
     vertical-align: super;
-    font-size: 10px;
+    font-size: 0.8rem;
 }
 
 img {
@@ -232,8 +234,8 @@ img {
 figure {
     text-align: center;
     margin: {
-        top: 1em;
-        bottom: 1em;
+        top: 1rem;
+        bottom: 1rem;
     }
 }
 
@@ -247,18 +249,18 @@ img + p.caption {
     :before {
         content: "Fig: ";
         font: {
-             size: 8px;
+             size: 0.8rem;
              style: normal;
         }
-        padding-right: 0.3em;
+        padding-right: 0.3rem;
     }
     font: {
-        size: 10px;
+        size: 0.8rem;
         style: normal;
     }
     padding: {
-         top: 16px;
-         bottom: 1px;
+         top: 2rem;
+         bottom: 0.1rem;
          left: 0px;
          right: 0px;
     }
@@ -278,15 +280,21 @@ div {
 }
 
 div#logo {
-    text-align: center;
     @include phone {
+        text-align: center;
+        float: center;
+        margin: {
+            top: 1rem;
+            bottom: 0px;
+            left: -4rem;
+            right: 0;
+        }
+    }
+    @include tablet {
         text-align: left;
         float: left;
         margin: {
-            top: 1em;
-            bottom: 0px;
-            left: -4em;
-            right: 0;
+            right: 2em;
         }
     }
     @include desktop {
@@ -306,12 +314,11 @@ div#logo {
     line-height: $toc_line_height;
     background: $toc_background;
     border: 1px solid $toc_border;
-    width: 100%;
     h2 {
         font: {
             style: normal;
             weight: bold;
-            size: 1.2em;
+            size: 1.2rem;
         }
         text: {
             align: center;
@@ -325,10 +332,15 @@ div#logo {
     }
     li {
         font: {
-            size: $normal_font_size * 0.8;
+            size: $normal_font_size;
+        }
+        @include desktop {
+            font: {
+                size: $normal_font_size * 0.8;
+            }
         }
         margin: {
-            left: 1em;
+            left: 1rem;
             bottom: 0;
             top: $normal_font_size * 0.6;
             right: 0;
@@ -339,17 +351,20 @@ div#logo {
         width: $sidebar_width;
         float: right;
         margin: {
-            top: 0.5em;
-            bottom: 0.5em;
-            left: 0.5em;
-            right: 0.5em;
+            top: 0.5rem;
+            bottom: 0.5rem;
+            left: 0.5rem;
+            right: 0.5rem;
         }
         padding: {
-            top: 0.5em;
-            bottom: 0.5em;
-            left: 0.5em;
-            right: 0.5em;
+            top: 0.5rem;
+            bottom: 0.5rem;
+            left: 0.5rem;
+            right: 0.5rem;
         }
+    }
+    @include tablet {
+        width: 100%
     }
     @include desktop {
         width: $sidebar_width;
@@ -358,7 +373,7 @@ div#logo {
         right: $toc_edge_distance;
         float: none;
         margin: {
-            top: 5em;
+            top: 5rem;
             left: $body-width;
         }
     }
@@ -373,7 +388,7 @@ div#header {
         width: $sidebar_width;
         position: absolute;
         top: $title_top_margin + $title_bottom_margin;
-        left: 1em;
+        left: 1rem;
         float: none;
         margin: {
             right: $body-width;
@@ -399,7 +414,7 @@ div#navigation {
     }
     i {
         color: $icon_color;
-        margin-right: 2px;
+        margin-right: 0.1rem;
     }
     @include phone {
         text-align: right;
@@ -417,18 +432,35 @@ div#navigation {
 div#metadata
 {
     color: $icon_color;
-    text-align: right;
-    position: relative;
     font: {
         family: $body_family;
         size: $normal_font_size * 0.8;
         weight: normal;
     }
-    margin-bottom: -3em;
+        text-align: center;
+    @include phone {
+        text-align: center;
+        position: relative;
+        margin {
+            bottom: 0em;
+        }
+    }
+    @include tablet {
+        text-align: right;
+        position: relative;
+        top: $title_bottom_margin;
+        margin {
+            top: 1rem;
+            bottom: -1rem;
+        }
+    }
     @include desktop {
         top: $title_bottom_margin;
         right: $toc_edge_distance;
         position: absolute;
+        margin {
+            bottom: -1rem;
+        }
     }
 }
 
@@ -441,27 +473,27 @@ div#metadata
 .snippets {
     i {
         margin: {
-            right: 2px;
+            right: 0.2rem;
         }
     }
     margin: {
-        bottom: 16px;
-        top:8px;
+        bottom: 1rem;
+        top: 0.5rem;
     }
 }
 
 div#footer {
     border-top: solid 1px #5F819D;
     color: #555;
-    font-size: 12px;
-    margin-top: 30px;
-    padding: 12px 0px 12px 0px;
+    font-size: $normal_font_size * 0.8;
+    margin-top: 3rem;
+    padding: 1rem 0rem 1rem 0rem;
     text-align: center;
 }
 
 div.info {
     color: #555;
-    font-size: 14px;
+    font-size: 1rem;
     font-style: italic;
 }
 
@@ -511,20 +543,20 @@ div {
     .sourceCode {
         padding: 0;
         margin: {
-            top: 0em;
-            bottom: 0em;
-            left: 0em;
-            right: 0em;
+            top: 0rem;
+            bottom: 0rem;
+            left: 0rem;
+            right: 0rem;
         }
     }
 }
 
 .sourceCode {
     padding: {
-        top:    0em;
-        bottom: 0em;
-        left:   1em;
-        right:  1em;
+        top:    0rem;
+        bottom: 0rem;
+        left:   1rem;
+        right:  1rem;
     }
     span {
         font-family: $monospace_family;
@@ -566,10 +598,10 @@ code {
     background: $codebg;
     border: 1px dashed $codeborder;
     padding: {
-        top:    2px;
-        bottom: 2px;
-        left:   2px;
-        right:  2px;
+        top:    0.1rem;
+        bottom: 0.1rem;
+        left:   0.1rem;
+        right:  0.1rem;
     }
 }
 
@@ -579,7 +611,7 @@ td.sourceCode {
 
 pre.sourceCode
 {
-    font-size: 8pt;
+    font-size: 1.0rem;
     font-family: $monospace_family;
     line-height: 12pt;
     width: 100%;
@@ -590,17 +622,17 @@ pre.sourceCode
         padding: 0px;
         margin: 0px;
     }
-    padding: 1em;
+    padding: 1rem;
     margin: {
-        top:    1em;
-        bottom: 1em;
-        left:   -1.5em;
-        right:  -1.5em;
+        top:    1rem;
+        bottom: 1rem;
+        left:   -1.5rem;
+        right:  -1.5rem;
     }
     border: {
         top:    0;
         bottom: 0;
-        left:   0.5em solid $codeborder;
+        left:   0.5rem solid $codeborder;
         right:  0;
     }
     background: $codebg;
