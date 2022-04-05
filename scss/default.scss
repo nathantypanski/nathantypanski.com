@@ -55,7 +55,7 @@ $header_top_pad: 1.2rem;
 $codebg: #F7F5FF;
 $codeborder: #989CB3;
 
-$inline_code_font_size: 0.7rem;
+$inline_code_font_size: 1.0rem;
 
 $desktop_width: 80rem;
 $tablet_width: 60rem;
@@ -596,12 +596,12 @@ code {
     line-height: $paragraph_line_height;
     font-family: $monospace_family;
     background: $codebg;
-    border: 1px dashed $codeborder;
+    border: 1px dashed $codebg;
     padding: {
-        top:    0.1rem;
-        bottom: 0.1rem;
-        left:   0.1rem;
-        right:  0.1rem;
+        top:    0.2rem;
+        bottom: 0.2rem;
+        left:   0.2rem;
+        right:  0.2rem;
     }
 }
 
