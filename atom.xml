@@ -8,8 +8,313 @@
         <name>Nathan Typanski</name>
         <email>ndt@nathantypanski.com</email>
     </author>
-    <updated>2021-12-24T00:00:00Z</updated>
+    <updated>2022-03-29T00:00:00Z</updated>
     <entry>
+    <title>Switching to NixOS</title>
+    <link href="http://www.nathantypanski.com/blog/2022-03-29-nixos.html" />
+    <id>http://www.nathantypanski.com/blog/2022-03-29-nixos.html</id>
+    <published>2022-03-29T00:00:00Z</published>
+    <updated>2022-03-29T00:00:00Z</updated>
+    <summary type="html"><![CDATA[<div class="info">
+    <!--
+    <div class="snippets">
+        <i class="fa fa-calendar"></i> March 29, 2022 <i class="fa fa-cut" June 23, 2022
+></i> June 23, 2022
+
+    </div>
+    -->
+    
+</div>
+<div id="toc"><h2>Contents</h2>
+<ul>
+<li><a href="#what-is-nix">What is Nix?</a>
+<ul>
+<li><a href="#expression-language">Expression language</a></li>
+<li><a href="#package-manager">Package manager</a></li>
+<li><a href="#operating-system">Operating system</a></li>
+</ul></li>
+<li><a href="#installation">Installation</a></li>
+<li><a href="#opt-in-state">Opt-in state</a></li>
+<li><a href="#config-as-code">Config-as-code</a></li>
+<li><a href="#home-directory-management">Home directory management</a>
+<ul>
+<li><a href="#example">Example</a></li>
+<li><a href="#why">Why?</a></li>
+</ul></li>
+<li><a href="#nixos-generations">NixOS generations</a></li>
+<li><a href="#shells">Shells</a></li>
+<li><a href="#downsides">Downsides</a>
+<ul>
+<li><a href="#documentation">Documentation</a></li>
+<li><a href="#the-language">The language</a></li>
+</ul></li>
+<li><a href="#conclusion">Conclusion</a></li>
+</ul> </div>
+<p>NixOS is a radical reimagining of what a Unix-like operating system can be like. It has a concept of <q>generations</q> that permit you to roll back (or forward) to previous instances of your operating system state. It’s defined entirely by code written in the <a href="https://nixos.wiki/wiki/Nix_Expression_Language">Nix expression language</a>, a functional programming language designed to make reproduicble builds easy. That’s right, NixOS is fully reproducible: if you have a NixOS machine definition, then you can reproduce not only the exact bytes of each package installed on that machine, but the entire state of the machine itself (besides ephemeral machine-specific bits).</p>
+<p>The only comparable project I am aware of is <a href="https://guix.gnu.org/">GNU Guix</a>, a relatively newer project that attempts similar goals using Scheme instead of a domain-specific programming language.</p>
+<p>It took a <em>long</em> time for me to warm up to the Nix approach to Unix systems. It takes the entire <a href="https://refspecs.linuxfoundation.org/FHS_3.0/fhs/index.html">FHS</a> and throws it out the door, and by extension requires you to un-learn concepts that have been more-or-less stable for 30 years. While I have learned to appreciate what Nix offers, certain parts of NixOS remain opaque to me behind veils of abstraction. But with a few months of experience behind me, I can at least state that I <em>like</em> NixOS, that it is usable as a daily driver operating system, and that NixOS is (generally speaking) successful in achieving its lofty goals.</p>
+<section id="what-is-nix" class="level2">
+<h2>What is Nix?</h2>
+<p>The term <q>Nix</q> can have three meanings, depending on context. I’ll cover each of them here.</p>
+<section id="expression-language" class="level3">
+<h3>Expression language</h3>
+<p>The <em>Nix expression language</em> is a domain-specific programming language for reproducible configuraiton of packages and systems. It is a lazy, functional, mostly pure language primarily concerned with the manipulation of associative data structures termed <em>sets</em>:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>nix-repl&gt; mul = { left, right }: left * right</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>nix-repl&gt; mul { left = 10; right = 30; }</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>300</span></code></pre></div>
+<p>Most Nix functions take sets as arguments and return sets to inform the caller about the result of a computation.</p>
+<p>The standard way to learn Nix is to study the <a href="https://nixos.org/guides/nix-pills/index.html">Nix Pills</a>, which start at the interpreter and work their way up to full package definitions.</p>
+<p>Alternatively, you can study the <a href="https://nixos.wiki/wiki/Nix_Expression_Language">wiki page</a>, which is a terse reference for the Nix language.</p>
+</section>
+<section id="package-manager" class="level3">
+<h3>Package manager</h3>
+<p>The <em>Nix pacakage manager</em> is a tool for installing and managing derivations (<q>packages</q>) written in the Nix expression language. The official <a href="https://github.com/NixOS/nixpkgs/"><code>nixpkgs</code></a> repository contains a whopping 60,000 packages, which puts it near the top distributions in terms of package count (approximately the same number as Debian or Fedora).</p>
+</section>
+<section id="operating-system" class="level3">
+<h3>Operating system</h3>
+</section>
+</section>
+<section id="installation" class="level2">
+<h2>Installation</h2>
+<p>Installing NixOS is similar to installing Arch Linux in many ways. There is no official installer, just live <code>.iso</code> and a <a href="https://nixos.org/manual/nixos/stable/index.html#sec-installation">giant manual</a>. You boot the live USB, partition a disk, mount the disk, generate hardware configuration, and run the installer, which installs the necessary components of the operating system to the mounted disk(s). Unlike Arch, if you wish to customize this system, you have one file to modify: <code>/etc/nixos/configuration.nix</code>. This file defines the entire machine state.</p>
+</section>
+<section id="opt-in-state" class="level2">
+<h2>Opt-in state</h2>
+<p>I used some modifications to this installation from grahamc’s <a href="https://grahamc.com/blog/erase-your-darlings">Erase Your Darlings</a> and mt-caret’s <a href="https://mt-caret.github.io/blog/posts/2020-06-29-optin-state.html">Encypted Btrfs Root with Opt-in State on NixOS</a>. Although NixOS tries to make its systems fully reproducible, this is not always possible.</p>
+<p>Consider <code>/etc/resolv.conf</code>. This file is generated by <a href="https://www.man7.org/linux/man-pages/man1/resolvectl.1.html"><code>resolvconf</code></a> on a typical systemd Linux system and expected to change if your device roams between networks. In lieu of persistently keeping (and tracking) all the state from <code>/etc</code>, we treat <code>/etc</code> as a semi-ephemeral filesystem, and link only the <em>required</em> persistent configuration from <code>/persist/etc</code>.</p>
+<p>In <code>/etc/nixos/configuration.nix</code>:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>  environment.etc = {</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    nixos.source = &quot;/persist/etc/nixos&quot;;</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    machine-id.source = &quot;/persist/etc/machine-id&quot;;</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    NIXOS.source = &quot;/persist/etc/NIXOS&quot;;</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    adjtime.source = &quot;/persist/etc/adjtime&quot;;</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  };</span></code></pre></div>
+<p>Then <code>/etc/nixos/configuration.nix</code> is a hardlink to <code>/persist/etc/nixos/configuration.nix</code>:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a># stat /etc/nixos/configuration.nix /persist/etc/nixos/configuration.nix</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  File: /etc/nixos/configuration.nix</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  Size: 5629            Blocks: 16         IO Block: 4096   regular file</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>Device: 0,55    Inode: 1141        Links: 1</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>Access: (0600/-rw-------)  Uid: (    0/    root)   Gid: (    0/    root)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>Access: 2022-03-23 09:55:00.014521725 -0400</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>Modify: 2022-03-23 09:55:00.014521725 -0400</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>Change: 2022-03-23 09:55:00.015521737 -0400</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a> Birth: 2022-03-23 09:55:00.014521725 -0400</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  File: /persist/etc/nixos/configuration.nix</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>  Size: 5629            Blocks: 16         IO Block: 4096   regular file</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>Device: 0,55    Inode: 1141        Links: 1</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>Access: (0600/-rw-------)  Uid: (    0/    root)   Gid: (    0/    root)</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>Access: 2022-03-23 09:55:00.014521725 -0400</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>Modify: 2022-03-23 09:55:00.014521725 -0400</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>Change: 2022-03-23 09:55:00.015521737 -0400</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a> Birth: 2022-03-23 09:55:00.014521725 -0400</span></code></pre></div>
+<p>If we wanted to keep additional state, we can expand the list of links in the Nix definition for our machine.</p>
+</section>
+<section id="config-as-code" class="level2">
+<h2>Config-as-code</h2>
+<blockquote>
+<p>A sufficiently complete specification of a system policy leads to the notion of an ideal average state for the system. Over time, the ideal average state of the system degrades. The aim of system administration is to keep the system as close to its ideal state as possible.</p>
+<p>-M. Burgess, <a href="https://www.usenix.org/legacy/publications/library/proceedings/lisa2000/full_papers/burgess/burgess_html/index.html"><em>Theoretical System Administration</em></a></p>
+</blockquote>
+<p>In my professional life, I’ve written a fair amount of Puppet, Ansible, and Chef code defining the state of Linux systems. These tools all share a model of Linux systems as <em>mutable, living systems</em>. Their policy is designed to take a system from an unknown initial state <em>toward</em> an ideal state. After sufficient repeated applications of this process of <em>convergence</em>, the system state should tend towards our ideal state.</p>
+<p>Nix works differently. Its policies, like most configuration management tools, model the end-state of a system. Unlike traditional configuration management tools, Nix does not assume an unknown initial state. It relies heavily on sandboxing and build isolation to produce ideal states from known initial states.</p>
+<p>In some sense, this is a strictly <q>easier</q> problem to solve than convergent configuration management. Nix takes steps to ensure there is only one possible path from initial state to ideal state, and therefore can ensure repeated applications of a Nix derivaiton always result in the same end-state.</p>
+</section>
+<section id="home-directory-management" class="level2">
+<h2>Home directory management</h2>
+<p>Like many users of Unix-like operating systems, I spent a significant amount of time building and tweaking my <a href="https://github.com/nathantypanski/dotfiles">dotfiles</a> collection to configure new users the way I want. I went through repeated iterations of attempts at making this process <em>manageable</em>, but the tools were never quite sufficient for the job. Prior to Nix, the best solution I’d found was to use <a href="https://www.gnu.org/software/stow/">GNU Stow</a> to create and manage symlinks from <code>~/.vimrc</code> to <code>~/src/github.com/nathantypanski/dotfiles/vim/.vimrc</code> and so on. This works well for individual files, but many tools also have plugin directories and other state that is easy to lose track of. Over time, the dotfiles repository diverges from local system state.</p>
+<p>The Nix solution to this problem is <a href="https://github.com/nix-community/home-manager"><code>home-manager</code></a>. This is a tool that lets you use the same declarative configuraiton for your home directory (and its many configuration files) as you would for the NixOS operating system.</p>
+<section id="example" class="level3">
+<h3>Example</h3>
+<p>Here’s an example of <code>home-manager</code>, taken from my current configuration:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>{ config, pkgs, lib, ... }:</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  imports = [ ./zsh.nix ];</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  home.username = &quot;nathan&quot;;</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  home.homeDirectory = &quot;/home/nathan&quot;;</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  home.stateVersion = &quot;22.05&quot;;</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>  # Let Home Manager install and manage itself.</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  programs.home-manager.enable = true;</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>  services.gpg-agent = {</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>    enable = true;</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>    defaultCacheTtl = 1800;</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>    enableSshSupport = false;</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>  };</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>  home.keyboard.options = [&quot;ctrl:nocaps&quot;];</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>  # continued below ...</span></code></pre></div>
+<p>Installing and configuring a window manager is as simple as including its block:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>  # continued from above ...</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  wayland.windowManager.sway = {</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    enable = true;</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    wrapperFeatures.gtk = true ;</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    config = {</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>      terminal = &quot;alacritty&quot;;</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>      fonts = {</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>        names = [&quot;pango:Terminus&quot;];</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>        style = &quot;normal&quot;;</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>        size = 10.0;</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>      };</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>    };</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>  };</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>  # continued below ...</span></code></pre></div>
+<p>You can install per-user packages here. This lets you install software for a particular user that won’t be available to the rest of the system. I use users to segment different types of tasks (e.g., gaming), and I wouldn’t want my gaming user to have access to compiler toolchains.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>  # continued from above ...</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  home.packages = with pkgs; [</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    haskell.compiler.ghc921</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    pass</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    rustup</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    go-tools</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    go</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    python39</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    python39Packages.pip</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    python39Packages.virtualenv</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>  ];</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>  # continued below ...</span></code></pre></div>
+<p>Most programs you would normally have in dotfiles with per-application configuration are managed natively using the Nix domain-specific language.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>  # continued from above ...</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  programs.git = {</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    enable = true;</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    userName = &quot;ndt&quot;;</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    userEmail = &quot;...&quot;;</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  };</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>  # continued below ...</span></code></pre></div>
+<p>Even the shell configuration is defined in the Nix language:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>  # continued from above ...</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  programs.zsh = {</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    enable = true;</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    enableCompletion = true;</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    enableSyntaxHighlighting = true;</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    history = {</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>      save = 10000;</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>      size = 10000;</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>      share = true;</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>      extended = true;</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>      ignoreSpace = true;</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>      ignorePatterns = [</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>        &quot;rm *&quot;</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>        &quot;pkill *&quot;</span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>      ];</span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>    };</span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>    shellAliases = {</span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>      x = &quot;tmux&quot;;</span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>    };</span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>  };</span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+</section>
+<section id="why" class="level3">
+<h3>Why?</h3>
+<p>It’s probably not immediately apparent what the benefit of using Nix to configure Git, or the shell, or a window manager might be. Each of these tools has its own configuration language already, and you might have taken the time to learn each program’s config format. Migrating this configuration can take time, and besides, you’re just expressing the same config in a different format, right?</p>
+<section id="generations" class="level4">
+<h4>Generations</h4>
+<p>One of the most fundamental benefits of Nix management is its concept of <em>generations</em>. Every deployment of changes to your Nix-managed homedir produces a generation. You can enumerate the generations using the <code>home-manager</code> CLI:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>$ home-manager generations | head</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>2022-04-11 09:07 : id 65 -&gt; /nix/store/9j3s2canrz3q2rwh19maywlj0xgm27lr-home-manager-generation</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>2022-04-11 09:05 : id 64 -&gt; /nix/store/gdcf7r29kphnq6mcmkj9zqjknlbh3gp7-home-manager-generation</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>2022-04-11 09:04 : id 63 -&gt; /nix/store/rsqf8dyhz9lk1j5351r6zracaanwxq34-home-manager-generation</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>2022-04-05 20:49 : id 62 -&gt; /nix/store/a2c65dx05595smgw58j02ffy2cm4rrq0-home-manager-generation</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>2022-03-12 18:09 : id 61 -&gt; /nix/store/98b16il8x7rzma5pr75njwavwnadl7p4-home-manager-generation</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>2022-03-12 13:15 : id 60 -&gt; /nix/store/d0rvr0nx3y2rj0ixa71n9q0a9lpc7dp8-home-manager-generation</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>2022-03-12 13:15 : id 59 -&gt; /nix/store/73xqnpzsfm42hjp76kx4bi769ld4gzmm-home-manager-generation</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>2022-03-11 10:49 : id 58 -&gt; /nix/store/waizbp6iqdp6zgxxrbvbn1pagxk7jh4f-home-manager-generation</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>2022-03-11 09:58 : id 57 -&gt; /nix/store/bg169sw55c440f0rsd7pxsh31zsdw43q-home-manager-generation</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>2022-03-11 09:54 : id 56 -&gt; /nix/store/m3bq41252rcrp8xc48982h5kfhgpbvix-home-manager-generation</span></code></pre></div>
+<p>If I’d like to roll back to one of these generations, I can simply run the <code>activate</code> script for that generation. For example, to roll back one generation (to <code>64</code>), I would run:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>$ /nix/store/gdcf7r29kphnq6mcmkj9zqjknlbh3gp7-home-manager-generation/activate</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>Starting Home Manager activation</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>Activating checkFilesChanged</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>Activating checkLinkTargets</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>Activating writeBoundary</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>Activating installPackages</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>replacing old &#39;home-manager-path&#39;</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>installing &#39;home-manager-path&#39;</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>Activating linkGeneration</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>Cleaning up orphan links from /home/nathan</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>Creating profile generation 66</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>Creating home file links in /home/nathan</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>Activating onFilesChange</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>Activating reloadSystemd</span></code></pre></div>
+<p>This is a powerful feature enabling experimentation. Mistakes are trivial to undo, and you get a fully reproducible configuration for your home directory. That means you get baked-in guarantees that if you choose to spin up a new system with the same configuration, the configuration will not only apply successfully—it will produce exactly the same result.</p>
+</section>
+</section>
+</section>
+<section id="nixos-generations" class="level2">
+<h2>NixOS generations</h2>
+<p>The concept of generations doesn’t originate in <code>home-manager</code>. In fact, it’s a first-party feature of NixOS proper. Each version of your system configuration gets recorded in the generations list, and you can restore the system to any of those versions with a single command with <code>nix-env --rollback</code> (for the previous version) or <code>nix-env -G 3</code>. Note that you may have to set the profile to <code>system</code> in order to change the global system instead of per-user configuration.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a># nix-env --list-generations --profile /nix/var/nix/profiles/system | tail</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  91   2022-04-10 16:06:58</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  92   2022-04-10 16:18:46</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  93   2022-04-10 16:22:37</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  94   2022-04-10 16:39:26</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  95   2022-04-21 10:04:08</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>  96   2022-04-22 09:25:09</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>  97   2022-04-24 13:08:53</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>  98   2022-04-24 13:11:39</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>  99   2022-04-24 14:48:43</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a> 100   2022-04-24 14:49:28   (current)</span></code></pre></div>
+</section>
+<section id="shells" class="level2">
+<h2>Shells</h2>
+<p>A feature I didn’t think I’d care for, but ended up using <em>all the time</em> was <code>nix-shell -p ${package_name}</code> to spawn a new Bash shell with some requested software available, but (crucially) <em>without</em> making that software available to the system as a whole.</p>
+<p>Let’s say I want to use <a href="https://github.com/radio-rogal/swayshot">swayshot</a> to take a screenshot, but I don’t have <code>slurp</code> or <code>grim</code> installed:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>$ nix-shell -p slurp grim</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>these paths will be fetched (0.03 MiB download, 0.10 MiB unpacked):</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  /nix/store/0silcp1jlicjbjbjhzvmkffj2wck4m5z-grim-1.4.0</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  /nix/store/yc2sc0k5d3bm9n6wq57qmmv4dsndkzpn-slurp-1.3.2</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>$ ./swayshot.sh</span></code></pre></div>
+<p>Being able to experiment with different tools on-the-fly like this, grants a powerful feeling of freedom to try things. If you don’t like a tool you just tried, then don’t add it to <code>/etc/nixos/configuration.nix</code> and it won’t pollute your environment. The next time you run <code>nixos-collect-garbage</code>, it will be removed from the Nix store.</p>
+<p>Likewise <code>home-manager</code> can list packages that are available only to a certain user, but not other users or the root user.</p>
+</section>
+<section id="downsides" class="level2">
+<h2>Downsides</h2>
+<p>NixOS is <em>not</em> perfect. In exchange for all this functional, immutable, reproducible OS magic, we need to trade a few things (at least today).</p>
+<section id="documentation" class="level3">
+<h3>Documentation</h3>
+<p>This is still the worst part of NixOS. Community efforts have strived to improve the Nix documentation. Today we have <a href="https://nixos.org/guides/nix-pills/index.html">Nix Pills</a> for learning Nix-the-language, the <a href="https://nixos.org/manual/nixos/stable/">NixOS Manual</a> explaining how to install and configure NixOS systems, and the <a href="https://nixos.wiki/">NixOS Wiki</a> which provides succinct howtos on common problems.</p>
+<p>That sounds great, right? In theory, those resources are everything you need. In practice, they each seem to land at the wrong level of abstraction, and the symptoms of this are similar to the problems found with monad tutorials in something like Haskell. The people writing monad tutorials understand monads. You do not. The problem is once you learn how monads work, you lose the ability to explain monads to anyone who doesn’t already know how they work.</p>
+<p>This kind of <q>pedagogy disruptor field</q> is common when you’re explaining concepts that one day <q>click.</q> The day before, you didn’t understand NixOS. Then you use it for a few days/weeks/months and one day you suddenly have enough of the pieces in place and it clicks and you understand how the system works. Do you understand all the prerequisites for reaching this state of understanding? Not consciously.</p>
+<p>The NixOS documentation authors are all plagued by the pedagogy disruptor field. For instance, the Nix store is an extraordinarily fundamental part of NixOS systems. It contains all installed packages, each prefixed by a cryptographic hash of their contents, and is located at <code>/nix/store</code>:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>$ ls /nix/store | head</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>000yp1grcymcfbmncflf2bhbqyzb8p62-hook.drv</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>0018h2fjjq0zijmyknykxvwysaj24qw0-timeit-2.0.tar.gz.drv</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>001gp43bjqzx60cg345n2slzg7131za8-nix-nss-open-files.patch</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>001ybmr7k4bj79nknk7ykzfqa7wqw55h-source.drv</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>001ynjbfcyzg60w6y1x0hjx106ixydq8-unit-script-prepare-kexec-start</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>002gbsl500p1b9m4wlinazna58mcmn6z-gnum4-1.4.19.drv</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>003cl64qdhj7ng8pjmnihhda315q5czg-home-manager-path.drv</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>0042c0dpzvx4khk34wl8ikikjrsv3fwn-conduit-1.3.4.2.drv</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>004fc2vsbnzsw43ci25hqk08rpvyagy0-catalog-legacy-uris.patch.drv</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>004h9inrdzqj2sfgssfpmlsl8mp9dn23-source.drv</span></code></pre></div>
+<p>The first mention of the Nix store in the NixOS manual (not counting the syntax summary) is in the <a href="https://nixos.org/manual/nixos/stable/index.html#sec-wireless">wifi setup section</a>. There are descriptions of how to clean the nix store, sections on preventing storage of secrets in the nix store, and numerous references to the Nix store with the implication that the reader already understands what it is. At no point is the Nix store defined, or descriptively outlined.</p>
+<p>Many attributes of Nix or NixOS are treated in this way. Maintenance tasks for obscure subsystems are described in intricate detail, but the purpose or behavior of those subsystems is absent in documentation.</p>
+</section>
+<section id="the-language" class="level3">
+<h3>The language</h3>
+<p>The Nix language is syntactically ugly. I have yet to decide whether it is actually <q>bad.</q> There’s a GNU reimplementation of NixOS called <a href="https://guix.gnu.org/">Guix</a> that attempts to address this by replacing Nix with Guile, a dialect of Lisp.</p>
+<p>The Nix language is almost entirely side-effect free. Most of the time, all you’re doing with it is templating Bash scripts with increasingly high-level abstractions.</p>
+<p>The standard way to learn it is you go read <a href="https://nixos.org/guides/nix-pills/">Nix pills</a> and then you read <a href="https://nixos.wiki/wiki/Nix_Expression_Language">the wiki</a>. When it comes time to author real-world packages you search <a href="https://github.com/NixOS/nixpkgs/">nixpkgs</a> for similar applications to learn patterns, using <a href="https://nixos.org/manual/nixpkgs/stable/">the manual</a> for reference.</p>
+</section>
+</section>
+<section id="conclusion" class="level1">
+<h1>Conclusion</h1>
+<p>Nix is a radical approach to software packaging, and it makes reproducibility of complex software systems easier than any other tool I know of. At the same time, it’s a complex and largely undocumented beast. Working with Nix reminds me of pre-1.0 Rust: smart ideas, constant changes, and a growing push for stabilization and documentation that gets better each month.</p>
+<p>I still have my gripes with it, but the promise of a new and innovative way to manage systems has finally ripped me away from Arch Linux in search of something better than Unix-style userspace organization. The ability to effortlessly experiment and rollback changes to my OS has made hacking on Linux fun again.</p>
+</section>
+]]></summary>
+</entry>
+<entry>
     <title>JWS is a nightmare</title>
     <link href="http://www.nathantypanski.com/blog/2021-12-24-jws-nightmare.html" />
     <id>http://www.nathantypanski.com/blog/2021-12-24-jws-nightmare.html</id>
@@ -18,8 +323,8 @@
     <summary type="html"><![CDATA[<div class="info">
     <!--
     <div class="snippets">
-        <i class="fa fa-calendar"></i> December 24, 2021 <i class="fa fa-cut" December 24, 2021
-></i> December 24, 2021
+        <i class="fa fa-calendar"></i> December 24, 2021 <i class="fa fa-cut" June 23, 2022
+></i> June 23, 2022
 
     </div>
     -->
@@ -35,7 +340,7 @@
 <li><a href="#protocols-should-be-defensive-against-implementations">Protocols should be defensive against implementations</a></li>
 <li><a href="#a-better-way-to-sign-json">A better way to sign JSON</a></li>
 </ul> </div>
-<p>JWS is the kind of thing where you could be forgiven for thinking <q>hey, everyone’s using this, so it must be good!</q> JWTs are built on JWS, and lots of people use those. JWS is standardized by the IETF in <a href="https://datatracker.ietf.org/doc/html/rfc7515">RFC7515</a>. If you are investigating ways to sign REST API requests with JSON bodies, JWS is probably one of the first things you’ll look at. I’m hoping that by the time you’re done with this post, you’ll do something else. If you just want to know what that <q>something else</q> is, skip to <a href="#a-better-way-to-sign-json">the bottom</a>.</p>
+<p>JWS is the kind of thing where you could be forgiven for thinking <q>hey, everyone’s using this, so it must be good!</q> JWTs are built on JWS, and lots of people use those. JWS is standardized by the IETF in <a href="https://datatracker.ietf.org/doc/html/rfc7515">RFC7515</a>. I’m hoping that by the time you’re done with this post, you’ll do something else. If you just want to know what that <q>something else</q> is, skip to <a href="#a-better-way-to-sign-json">the bottom</a>.</p>
 <p>In this post, I will show how the JWS standard encourages implementations to structure their validation logic in an insecure manner. Thus JWTs, being built upon a rotten foundation, are themselves insecure—or at least very difficult to implement securely. Then I will provide suggestions on alternatives to JWS.</p>
 <p>Here’s an example JWS from that RFC:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
@@ -82,8 +387,8 @@
 <li><p>Determine the verification algorithm to use by extracting it from the decoded <code>protected</code> header.</p></li>
 <li><p>Construct the JWS signing input by concatenating encoded <code>protected</code> and <code>payload</code> headers together with a <q>.</q> character.</p>
 <p><span class="math display">\[ \begin{aligned} &amp; \texttt{ascii}(\texttt{base64urlencode}(\texttt{utf-8}(\texttt{protected}))) \\
- &amp; \qquad || \quad ``.&quot; \\
- &amp; \qquad || \quad \texttt{base64urldecode}(\texttt{payload}) \end{aligned} \]</span></p></li>
+&amp; \qquad || \quad ``.&quot; \\
+&amp; \qquad || \quad \texttt{base64urldecode}(\texttt{payload}) \end{aligned} \]</span></p></li>
 <li><p>Using the algorithm from (8), verify the JWS.</p></li>
 </ol>
 <p>Every step in this list prior to (9) is an opportunity for attackers to modify objects that are deserialized into JSON, control the algorithm in use by the system, and generally mess around where we expect contents to be integrity-protected.</p>
@@ -124,7 +429,7 @@
 <section id="a-better-way-to-sign-json" class="level2">
 <h2>A better way to sign JSON</h2>
 <p>Most mistakes in request signing protocols stem from serializing, parsing, and decoding the object <a href="https://www.daemonology.net/blog/2008-12-18-AWS-signature-version-1-is-insecure.html">prior to verification</a>. Don’t do those steps. Most of the time it doesn’t matter.</p>
-<p>If you need <q>deniability</q>—unforgeability of messages by the server, then use Ed25519. This is unnecessary for most web APIs, but it is important in some cases, like <a href="https://shufflesharding.com/posts/aws-sigv4-and-sigv4a">AWS multi-region access points</a>. If you trust the server, then use HMAC-SHA256, a symmetric authentication algorithm. <strong>Do not support both of these at once</strong>. Think long and hard about what is appropriate for your application.</p>
+<p>If you need unforgeability of messages by the server, then use Ed25519. This is unnecessary for most web APIs, but it is important in some cases, like <a href="https://shufflesharding.com/posts/aws-sigv4-and-sigv4a">AWS multi-region access points</a>. If you trust the server, then use HMAC-SHA256, a symmetric authentication algorithm. <strong>Do not support both of these at once</strong>. Think long and hard about what is appropriate for your application.</p>
 <p>Have clients serialize the JSON object they wish to sign into a bytestring <code>json_bytes</code>. Now your signature algorithm becomes just:</p>
 <p><span class="math display">\[ \texttt{sign}(\texttt{json_bytes},\ \texttt{key}).\]</span></p>
 <p>And verification?</p>
@@ -215,18 +520,28 @@
     -->
     
 </div>
-<p>This post is a quick update about my website. I love running my personal site. It is my diary, it is my intellectual backbone, and it has gone largely neglected for most of 2015–2016. I am working on redirecting attention back to my blog and starting to write publicly again; let us see if I will be successful.</p>
+<p>This post is a quick update about my website. I love running my personal site. It is my diary, it is my intellectual backbone, and it has gone largely neglected for most of 2015–2016.
+I am working on redirecting attention back to my blog and starting to write publicly again; let us see if I will be successful.</p>
 <p>This post is a very quick and rudimentary overview of the current analytics and popularity of my site.</p>
 <figure>
-<img src="../images/website_2016-12-08_google_analytics.png" alt="My website in 2016." /><figcaption aria-hidden="true">My website in 2016.</figcaption>
+<img src="../images/website_2016-12-08_google_analytics.png" alt="My website in 2016." />
+<figcaption aria-hidden="true">My website in 2016.</figcaption>
 </figure>
-<p>I wrote my first post on this blog on June 3, 2012. <a href="2016-12-03-systems-and-philosophy.html">Just last Saturday</a> I mentioned it, since I’m starting to get back into writing again. I got somewhere between 1500 and 2000 user sessions a month on my website, and I’ve been running <a href="https://www.google.com/analytics/">Google Analytics</a> on the site for most of that time.</p>
-<p>I used to think <a href="2014-08-03-a-vim-like-emacs-config.html">Towards a Vim-like Emacs</a> was the most popular post on my website. It hit <a href="https://news.ycombinator.com/item?id=8581530">#1 on Hacker News</a> for a brief period of time,<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> and I’ve never been quite sure if I will be able to top that or if it will go down as my magnum opus.</p>
-<p>Now my <a href="2014-08-23-ode-solver-py.html">ODE solver</a> turns out to be the most popular, with 10,716 pageviews in 2016, versus 5,457 for the Emacs post. This is surprising given that the mathjax was broken for some unknown period of time, until I fixed it <a href="https://github.com/nathantypanski/nathantypanski.com/commit/1557c22449cb1c473b4937dedba3595eebcbcf73">5 days ago</a> in a scramble to <a href="https://github.com/nathantypanski/nathantypanski.com/commit/de89bb8de58aacd6690e06b4c87ac14aa0b9c1ee">fix the Haskell that assembles my website</a>. This is surprising to me, but it’s easy to explain—that is easily my best post that combines mathematics with a generally useful tutorial on Python code. If I were a scientist working with applied mathematics, that post would certainly be of more interest to me.</p>
-<p>Further, now the <a href="http://spacemacs.org/">Spacemacs</a> project has been successful (10,001 stars on GitHub and 2,597 forks), which brings <a href="https://www.emacswiki.org/emacs/Evil">Evil</a> to the general population with considerably less work than following my Emacs post would require. I’m not sure how much impact my work had in inspiring that project, or whether Spacemacs started first, but they certainly make it easy enough for the everyday person that you don’t need to do <a href="2014-08-03-a-vim-like-emacs-config.html#stealing-ibuffers-keymap">some of the immensely crazy shit I did stealing keymaps on your own</a>.</p>
+<p>I wrote my first post on this blog on June 3, 2012.
+<a href="2016-12-03-systems-and-philosophy.html">Just last Saturday</a> I mentioned it, since I’m starting to get back into writing again.
+I got somewhere between 1500 and 2000 user sessions a month on my website, and I’ve been running <a href="https://www.google.com/analytics/">Google Analytics</a> on the site for most of that time.</p>
+<p>I used to think <a href="2014-08-03-a-vim-like-emacs-config.html">Towards a Vim-like Emacs</a> was the most popular post on my website.
+It hit <a href="https://news.ycombinator.com/item?id=8581530">#1 on Hacker News</a> for a brief period of time,<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> and I’ve never been quite sure if I will be able to top that or if it will go down as my magnum opus.</p>
+<p>Now my <a href="2014-08-23-ode-solver-py.html">ODE solver</a> turns out to be the most popular, with 10,716 pageviews in 2016, versus 5,457 for the Emacs post.
+This is surprising given that the mathjax was broken for some unknown period of time, until I fixed it <a href="https://github.com/nathantypanski/nathantypanski.com/commit/1557c22449cb1c473b4937dedba3595eebcbcf73">5 days ago</a> in a scramble to <a href="https://github.com/nathantypanski/nathantypanski.com/commit/de89bb8de58aacd6690e06b4c87ac14aa0b9c1ee">fix the Haskell that assembles my website</a>.
+This is surprising to me, but it’s easy to explain—that is easily my best post that combines mathematics with a generally useful tutorial on Python code.
+If I were a scientist working with applied mathematics, that post would certainly be of more interest to me.</p>
+<p>Further, now the <a href="http://spacemacs.org/">Spacemacs</a> project has been successful (10,001 stars on GitHub and 2,597 forks), which brings <a href="https://www.emacswiki.org/emacs/Evil">Evil</a> to the general population with considerably less work than following my Emacs post would require.
+I’m not sure how much impact my work had in inspiring that project, or whether Spacemacs started first, but they certainly make it easy enough for the everyday person that you don’t need to do <a href="2014-08-03-a-vim-like-emacs-config.html#stealing-ibuffers-keymap">some of the immensely crazy shit I did stealing keymaps on your own</a>.</p>
 <p>No big conclusion for this piece. Just a quick update, carrying high <a href="../pages.html#blogging">temporal locality</a>. <a href="http://genius.com/10981254">Onward! and Onward!</a></p>
 <figure>
-<img src="../images/website_2016-12-08_google_analytics_vimlike.png" alt="When Towards a Vim-like Emacs hit Hacker News, my website spiked to 13,423 hits in a week." /><figcaption aria-hidden="true">When <a href="2014-08-03-a-vim-like-emacs-config.html">Towards a Vim-like Emacs</a> <a href="https://news.ycombinator.com/item?id=8581530">hit Hacker News</a>, my website spiked to 13,423 hits in a week.</figcaption>
+<img src="../images/website_2016-12-08_google_analytics_vimlike.png" alt="When Towards a Vim-like Emacs hit Hacker News, my website spiked to 13,423 hits in a week." />
+<figcaption aria-hidden="true">When <a href="2014-08-03-a-vim-like-emacs-config.html">Towards a Vim-like Emacs</a> <a href="https://news.ycombinator.com/item?id=8581530">hit Hacker News</a>, my website spiked to 13,423 hits in a week.</figcaption>
 </figure>
 <section class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr />
@@ -327,15 +642,23 @@
 </ul></li>
 <li><a href="#conclusion">Conclusion</a></li>
 </ul> </div>
-<p>Python and Ruby always struck me as somewhat related. They’re both dynamic languages from the 1990s, still highly popular, and influenced a number of more modern dynamic programming languages like <a href="https://en.wikipedia.org/wiki/Julia_%28programming_language%29">Julia</a>. They’re similar enough in spirit that one can easily fall into the trap of thinking that if they know one of Python and Ruby, they don’t have to learn the other. I was primarily a Python programmer for my research work, and Python is popular in academia, so I am definitely guilty of having a closed mind toward Ruby.</p>
-<p>Today I made an effort to challenge my assumptions and give Ruby a serious shot. I finished the <a href="http://rubykoans.com/">Ruby koans</a>, which took me about <a href="https://github.com/nathantypanski/ruby-koans">five hours, and four hours of <q>real work</q></a>. I’d messed with <a href="http://tryruby.org/levels/1/challenges/0">Try Ruby</a> before that, but that didn’t take me very far, and <a href="https://rubymonk.com/">RubyMonk</a> felt too slow and clunky for my tastes when I tried the primer.</p>
-<p>So the natural thing to do for me is to compare Ruby with Python, and see what I like and don’t like about each of them. I’m not trying to <a href="http://c2.com/cgi/wiki?PythonVsRuby">start a flamewar</a>, it’s more like I’m just trying to translate some of my knowledge and highlight some of the differences that I saw so far.</p>
+<p>Python and Ruby always struck me as somewhat related.
+They’re both dynamic languages from the 1990s, still highly popular, and influenced a number of more modern dynamic programming languages like <a href="https://en.wikipedia.org/wiki/Julia_%28programming_language%29">Julia</a>.
+They’re similar enough in spirit that one can easily fall into the trap of thinking that if they know one of Python and Ruby, they don’t have to learn the other.
+I was primarily a Python programmer for my research work, and Python is popular in academia, so I am definitely guilty of having a closed mind toward Ruby.</p>
+<p>Today I made an effort to challenge my assumptions and give Ruby a serious shot.
+I finished the <a href="http://rubykoans.com/">Ruby koans</a>, which took me about <a href="https://github.com/nathantypanski/ruby-koans">five hours, and four hours of <q>real work</q></a>.
+I’d messed with <a href="http://tryruby.org/levels/1/challenges/0">Try Ruby</a> before that, but that didn’t take me very far, and <a href="https://rubymonk.com/">RubyMonk</a> felt too slow and clunky for my tastes when I tried the primer.</p>
+<p>So the natural thing to do for me is to compare Ruby with Python, and see what I like and don’t like about each of them.
+I’m not trying to <a href="http://c2.com/cgi/wiki?PythonVsRuby">start a flamewar</a>, it’s more like I’m just trying to translate some of my knowledge and highlight some of the differences that I saw so far.</p>
 <section id="toy-script-comparisons" class="level2">
 <h2>Toy script comparisons</h2>
-<p>I wrote some toy scripts to show the most jarring differences so far. Yeah, I’m sure I’ll dig further into the language and all of this code will look silly, but as a budding Rubyist this is about as advanced as I can muster.</p>
+<p>I wrote some toy scripts to show the most jarring differences so far.
+Yeah, I’m sure I’ll dig further into the language and all of this code will look silly, but as a budding Rubyist this is about as advanced as I can muster.</p>
 <section id="running-sum" class="level3">
 <h3>Running sum</h3>
-<p>In Ruby, the tendency is to iterate over a number of variables with the <code>#each</code> method, and then you pass in a block that gets called on each of the elements. What’s immediately noticeable here is that Ruby blocks are way more powerful than Python’s anonymous callalbles (<code>lambdas</code>).</p>
+<p>In Ruby, the tendency is to iterate over a number of variables with the <code>#each</code> method, and then you pass in a block that gets called on each of the elements.
+What’s immediately noticeable here is that Ruby blocks are way more powerful than Python’s anonymous callalbles (<code>lambdas</code>).</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode Ruby"><code class="sourceCode ruby"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="cf">#!/usr/bin/env ruby</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>running_sum <span class="kw">=</span> <span class="kw">[]</span></span>
@@ -368,8 +691,11 @@
 </section>
 <section id="oop" class="level3">
 <h3>OOP</h3>
-<p>Ruby classes seem to be both less verbose and syntactically simpler than Python classes. Both languages have a <q>message passing</q> way of calling instance methods: in Python, with <code>getattr(object, name)</code> and in Ruby via <code>#send()</code>. Mixins, via <code>modules</code>, are the coolest advantage Ruby seems to have over Python, where the closest equivalent is boring old implementation inheritance.</p>
-<p>Both languages have an equivalent for getters and setters. In Python, this is done via a decorator, but in Ruby it seems to be a language builtin.</p>
+<p>Ruby classes seem to be both less verbose and syntactically simpler than Python classes.
+Both languages have a <q>message passing</q> way of calling instance methods: in Python, with <code>getattr(object, name)</code> and in Ruby via <code>#send()</code>.
+Mixins, via <code>modules</code>, are the coolest advantage Ruby seems to have over Python, where the closest equivalent is boring old implementation inheritance.</p>
+<p>Both languages have an equivalent for getters and setters.
+In Python, this is done via a decorator, but in Ruby it seems to be a language builtin.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode Ruby"><code class="sourceCode ruby"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="cf">#!/usr/bin/env ruby</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="cf">module</span> <span class="dt">Nameable</span></span>
@@ -426,10 +752,13 @@
 <section id="hidden" class="level3">
 <h3>Hidden</h3>
 <p><em>Finally, a serious scripting task!</em></p>
-<p>I’ve been playing with <a href="https://github.com/venam/2bwm">2bwm</a> as my window manager lately. One of its major defects is that it lacks an easy way to list all hidden windows and show them. It comes with a tool, <code>hidden</code>, that will list hidden windows and print <code>xdotool</code> output for raising them, but the output looks like this:</p>
+<p>I’ve been playing with <a href="https://github.com/venam/2bwm">2bwm</a> as my window manager lately.
+One of its major defects is that it lacks an easy way to list all hidden windows and show them.
+It comes with a tool, <code>hidden</code>, that will list hidden windows and print <code>xdotool</code> output for raising them, but the output looks like this:</p>
 <pre class="sourceCode"><code>&#39;hidden.rb&#39;:&#39;xdotool windowactivate 0xc003ec windowraise 0xc003ec&#39;
 &#39;[nathan@dionysus][~/dotfiles]%&#39;:&#39;xdotool windowactivate 0xc0085c windowraise 0xc0085c&#39;</code></pre>
-<p>Which obviously isn’t sufficient for easily raising the windows. A potential fix to this is building a wrapper for <a href="http://tools.suckless.org/dmenu/">dmenu</a> that lets you easily raise hidden windows.</p>
+<p>Which obviously isn’t sufficient for easily raising the windows.
+A potential fix to this is building a wrapper for <a href="http://tools.suckless.org/dmenu/">dmenu</a> that lets you easily raise hidden windows.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode Ruby"><code class="sourceCode ruby"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="cf">#!/usr/bin/env ruby</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>hidden_windows <span class="kw">=</span> <span class="in">`hidden -c`</span><span class="at">.split</span>(<span class="ss">/\n/</span>)</span>
@@ -482,19 +811,27 @@
 <span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="va">__name__</span> <span class="op">==</span> <span class="st">&#39;__main__&#39;</span>:</span>
 <span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>    main()</span></code></pre></div>
-<p>The advantages Ruby has here are its simpler means of spawning and interacting with subprocesses, and the far prettier Regex syntax, both of which are inspired by Perl. Python, by contrast, has a clunkier regex engine that requires an import, a call to <code>re.compile</code>, and another call to <code>regex.match(...)</code> in order to use it.</p>
+<p>The advantages Ruby has here are its simpler means of spawning and interacting with subprocesses, and the far prettier Regex syntax, both of which are inspired by Perl.
+Python, by contrast, has a clunkier regex engine that requires an import, a call to <code>re.compile</code>, and another call to <code>regex.match(...)</code> in order to use it.</p>
 <p>The other thing you notice here is the <code>bytes</code> handling. Subprocess output returns <code>bytes</code> objects in Python, and they have to be decoded into <code>utf-8</code> before I can do much with them.</p>
 <p>This results in a far more verbose Python solution.</p>
 <p>It’s also worth mentioning that the subprocess interface in Ruby is handled through an RAII-style block. In Python’s case, it looks like <a href="https://bugs.python.org/issue10554"><code>Popen</code> objects can be used in <code>with</code> statements</a>:</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode Python"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> Popen([<span class="st">&quot;ifconfig&quot;</span>], stdout<span class="op">=</span>PIPE) <span class="im">as</span> proc:</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    log.write(proc.stdout.read())</span></code></pre></div>
-<p>but that leaves the clunky <code>Popen</code> interface to worry about. Personally I can never remember what <code>stdout=PIPE</code> actually does, or which of those given modes I should be using for my process. In Ruby, I get to use <a href="http://man7.org/linux/man-pages/man3/fopen.3.html"><code>fopen(3)</code> arguments</a> to describe how I’d like to handle fds on the subprocess. That’s an interface I’m already familiar with, and it’s intutitive.</p>
+<p>but that leaves the clunky <code>Popen</code> interface to worry about. Personally I can never remember what <code>stdout=PIPE</code> actually does, or which of those given modes I should be using for my process.
+In Ruby, I get to use <a href="http://man7.org/linux/man-pages/man3/fopen.3.html"><code>fopen(3)</code> arguments</a> to describe how I’d like to handle fds on the subprocess. That’s an interface I’m already familiar with, and it’s intutitive.</p>
 </section>
 </section>
 <section id="conclusion" class="level2">
 <h2>Conclusion</h2>
-<p>My initial impression of Ruby is quite positive. It’s a strong candidate for replacing my <q>one off Python scripts</q> that often felt a bit too verbose for the tasks they were achieving. While I’m not comfortable enough to do serious development in it yet, I do get the feeling that Ruby will be quite readable over the equivalent Bash/Awk/Sed mashup that I might otherwise use to avoid writing a wordy Python script that uses <code>subprocess</code>.</p>
-<p>There’s a distinct impression that Ruby is more <q>fun</q> than Python. There are many ways to achieve certain tasks, and the general goal is to find the most beautiful way. In Python, it seems like there’s a heavier focus on readability. I was skimming through some of the Rails codebase, and Rubyists seem to have no qualms about using the obscure <code>||=</code> operator, in spite of the fact that it <a href="https://stackoverflow.com/questions/995593/what-does-or-equals-mean-in-ruby">really doesn’t mean what you think it means</a>. I think the most obscure syntactic construct in Python is just the <a href="https://stackoverflow.com/questions/394809/does-python-have-a-ternary-conditional-operator">wacky ternary operator</a>.</p>
+<p>My initial impression of Ruby is quite positive.
+It’s a strong candidate for replacing my <q>one off Python scripts</q> that often felt a bit too verbose for the tasks they were achieving.
+While I’m not comfortable enough to do serious development in it yet, I do get the feeling that Ruby will be quite readable over the equivalent Bash/Awk/Sed mashup that I might otherwise use to avoid writing a wordy Python script that uses <code>subprocess</code>.</p>
+<p>There’s a distinct impression that Ruby is more <q>fun</q> than Python.
+There are many ways to achieve certain tasks, and the general goal is to find the most beautiful way.
+In Python, it seems like there’s a heavier focus on readability.
+I was skimming through some of the Rails codebase, and Rubyists seem to have no qualms about using the obscure <code>||=</code> operator, in spite of the fact that it <a href="https://stackoverflow.com/questions/995593/what-does-or-equals-mean-in-ruby">really doesn’t mean what you think it means</a>.
+I think the most obscure syntactic construct in Python is just the <a href="https://stackoverflow.com/questions/394809/does-python-have-a-ternary-conditional-operator">wacky ternary operator</a>.</p>
 <p>I do not believe that Python and Ruby are really playing in the same niche. While Python dominates in academia and scientific programming, Ruby seems to win in the Perl-ish systems scripting and web development areas (though <a href="https://www.djangoproject.com/">Django</a> and <a href="http://www.tornadoweb.org/en/stable/">Tornado</a> put out some serious competition with <a href="http://rubyonrails.org/">Rails</a> and <a href="http://www.sinatrarb.com/">Sinatra</a>, and Python’s <a href="http://blog.getpelican.com/">Pelican</a> looks like a fine alternative to <a href="http://jekyllrb.com/">Jekyll</a>).</p>
 </section>
 ]]></summary>
@@ -524,30 +861,45 @@
 <li><a href="#leaving-college-joining-palantir">Leaving college, joining Palantir</a></li>
 </ul> </div>
 <p>I haven’t blogged since January, and I really wish I had a better reason for it but the truth is I simply have not applied my characteristic productive laziness to writing.</p>
-<p>I’ve been reading a lot of jwz lately. I think I read <a href="http://www.jwz.org/gruntle/nscpdorm.html">the netscape dorm</a> three times in the last few weeks. That was a bad sign, and I should have known better, but I didn’t quite pick up on it.</p>
+<p>I’ve been reading a lot of jwz lately.
+I think I read <a href="http://www.jwz.org/gruntle/nscpdorm.html">the netscape dorm</a> three times in the last few weeks.
+That was a bad sign, and I should have known better, but I didn’t quite pick up on it.</p>
 <p>So let’s do a breakdown of the past few months; maybe somehow I can justify the silence.</p>
 <section id="red-hat" class="level2">
 <h2>Red Hat</h2>
-<p><a href="https://fedoraproject.org/wiki/User:Spot">Tom Callaway</a> from Red Hat <a href="http://blog.pcs.cnu.edu/?p=254">came to speak on March 24</a> for CNU’s PCSE<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> department and the <a href="http://cnulug.org/">LUG I founded</a>. That was awesome. I don’t think anything could validate a newly-founded Linux user group more than having industry leaders come joke with you about tiling window managers. Quoting Tom:</p>
+<p><a href="https://fedoraproject.org/wiki/User:Spot">Tom Callaway</a> from Red Hat <a href="http://blog.pcs.cnu.edu/?p=254">came to speak on March 24</a> for CNU’s PCSE<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> department and the <a href="http://cnulug.org/">LUG I founded</a>.
+That was awesome.
+I don’t think anything could validate a newly-founded Linux user group more than having industry leaders come joke with you about tiling window managers. Quoting Tom:</p>
 <blockquote>
 <p>The venn diagram between people who use tiling window managers and people who know Haskell is just a circle.</p>
 </blockquote>
 <p>In complete good spirit, it’s worth mentioning <a href="https://i3wm.org/">i3</a> was written largely <em>because</em> the developers thought XMonad was cool, but didn’t want to learn Haskell.</p>
-<p>After the presentation I was told by one of the LUG members that Tom’s talk was really inspiring for them. The student said <q>It’s really great seeing industry leaders and finding out they’re just like us - only maybe a bit older or more knowledgeable - and feeling like I can be just like that, too, if I just work hard and dedicate myself.</q></p>
-<p>It’s that kind of thing that makes me so glad I stuck with CNULUG. Even through all the lows, the awful turnout for the first year or so, we’ve pulled through - and now we matter so much that we’re making a real difference in students’ lives. Those sort of results, to me, almost makes my whole four years at CNU worth it on their own.</p>
+<p>After the presentation I was told by one of the LUG members that Tom’s talk was really inspiring for them.
+The student said <q>It’s really great seeing industry leaders and finding out they’re just like us - only maybe a bit older or more knowledgeable - and feeling like I can be just like that, too, if I just work hard and dedicate myself.</q></p>
+<p>It’s that kind of thing that makes me so glad I stuck with CNULUG.
+Even through all the lows, the awful turnout for the first year or so,
+we’ve pulled through - and now we matter so much that we’re making a real difference
+in students’ lives.
+Those sort of results, to me, almost makes my whole four years at CNU worth it on their own.</p>
 </section>
 <section id="pcse-coding-challenge" class="level2">
 <h2>PCSE Coding Challenge</h2>
-<p>A team I was on (with <a href="https://www.linkedin.com/pub/wilson-ho/82/33/b23">Wilson Ho</a> and <a href="https://www.linkedin.com/pub/ian-miller/b1/ba9/513">Ian Miller</a>) won my university’s <q>PCSE Coding Challenge</q> on April 3. That was fun. I totally embarrassed myself during the big-wig ACM programming competition last semester, so it’s relieving to see some sort of quantifiable progress.</p>
-<p>Something struck me about the <a href="/files/2015Spring-PCSE-coding-challenge-Koehl.pdf">problems</a>, though. We had three language options: Java, C (<code>gcc</code> with default flags), and C++ (<code>g++</code> with default flags). At least two of these would be more well-suited to scripting languages, though.</p>
-<p>Problem 4 is simple text substitution. The input two lines forming a substitution table (preceded by a less-than-helpful count), followed by a list of plaintext/cyphertext blocks:</p>
+<p>A team I was on (with <a href="https://www.linkedin.com/pub/wilson-ho/82/33/b23">Wilson Ho</a> and <a href="https://www.linkedin.com/pub/ian-miller/b1/ba9/513">Ian Miller</a>) won my university’s <q>PCSE Coding Challenge</q> on April 3.
+That was fun.
+I totally embarrassed myself during the big-wig ACM programming competition last semester, so it’s relieving to see some sort of quantifiable progress.</p>
+<p>Something struck me about the <a href="/files/2015Spring-PCSE-coding-challenge-Koehl.pdf">problems</a>, though.
+We had three language options: Java, C (<code>gcc</code> with default flags), and C++ (<code>g++</code> with default flags).
+At least two of these would be more well-suited to scripting languages, though.</p>
+<p>Problem 4 is simple text substitution.
+The input two lines forming a substitution table (preceded by a less-than-helpful count), followed by a list of plaintext/cyphertext blocks:</p>
 <pre class="sourceCode"><code>3
 a b c
 B C D
 2
 PT: abc
 CT: BCDDCB</code></pre>
-<p>You’re supposed to encrypt the plaintext blocks, and decrypt the cyphertext blocks. Normally I’d solve this in Bash:<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
+<p>You’re supposed to encrypt the plaintext blocks, and decrypt the cyphertext blocks.
+Normally I’d solve this in Bash:<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode Bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/bin/bash</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> <span class="bu">read</span> <span class="at">-r</span> <span class="va">cypher_count</span><span class="kw">;</span> <span class="cf">do</span></span>
@@ -567,36 +919,100 @@ CT: BCDDCB</code></pre>
 <span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">done</span></span>
 <span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="cf">done</span></span></code></pre></div>
 <p>Problems 1 and 5 were semi-interesting graph problems, but why bother with those when there are nice and easy text substitution problems to play with?</p>
-<p>Anyway, I’m actually pretty embarrassed by the win. My team solved the above text translation problem and the Sudoku problem (problem 3). Neither of those are particularly difficult, or require any sort of serious algorithms knowledge to solve. They’re more like run-of-the-mill programming challenges. We were about 90% of the way through problem 2, another simple text processing/sorting problem, when the timer rang.</p>
-<p>Main lesson learned: brush up on I/O in whatever language I’m choosing before the next algorithms competition. We could have performed a <em>lot</em> better if we spent less time fumbling around with a <code>BufferedReader</code> and more time thinking about algorithms.</p>
+<p>Anyway, I’m actually pretty embarrassed by the win.
+My team solved the above text translation problem and the Sudoku problem (problem 3).
+Neither of those are particularly difficult, or require any sort of serious algorithms knowledge to solve. They’re more like run-of-the-mill programming challenges.
+We were about 90% of the way through problem 2, another simple text processing/sorting problem, when the timer rang.</p>
+<p>Main lesson learned: brush up on I/O in whatever language I’m choosing before the next algorithms competition.
+We could have performed a <em>lot</em> better if we spent less time fumbling around with a <code>BufferedReader</code> and more time thinking about algorithms.</p>
 </section>
 <section id="mike-bland-cnu-research-google-and-the-us-government" class="level2">
 <h2>Mike Bland, CNU research, Google, and the US Government</h2>
-<p><a href="http://mike-bland.com/">Mike Bland</a> keynoted <a href="http://cnu.edu/research/about/paideia.asp">Paideia</a>, CNU’s annual <q>research conference</q> on April 11. He gave a primer of his talk, itself a sort of toned-down variation of his slideshow behemoth <a href="https://18f.gsa.gov/2014/12/11/large-scale-development-culture-change/">Large Scale Development Culture Change: Google and the US Government</a> to the PCSE department on Friday, April 10. Apparently no one told him that the April 10 event would be a <q>talk</q>, and not a Q&amp;A, so Mike just ran through the same slides he’d be covering at Paideia.</p>
-<p>Mike really did a great job relating to the audience at the keynote. Even though he covered somewhat technical material, I think everyone who was there (mostly non-programmers) managed to relate to his talk and took him seriously. He made <a href="https://18f.gsa.gov/">18F</a> seem like <em>the real deal</em>, where Google was just like the training grounds for work that will have real, lasting impact on the United States.</p>
-<p>One unfortunate consequence of Friday’s talk was that PCSE folks were notably absent on Saturday. In some sense that’s OK because they already saw most of it on Friday, but in another sense it’s not since Mike was quite obviously more well-prepared on Saturday.</p>
-<p>Mike is locally famous for organizing student demonstrations to <q>save</q>, from bureaucratic shutdown, CNU’s <a href="http://cnu.edu/academics/graduate/">graduate program</a>, which basically makes him the reason I can write <q>Christopher Newport University</q> on my resumé instead of <q>Christopher Newport College</q>. But he was actually <em>confused</em> why he was relevant when <a href="http://www.pcs.cnu.edu/~David.Gore/">Dr. Gore</a> asked him to keynote CNU’s undergraduate/graduate research conference. Go figure.</p>
-<p>One thing I noticed is that he put a lot of effort into engaging the audience during his presentations. Sometimes this was successful, and sometimes this wasn’t. The difference I noticed between successively captivating a live audience and <em>not</em> doing so is when he asked people in the audience to express themselves. I can recall this same dynamic from when I gave my <a href="http://nathantypanski.github.io/git-talk/">talk advocating Git</a> at NASA Langley: people were engaged when it seemed like I valued their opinions on things. Asking questions like <q>How many have you have used version control? How many of you <em>liked</em> using it?</q> engaged viewers way more than my 15-minute usage demo.</p>
-<p>Similarly, when an audience members got to ask questions and be part of a conversation instead of just recipients of a speech, they seemed more alive and interested themselves, and the presentation seemed to have bigger impact.</p>
-<p>This kind of thing reminds me not to focus too hard on slides when I do a presentation. What I should be doing is motivating the audience, and then letting them tell me what they’re interested in - not the other way around. Unless I have something truly original to say, people are probably going to be more interested in how what I’m saying applies to <em>them</em> than whatever it is that I’m saying. Maybe that’s a sad reality, and people should care more about the generalized intellectual pursuit than individual relevance, but feeling that way isn’t going to make people listen to you.</p>
+<p><a href="http://mike-bland.com/">Mike Bland</a> keynoted <a href="http://cnu.edu/research/about/paideia.asp">Paideia</a>, CNU’s annual <q>research conference</q> on April 11.
+He gave a primer of his talk, itself a sort of toned-down variation of his slideshow behemoth
+<a href="https://18f.gsa.gov/2014/12/11/large-scale-development-culture-change/">Large Scale Development Culture Change: Google and the US Government</a>
+to the PCSE department on Friday, April 10.
+Apparently no one told him that the April 10 event would be a <q>talk</q>, and not a Q&amp;A, so Mike just ran through the same slides he’d be covering at Paideia.</p>
+<p>Mike really did a great job relating to the audience at the keynote.
+Even though he covered somewhat technical material, I think everyone who was there (mostly non-programmers) managed to relate to his talk and took him seriously.
+He made <a href="https://18f.gsa.gov/">18F</a> seem like <em>the real deal</em>,
+where Google was just like the training grounds for work that will have real,
+lasting impact on the United States.</p>
+<p>One unfortunate consequence of Friday’s talk was that PCSE folks were notably absent on Saturday.
+In some sense that’s OK because they already saw most of it on Friday, but in another sense it’s not since Mike was quite obviously more well-prepared on Saturday.</p>
+<p>Mike is locally famous for organizing student demonstrations to <q>save</q>, from bureaucratic shutdown, CNU’s
+<a href="http://cnu.edu/academics/graduate/">graduate program</a>,
+which basically makes him the reason I can write <q>Christopher Newport University</q> on my resumé instead of <q>Christopher Newport College</q>.
+But he was actually <em>confused</em> why he was relevant when
+<a href="http://www.pcs.cnu.edu/~David.Gore/">Dr. Gore</a> asked him to keynote CNU’s undergraduate/graduate research conference. Go figure.</p>
+<p>One thing I noticed is that he put a lot of effort into engaging the audience during
+his presentations.
+Sometimes this was successful, and sometimes this wasn’t.
+The difference I noticed between successively captivating a live audience and <em>not</em> doing so is when he asked people in the audience to express themselves.
+I can recall this same dynamic from when I gave my <a href="http://nathantypanski.github.io/git-talk/">talk advocating Git</a> at NASA Langley: people were engaged when it seemed like I valued their opinions on things.
+Asking questions like <q>How many have you have used version control? How many of you <em>liked</em> using it?</q> engaged viewers way more than my 15-minute usage demo.</p>
+<p>Similarly, when an audience members got to ask questions and be part of a conversation
+instead of just recipients of a speech, they seemed more alive and interested themselves,
+and the presentation seemed to have bigger impact.</p>
+<p>This kind of thing reminds me not to focus too hard on slides when I do a presentation.
+What I should be doing is motivating the audience, and then letting them tell me what they’re interested in - not the other way around.
+Unless I have something truly original to say, people are probably going to be more interested in how what I’m saying applies to <em>them</em> than whatever it is that I’m saying.
+Maybe that’s a sad reality, and people should care more about the generalized intellectual pursuit than individual relevance, but feeling that way isn’t going to make people listen to you.</p>
 <p>Making people relate to you will make them listen. Inspiring the hell out of people will make them listen. You don’t need to win everywhere to captivate an audience, but you better damn well captivate them or you’re just wasting a bunch of people’s time.</p>
 <p><a href="2014-08-22-openssl-makefiles.html">Previously</a>.</p>
 </section>
 <section id="microcontrollers-are-fun" class="level2">
 <h2>Microcontrollers are fun</h2>
-<p>I’m in a microprocessors class this semester, and it’s awesome. It’s definitely among the hardest classes I’ve taken at CNU, but also one of the most rewarding. Among most programmers I meet, both hardware programming and C are seen as some crazy sort of <q>black magic</q>. I understand we all pine for the good ol’ days when C was taught to every budding programmer instead of <a href="http://www.joelonsoftware.com/articles/ThePerilsofJavaSchools.html">Java</a>, when Linus Torvalds’ <a href="http://grisha.org/blog/2013/04/02/linus-on-understanding-pointers/">comments on linked lists</a> actually made sense to people with CS degrees, but modern CS departments apparently don’t throw students into the deep end with nothing but a C compiler and an assembly-language manual anymore.</p>
-<p>Yeah, most people in the class weren’t ready for that. They freaked out at first. But, you know what? The students learned the material. Myself included. <a href="http://cnu.edu/pcs/faculty_staff/wang.asp">Dr. Wang</a> didn’t spoonfeed us; he just gave us hardware manuals and told us <q>when you get out in the industry, you’re not gonna have textbooks</q> and let everyone sink or swim.</p>
-<p>I spent this evening solving example problems from an exercise booklet on a <a href="https://www.microchip.com/wwwproducts/Devices.aspx?product=PIC16F877A">PIC16F877A microcontroller</a>. It was fun. I feel like I haven’t had fun programming in a while, but when you sit down and program hardware in C it can really reinvigorate love of the craft. The work wasn’t very interesting: make different LEDs light up depending on the voltage reading from a dial. Set a cutoff threshold whenever a button is pressed and light different LEDs depending on whether you’re above or below that threshold. Simple things, but the experience is rewarding. It reminds me of being in high school, writing my first Java classes to simulate the Monty Hall problem or whatever. There’s a sense of joy and wonder that programming can produce, and it’s when I find it that I do my best work.</p>
+<p>I’m in a microprocessors class this semester, and it’s awesome.
+It’s definitely among the hardest classes I’ve taken at CNU, but also one of the most rewarding.
+Among most programmers I meet, both hardware programming and C are seen as some crazy sort of <q>black magic</q>.
+I understand we all pine for the good ol’ days when C was taught to every budding programmer instead of <a href="http://www.joelonsoftware.com/articles/ThePerilsofJavaSchools.html">Java</a>,
+when Linus Torvalds’ <a href="http://grisha.org/blog/2013/04/02/linus-on-understanding-pointers/">comments on linked lists</a>
+actually made sense to people with CS degrees,
+but modern CS departments apparently don’t throw students into the deep end with nothing but a C compiler and an assembly-language manual anymore.</p>
+<p>Yeah, most people in the class weren’t ready for that.
+They freaked out at first.
+But, you know what?
+The students learned the material.
+Myself included.
+<a href="http://cnu.edu/pcs/faculty_staff/wang.asp">Dr. Wang</a> didn’t spoonfeed us; he just gave us hardware manuals and told us <q>when you get out in the industry, you’re not gonna have textbooks</q> and let everyone sink or swim.</p>
+<p>I spent this evening solving example problems from an exercise booklet on a <a href="https://www.microchip.com/wwwproducts/Devices.aspx?product=PIC16F877A">PIC16F877A microcontroller</a>.
+It was fun.
+I feel like I haven’t had fun programming in a while, but when you sit down and program hardware in C it can really reinvigorate love of the craft.
+The work wasn’t very interesting: make different LEDs light up depending on the voltage reading from a dial.
+Set a cutoff threshold whenever a button is pressed and light different LEDs depending on whether you’re above or below that threshold.
+Simple things, but the experience is rewarding.
+It reminds me of being in high school, writing my first Java classes to simulate the Monty Hall problem or whatever.
+There’s a sense of joy and wonder that programming can produce, and it’s when I find it that I do my best work.</p>
 </section>
 <section id="leaving-college-joining-palantir" class="level1">
 <h1>Leaving college, joining Palantir</h1>
-<p>I graduate in May, and I’m absolutely terrified. I took an internship with Palantir this summer, on their Mission Operations team, instead of taking the <q>safe</q> route taking a full-time offer (like I might have gotten with <a href="https://www.ssaihq.com/">SSAI</a>, who have given me arguably the most rewarding work experience of my lifetime applying bleeding-edge industry practices to the US government). As apprehensive as this leaves me, I’m really excited about joining Palantir.</p>
-<p>Why? I really can’t overstate the influence of the mission ops team lead in inspiring me to do this. Paraphrasing, this guy told me upfront:</p>
+<p>I graduate in May, and I’m absolutely terrified.
+I took an internship with Palantir this summer, on their Mission Operations team, instead of taking the <q>safe</q> route taking a full-time offer (like I might have gotten with <a href="https://www.ssaihq.com/">SSAI</a>, who have given me arguably the most rewarding work experience of my lifetime applying bleeding-edge industry practices to the US government).
+As apprehensive as this leaves me, I’m really excited about joining Palantir.</p>
+<p>Why? I really can’t overstate the influence of the mission ops team lead in inspiring me to do this.
+Paraphrasing, this guy told me upfront:</p>
 <blockquote>
-<p>You seem good, but you’re kind of green. There are specific things about Linux that you didn’t know - out of genuine ignorance - and our goal is gonna be to teach you those things, so you’re capable enough to do your day-to-day tasks with us and not need support from anyone else. You’re not on the level we need <em>quite</em> yet, and that’s why we’re offering you an internship, but my goal is going to be to <em>get</em> you there and <em>make</em> you that good so you can succeed with us.</p>
+<p>You seem good, but you’re kind of green.
+There are specific things about Linux that you didn’t know - out of genuine ignorance - and
+our goal is gonna be to teach you those things, so you’re capable enough
+to do your day-to-day tasks with us and not need support from anyone else.
+You’re not on the level we need <em>quite</em> yet, and that’s why we’re offering
+you an internship, but my goal is going to be to <em>get</em> you there and <em>make</em>
+you that good so you can succeed with us.</p>
 </blockquote>
-<p>Now, to understand why that kind of talk inspires me, you’ve gotta understand something about who I am. I’m naturally a bit arrogant. I founded the Linux user group at my school, and I built my first Arch system seven years ago with nothing but a paper printout of the <a href="https://wiki.archlinux.org/index.php/Beginners%27_guide">beginner’s guide</a> and a single desktop computer. I’ve been administering my own webservers for three years, and running other people’s Linux servers for money for two. At least among my peers at CNU, I’m simply <em>not used</em> to people knowing more than me about this operating system.</p>
-<p>But the people at Palantir are better than me. They showed me up in the interview process, but it’s not just that - being smart isn’t the only requirement to win my respect - they’re willing to teach me. And that kind of attitude is what makes me fall in love with a company.</p>
+<p>Now, to understand why that kind of talk inspires me, you’ve gotta understand something about
+who I am.
+I’m naturally a bit arrogant.
+I founded the Linux user group at my school, and I built my first Arch system seven years ago
+with nothing but a paper printout of the <a href="https://wiki.archlinux.org/index.php/Beginners%27_guide">beginner’s guide</a> and a single desktop computer.
+I’ve been administering my own webservers for three years, and running other people’s
+Linux servers for money for two.
+At least among my peers at CNU, I’m simply <em>not used</em> to people knowing more than me about this operating system.</p>
+<p>But the people at Palantir are better than me.
+They showed me up in the interview process, but it’s not just that
+- being smart isn’t the only requirement to win my respect - they’re willing to teach me.
+And that kind of attitude is what makes me fall in love with a company.</p>
 <p>I’ll quote <a href="http://dcurt.is/the-compounding-returns-of-intelligence">one of their cofounders, Stephen Cohen</a>, to drive this point home:</p>
 <blockquote>
 <p>We tend to massively underestimate the compounding returns of intelligence. As humans, we need to solve big problems. If you graduate Stanford at 22 and Google recruits you, you’ll work a 9-to-5. It’s probably more like an 11-to-3 in terms of hard work. They’ll pay well. It’s relaxing. But what they are actually doing is paying you to accept a much lower intellectual growth rate. When you recognize that intelligence is compounding, the cost of that missing long-term compounding is enormous. They’re not giving you the best opportunity of your life. Then a scary thing can happen: You might realize one day that you’ve lost your competitive edge. You won’t be the best anymore. You won’t be able to fall in love with new stuff. Things are cushy where you are. You get complacent and stall. So, run your prospective engineering hires through that narrative. Then show them the alternative: working at your startup.</p>
@@ -656,7 +1072,8 @@ CT: BCDDCB</code></pre>
 <span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a>        free<span class="op">(</span>line<span class="op">);</span></span>
 <span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
-<p>But there’s a bug in the official test data, and that code won’t work unless the following is fixed:</p>
+<p>But there’s a bug in the official test data, and that code won’t work unless
+the following is fixed:</p>
 <pre class="sourceCode"><code>-5
 +7
  d e h l o r w
@@ -723,8 +1140,12 @@ CT: BCDDCB</code></pre>
 </ul></li>
 <li><a href="#conclusion">Conclusion</a></li>
 </ul> </div>
-<p>I always appreciate it when people share some of the quirks of their development workflow, particularly with Git, since the version control monster is so powerful that it can be difficult to stumble your way through its features.</p>
-<p>Here’s something I do every so often: I’m working too quickly, and I add extra unrelated files to an otherwise granular commit. Then I have to fix it, but I usually don’t want to rewrite the commit message. What’s the solution?</p>
+<p>I always appreciate it when people share some of the quirks of their development workflow,
+particularly with Git, since the version control monster is so powerful that it can be
+difficult to stumble your way through its features.</p>
+<p>Here’s something I do every so often: I’m working too quickly, and I add extra
+unrelated files to an otherwise granular commit. Then I have to fix it, but I
+usually don’t want to rewrite the commit message. What’s the solution?</p>
 <p>Here’s an example from my Emacs config:</p>
 <pre class="sourceCode"><code>Refs: [master]
 
@@ -734,9 +1155,14 @@ CT: BCDDCB</code></pre>
  .travis.yml                    | 11 +++++++++++
  config/eyecandy/my-eyecandy.el | 22 +++-------------------
  2 files changed, 14 insertions(+), 19 deletions(-)</code></pre>
-<p>I was partway through an attempt at adding simple <a href="https://travis-ci.org/">travis</a> testing to the repo, but accidentally included that <code>.travis.yml</code> along with a batch of theme config changes.</p>
-<p>Obviously my personal text editor config files can’t get away with <a href="https://github.com/nathantypanski/emacs.d/commit/3597bfd5d1c1c561f019f7fce7ad6119b5edb07e">bad commits</a>[^badcommit] I’ll have to fix that.</p>
-<p>There are a handful of ways I could do this, but the method I inevitably choose is <a href="http://git-scm.com/docs/git-rebase"><code>git rebase</code></a>. Called with the <code>--interactive</code> switch, <code>git rebase</code> gives you a list of commit messages since some point in the tree, and lets you modify and rewrite them as you see fit.</p>
+<p>I was partway through an attempt at adding simple <a href="https://travis-ci.org/">travis</a> testing
+to the repo, but accidentally included that <code>.travis.yml</code> along with a batch of
+theme config changes.</p>
+<p>Obviously my personal text editor config files can’t get away with <a href="https://github.com/nathantypanski/emacs.d/commit/3597bfd5d1c1c561f019f7fce7ad6119b5edb07e">bad commits</a>!<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> I’ll have to fix that.</p>
+<p>There are a handful of ways I could do this, but the method I inevitably choose
+is <a href="http://git-scm.com/docs/git-rebase"><code>git rebase</code></a>. Called with the <code>--interactive</code>
+switch, <code>git rebase</code> gives you a list of commit messages since some point in the
+tree, and lets you modify and rewrite them as you see fit.</p>
 <p>What we’re going to do here is this:</p>
 <ul>
 <li>start an interactive rebase,</li>
@@ -747,15 +1173,19 @@ CT: BCDDCB</code></pre>
 <p>The reason I prefer using an interactive rebase is</p>
 <ol type="1">
 <li>I know how to do it,</li>
-<li>it differs less from my everyday git usage than the alternatives.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></li>
+<li>it differs less from my everyday git usage than the alternatives.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></li>
 </ol>
 <section id="picking-a-rebase-target" class="level2">
 <h2>Picking a rebase target</h2>
-<p>One of the most important choices before you start any interactive rebase is <q>how far back am I rebasing.</q> It’s only safe to rewrite the parts of history that haven’t been pushed to a remote yet,<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> so the natural choice is to rebase against a remote.</p>
-<p>I’ll pretend that I’m working on a codebase with multiple people, purely for didactic purposes, and do a fetch before I get started:</p>
+<p>One of the most important choices before you start any interactive rebase is <q>how far back
+am I rebasing.</q> It’s only safe to rewrite the parts of history that haven’t been pushed to
+a remote yet,<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> so the natural choice is to rebase against a remote.</p>
+<p>I’ll pretend that I’m working on a codebase with multiple people, purely for didactic
+purposes, and do a fetch before I get started:</p>
 <pre class="sourceCode"><code>~/dotfiles/emacs/.emacs.d/ » git fetch origin
 ~/dotfiles/emacs/.emacs.d/ »</code></pre>
-<p>Since there was no output, that means I have the latest version of <code>origin</code>. Great! Let’s get started:</p>
+<p>Since there was no output, that means I have the latest version of <code>origin</code>.
+Great! Let’s get started:</p>
 <pre class="sourceCode"><code>~/dotfiles/emacs/.emacs.d/ » git rebase -i origin/master
 Cannot rebase: You have unstaged changes.
 Please commit or stash them.</code></pre>
@@ -763,13 +1193,19 @@ Please commit or stash them.</code></pre>
 </section>
 <section id="cleaning-your-worktree" class="level2">
 <h2>Cleaning your worktree</h2>
-<p>When you start an interactive rebase, you need to have a clean worktree. To get there, I used to run <code>git stash</code> before the rebase, and <code>git stash apply</code> afterwards to reapply my old changes after modifying the log. As it turns out, there’s a better way (from <code>man git-rebase</code>):</p>
+<p>When you start an interactive rebase, you need to have a clean worktree.
+To get there, I used to run <code>git stash</code> before the rebase, and <code>git stash apply</code>
+afterwards to reapply my old changes after modifying the log.
+As it turns out, there’s a better way (from <code>man git-rebase</code>):</p>
 <pre class="sourceCode"><code>--[no-]autostash
     Automatically create a temporary stash before the operation begins, and apply it
     after the operation ends. This means that you can run rebase on a dirty worktree.
     However, use with care: the final stash application after a successful rebase might
     result in non-trivial conflicts.</code></pre>
-<p>As mentioned, stashes don’t necessarily apply cleanly after a rebase. This works best if you know that your unstaged changes won’t conflict with anything you’re rebasing. In my case, I only start rebases if I think my stash (if any) will apply cleanly, so I’m going to make this a default in my config:<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p>
+<p>As mentioned, stashes don’t necessarily apply cleanly after a rebase. This works best
+if you know that your unstaged changes won’t conflict with anything you’re rebasing.
+In my case, I only start rebases if I think my stash (if any) will apply cleanly, so
+I’m going to make this a default in my config:<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a></p>
 <pre class="sourceCode"><code>~/dotfiles/emacs/.emacs.d/ » git config --get rebase.autostash
 ~/dotfiles/emacs/.emacs.d/ » git config --global rebase.autostash true
 ~/dotfiles/emacs/.emacs.d/ » git config --get rebase.autostash
@@ -777,7 +1213,8 @@ true</code></pre>
 </section>
 <section id="blasting-apart-history" class="level2">
 <h2>Blasting apart history</h2>
-<p>Now we can get started, and Git will <code>stash</code> unstaged changes automatically before interactive rebases.</p>
+<p>Now we can get started, and Git will <code>stash</code> unstaged changes automatically before
+interactive rebases.</p>
 <pre class="sourceCode"><code>~/dotfiles/emacs/.emacs.d/ » git rebase -i origin/master</code></pre>
 <p>We’re dropped into the interactive rebase window:</p>
 <pre class="sourceCode"><code>pick 712edab eyecandy: just use zenburn theme
@@ -815,8 +1252,12 @@ You can amend the commit now, with
 Once you are satisfied with your changes, run
 
         git rebase --continue</code></pre>
-<p>This has dropped us into the history at a point in time <q>just after</q> <code>712edab</code> was committed. We can modify the files that were changed in that commit, and then use <code>git commit --amend</code> to replace the old commit with our new changes.</p>
-<p>In my case, I still want to keep my <code>.travis.yml</code> changes, but wish to move them into a separate commit. I’ll remove the file from Git’s index, but not my worktree, using <code>git rm --cached</code>.</p>
+<p>This has dropped us into the history at a point in time <q>just after</q> <code>712edab</code> was committed.
+We can modify the files that were changed in that commit, and then use <code>git commit --amend</code>
+to replace the old commit with our new changes.</p>
+<p>In my case, I still want to keep my <code>.travis.yml</code> changes, but wish to move them
+into a separate commit. I’ll remove the file from Git’s index, but not my worktree,
+using <code>git rm --cached</code>.</p>
 <pre class="sourceCode"><code>~/dotfiles/emacs/.emacs.d/ » git rm --cached .travis.yml
 rm &#39;.travis.yml&#39;
 ~/dotfiles/emacs/.emacs.d/ » git commit --amend</code></pre>
@@ -835,7 +1276,9 @@ rm &#39;.travis.yml&#39;
  1 file changed, 3 insertions(+), 19 deletions(-)
 ~/dotfiles/emacs/.emacs.d/ » ls .travis.yml
 .travis.yml</code></pre>
-<p>Great! We’ve rewritten the commit to remove the unrelated changes. It’s worth noting that <code>edit</code> actions in a rebase still let you make new commits, unlike most <q>detached head</q> states in Git.</p>
+<p>Great! We’ve rewritten the commit to remove the unrelated changes. It’s worth
+noting that <code>edit</code> actions in a rebase still let you make new commits, unlike
+most <q>detached head</q> states in Git.</p>
 <p>So we can just add the file back in right here, and finish the rebase:</p>
 <pre class="sourceCode"><code>~/dotfiles/emacs/.emacs.d/ » git add .travis.yml
 ~/dotfiles/emacs/.emacs.d/ » git commit -m &#39;test out travis CI for emacs&#39;
@@ -854,19 +1297,32 @@ Applied autostash.</code></pre>
 2014-12-13 22:42 Nathan Typanski o [master] test out travis CI for emacs
 2014-12-13 20:45 Nathan Typanski o eyecandy: just use zenburn theme
 2014-12-13 19:09 Nathan Typanski o {origin/master} evil: fancy smart indent behavior</code></pre>
-<p>This is just a little snapshot of my Git workflow. I wrote this post because I find myself constantly wondering if I’m using Git <q>the right way</q>, and find myself curious how other people solve problems like this one. Perhaps there’s a way to do this using only a handful of one-liners, and I’m going overkill by using <code>git rebase</code> for this kind of thing (it certainly feels that way).</p>
-<p>But then I realize there’s no One True Workflow with Git. Git usage is a <a href="https://en.wikipedia.org/wiki/State_function">state function</a>: we went from our initial state to our desired result state, and nobody cares how we got there. That’s the whole point.</p>
+<p>This is just a little snapshot of my Git workflow.
+I wrote this post because I find myself constantly wondering if I’m using Git <q>the right way</q>,
+and find myself curious how other people solve problems like this one.
+Perhaps there’s a way to do this using only a handful of one-liners, and I’m
+going overkill by using <code>git rebase</code> for this kind of thing (it certainly feels that way).</p>
+<p>But then I realize there’s no One True Workflow with Git.
+Git usage is a <a href="https://en.wikipedia.org/wiki/State_function">state function</a>:
+we went from our initial state to our desired result state, and nobody cares
+how we got there. That’s the whole point.</p>
 </section>
 <section class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr />
 <ol>
-<li id="fn1" role="doc-endnote"><p>If I have to hack apart a tree in Git, the easiest way for me to do it is usually inside of an interactive rebase. Unlike memorizing a bunch of esoteric one-liners, this lets me work on a repository like I’m always <q>at its tip</q> - which is the normal state of a Git repo when you’re working on new changes.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2" role="doc-endnote"><p>You can get away with rewriting commits that are on a remote, but then you’re doomed to <code>git push -f</code>’ing all over said remote. Without good reason, this is a pretty bad idea. If you have coworkers, it’s a really bad idea.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn3" role="doc-endnote"><p>From the man page for <code>git rebase</code>:</p>
+<li id="fn1" role="doc-endnote"><p>Or I might not tolerate it in a few weeks. Ho, ho.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2" role="doc-endnote"><p>If I have to hack apart a tree in Git, the easiest way for me to do it is
+usually inside of an interactive rebase. Unlike memorizing a bunch of esoteric
+one-liners, this lets me work on a repository like I’m always <q>at its tip</q> -
+which is the normal state of a Git repo when you’re working on new changes.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3" role="doc-endnote"><p>You can get away with rewriting commits that are on a remote, but then you’re
+doomed to <code>git push -f</code>’ing all over said remote. Without good reason, this is a
+pretty bad idea. If you have coworkers, it’s a really bad idea.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4" role="doc-endnote"><p>From the man page for <code>git rebase</code>:</p>
 <pre class="sourceCode"><code>CONFIGURATION
        rebase.autostash
                   If set to true enable --autostash option by default.</code></pre>
-<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></li>
+<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></li>
 </ol>
 </section>
 ]]></summary>
@@ -887,7 +1343,8 @@ Applied autostash.</code></pre>
     -->
     
 </div>
-<p>In an effort to help out one of my readers, I made a quick Asciicast demo of the first few steps in my <a href="/blog/2014-08-03-a-vim-like-emacs-config.html">Towards a Vim-like Emacs</a> blog post. Since I figure at least a few others might be interested, I’ve reproduced it here:<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+<p>In an effort to help out one of my readers, I made a quick Asciicast demo of the first few steps in my <a href="/blog/2014-08-03-a-vim-like-emacs-config.html">Towards a Vim-like Emacs</a> blog post.
+Since I figure at least a few others might be interested, I’ve reproduced it here:<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
 <script type="text/javascript" src="https://asciinema.org/a/14201.js" id="asciicast-14201" async></script>
 <section class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr />
@@ -920,10 +1377,17 @@ Applied autostash.</code></pre>
 <li><a href="#pci-interrupt-acknowledge">PCI Interrupt Acknowledge</a></li>
 <li><a href="#synchronous-serial-interface">Synchronous Serial Interface</a></li>
 </ul> </div>
-<p>Today, for one of my engineering courses, I had to create some <a href="http://en.wikipedia.org/wiki/Digital_timing_diagram">timing diagrams</a> to show certain parts of the PCI standard. If you’ve never had to draw your own timing diagrams before, then you probably haven’t realized that there is no obvious to quickly, easily draw waveforms for a bunch of signals.</p>
-<p>The solution I found is <a href="http://www.ctan.org/pkg/tikz-timing">tikz-timing</a>. An alternative is <a href="http://www.texample.net/tikz/examples/timing-diagram/">timing.sty</a>, which is simple and pretty enough in a pinch.</p>
+<p>Today, for one of my engineering courses, I had to create some <a href="http://en.wikipedia.org/wiki/Digital_timing_diagram">timing diagrams</a> to show certain parts of the PCI standard.
+If you’ve never had to draw your own timing diagrams before, then you probably haven’t realized that there is no obvious to quickly, easily draw waveforms for a bunch of signals.</p>
+<p>The solution I found is
+<a href="http://www.ctan.org/pkg/tikz-timing">tikz-timing</a>.
+An alternative is <a href="http://www.texample.net/tikz/examples/timing-diagram/">timing.sty</a>,
+which is simple and pretty enough in a pinch.</p>
 <p>I find the more advanced features of tikz-timing invaluable for versatility, though—there’s nothing like needing to talk about a signal transition in some text, and, oh yeah, just <em>drawing the signal in the text</em>.</p>
-<p>The only problem with tikz-timing is a shortage of examples. The <a href="http://mirrors.ibiblio.org/CTAN/graphics/pgf/contrib/tikz-timing/tikz-timing.pdf">package documentation</a> has but a handful, and they don’t look much like real-world timing diagrams. The texample.net <a href="http://www.texample.net/tikz/examples/more-tikz-timing-examples/">timing</a> <a href="http://www.texample.net/tikz/examples/tikz-timing/">diagrams</a> are just copied directly from that manual, which isn’t useful. So I figure I’ll post some realistic use cases.</p>
+<p>The only problem with tikz-timing is a shortage of examples.
+The <a href="http://mirrors.ibiblio.org/CTAN/graphics/pgf/contrib/tikz-timing/tikz-timing.pdf">package documentation</a> has but a handful, and they don’t look much like real-world timing diagrams.
+The texample.net <a href="http://www.texample.net/tikz/examples/more-tikz-timing-examples/">timing</a> <a href="http://www.texample.net/tikz/examples/tikz-timing/">diagrams</a> are just copied directly from that manual, which isn’t useful.
+So I figure I’ll post some realistic use cases.</p>
 <p>To get started, I included the package like this:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode latex"><code class="sourceCode latex"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="bu">\usepackage</span>{<span class="ex">tikz-timing</span>}[2014/10/29]</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">\usetikztiminglibrary</span>[rising arrows]{clockarrows}</span></code></pre></div>
@@ -943,11 +1407,14 @@ Applied autostash.</code></pre>
 <span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="fu">\IfValueTF</span>{#2}{[#2]}{}<span class="co">%</span></span>
 <span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="fu">\IfBooleanTF</span>{#1}{<span class="fu">\#</span>}{}<span class="co">%</span></span>
 <span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>}}</span></code></pre></div>
-<p>The PCI timing diagrams are drawn with reference to version 2.2 of the PCI specification. I added the <code>DEVSEL#</code> signal myself,<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> and I’ve taken some slight liberties with the start and stop times of the signals (though they should still be accurate). One notable feature lacking in my diagrams is the delay cycles—most books you’ll read on PCI, in addition to the spec itself will include those directly on the diagram. I haven’t figured out how to do that kind of thing yet.</p>
+<p>The PCI timing diagrams are drawn with reference to version 2.2 of the PCI specification.
+I added the <code>DEVSEL#</code> signal myself,<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> and I’ve taken some slight liberties with the start and stop times of the signals (though they should still be accurate).
+One notable feature lacking in my diagrams is the delay cycles—most books you’ll read on PCI, in addition to the spec itself will include those directly on the diagram. I haven’t figured out how to do that kind of thing yet.</p>
 <section id="pci-read" class="level2">
 <h2>PCI Read</h2>
 <figure>
-<img src="/files/latex/tikz-timing/pci-read-thumb.png" alt="PCI read operation. LaTeX source." /><figcaption aria-hidden="true">PCI read operation. <a href="/files/latex/tikz-timing/pci-read.tex">LaTeX source</a>.</figcaption>
+<img src="/files/latex/tikz-timing/pci-read-thumb.png" alt="PCI read operation. LaTeX source." />
+<figcaption aria-hidden="true">PCI read operation. <a href="/files/latex/tikz-timing/pci-read.tex">LaTeX source</a>.</figcaption>
 </figure>
 <div class="sourceCode" id="cb3"><pre class="sourceCode latex"><code class="sourceCode latex"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">\begin</span>{<span class="ex">tikztimingtable</span>}[<span class="co">%</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    timing/dslope=0.1,</span>
@@ -971,7 +1438,8 @@ Applied autostash.</code></pre>
 <span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="kw">\end</span>{<span class="ex">pgfonlayer</span>}</span>
 <span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="kw">\end</span>{<span class="ex">tikztimingtable</span>}</span></code></pre></div>
 <p>You can think of the <code>tikztimingtable</code> environment as two-column <a href="http://en.wikibooks.org/wiki/LaTeX/Tables">tables</a> with some special syntax for the righthand column. The gist of it is this: there are signal variants, and you create them by writing a letter that serves as a key. Each key has two variants: a half-duration lowercase one and a full-duration uppercase one.</p>
-<p>So to make the clock signal in the PCI read diagram, it’s 18 half-duration clock cycles, and we write that <code>18{c}</code>. The brackets there aren’t strictly necessary, but you can write them for clarity. Signal changes are separated by spaces if there’s any ambiguity about what argument goes with what transition.</p>
+<p>So to make the clock signal in the PCI read diagram, it’s 18 half-duration clock cycles, and we write that <code>18{c}</code>. The brackets there aren’t strictly necessary, but you can write them for clarity.
+Signal changes are separated by spaces if there’s any ambiguity about what argument goes with what transition.</p>
 <p>In the above example, I used these letters to make the signals:</p>
 <ul>
 <li><code>C</code>/<code>c</code>: clock</li>
@@ -980,14 +1448,19 @@ Applied autostash.</code></pre>
 <li><code>H</code>/<code>h</code>: hi</li>
 <li><code>L</code>/<code>l</code>: lo</li>
 </ul>
-<p>The other interesting option is including letters in the <code>D</code> timings. The way you do that is you add an argument in brackets following a <code>D</code> block, like <code>D{0000}</code> to draw a multi-signal timing with value <code>0000</code>.</p>
+<p>The other interesting option is including letters in the <code>D</code> timings.
+The way you do that is you add an argument in brackets following a <code>D</code> block, like <code>D{0000}</code> to draw a multi-signal timing with value <code>0000</code>.</p>
 <p>For invalid states I used <code>X</code> in the below example:</p>
 </section>
 <section id="pci-interrupt-acknowledge" class="level2">
 <h2>PCI Interrupt Acknowledge</h2>
-<p>When a PCI interrupt acknowledge starts, you have invalid values in the address/data line. They’re <em>knowable</em>, but it’s against the protocol to use them for anything. To show that I used an <code>X</code>, which draws a red line for an <em>undefined</em> don’t care. Or at least that’s how I interpreted it. Some people will just use shaded blocks for everything, and make no distinction between the two.</p>
+<p>When a PCI interrupt acknowledge starts, you have invalid values in the address/data line.
+They’re <em>knowable</em>, but it’s against the protocol to use them for anything.
+To show that I used an <code>X</code>, which draws a red line for an <em>undefined</em> don’t care. Or at least that’s how I interpreted it.
+Some people will just use shaded blocks for everything, and make no distinction between the two.</p>
 <figure>
-<img src="/files/latex/tikz-timing/pci-int-thumb.png" alt="PCI interrupt acknowledge. LaTeX source." /><figcaption aria-hidden="true">PCI interrupt acknowledge. <a href="/files/latex/tikz-timing/pci-int.tex">LaTeX source</a>.</figcaption>
+<img src="/files/latex/tikz-timing/pci-int-thumb.png" alt="PCI interrupt acknowledge. LaTeX source." />
+<figcaption aria-hidden="true">PCI interrupt acknowledge. <a href="/files/latex/tikz-timing/pci-int.tex">LaTeX source</a>.</figcaption>
 </figure>
 <div class="sourceCode" id="cb4"><pre class="sourceCode latex"><code class="sourceCode latex"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">\begin</span>{<span class="ex">tikztimingtable</span>}[<span class="co">%</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    timing/dslope=0.1,</span>
@@ -1016,7 +1489,8 @@ Applied autostash.</code></pre>
 <h2>Synchronous Serial Interface</h2>
 <p><a href="http://en.wikipedia.org/wiki/Synchronous_Serial_Interface">Synchronous Serial Interface</a> (SSI) is another protocol I studied. I drew a genuinely oversimplified diagram of it, just for fun.</p>
 <figure>
-<img src="/files/latex/tikz-timing/ssi-thumb.png" alt="SSI protocol basic timing. LaTeX source." /><figcaption aria-hidden="true">SSI protocol basic timing. <a href="/files/latex/tikz-timing/ssi.tex">LaTeX source</a>.</figcaption>
+<img src="/files/latex/tikz-timing/ssi-thumb.png" alt="SSI protocol basic timing. LaTeX source." />
+<figcaption aria-hidden="true">SSI protocol basic timing. <a href="/files/latex/tikz-timing/ssi.tex">LaTeX source</a>.</figcaption>
 </figure>
 <div class="sourceCode" id="cb5"><pre class="sourceCode latex"><code class="sourceCode latex"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">\begin</span>{<span class="ex">tikztimingtable</span>}[<span class="co">%</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    timing/dslope=0.4,</span>
@@ -1036,94 +1510,6 @@ Applied autostash.</code></pre>
 <ol>
 <li id="fn1" role="doc-endnote"><p>Defining commands for patterns of input is one of those tricks you pick up once you’ve used LaTeX for more than a handful of documents. The advantage of doing it this way is that if I want to change the convention used to represent the <a href="http://en.wikipedia.org/wiki/Logic_level">logic level</a> of my signals, I can just change it in one place and it gets updated in the rest of the document.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn2" role="doc-endnote"><p>So it might be wrong—go read the spec if you <em>really</em> care.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-</ol>
-</section>
-]]></summary>
-</entry>
-<entry>
-    <title>Solving a second-order ODE with NumPy and SciPy</title>
-    <link href="http://www.nathantypanski.com/blog/2014-08-23-ode-solver-py.html" />
-    <id>http://www.nathantypanski.com/blog/2014-08-23-ode-solver-py.html</id>
-    <published>2014-08-23T00:00:00Z</published>
-    <updated>2014-08-23T00:00:00Z</updated>
-    <summary type="html"><![CDATA[<div class="info">
-    <!--
-    <div class="snippets">
-        <i class="fa fa-calendar"></i> August 23, 2014 <i class="fa fa-cut" March 22, 2015
-></i> March 22, 2015
-
-    </div>
-    -->
-    
-</div>
-<div id="toc"><h2>Contents</h2>
-<ul>
-<li><a href="#problem">Problem</a></li>
-<li><a href="#analytic-solution">Analytic solution</a></li>
-<li><a href="#python">Python</a></li>
-</ul> </div>
-<p>I was going through my ODE notes the other day and wondered if I could solve any of them with Python. I gave it a shot for one of the simpler equations, and here are my results (with analytic solution included for comparison).</p>
-<section id="problem" class="level2">
-<h2>Problem</h2>
-<p>Say we have the equation</p>
-<p><span class="math display">\[ y&#39;&#39; + y&#39; + 2y = 0, \]</span></p>
-<p>where <span class="math inline">\(y\)</span> is a function of <span class="math inline">\(t\)</span> and the initial values <span class="math inline">\(y(0) = 1\)</span>, <span class="math inline">\(y&#39;(0)=0\)</span>. Can we write an equation for <span class="math inline">\(y\)</span>, or at least get some answers about its behavior?</p>
-<p>In real life, this sort of problem often comes up when you’re dealing with a circuit containing a <a href="http://en.wikipedia.org/wiki/Capacitor">capacitor</a> that discharges through an <a href="http://en.wikipedia.org/wiki/Inductor">inductor</a> over time, and you want to analyze the voltage or current going through any given part of the circuit while this happens. Generally speaking, this is only one small part of a real-life circuit problem: you know that when you flip some switch, the circuit can be simplified to the above equation and that lets you solve it for some range <span class="math inline">\(t_1 &lt; t &lt; t_2\)</span>, where <span class="math inline">\(t_1\)</span> and <span class="math inline">\(t_2\)</span> are the time boundaries where you <em>didn’t</em> have the switch thrown.</p>
-<p>Our analytic solution will let us write an equation for <span class="math inline">\(y\)</span> that’s solvable for any time <span class="math inline">\(t\)</span>, but the numeric solution in Python will just give us answers in some range that we actually calculate. Depending on what we’re trying to do with the answer, the numeric solution might be all that we need.</p>
-</section>
-<section id="analytic-solution" class="level2">
-<h2>Analytic solution</h2>
-<p>If you’ve taken a class on ordinary differential equations, then you should recognize this as a second-order linear homogeneous ODE with constant coefficients. If you haven’t, no big deal then either. Regardless, I’ll go over the exact analytical answer, since it’s pretty easy to find in this case.</p>
-<p>An equation of the form <span class="math display">\[ \alpha y&#39;&#39;+\beta y&#39;+ \gamma y=0, \]</span> where <span class="math inline">\(\alpha\)</span>, <span class="math inline">\(\beta\)</span>, <span class="math inline">\(\gamma\)</span> are some constants, has a characteristic equation <span class="math display">\[\alpha r^2 + \beta r + \gamma=0.\]</span> Once we have this characteristic equation we can avoid actually doing any calculus and just solving that quadratic. So our characteristic equation here is <span class="math display">\[r^2+r+2=0\]</span> and its roots <span class="math inline">\(r_{1,2}\)</span> are <span class="math display">\[r_{1,2} = \frac{-1 \pm \sqrt{-7}}{2},\]</span> found using the quadratic equation <span class="math display">\[x=\frac{-b\pm \sqrt{b^2 -4ac}}{2a}.\]</span> Noting that <span class="math inline">\(r_{1,2}\)</span> are both complex, the general form for our solution here is thus<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> <span class="math display">\[y=e^{\alpha t}(c_1 \cos{\beta t} + c_2 \sin{\beta t}).\]</span></p>
-<p>Once we have the general form of our solution, we plug in the known values and then we have to solve for the constants using the initial values. So we have <span class="math display">\[y=e^{-\frac{t}{2}}\left(c_1\cos{\frac{\sqrt{7}t}{2}} + c_2\sin{\frac{\sqrt{7}t}{2}}\right),\]</span> and we need to find <span class="math inline">\(c_{1,2}\)</span> for that equation. If we try this for <span class="math inline">\(t=0\)</span>, <span class="math inline">\(y(0)=1\)</span> we find <span class="math display">\[ 1=e^{-\frac{0}{2}}(c_1 \cos{0} + c_2 \sin{0}), \]</span> so <span class="math inline">\(c_1=1\)</span>. Then for the second part of this we have to differentiate our solution first, finding that <span class="math display">\[y&#39; = \frac{-1}{2}e^{-\frac{t}{2}}\left(\cos{\frac{\sqrt{7}t}{2}} + c_2\sin{\frac{\sqrt{7}t}{2}}\right)
-+ e^{-\frac{t}{2}}\left( -\frac{\sqrt{7}}{2} \sin{\frac{\sqrt{7}t}{2}}
-+ c_2 \frac{\sqrt{7}}{2}\cos{\frac{\sqrt{7}t}{2}}\right)\]</span> which for <span class="math inline">\(t=0\)</span>, <span class="math inline">\(y&#39;(0)=0\)</span> reduces to <span class="math display">\[0=-\frac{1}{2}+c_2 \frac{\sqrt{7}}{2},\]</span> and thus <span class="math inline">\(c_2=\frac{1}{\sqrt{7}}\)</span> and our solution is <span class="math display">\[y=e^{-\frac{t}{2}}\left(\cos\frac{\sqrt 7 t}{2} + \frac{\sin \frac{\sqrt 7 t}{2}}{\sqrt 7}\right).\]</span></p>
-<p>Purely from an analytic standpoint we can tell that this is <a href="http://en.wikipedia.org/wiki/Harmonic_oscillator">harmonic oscillator</a> with a strong cosine term and a weak sine term that starts at 1 and eventually dampens, tending toward 0. That makes sense: it’s what you’d expect to see if you have a capacitor discharging and there’s nothing to supply energy back into the circuit over time.</p>
-</section>
-<section id="python" class="level2">
-<h2>Python</h2>
-<p>It turns out we can get a numerical solution to this kind of problem using Python’s excellent <a href="http://www.numpy.org/">NumPy</a> module and the <a href="http://scipy.org/">SciPy</a> toolkit without doing very much work at all. The <a href="http://docs.scipy.org/doc/scipy/reference/integrate.html"><code>scipy.integrate.odeint</code></a> function is of particular interest here. One problem: it only works for first-order ODEs of the form <span class="math display">\[\frac{\mathrm d y}{\mathrm d t} = f(y,t_0,\ldots), \]</span> so we need to do some twisting to get our original problem in that form.</p>
-<p>If we’re trying to solve <span class="math display">\[ y&#39;&#39; + y&#39; + 2y = 0, \]</span> we can transform this into a first-order ODE with some simple variable substitution. Define <span class="math inline">\(x_2(t)=y&#39;(t)\)</span> and <span class="math inline">\(x_1(t)=y(t)\)</span> for some equation <span class="math inline">\(y&#39;&#39; =Ay&#39;+By\)</span>. Then we have <span class="math inline">\(x_1&#39;=y&#39;=x_2\)</span> and <span class="math inline">\(x_2&#39;=y&#39;&#39;=Ax_1-Bx_2\)</span>. Thus we can simplify our original equation into a system of equations <span class="math display">\[\begin{align}
-x_1&#39; &amp;=x_2,\\
-x_2&#39; &amp;=Ax_1-Bx_2.\\
-\end{align}\]</span> In our original equation this means <span class="math display">\[ \begin{align}
-x_1&#39; &amp;= x_2, &amp; x_1(0) &amp;=1, \\
-x_2&#39; &amp;= -2x_1 - x_2, &amp; x_2(0) &amp;=0, \\
-\end{align} \]</span> which we can pretty much just plug into <code>scipy.integrate.odeint</code> directly.</p>
-<p>To do this we need to write a function that takes a matrix <span class="math inline">\(Y\)</span> and a time <span class="math inline">\(t\)</span> and returns a new matrix with the values of <span class="math inline">\(x_1&#39;, x_2&#39;\)</span> for that time. We can pretty much just ignore the <span class="math inline">\(t\)</span> argument and write</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy <span class="im">import</span> integrate</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> solvr(Y, t):</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> [Y[<span class="dv">1</span>], <span class="op">-</span><span class="dv">2</span> <span class="op">*</span> Y[<span class="dv">0</span>]<span class="op">-</span>Y[<span class="dv">1</span>]]</span></code></pre></div>
-<p>Which is equivalent to our system of equations above, excluding the initial values.</p>
-<p>Then to get the solution:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> main():</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    a_t <span class="op">=</span> np.arange(<span class="dv">0</span>, <span class="fl">25.0</span>, <span class="fl">0.01</span>)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    asol <span class="op">=</span> integrate.odeint(solvr, [<span class="dv">1</span>, <span class="dv">0</span>], a_t)</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(asol)</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="va">__name__</span> <span class="op">==</span> <span class="st">&#39;__main__&#39;</span>:</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    main()</span></code></pre></div>
-<p>Running this at the command line will give a numeric value for <span class="math inline">\(y\)</span> (and <span class="math inline">\(y&#39;\)</span>, which we don’t care about) at each time <span class="math inline">\(t\)</span> in the range <span class="math inline">\(0 \leq t \leq 25\)</span>, in increments of 0.01. If we wanted a more exact solution, we could do this in smaller increments and get more numbers.</p>
-<p>If we stack our data up into a 3-column array in the <code>main()</code> function and write this to a CSV:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> main():</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    a_t <span class="op">=</span> np.arange(<span class="dv">0</span>, <span class="fl">25.0</span>, <span class="fl">0.01</span>)</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    asol <span class="op">=</span> integrate.odeint(solvr, [<span class="dv">1</span>, <span class="dv">0</span>], a_t)</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    astack <span class="op">=</span> np.c_[a_t, asol[:,<span class="dv">0</span>], asol[:, <span class="dv">1</span>]]</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    np.savetxt(<span class="st">&#39;approx.csv&#39;</span>, astack, delimiter<span class="op">=</span><span class="st">&#39;,&#39;</span>, header<span class="op">=</span><span class="st">&#39;t, y, yd&#39;</span>, comments<span class="op">=</span><span class="st">&#39;&#39;</span>)</span></code></pre></div>
-<p>Then we can plot this in R.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> approx <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&#39;approx.csv&#39;</span>)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">plot</span>(y <span class="sc">~</span> t, <span class="at">data=</span>approx, <span class="at">type=</span><span class="st">&#39;l&#39;</span>)</span></code></pre></div>
-<p><img src="/images/python-ode-blog.png" /></p>
-<p>I’ll add that the Python solution here is <em>not</em> just a mere plot of the analytic method. We could have done this for an equation even if we don’t remember how to solve it ourselves, as long as we’re able to reduce it to a first-order ODE system like here. SciPy has more advanced numeric solvers available, including the more generic <a href="http://docs.scipy.org/doc/scipy-0.13.0/reference/generated/scipy.integrate.ode.html"><code>scipy.integrate.ode</code></a> for dealing with more complicated equations.</p>
-<p>But overall, considering I had never used Python to solve this sort of thing before, I’m pretty impressed by how easy it was to work through this solution. I’m looking forward to pushing Python’s numeric/mathematical capabilities further in the future.</p>
-</section>
-<section class="footnotes footnotes-end-of-document" role="doc-endnotes">
-<hr />
-<ol>
-<li id="fn1" role="doc-endnote"><p>This equation might look duanting, but it is literally just straight-from-a-textbook material on these things. If you go look up <q>second-order homogeneous linear ODE with constant coefficients</q> you will find that for characteristic equations where both roots are complex, that is the general form of your solution. So when actually solving these analytically, you don’t think about it much more once you know whether the c.e. roots are complex.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2" role="doc-endnote"><p>I know all the <q>cool kids</q> on the Python block are using <a href="http://matplotlib.org/">matplotlib</a>. I simply prefer R. I’ve used it more, and I find it easier to work with whenever there’s an actual <em>dataset</em> that I’m shifting around, not just pure numeric values.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 ]]></summary>

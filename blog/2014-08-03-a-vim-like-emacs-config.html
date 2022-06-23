@@ -109,9 +109,11 @@
 </ul></li>
 <li><a href="#my-config">My config</a></li>
 </ul> </div>
-<p>I’ve <a href="../blog/2014-07-02-switching-to-emacs.html">previously written</a> about my own process of transitioning from Vim to Emacs. It’s fairly high-level, however, and doesn’t cover the nitty-gritty: all those long, painful hours spent trying to smash Emacs into reasonable keybindings are lost. You get the retrospective, the analysis, but not the same benefit of hindsight I’ve gathered since I switched. Unfortunately, there aren’t many resources out there on how to do this <em>right</em>. People use Emacs. It’s a tool. Most of its users don’t write about it, and the percentage of Emacs users who try to emulate Vim and also write about it is even smaller.</p>
+<p>I’ve <a href="../blog/2014-07-02-switching-to-emacs.html">previously written</a> about my own process of transitioning from Vim to Emacs. It’s fairly high-level, however, and doesn’t cover the nitty-gritty: all those long, painful hours spent trying to smash Emacs into reasonable keybindings are lost.
+You get the retrospective, the analysis, but not the same benefit of hindsight I’ve gathered since I switched. Unfortunately, there aren’t many resources out there on how to do this <em>right</em>. People use Emacs. It’s a tool. Most of its users don’t write about it, and the percentage of Emacs users who try to emulate Vim and also write about it is even smaller.</p>
 <p>There is <a href="http://bling.github.io/">Bling</a>, the vim-airline developer, who switched and ultimately convinced me to give Emacs a shot. But his tips just scratch the surface of what’s necessary to replicate the finger-friendliness of a modern Vim workflow.</p>
-<p>It’s a well-known and overstated joke that the default Emacs bindings are bad. If you’re reading this post, you probably already agree with me here, but for the uninitiated: key combos are the devil. Any time you are pressing two keys at once, with the same hand, hundreds of times per day, you are setting yourself up for repetitive stress injury. As programmers, we need to take care of our hands or our careers will be over.</p>
+<p>It’s a well-known and overstated joke that the default Emacs bindings are bad.
+If you’re reading this post, you probably already agree with me here, but for the uninitiated: key combos are the devil. Any time you are pressing two keys at once, with the same hand, hundreds of times per day, you are setting yourself up for repetitive stress injury. As programmers, we need to take care of our hands or our careers will be over.</p>
 <p>This is going to be part-tutorial, part describing my configuration. With a little determination, this can take you from ground-zero to a working Evil configuration and generic development environment.</p>
 <p>This post is geared at the <strong>determined Vim user</strong> who is willing to give Evil a shot and likes having a heavily customized editor. It has a number of tasks that are intended to teach the right attitude and mindset required to keep working with Emacs on your own. These will get you familiar enough with reading documentation that you know where to look when you want to do something. It is also Elisp-focused, with no emphasis on the more <q>modern</q> customization features of Emacs that ultimately prevent new users from groking its internals.</p>
 <section id="first-some-terminology" class="level2">
@@ -248,7 +250,8 @@ saving keyboard macros (see `edmacro-mode').</code></pre>
 <p>You can list the buffers that are currently open by typing <code>M-x list-buffers</code>. Using the bindings we defined earlier, you can switch to the window that is opened and hit <code>q</code> to close it when you’re done. To switch to one of these buffers, typing <code>M-x switch-to-buffer</code> will bring up a minibuffer prompt where you can type the name of a buffer to switch to it.</p>
 <p>For a better listing, you can use <code>M-x ibuffer</code>.</p>
 <figure>
-<img src="../images/2014-08-ibuffer.png" alt="IBuffer with the default settings" /><figcaption aria-hidden="true">IBuffer with the default settings</figcaption>
+<img src="../images/2014-08-ibuffer.png" alt="IBuffer with the default settings" />
+<figcaption aria-hidden="true">IBuffer with the default settings</figcaption>
 </figure>
 <p>The default bindings you should care about right now are:</p>
 <ul>
@@ -268,11 +271,13 @@ saving keyboard macros (see `edmacro-mode').</code></pre>
 </ul>
 <p>With <code>ibuffer</code> open, type <code>M-x describe-mode</code> to pull up the help info below.</p>
 <figure>
-<img src="../images/2014-08-ibuffer-link.png" alt="A link to ibuffer.el in help-mode" /><figcaption aria-hidden="true">A link to <code>ibuffer.el</code> in <code>help-mode</code></figcaption>
+<img src="../images/2014-08-ibuffer-link.png" alt="A link to ibuffer.el in help-mode" />
+<figcaption aria-hidden="true">A link to <code>ibuffer.el</code> in <code>help-mode</code></figcaption>
 </figure>
 <p>Following that link<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a> will take you to the source code for IBuffer. Somewhere in there, you’ll find the keymap:</p>
 <figure>
-<img src="../images/2014-08-ibuffer-default-map.png" alt="Default IBuffer keymap" /><figcaption aria-hidden="true">Default IBuffer keymap</figcaption>
+<img src="../images/2014-08-ibuffer-default-map.png" alt="Default IBuffer keymap" />
+<figcaption aria-hidden="true">Default IBuffer keymap</figcaption>
 </figure>
 <p>Any one of these major mode keymaps is bound to be really large, so I won’t reproduce it here. The idea is to redefine these into a map within Evil, so IBuffer will respect your Evil keymaps and still have its functionality. The <code>evil-define-key</code> function we used earlier has the option of taking an unlimited number of arguments. Now, copy lines like the following out of <code>ibuffer.el</code>:</p>
 <pre class="sourceCode"><code>(define-key map (kbd &quot;m&quot;) 'ibuffer-mark-forward)
@@ -331,7 +336,8 @@ saving keyboard macros (see `edmacro-mode').</code></pre>
 </ul>
 <p>Looking at the help documentation:</p>
 <blockquote>
-<p><code>ibuffer-do-kill-lines</code> is an interactive autoloaded compiled Lisp function in <code>ibuf-ext.el</code>.</p>
+<p><code>ibuffer-do-kill-lines</code> is an interactive autoloaded compiled Lisp function in
+<code>ibuf-ext.el</code>.</p>
 <p><code>(ibuffer-do-kill-lines)</code></p>
 <p>Hide all of the currently marked lines.</p>
 </blockquote>
@@ -413,7 +419,8 @@ saving keyboard macros (see `edmacro-mode').</code></pre>
 <p>If you use <code>K</code> in Evil’s normal state to look up the definition of <code>concat</code>, you’ll see:</p>
 <blockquote>
 <p><code>(concat &amp;rest SEQUENCES)</code></p>
-<p>Concatenate all the arguments and make the result a string. The result is a string whose elements are the elements of all the arguments.</p>
+<p>Concatenate all the arguments and make the result a string.
+The result is a string whose elements are the elements of all the arguments.</p>
 </blockquote>
 <p>Since this won’t be the last time you see it, I suggest reading the docs for <code>add-to-list</code> as well.</p>
 <p>You can use <code>M-x describe-variable</code> to see the definition of <code>user-emacs-directory</code> or <code>load-path</code>. It will also tell you the variable’s value. Hitting <code>K</code> with the symbol at point will also take you to this, but it’s good to do it the hard way at least once.</p>
@@ -524,23 +531,47 @@ saving keyboard macros (see `edmacro-mode').</code></pre>
 </tr>
 <tr class="even">
 <td><code>:ensure</code></td>
-<td>Automatically fetch and install the package if it is not already installed.</td>
+<td>Automatically
+fetch and
+install the
+package if it
+is not already
+installed.</td>
 </tr>
 <tr class="odd">
 <td><code>:mode</code></td>
-<td>Defer the loading until a given file extension is found.</td>
+<td>Defer the
+loading until
+a given file
+extension is
+found.</td>
 </tr>
 <tr class="even">
 <td><code>:commands</code></td>
-<td>Define the given commands, but don’t load the package until they are called.</td>
+<td>Define the
+given
+commands, but
+don’t load the
+package until
+they are
+called.</td>
 </tr>
 <tr class="odd">
 <td><code>:init</code></td>
-<td>Command to be executed immediatley when the expression is found.</td>
+<td>Command to be
+executed
+immediatley
+when the
+expression is
+found.</td>
 </tr>
 <tr class="even">
 <td><code>:config</code></td>
-<td>Commands to be executed after the package is loaded.</td>
+<td>Commands to
+be executed
+after the
+package is
+loaded.</td>
 </tr>
 </tbody>
 </table>
@@ -644,7 +675,8 @@ WantedBy=console.target</code></pre>
 <ol>
 <li id="fn1" role="doc-endnote"><p><code>evil-emacs-state</code> uses Emacs keybindings exclusively.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn2" role="doc-endnote"><p>Note that not everything in a given buffer is a <em>symbol</em>, even though everything in Elisp is an <em>object</em>. Since you were looking up a function definition, it <em>was</em> a symbol, but symbol refers exclusively to those objects that have names.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn3" role="doc-endnote"><p>Often you’ll see people defining hooks using a <code>lambda</code> construct. This is counterproductive, since once you add a hook to a list it can be complicated to get it out. If you messed anything up with your lambda, you can have a hard time removing it. Giving all of your hooks explicit names lets you remove them easily with <code>remove-hook</code> without restarting your Emacs session.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3" role="doc-endnote"><p>Often you’ll see people defining hooks using a <code>lambda</code> construct. This is counterproductive, since once you add a hook to a list it can be complicated to get it out. If you messed anything up with your lambda, you can have a hard time removing it.
+Giving all of your hooks explicit names lets you remove them easily with <code>remove-hook</code> without restarting your Emacs session.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn4" role="doc-endnote"><p>As of Emacs 24.4, <code>turn-on-eldoc-mode</code> is a deprecated alias for <code>eldoc-mode</code>, which should be used instead.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn5" role="doc-endnote"><p>One reader wrote to me, finding that the code I provide here did not work for him.</p>
 <blockquote>

@@ -80,29 +80,65 @@
 <p>Say we have the equation</p>
 <p><span class="math display">\[ y'' + y' + 2y = 0, \]</span></p>
 <p>where <span class="math inline">\(y\)</span> is a function of <span class="math inline">\(t\)</span> and the initial values <span class="math inline">\(y(0) = 1\)</span>, <span class="math inline">\(y'(0)=0\)</span>. Can we write an equation for <span class="math inline">\(y\)</span>, or at least get some answers about its behavior?</p>
-<p>In real life, this sort of problem often comes up when you’re dealing with a circuit containing a <a href="http://en.wikipedia.org/wiki/Capacitor">capacitor</a> that discharges through an <a href="http://en.wikipedia.org/wiki/Inductor">inductor</a> over time, and you want to analyze the voltage or current going through any given part of the circuit while this happens. Generally speaking, this is only one small part of a real-life circuit problem: you know that when you flip some switch, the circuit can be simplified to the above equation and that lets you solve it for some range <span class="math inline">\(t_1 &lt; t &lt; t_2\)</span>, where <span class="math inline">\(t_1\)</span> and <span class="math inline">\(t_2\)</span> are the time boundaries where you <em>didn’t</em> have the switch thrown.</p>
+<p>In real life, this sort of problem often comes up when you’re dealing with a circuit containing a <a href="http://en.wikipedia.org/wiki/Capacitor">capacitor</a> that discharges through an <a href="http://en.wikipedia.org/wiki/Inductor">inductor</a> over time, and you want to analyze the voltage or current going through any given part of the circuit while this happens.
+Generally speaking, this is only one small part of a real-life circuit problem: you know that when you flip some switch, the circuit can be simplified to the above equation and that lets you solve it for some range <span class="math inline">\(t_1 &lt; t &lt; t_2\)</span>, where <span class="math inline">\(t_1\)</span> and <span class="math inline">\(t_2\)</span> are the time boundaries where you <em>didn’t</em> have the switch thrown.</p>
 <p>Our analytic solution will let us write an equation for <span class="math inline">\(y\)</span> that’s solvable for any time <span class="math inline">\(t\)</span>, but the numeric solution in Python will just give us answers in some range that we actually calculate. Depending on what we’re trying to do with the answer, the numeric solution might be all that we need.</p>
 </section>
 <section id="analytic-solution" class="level2">
 <h2>Analytic solution</h2>
-<p>If you’ve taken a class on ordinary differential equations, then you should recognize this as a second-order linear homogeneous ODE with constant coefficients. If you haven’t, no big deal then either. Regardless, I’ll go over the exact analytical answer, since it’s pretty easy to find in this case.</p>
-<p>An equation of the form <span class="math display">\[ \alpha y''+\beta y'+ \gamma y=0, \]</span> where <span class="math inline">\(\alpha\)</span>, <span class="math inline">\(\beta\)</span>, <span class="math inline">\(\gamma\)</span> are some constants, has a characteristic equation <span class="math display">\[\alpha r^2 + \beta r + \gamma=0.\]</span> Once we have this characteristic equation we can avoid actually doing any calculus and just solving that quadratic. So our characteristic equation here is <span class="math display">\[r^2+r+2=0\]</span> and its roots <span class="math inline">\(r_{1,2}\)</span> are <span class="math display">\[r_{1,2} = \frac{-1 \pm \sqrt{-7}}{2},\]</span> found using the quadratic equation <span class="math display">\[x=\frac{-b\pm \sqrt{b^2 -4ac}}{2a}.\]</span> Noting that <span class="math inline">\(r_{1,2}\)</span> are both complex, the general form for our solution here is thus<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> <span class="math display">\[y=e^{\alpha t}(c_1 \cos{\beta t} + c_2 \sin{\beta t}).\]</span></p>
-<p>Once we have the general form of our solution, we plug in the known values and then we have to solve for the constants using the initial values. So we have <span class="math display">\[y=e^{-\frac{t}{2}}\left(c_1\cos{\frac{\sqrt{7}t}{2}} + c_2\sin{\frac{\sqrt{7}t}{2}}\right),\]</span> and we need to find <span class="math inline">\(c_{1,2}\)</span> for that equation. If we try this for <span class="math inline">\(t=0\)</span>, <span class="math inline">\(y(0)=1\)</span> we find <span class="math display">\[ 1=e^{-\frac{0}{2}}(c_1 \cos{0} + c_2 \sin{0}), \]</span> so <span class="math inline">\(c_1=1\)</span>. Then for the second part of this we have to differentiate our solution first, finding that <span class="math display">\[y' = \frac{-1}{2}e^{-\frac{t}{2}}\left(\cos{\frac{\sqrt{7}t}{2}} + c_2\sin{\frac{\sqrt{7}t}{2}}\right)
+<p>If you’ve taken a class on ordinary differential equations, then you should recognize this as a second-order linear homogeneous ODE with constant coefficients.
+If you haven’t, no big deal then either.
+Regardless, I’ll go over the exact analytical answer, since it’s pretty easy to find in this case.</p>
+<p>An equation of the form <span class="math display">\[ \alpha y''+\beta y'+ \gamma y=0, \]</span> where <span class="math inline">\(\alpha\)</span>, <span class="math inline">\(\beta\)</span>, <span class="math inline">\(\gamma\)</span> are some constants, has a characteristic equation <span class="math display">\[\alpha r^2 + \beta r + \gamma=0.\]</span>
+Once we have this characteristic equation we can avoid actually doing any calculus and just solving that quadratic.
+So our characteristic equation here is <span class="math display">\[r^2+r+2=0\]</span> and its roots <span class="math inline">\(r_{1,2}\)</span> are
+<span class="math display">\[r_{1,2} = \frac{-1 \pm \sqrt{-7}}{2},\]</span>
+found using the quadratic equation
+<span class="math display">\[x=\frac{-b\pm \sqrt{b^2 -4ac}}{2a}.\]</span>
+Noting that <span class="math inline">\(r_{1,2}\)</span> are both complex, the general form for our solution here is thus<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>
+<span class="math display">\[y=e^{\alpha t}(c_1 \cos{\beta t} + c_2 \sin{\beta t}).\]</span></p>
+<p>Once we have the general form of our solution, we plug in the known values
+and then we have to solve for the constants using the initial values.
+So we have
+<span class="math display">\[y=e^{-\frac{t}{2}}\left(c_1\cos{\frac{\sqrt{7}t}{2}} + c_2\sin{\frac{\sqrt{7}t}{2}}\right),\]</span>
+and we need to find <span class="math inline">\(c_{1,2}\)</span> for that equation.
+If we try this for <span class="math inline">\(t=0\)</span>, <span class="math inline">\(y(0)=1\)</span> we find
+<span class="math display">\[ 1=e^{-\frac{0}{2}}(c_1 \cos{0} + c_2 \sin{0}), \]</span>
+so <span class="math inline">\(c_1=1\)</span>.
+Then for the second part of this we have to differentiate our solution first, finding that
+<span class="math display">\[y' = \frac{-1}{2}e^{-\frac{t}{2}}\left(\cos{\frac{\sqrt{7}t}{2}} + c_2\sin{\frac{\sqrt{7}t}{2}}\right)
 + e^{-\frac{t}{2}}\left( -\frac{\sqrt{7}}{2} \sin{\frac{\sqrt{7}t}{2}}
-+ c_2 \frac{\sqrt{7}}{2}\cos{\frac{\sqrt{7}t}{2}}\right)\]</span> which for <span class="math inline">\(t=0\)</span>, <span class="math inline">\(y'(0)=0\)</span> reduces to <span class="math display">\[0=-\frac{1}{2}+c_2 \frac{\sqrt{7}}{2},\]</span> and thus <span class="math inline">\(c_2=\frac{1}{\sqrt{7}}\)</span> and our solution is <span class="math display">\[y=e^{-\frac{t}{2}}\left(\cos\frac{\sqrt 7 t}{2} + \frac{\sin \frac{\sqrt 7 t}{2}}{\sqrt 7}\right).\]</span></p>
-<p>Purely from an analytic standpoint we can tell that this is <a href="http://en.wikipedia.org/wiki/Harmonic_oscillator">harmonic oscillator</a> with a strong cosine term and a weak sine term that starts at 1 and eventually dampens, tending toward 0. That makes sense: it’s what you’d expect to see if you have a capacitor discharging and there’s nothing to supply energy back into the circuit over time.</p>
++ c_2 \frac{\sqrt{7}}{2}\cos{\frac{\sqrt{7}t}{2}}\right)\]</span>
+which for <span class="math inline">\(t=0\)</span>, <span class="math inline">\(y'(0)=0\)</span> reduces to <span class="math display">\[0=-\frac{1}{2}+c_2 \frac{\sqrt{7}}{2},\]</span>
+and thus <span class="math inline">\(c_2=\frac{1}{\sqrt{7}}\)</span> and our solution is
+<span class="math display">\[y=e^{-\frac{t}{2}}\left(\cos\frac{\sqrt 7 t}{2} + \frac{\sin \frac{\sqrt 7 t}{2}}{\sqrt 7}\right).\]</span></p>
+<p>Purely from an analytic standpoint we can tell that this is <a href="http://en.wikipedia.org/wiki/Harmonic_oscillator">harmonic oscillator</a> with a strong cosine term and a weak sine term that starts at 1 and eventually dampens, tending toward 0.
+That makes sense: it’s what you’d expect to see if you have a capacitor discharging and there’s nothing to supply energy back into the circuit over time.</p>
 </section>
 <section id="python" class="level2">
 <h2>Python</h2>
-<p>It turns out we can get a numerical solution to this kind of problem using Python’s excellent <a href="http://www.numpy.org/">NumPy</a> module and the <a href="http://scipy.org/">SciPy</a> toolkit without doing very much work at all. The <a href="http://docs.scipy.org/doc/scipy/reference/integrate.html"><code>scipy.integrate.odeint</code></a> function is of particular interest here. One problem: it only works for first-order ODEs of the form <span class="math display">\[\frac{\mathrm d y}{\mathrm d t} = f(y,t_0,\ldots), \]</span> so we need to do some twisting to get our original problem in that form.</p>
-<p>If we’re trying to solve <span class="math display">\[ y'' + y' + 2y = 0, \]</span> we can transform this into a first-order ODE with some simple variable substitution. Define <span class="math inline">\(x_2(t)=y'(t)\)</span> and <span class="math inline">\(x_1(t)=y(t)\)</span> for some equation <span class="math inline">\(y'' =Ay'+By\)</span>. Then we have <span class="math inline">\(x_1'=y'=x_2\)</span> and <span class="math inline">\(x_2'=y''=Ax_1-Bx_2\)</span>. Thus we can simplify our original equation into a system of equations <span class="math display">\[\begin{align}
+<p>It turns out we can get a numerical solution to this kind of problem using Python’s excellent <a href="http://www.numpy.org/">NumPy</a> module and the <a href="http://scipy.org/">SciPy</a> toolkit without doing very much work at all.
+The <a href="http://docs.scipy.org/doc/scipy/reference/integrate.html"><code>scipy.integrate.odeint</code></a> function is of particular interest here.
+One problem: it only works for first-order ODEs of the form
+<span class="math display">\[\frac{\mathrm d y}{\mathrm d t} = f(y,t_0,\ldots), \]</span>
+so we need to do some twisting to get our original problem in that form.</p>
+<p>If we’re trying to solve
+<span class="math display">\[ y'' + y' + 2y = 0, \]</span>
+we can transform this into a first-order ODE with some simple variable substitution.
+Define <span class="math inline">\(x_2(t)=y'(t)\)</span> and <span class="math inline">\(x_1(t)=y(t)\)</span> for some equation <span class="math inline">\(y'' =Ay'+By\)</span>. Then we have <span class="math inline">\(x_1'=y'=x_2\)</span> and <span class="math inline">\(x_2'=y''=Ax_1-Bx_2\)</span>.
+Thus we can simplify our original equation into a system of equations
+<span class="math display">\[\begin{align}
 x_1' &amp;=x_2,\\
 x_2' &amp;=Ax_1-Bx_2.\\
-\end{align}\]</span> In our original equation this means <span class="math display">\[ \begin{align}
+\end{align}\]</span>
+In our original equation this means
+<span class="math display">\[ \begin{align}
 x_1' &amp;= x_2, &amp; x_1(0) &amp;=1, \\
 x_2' &amp;= -2x_1 - x_2, &amp; x_2(0) &amp;=0, \\
-\end{align} \]</span> which we can pretty much just plug into <code>scipy.integrate.odeint</code> directly.</p>
-<p>To do this we need to write a function that takes a matrix <span class="math inline">\(Y\)</span> and a time <span class="math inline">\(t\)</span> and returns a new matrix with the values of <span class="math inline">\(x_1', x_2'\)</span> for that time. We can pretty much just ignore the <span class="math inline">\(t\)</span> argument and write</p>
+\end{align} \]</span>
+which we can pretty much just plug into <code>scipy.integrate.odeint</code> directly.</p>
+<p>To do this we need to write a function that takes a matrix <span class="math inline">\(Y\)</span> and a time <span class="math inline">\(t\)</span> and returns a new matrix with the values of <span class="math inline">\(x_1', x_2'\)</span> for that time.
+We can pretty much just ignore the <span class="math inline">\(t\)</span> argument and write</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy <span class="im">import</span> integrate</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -117,7 +153,8 @@ x_2' &amp;= -2x_1 - x_2, &amp; x_2(0) &amp;=0, \\
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="va">__name__</span> <span class="op">==</span> <span class="st">'__main__'</span>:</span>
 <span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    main()</span></code></pre></div>
-<p>Running this at the command line will give a numeric value for <span class="math inline">\(y\)</span> (and <span class="math inline">\(y'\)</span>, which we don’t care about) at each time <span class="math inline">\(t\)</span> in the range <span class="math inline">\(0 \leq t \leq 25\)</span>, in increments of 0.01. If we wanted a more exact solution, we could do this in smaller increments and get more numbers.</p>
+<p>Running this at the command line will give a numeric value for <span class="math inline">\(y\)</span> (and <span class="math inline">\(y'\)</span>, which we don’t care about) at each time <span class="math inline">\(t\)</span> in the range <span class="math inline">\(0 \leq t \leq 25\)</span>, in increments of 0.01.
+If we wanted a more exact solution, we could do this in smaller increments and get more numbers.</p>
 <p>If we stack our data up into a 3-column array in the <code>main()</code> function and write this to a CSV:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> main():</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    a_t <span class="op">=</span> np.arange(<span class="dv">0</span>, <span class="fl">25.0</span>, <span class="fl">0.01</span>)</span>

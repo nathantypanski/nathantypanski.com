@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html>
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <meta charset="UTF-8">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>Switching to NixOS</title>
+        <link rel="stylesheet" type="text/css" href="../css/default.css" />
+        
+    </head>
+    <body>
+        <div id="header">
+          <div id="logo">
+      <a href="../">
+        <img class="img" src="../images/log0.png" />
+      </a>
+</div>
+<div id="navigation">
+  <ul>
+    <li>
+      <a href="../blog.html">
+        Blog
+        <i class="fa fa-pencil"></i>
+      </a>
+    </li>
+    <li>
+      <a href="../pages.html">
+        Writing
+        <i class="fa fa-globe"></i>
+      </a>
+    </li>
+    <li>
+      <a href="../worklog.html">
+        Worklog
+        <i class="fa fa-bar-chart"></i>
+      </a>
+    </li>
+    <li>
+      <a href="../contact.html">
+        Contact
+        <i class="fa fa-envelope"></i>
+      </a>
+    </li>
+  </ul>
+</div>
+
+        </div>
+        <div id="metadata">
+            <ul class="meta">
+            
+                <li>tags: <em><a title="All pages tagged 'NixOS'." href="../tags/NixOS.html">NixOS</a>, <a title="All pages tagged 'Nix'." href="../tags/Nix.html">Nix</a>, <a title="All pages tagged 'functional programming'." href="../tags/functional%20programming.html">functional programming</a></em></li>
+            
+            
+            <li>posted: <em> March 29, 2022 </em></li>
+            <li>modified: <em> June 23, 2022
+ </em></li>
+            </ul>
+        </div>
+        <div id="content">
+            <h1>Switching to NixOS</h1>
+            <div class="info">
+    <!--
+    <div class="snippets">
+        <i class="fa fa-calendar"></i> March 29, 2022 <i class="fa fa-cut" June 23, 2022
+></i> June 23, 2022
+
+    </div>
+    -->
+    
+</div>
+<div id="toc"><h2>Contents</h2>
+<ul>
+<li><a href="#what-is-nix">What is Nix?</a>
+<ul>
+<li><a href="#expression-language">Expression language</a></li>
+<li><a href="#package-manager">Package manager</a></li>
+<li><a href="#operating-system">Operating system</a></li>
+</ul></li>
+<li><a href="#installation">Installation</a></li>
+<li><a href="#opt-in-state">Opt-in state</a></li>
+<li><a href="#config-as-code">Config-as-code</a></li>
+<li><a href="#home-directory-management">Home directory management</a>
+<ul>
+<li><a href="#example">Example</a></li>
+<li><a href="#why">Why?</a></li>
+</ul></li>
+<li><a href="#nixos-generations">NixOS generations</a></li>
+<li><a href="#shells">Shells</a></li>
+<li><a href="#downsides">Downsides</a>
+<ul>
+<li><a href="#documentation">Documentation</a></li>
+<li><a href="#the-language">The language</a></li>
+</ul></li>
+<li><a href="#conclusion">Conclusion</a></li>
+</ul> </div>
+<p>NixOS is a radical reimagining of what a Unix-like operating system can be like. It has a concept of <q>generations</q> that permit you to roll back (or forward) to previous instances of your operating system state. It’s defined entirely by code written in the <a href="https://nixos.wiki/wiki/Nix_Expression_Language">Nix expression language</a>, a functional programming language designed to make reproduicble builds easy. That’s right, NixOS is fully reproducible: if you have a NixOS machine definition, then you can reproduce not only the exact bytes of each package installed on that machine, but the entire state of the machine itself (besides ephemeral machine-specific bits).</p>
+<p>The only comparable project I am aware of is <a href="https://guix.gnu.org/">GNU Guix</a>, a relatively newer project that attempts similar goals using Scheme instead of a domain-specific programming language.</p>
+<p>It took a <em>long</em> time for me to warm up to the Nix approach to Unix systems. It takes the entire <a href="https://refspecs.linuxfoundation.org/FHS_3.0/fhs/index.html">FHS</a> and throws it out the door, and by extension requires you to un-learn concepts that have been more-or-less stable for 30 years. While I have learned to appreciate what Nix offers, certain parts of NixOS remain opaque to me behind veils of abstraction. But with a few months of experience behind me, I can at least state that I <em>like</em> NixOS, that it is usable as a daily driver operating system, and that NixOS is (generally speaking) successful in achieving its lofty goals.</p>
+<section id="what-is-nix" class="level2">
+<h2>What is Nix?</h2>
+<p>The term <q>Nix</q> can have three meanings, depending on context. I’ll cover each of them here.</p>
+<section id="expression-language" class="level3">
+<h3>Expression language</h3>
+<p>The <em>Nix expression language</em> is a domain-specific programming language for reproducible configuraiton of packages and systems. It is a lazy, functional, mostly pure language primarily concerned with the manipulation of associative data structures termed <em>sets</em>:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>nix-repl&gt; mul = { left, right }: left * right</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>nix-repl&gt; mul { left = 10; right = 30; }</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>300</span></code></pre></div>
+<p>Most Nix functions take sets as arguments and return sets to inform the caller about the result of a computation.</p>
+<p>The standard way to learn Nix is to study the <a href="https://nixos.org/guides/nix-pills/index.html">Nix Pills</a>, which start at the interpreter and work their way up to full package definitions.</p>
+<p>Alternatively, you can study the <a href="https://nixos.wiki/wiki/Nix_Expression_Language">wiki page</a>, which is a terse reference for the Nix language.</p>
+</section>
+<section id="package-manager" class="level3">
+<h3>Package manager</h3>
+<p>The <em>Nix pacakage manager</em> is a tool for installing and managing derivations (<q>packages</q>) written in the Nix expression language. The official <a href="https://github.com/NixOS/nixpkgs/"><code>nixpkgs</code></a> repository contains a whopping 60,000 packages, which puts it near the top distributions in terms of package count (approximately the same number as Debian or Fedora).</p>
+</section>
+<section id="operating-system" class="level3">
+<h3>Operating system</h3>
+</section>
+</section>
+<section id="installation" class="level2">
+<h2>Installation</h2>
+<p>Installing NixOS is similar to installing Arch Linux in many ways. There is no official installer, just live <code>.iso</code> and a <a href="https://nixos.org/manual/nixos/stable/index.html#sec-installation">giant manual</a>. You boot the live USB, partition a disk, mount the disk, generate hardware configuration, and run the installer, which installs the necessary components of the operating system to the mounted disk(s). Unlike Arch, if you wish to customize this system, you have one file to modify: <code>/etc/nixos/configuration.nix</code>. This file defines the entire machine state.</p>
+</section>
+<section id="opt-in-state" class="level2">
+<h2>Opt-in state</h2>
+<p>I used some modifications to this installation from grahamc’s <a href="https://grahamc.com/blog/erase-your-darlings">Erase Your Darlings</a> and mt-caret’s <a href="https://mt-caret.github.io/blog/posts/2020-06-29-optin-state.html">Encypted Btrfs Root with Opt-in State on NixOS</a>. Although NixOS tries to make its systems fully reproducible, this is not always possible.</p>
+<p>Consider <code>/etc/resolv.conf</code>. This file is generated by <a href="https://www.man7.org/linux/man-pages/man1/resolvectl.1.html"><code>resolvconf</code></a> on a typical systemd Linux system and expected to change if your device roams between networks. In lieu of persistently keeping (and tracking) all the state from <code>/etc</code>, we treat <code>/etc</code> as a semi-ephemeral filesystem, and link only the <em>required</em> persistent configuration from <code>/persist/etc</code>.</p>
+<p>In <code>/etc/nixos/configuration.nix</code>:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>  environment.etc = {</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    nixos.source = &quot;/persist/etc/nixos&quot;;</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    machine-id.source = &quot;/persist/etc/machine-id&quot;;</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    NIXOS.source = &quot;/persist/etc/NIXOS&quot;;</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    adjtime.source = &quot;/persist/etc/adjtime&quot;;</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  };</span></code></pre></div>
+<p>Then <code>/etc/nixos/configuration.nix</code> is a hardlink to <code>/persist/etc/nixos/configuration.nix</code>:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a># stat /etc/nixos/configuration.nix /persist/etc/nixos/configuration.nix</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  File: /etc/nixos/configuration.nix</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  Size: 5629            Blocks: 16         IO Block: 4096   regular file</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>Device: 0,55    Inode: 1141        Links: 1</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>Access: (0600/-rw-------)  Uid: (    0/    root)   Gid: (    0/    root)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>Access: 2022-03-23 09:55:00.014521725 -0400</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>Modify: 2022-03-23 09:55:00.014521725 -0400</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>Change: 2022-03-23 09:55:00.015521737 -0400</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a> Birth: 2022-03-23 09:55:00.014521725 -0400</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  File: /persist/etc/nixos/configuration.nix</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>  Size: 5629            Blocks: 16         IO Block: 4096   regular file</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>Device: 0,55    Inode: 1141        Links: 1</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>Access: (0600/-rw-------)  Uid: (    0/    root)   Gid: (    0/    root)</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>Access: 2022-03-23 09:55:00.014521725 -0400</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>Modify: 2022-03-23 09:55:00.014521725 -0400</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>Change: 2022-03-23 09:55:00.015521737 -0400</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a> Birth: 2022-03-23 09:55:00.014521725 -0400</span></code></pre></div>
+<p>If we wanted to keep additional state, we can expand the list of links in the Nix definition for our machine.</p>
+</section>
+<section id="config-as-code" class="level2">
+<h2>Config-as-code</h2>
+<blockquote>
+<p>A sufficiently complete specification of a system policy leads to the notion of an ideal average state for the system. Over time, the ideal average state of the system degrades. The aim of system administration is to keep the system as close to its ideal state as possible.</p>
+<p>-M. Burgess, <a href="https://www.usenix.org/legacy/publications/library/proceedings/lisa2000/full_papers/burgess/burgess_html/index.html"><em>Theoretical System Administration</em></a></p>
+</blockquote>
+<p>In my professional life, I’ve written a fair amount of Puppet, Ansible, and Chef code defining the state of Linux systems. These tools all share a model of Linux systems as <em>mutable, living systems</em>. Their policy is designed to take a system from an unknown initial state <em>toward</em> an ideal state. After sufficient repeated applications of this process of <em>convergence</em>, the system state should tend towards our ideal state.</p>
+<p>Nix works differently. Its policies, like most configuration management tools, model the end-state of a system. Unlike traditional configuration management tools, Nix does not assume an unknown initial state. It relies heavily on sandboxing and build isolation to produce ideal states from known initial states.</p>
+<p>In some sense, this is a strictly <q>easier</q> problem to solve than convergent configuration management. Nix takes steps to ensure there is only one possible path from initial state to ideal state, and therefore can ensure repeated applications of a Nix derivaiton always result in the same end-state.</p>
+</section>
+<section id="home-directory-management" class="level2">
+<h2>Home directory management</h2>
+<p>Like many users of Unix-like operating systems, I spent a significant amount of time building and tweaking my <a href="https://github.com/nathantypanski/dotfiles">dotfiles</a> collection to configure new users the way I want. I went through repeated iterations of attempts at making this process <em>manageable</em>, but the tools were never quite sufficient for the job. Prior to Nix, the best solution I’d found was to use <a href="https://www.gnu.org/software/stow/">GNU Stow</a> to create and manage symlinks from <code>~/.vimrc</code> to <code>~/src/github.com/nathantypanski/dotfiles/vim/.vimrc</code> and so on. This works well for individual files, but many tools also have plugin directories and other state that is easy to lose track of. Over time, the dotfiles repository diverges from local system state.</p>
+<p>The Nix solution to this problem is <a href="https://github.com/nix-community/home-manager"><code>home-manager</code></a>. This is a tool that lets you use the same declarative configuraiton for your home directory (and its many configuration files) as you would for the NixOS operating system.</p>
+<section id="example" class="level3">
+<h3>Example</h3>
+<p>Here’s an example of <code>home-manager</code>, taken from my current configuration:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>{ config, pkgs, lib, ... }:</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  imports = [ ./zsh.nix ];</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  home.username = &quot;nathan&quot;;</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  home.homeDirectory = &quot;/home/nathan&quot;;</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  home.stateVersion = &quot;22.05&quot;;</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>  # Let Home Manager install and manage itself.</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  programs.home-manager.enable = true;</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>  services.gpg-agent = {</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>    enable = true;</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>    defaultCacheTtl = 1800;</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>    enableSshSupport = false;</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>  };</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>  home.keyboard.options = [&quot;ctrl:nocaps&quot;];</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>  # continued below ...</span></code></pre></div>
+<p>Installing and configuring a window manager is as simple as including its block:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>  # continued from above ...</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  wayland.windowManager.sway = {</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    enable = true;</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    wrapperFeatures.gtk = true ;</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    config = {</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>      terminal = &quot;alacritty&quot;;</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>      fonts = {</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>        names = [&quot;pango:Terminus&quot;];</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>        style = &quot;normal&quot;;</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>        size = 10.0;</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>      };</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>    };</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>  };</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>  # continued below ...</span></code></pre></div>
+<p>You can install per-user packages here. This lets you install software for a particular user that won’t be available to the rest of the system. I use users to segment different types of tasks (e.g., gaming), and I wouldn’t want my gaming user to have access to compiler toolchains.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>  # continued from above ...</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  home.packages = with pkgs; [</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    haskell.compiler.ghc921</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    pass</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    rustup</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    go-tools</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    go</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    python39</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    python39Packages.pip</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    python39Packages.virtualenv</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>  ];</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>  # continued below ...</span></code></pre></div>
+<p>Most programs you would normally have in dotfiles with per-application configuration are managed natively using the Nix domain-specific language.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>  # continued from above ...</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  programs.git = {</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    enable = true;</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    userName = &quot;ndt&quot;;</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    userEmail = &quot;...&quot;;</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  };</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>  # continued below ...</span></code></pre></div>
+<p>Even the shell configuration is defined in the Nix language:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>  # continued from above ...</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  programs.zsh = {</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    enable = true;</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    enableCompletion = true;</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    enableSyntaxHighlighting = true;</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    history = {</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>      save = 10000;</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>      size = 10000;</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>      share = true;</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>      extended = true;</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>      ignoreSpace = true;</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>      ignorePatterns = [</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>        &quot;rm *&quot;</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>        &quot;pkill *&quot;</span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>      ];</span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>    };</span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>    shellAliases = {</span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>      x = &quot;tmux&quot;;</span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>    };</span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>  };</span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+</section>
+<section id="why" class="level3">
+<h3>Why?</h3>
+<p>It’s probably not immediately apparent what the benefit of using Nix to configure Git, or the shell, or a window manager might be. Each of these tools has its own configuration language already, and you might have taken the time to learn each program’s config format. Migrating this configuration can take time, and besides, you’re just expressing the same config in a different format, right?</p>
+<section id="generations" class="level4">
+<h4>Generations</h4>
+<p>One of the most fundamental benefits of Nix management is its concept of <em>generations</em>. Every deployment of changes to your Nix-managed homedir produces a generation. You can enumerate the generations using the <code>home-manager</code> CLI:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>$ home-manager generations | head</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>2022-04-11 09:07 : id 65 -&gt; /nix/store/9j3s2canrz3q2rwh19maywlj0xgm27lr-home-manager-generation</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>2022-04-11 09:05 : id 64 -&gt; /nix/store/gdcf7r29kphnq6mcmkj9zqjknlbh3gp7-home-manager-generation</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>2022-04-11 09:04 : id 63 -&gt; /nix/store/rsqf8dyhz9lk1j5351r6zracaanwxq34-home-manager-generation</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>2022-04-05 20:49 : id 62 -&gt; /nix/store/a2c65dx05595smgw58j02ffy2cm4rrq0-home-manager-generation</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>2022-03-12 18:09 : id 61 -&gt; /nix/store/98b16il8x7rzma5pr75njwavwnadl7p4-home-manager-generation</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>2022-03-12 13:15 : id 60 -&gt; /nix/store/d0rvr0nx3y2rj0ixa71n9q0a9lpc7dp8-home-manager-generation</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>2022-03-12 13:15 : id 59 -&gt; /nix/store/73xqnpzsfm42hjp76kx4bi769ld4gzmm-home-manager-generation</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>2022-03-11 10:49 : id 58 -&gt; /nix/store/waizbp6iqdp6zgxxrbvbn1pagxk7jh4f-home-manager-generation</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>2022-03-11 09:58 : id 57 -&gt; /nix/store/bg169sw55c440f0rsd7pxsh31zsdw43q-home-manager-generation</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>2022-03-11 09:54 : id 56 -&gt; /nix/store/m3bq41252rcrp8xc48982h5kfhgpbvix-home-manager-generation</span></code></pre></div>
+<p>If I’d like to roll back to one of these generations, I can simply run the <code>activate</code> script for that generation. For example, to roll back one generation (to <code>64</code>), I would run:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>$ /nix/store/gdcf7r29kphnq6mcmkj9zqjknlbh3gp7-home-manager-generation/activate</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>Starting Home Manager activation</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>Activating checkFilesChanged</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>Activating checkLinkTargets</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>Activating writeBoundary</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>Activating installPackages</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>replacing old 'home-manager-path'</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>installing 'home-manager-path'</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>Activating linkGeneration</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>Cleaning up orphan links from /home/nathan</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>Creating profile generation 66</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>Creating home file links in /home/nathan</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>Activating onFilesChange</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>Activating reloadSystemd</span></code></pre></div>
+<p>This is a powerful feature enabling experimentation. Mistakes are trivial to undo, and you get a fully reproducible configuration for your home directory. That means you get baked-in guarantees that if you choose to spin up a new system with the same configuration, the configuration will not only apply successfully—it will produce exactly the same result.</p>
+</section>
+</section>
+</section>
+<section id="nixos-generations" class="level2">
+<h2>NixOS generations</h2>
+<p>The concept of generations doesn’t originate in <code>home-manager</code>. In fact, it’s a first-party feature of NixOS proper. Each version of your system configuration gets recorded in the generations list, and you can restore the system to any of those versions with a single command with <code>nix-env --rollback</code> (for the previous version) or <code>nix-env -G 3</code>. Note that you may have to set the profile to <code>system</code> in order to change the global system instead of per-user configuration.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a># nix-env --list-generations --profile /nix/var/nix/profiles/system | tail</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  91   2022-04-10 16:06:58</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  92   2022-04-10 16:18:46</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  93   2022-04-10 16:22:37</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  94   2022-04-10 16:39:26</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  95   2022-04-21 10:04:08</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>  96   2022-04-22 09:25:09</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>  97   2022-04-24 13:08:53</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>  98   2022-04-24 13:11:39</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>  99   2022-04-24 14:48:43</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a> 100   2022-04-24 14:49:28   (current)</span></code></pre></div>
+</section>
+<section id="shells" class="level2">
+<h2>Shells</h2>
+<p>A feature I didn’t think I’d care for, but ended up using <em>all the time</em> was <code>nix-shell -p ${package_name}</code> to spawn a new Bash shell with some requested software available, but (crucially) <em>without</em> making that software available to the system as a whole.</p>
+<p>Let’s say I want to use <a href="https://github.com/radio-rogal/swayshot">swayshot</a> to take a screenshot, but I don’t have <code>slurp</code> or <code>grim</code> installed:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>$ nix-shell -p slurp grim</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>these paths will be fetched (0.03 MiB download, 0.10 MiB unpacked):</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  /nix/store/0silcp1jlicjbjbjhzvmkffj2wck4m5z-grim-1.4.0</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  /nix/store/yc2sc0k5d3bm9n6wq57qmmv4dsndkzpn-slurp-1.3.2</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>$ ./swayshot.sh</span></code></pre></div>
+<p>Being able to experiment with different tools on-the-fly like this, grants a powerful feeling of freedom to try things. If you don’t like a tool you just tried, then don’t add it to <code>/etc/nixos/configuration.nix</code> and it won’t pollute your environment. The next time you run <code>nixos-collect-garbage</code>, it will be removed from the Nix store.</p>
+<p>Likewise <code>home-manager</code> can list packages that are available only to a certain user, but not other users or the root user.</p>
+</section>
+<section id="downsides" class="level2">
+<h2>Downsides</h2>
+<p>NixOS is <em>not</em> perfect. In exchange for all this functional, immutable, reproducible OS magic, we need to trade a few things (at least today).</p>
+<section id="documentation" class="level3">
+<h3>Documentation</h3>
+<p>This is still the worst part of NixOS. Community efforts have strived to improve the Nix documentation. Today we have <a href="https://nixos.org/guides/nix-pills/index.html">Nix Pills</a> for learning Nix-the-language, the <a href="https://nixos.org/manual/nixos/stable/">NixOS Manual</a> explaining how to install and configure NixOS systems, and the <a href="https://nixos.wiki/">NixOS Wiki</a> which provides succinct howtos on common problems.</p>
+<p>That sounds great, right? In theory, those resources are everything you need. In practice, they each seem to land at the wrong level of abstraction, and the symptoms of this are similar to the problems found with monad tutorials in something like Haskell. The people writing monad tutorials understand monads. You do not. The problem is once you learn how monads work, you lose the ability to explain monads to anyone who doesn’t already know how they work.</p>
+<p>This kind of <q>pedagogy disruptor field</q> is common when you’re explaining concepts that one day <q>click.</q> The day before, you didn’t understand NixOS. Then you use it for a few days/weeks/months and one day you suddenly have enough of the pieces in place and it clicks and you understand how the system works. Do you understand all the prerequisites for reaching this state of understanding? Not consciously.</p>
+<p>The NixOS documentation authors are all plagued by the pedagogy disruptor field. For instance, the Nix store is an extraordinarily fundamental part of NixOS systems. It contains all installed packages, each prefixed by a cryptographic hash of their contents, and is located at <code>/nix/store</code>:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>$ ls /nix/store | head</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>000yp1grcymcfbmncflf2bhbqyzb8p62-hook.drv</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>0018h2fjjq0zijmyknykxvwysaj24qw0-timeit-2.0.tar.gz.drv</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>001gp43bjqzx60cg345n2slzg7131za8-nix-nss-open-files.patch</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>001ybmr7k4bj79nknk7ykzfqa7wqw55h-source.drv</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>001ynjbfcyzg60w6y1x0hjx106ixydq8-unit-script-prepare-kexec-start</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>002gbsl500p1b9m4wlinazna58mcmn6z-gnum4-1.4.19.drv</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>003cl64qdhj7ng8pjmnihhda315q5czg-home-manager-path.drv</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>0042c0dpzvx4khk34wl8ikikjrsv3fwn-conduit-1.3.4.2.drv</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>004fc2vsbnzsw43ci25hqk08rpvyagy0-catalog-legacy-uris.patch.drv</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>004h9inrdzqj2sfgssfpmlsl8mp9dn23-source.drv</span></code></pre></div>
+<p>The first mention of the Nix store in the NixOS manual (not counting the syntax summary) is in the <a href="https://nixos.org/manual/nixos/stable/index.html#sec-wireless">wifi setup section</a>. There are descriptions of how to clean the nix store, sections on preventing storage of secrets in the nix store, and numerous references to the Nix store with the implication that the reader already understands what it is. At no point is the Nix store defined, or descriptively outlined.</p>
+<p>Many attributes of Nix or NixOS are treated in this way. Maintenance tasks for obscure subsystems are described in intricate detail, but the purpose or behavior of those subsystems is absent in documentation.</p>
+</section>
+<section id="the-language" class="level3">
+<h3>The language</h3>
+<p>The Nix language is syntactically ugly. I have yet to decide whether it is actually <q>bad.</q> There’s a GNU reimplementation of NixOS called <a href="https://guix.gnu.org/">Guix</a> that attempts to address this by replacing Nix with Guile, a dialect of Lisp.</p>
+<p>The Nix language is almost entirely side-effect free. Most of the time, all you’re doing with it is templating Bash scripts with increasingly high-level abstractions.</p>
+<p>The standard way to learn it is you go read <a href="https://nixos.org/guides/nix-pills/">Nix pills</a> and then you read <a href="https://nixos.wiki/wiki/Nix_Expression_Language">the wiki</a>. When it comes time to author real-world packages you search <a href="https://github.com/NixOS/nixpkgs/">nixpkgs</a> for similar applications to learn patterns, using <a href="https://nixos.org/manual/nixpkgs/stable/">the manual</a> for reference.</p>
+</section>
+</section>
+<section id="conclusion" class="level1">
+<h1>Conclusion</h1>
+<p>Nix is a radical approach to software packaging, and it makes reproducibility of complex software systems easier than any other tool I know of. At the same time, it’s a complex and largely undocumented beast. Working with Nix reminds me of pre-1.0 Rust: smart ideas, constant changes, and a growing push for stabilization and documentation that gets better each month.</p>
+<p>I still have my gripes with it, but the promise of a new and innovative way to manage systems has finally ripped me away from Arch Linux in search of something better than Unix-style userspace organization. The ability to effortlessly experiment and rollback changes to my OS has made hacking on Linux fun again.</p>
+</section>
+
+        </div>
+        <div id="footer">
+            <p>
+  Content © 2012-2021 Nathan Typanski
+  and licensed under a <br /><a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.
+  Opinions are my own and not the views of my employer.
+  <a href="../website.html">About this site.</a>
+<!-- p-->
+<p>
+  <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/80x15.png" /></a>
+</p>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-37825924-1', 'nathantypanski.com');
+  ga('send', 'pageview');
+
+</script>
+
+
+        </div>
+    </body>
+</html>

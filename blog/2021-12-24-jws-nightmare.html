@@ -52,7 +52,7 @@
             
             
             <li>posted: <em> December 24, 2021 </em></li>
-            <li>modified: <em> December 24, 2021
+            <li>modified: <em> June 23, 2022
  </em></li>
             </ul>
         </div>
@@ -61,8 +61,8 @@
             <div class="info">
     <!--
     <div class="snippets">
-        <i class="fa fa-calendar"></i> December 24, 2021 <i class="fa fa-cut" December 24, 2021
-></i> December 24, 2021
+        <i class="fa fa-calendar"></i> December 24, 2021 <i class="fa fa-cut" June 23, 2022
+></i> June 23, 2022
 
     </div>
     -->
@@ -78,7 +78,7 @@
 <li><a href="#protocols-should-be-defensive-against-implementations">Protocols should be defensive against implementations</a></li>
 <li><a href="#a-better-way-to-sign-json">A better way to sign JSON</a></li>
 </ul> </div>
-<p>JWS is the kind of thing where you could be forgiven for thinking <q>hey, everyone’s using this, so it must be good!</q> JWTs are built on JWS, and lots of people use those. JWS is standardized by the IETF in <a href="https://datatracker.ietf.org/doc/html/rfc7515">RFC7515</a>. If you are investigating ways to sign REST API requests with JSON bodies, JWS is probably one of the first things you’ll look at. I’m hoping that by the time you’re done with this post, you’ll do something else. If you just want to know what that <q>something else</q> is, skip to <a href="#a-better-way-to-sign-json">the bottom</a>.</p>
+<p>JWS is the kind of thing where you could be forgiven for thinking <q>hey, everyone’s using this, so it must be good!</q> JWTs are built on JWS, and lots of people use those. JWS is standardized by the IETF in <a href="https://datatracker.ietf.org/doc/html/rfc7515">RFC7515</a>. I’m hoping that by the time you’re done with this post, you’ll do something else. If you just want to know what that <q>something else</q> is, skip to <a href="#a-better-way-to-sign-json">the bottom</a>.</p>
 <p>In this post, I will show how the JWS standard encourages implementations to structure their validation logic in an insecure manner. Thus JWTs, being built upon a rotten foundation, are themselves insecure—or at least very difficult to implement securely. Then I will provide suggestions on alternatives to JWS.</p>
 <p>Here’s an example JWS from that RFC:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
@@ -125,8 +125,8 @@
 <li><p>Determine the verification algorithm to use by extracting it from the decoded <code>protected</code> header.</p></li>
 <li><p>Construct the JWS signing input by concatenating encoded <code>protected</code> and <code>payload</code> headers together with a <q>.</q> character.</p>
 <p><span class="math display">\[ \begin{aligned} &amp; \texttt{ascii}(\texttt{base64urlencode}(\texttt{utf-8}(\texttt{protected}))) \\
- &amp; \qquad || \quad ``.&quot; \\
- &amp; \qquad || \quad \texttt{base64urldecode}(\texttt{payload}) \end{aligned} \]</span></p></li>
+&amp; \qquad || \quad ``.&quot; \\
+&amp; \qquad || \quad \texttt{base64urldecode}(\texttt{payload}) \end{aligned} \]</span></p></li>
 <li><p>Using the algorithm from (8), verify the JWS.</p></li>
 </ol>
 <p>Every step in this list prior to (9) is an opportunity for attackers to modify objects that are deserialized into JSON, control the algorithm in use by the system, and generally mess around where we expect contents to be integrity-protected.</p>
@@ -167,7 +167,7 @@
 <section id="a-better-way-to-sign-json" class="level2">
 <h2>A better way to sign JSON</h2>
 <p>Most mistakes in request signing protocols stem from serializing, parsing, and decoding the object <a href="https://www.daemonology.net/blog/2008-12-18-AWS-signature-version-1-is-insecure.html">prior to verification</a>. Don’t do those steps. Most of the time it doesn’t matter.</p>
-<p>If you need <q>deniability</q>—unforgeability of messages by the server, then use Ed25519. This is unnecessary for most web APIs, but it is important in some cases, like <a href="https://shufflesharding.com/posts/aws-sigv4-and-sigv4a">AWS multi-region access points</a>. If you trust the server, then use HMAC-SHA256, a symmetric authentication algorithm. <strong>Do not support both of these at once</strong>. Think long and hard about what is appropriate for your application.</p>
+<p>If you need unforgeability of messages by the server, then use Ed25519. This is unnecessary for most web APIs, but it is important in some cases, like <a href="https://shufflesharding.com/posts/aws-sigv4-and-sigv4a">AWS multi-region access points</a>. If you trust the server, then use HMAC-SHA256, a symmetric authentication algorithm. <strong>Do not support both of these at once</strong>. Think long and hard about what is appropriate for your application.</p>
 <p>Have clients serialize the JSON object they wish to sign into a bytestring <code>json_bytes</code>. Now your signature algorithm becomes just:</p>
 <p><span class="math display">\[ \texttt{sign}(\texttt{json_bytes},\ \texttt{key}).\]</span></p>
 <p>And verification?</p>

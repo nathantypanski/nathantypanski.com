@@ -85,7 +85,9 @@
 </ul></li>
 <li><a href="#conclusion">Conclusion</a></li>
 </ul> </div>
-<p><a href="http://mike-bland.com/">Mike Bland</a> has been <a href="https://github.com/mbland/openssl/commits/makefiles">hard at work</a> <a href="http://goo.gl/yhvCno">refactoring the build system</a> for OpenSSL. I wasn’t involved in developing these changes, but I do care about OpenSSL and the way the decision process happens there. I care about making sure its developers get the best <q>bang for their buck</q> out of their time, so that they can focus on the important issues.</p>
+<p><a href="http://mike-bland.com/">Mike Bland</a> has been <a href="https://github.com/mbland/openssl/commits/makefiles">hard at work</a> <a href="http://goo.gl/yhvCno">refactoring the build system</a> for OpenSSL.
+I wasn’t involved in developing these changes, but I do care about OpenSSL and the way the decision process happens there.
+I care about making sure its developers get the best <q>bang for their buck</q> out of their time, so that they can focus on the important issues.</p>
 <p>As my small contribution to this effort, I ran benchmarks and did statistical analysis of Mike’s builds to see if they <em>really are</em> faster than the old ones — and if so, to see just where these speedups manifest.</p>
 <p>The results are quite good.</p>
 <section id="motivation" class="level2">
@@ -98,7 +100,10 @@
 <li>Related to the above, some projects are incapable of taking advantage of various <q>parallel make</q> impementations, because the build does patently silly things.</li>
 </ul>
 </blockquote>
-<p>I won’t go further into the details of why these refactors are helpful here. You can read about that in <a href="http://goo.gl/yhvCno">Mike’s writeup</a>, <a href="https://groups.google.com/d/topic/mailing.openssl.dev/F1CkO4WCrv8/discussion"><code>[openssl-dev]</code></a>, or the <a href="https://groups.google.com/d/topic/openssl-testing/AUJME_4xkWM/discussion"><code>[openssl-testing]</code></a> thread if you’re interested. What I’m going to cover is the benchmarks that I ran and which of my results are statistically significant.</p>
+<p>I won’t go further into the details of why these refactors are helpful here.
+You can read about that in <a href="http://goo.gl/yhvCno">Mike’s writeup</a>,
+<a href="https://groups.google.com/d/topic/mailing.openssl.dev/F1CkO4WCrv8/discussion"><code>[openssl-dev]</code></a>,
+or the <a href="https://groups.google.com/d/topic/openssl-testing/AUJME_4xkWM/discussion"><code>[openssl-testing]</code></a> thread if you’re interested. What I’m going to cover is the benchmarks that I ran and which of my results are statistically significant.</p>
 <p>Why? Because I don’t like to see speed statistics without the data analysis to back them up. When someone comes around saying <q>hey, this way of doing it is faster</q> I want to see some sort of proof, repeated trials, and a significance test of some sort.</p>
 </section>
 <section id="r-analysis" class="level2">
@@ -139,7 +144,8 @@
 <div class="sourceCode" id="cb5"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">plot</span>(<span class="fu">density</span>(fullseq[<span class="fu">which</span>(fullseq<span class="sc">$</span>branch<span class="sc">==</span><span class="st">'master'</span>),]<span class="sc">$</span>real),</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">main=</span><span class="st">'master build time density (real)'</span>)</span></code></pre></div>
 <figure>
-<img src="../images/openssl-master-density.png" alt="Not exactly a normal distribution, but close enough for comfort" /><figcaption aria-hidden="true">Not exactly a normal distribution, but close enough for comfort</figcaption>
+<img src="../images/openssl-master-density.png" alt="Not exactly a normal distribution, but close enough for comfort" />
+<figcaption aria-hidden="true">Not exactly a normal distribution, but close enough for comfort</figcaption>
 </figure>
 </section>
 <section id="mbland-makefiles-00" class="level4">
@@ -194,7 +200,8 @@
 <div class="sourceCode" id="cb11"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">plot</span>(<span class="fu">density</span>(fullpar[<span class="fu">which</span>(fullpar<span class="sc">$</span>branch<span class="sc">==</span><span class="st">'master'</span>),]<span class="sc">$</span>real),</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>      <span class="at">main=</span><span class="st">'master parallel build time density (real)'</span>)</span></code></pre></div>
 <figure>
-<img src="../images/openssl-master-parallel-density.png" alt="This could actually pass for a normal distribution" /><figcaption aria-hidden="true">This could actually pass for a normal distribution</figcaption>
+<img src="../images/openssl-master-parallel-density.png" alt="This could actually pass for a normal distribution" />
+<figcaption aria-hidden="true">This could actually pass for a normal distribution</figcaption>
 </figure>
 </section>
 <section id="mbland-makefiles-00-1" class="level4">
@@ -218,7 +225,8 @@
 <span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span> <span class="at">names=</span><span class="fu">c</span>(<span class="st">'master'</span>, <span class="st">'mbland-makefiles-00'</span>),</span>
 <span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span> <span class="at">main=</span><span class="st">'Full parallel build'</span>)</span></code></pre></div>
 <figure>
-<img src="../images/openssl-parallel-real.png" alt="Single-makefile structure performs excellently in parallel builds" /><figcaption aria-hidden="true">Single-makefile structure performs <em>excellently</em> in parallel builds</figcaption>
+<img src="../images/openssl-parallel-real.png" alt="Single-makefile structure performs excellently in parallel builds" />
+<figcaption aria-hidden="true">Single-makefile structure performs <em>excellently</em> in parallel builds</figcaption>
 </figure>
 <div class="sourceCode" id="cb15"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">t.test</span>(real <span class="sc">~</span> branch, <span class="at">data=</span>fullpar)</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -281,7 +289,15 @@
 <p>We see noticeable (and statistically significant) improvements in even the sequential build with ccache. However, considering we’re talking a difference of 13 vs. 16 seconds here, this may or may not matter to you.</p>
 <p>If you’re concerned with how ccache impacts actual performance <em>during development</em>, there’s some useful info on their site’s <a href="https://ccache.samba.org/performance.html">performance page</a>:</p>
 <blockquote>
-<p>It should also be noted that if the expected hit rate is low, there may be a net performance loss when using ccache because of the overhead of cache misses (typically 5%-20%). Also, if the build machine is short on memory compared to the amount of memory used by the build tools (compiler, linker, etc), usage of ccache could decrease performance due the fact that ccache’s cached files may flush other files from the OS’s disk cache. See this mailing list post by Christopher Tate for a good write-up on this issue. So to sum it up: it is probably wise to perform some measurements with and without ccache for your typical use case before enabling it!</p>
+<p>It should also be noted that if the expected hit rate is low, there may be a
+net performance loss when using ccache because of the overhead of cache misses
+(typically 5%-20%). Also, if the build machine is short on memory compared to
+the amount of memory used by the build tools (compiler, linker, etc), usage of
+ccache could decrease performance due the fact that ccache’s cached files may
+flush other files from the OS’s disk cache. See this mailing list post by
+Christopher Tate for a good write-up on this issue. So to sum it up: it is
+probably wise to perform some measurements with and without ccache for your
+typical use case before enabling it!</p>
 </blockquote>
 </section>
 </section>
@@ -368,7 +384,11 @@ cpu cores	: 2</code></pre>
 <h3>make links</h3>
 <p>Mike has noted in his <a href="http://goo.gl/yhvCno">Google Doc</a>:</p>
 <blockquote>
-<p>(In fact, firing up a new build instance on Arch Linux revealed a problem with <q>make links</q> I hadn’t previously noticed. Though I was running <q>make clean</q> often in my original OS X working directories, the links produced by <q>make clean</q> are not removed by that target. Hence, I’ve already pushed a fix for this issue that succeeds the mbland-makefiles-00 tag.)</p>
+<p>(In fact, firing up a new build instance on Arch Linux revealed a problem with
+<q>make links</q> I hadn’t previously noticed. Though I was running <q>make clean</q>
+often in my original OS X working directories, the links produced by <q>make
+clean</q> are not removed by that target. Hence, I’ve already pushed a fix for
+this issue that succeeds the mbland-makefiles-00 tag.)</p>
 </blockquote>
 <p>I’m not sure to what extent this affects the quality of my build benchmarks.</p>
 </section>

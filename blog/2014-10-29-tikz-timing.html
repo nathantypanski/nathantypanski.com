@@ -74,10 +74,17 @@
 <li><a href="#pci-interrupt-acknowledge">PCI Interrupt Acknowledge</a></li>
 <li><a href="#synchronous-serial-interface">Synchronous Serial Interface</a></li>
 </ul> </div>
-<p>Today, for one of my engineering courses, I had to create some <a href="http://en.wikipedia.org/wiki/Digital_timing_diagram">timing diagrams</a> to show certain parts of the PCI standard. If you’ve never had to draw your own timing diagrams before, then you probably haven’t realized that there is no obvious to quickly, easily draw waveforms for a bunch of signals.</p>
-<p>The solution I found is <a href="http://www.ctan.org/pkg/tikz-timing">tikz-timing</a>. An alternative is <a href="http://www.texample.net/tikz/examples/timing-diagram/">timing.sty</a>, which is simple and pretty enough in a pinch.</p>
+<p>Today, for one of my engineering courses, I had to create some <a href="http://en.wikipedia.org/wiki/Digital_timing_diagram">timing diagrams</a> to show certain parts of the PCI standard.
+If you’ve never had to draw your own timing diagrams before, then you probably haven’t realized that there is no obvious to quickly, easily draw waveforms for a bunch of signals.</p>
+<p>The solution I found is
+<a href="http://www.ctan.org/pkg/tikz-timing">tikz-timing</a>.
+An alternative is <a href="http://www.texample.net/tikz/examples/timing-diagram/">timing.sty</a>,
+which is simple and pretty enough in a pinch.</p>
 <p>I find the more advanced features of tikz-timing invaluable for versatility, though—there’s nothing like needing to talk about a signal transition in some text, and, oh yeah, just <em>drawing the signal in the text</em>.</p>
-<p>The only problem with tikz-timing is a shortage of examples. The <a href="http://mirrors.ibiblio.org/CTAN/graphics/pgf/contrib/tikz-timing/tikz-timing.pdf">package documentation</a> has but a handful, and they don’t look much like real-world timing diagrams. The texample.net <a href="http://www.texample.net/tikz/examples/more-tikz-timing-examples/">timing</a> <a href="http://www.texample.net/tikz/examples/tikz-timing/">diagrams</a> are just copied directly from that manual, which isn’t useful. So I figure I’ll post some realistic use cases.</p>
+<p>The only problem with tikz-timing is a shortage of examples.
+The <a href="http://mirrors.ibiblio.org/CTAN/graphics/pgf/contrib/tikz-timing/tikz-timing.pdf">package documentation</a> has but a handful, and they don’t look much like real-world timing diagrams.
+The texample.net <a href="http://www.texample.net/tikz/examples/more-tikz-timing-examples/">timing</a> <a href="http://www.texample.net/tikz/examples/tikz-timing/">diagrams</a> are just copied directly from that manual, which isn’t useful.
+So I figure I’ll post some realistic use cases.</p>
 <p>To get started, I included the package like this:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode latex"><code class="sourceCode latex"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="bu">\usepackage</span>{<span class="ex">tikz-timing</span>}[2014/10/29]</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">\usetikztiminglibrary</span>[rising arrows]{clockarrows}</span></code></pre></div>
@@ -97,11 +104,14 @@
 <span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="fu">\IfValueTF</span>{#2}{[#2]}{}<span class="co">%</span></span>
 <span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="fu">\IfBooleanTF</span>{#1}{<span class="fu">\#</span>}{}<span class="co">%</span></span>
 <span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>}}</span></code></pre></div>
-<p>The PCI timing diagrams are drawn with reference to version 2.2 of the PCI specification. I added the <code>DEVSEL#</code> signal myself,<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> and I’ve taken some slight liberties with the start and stop times of the signals (though they should still be accurate). One notable feature lacking in my diagrams is the delay cycles—most books you’ll read on PCI, in addition to the spec itself will include those directly on the diagram. I haven’t figured out how to do that kind of thing yet.</p>
+<p>The PCI timing diagrams are drawn with reference to version 2.2 of the PCI specification.
+I added the <code>DEVSEL#</code> signal myself,<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> and I’ve taken some slight liberties with the start and stop times of the signals (though they should still be accurate).
+One notable feature lacking in my diagrams is the delay cycles—most books you’ll read on PCI, in addition to the spec itself will include those directly on the diagram. I haven’t figured out how to do that kind of thing yet.</p>
 <section id="pci-read" class="level2">
 <h2>PCI Read</h2>
 <figure>
-<img src="../files/latex/tikz-timing/pci-read-thumb.png" alt="PCI read operation. LaTeX source." /><figcaption aria-hidden="true">PCI read operation. <a href="../files/latex/tikz-timing/pci-read.tex">LaTeX source</a>.</figcaption>
+<img src="../files/latex/tikz-timing/pci-read-thumb.png" alt="PCI read operation. LaTeX source." />
+<figcaption aria-hidden="true">PCI read operation. <a href="../files/latex/tikz-timing/pci-read.tex">LaTeX source</a>.</figcaption>
 </figure>
 <div class="sourceCode" id="cb3"><pre class="sourceCode latex"><code class="sourceCode latex"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">\begin</span>{<span class="ex">tikztimingtable</span>}[<span class="co">%</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    timing/dslope=0.1,</span>
@@ -125,7 +135,8 @@
 <span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="kw">\end</span>{<span class="ex">pgfonlayer</span>}</span>
 <span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="kw">\end</span>{<span class="ex">tikztimingtable</span>}</span></code></pre></div>
 <p>You can think of the <code>tikztimingtable</code> environment as two-column <a href="http://en.wikibooks.org/wiki/LaTeX/Tables">tables</a> with some special syntax for the righthand column. The gist of it is this: there are signal variants, and you create them by writing a letter that serves as a key. Each key has two variants: a half-duration lowercase one and a full-duration uppercase one.</p>
-<p>So to make the clock signal in the PCI read diagram, it’s 18 half-duration clock cycles, and we write that <code>18{c}</code>. The brackets there aren’t strictly necessary, but you can write them for clarity. Signal changes are separated by spaces if there’s any ambiguity about what argument goes with what transition.</p>
+<p>So to make the clock signal in the PCI read diagram, it’s 18 half-duration clock cycles, and we write that <code>18{c}</code>. The brackets there aren’t strictly necessary, but you can write them for clarity.
+Signal changes are separated by spaces if there’s any ambiguity about what argument goes with what transition.</p>
 <p>In the above example, I used these letters to make the signals:</p>
 <ul>
 <li><code>C</code>/<code>c</code>: clock</li>
@@ -134,14 +145,19 @@
 <li><code>H</code>/<code>h</code>: hi</li>
 <li><code>L</code>/<code>l</code>: lo</li>
 </ul>
-<p>The other interesting option is including letters in the <code>D</code> timings. The way you do that is you add an argument in brackets following a <code>D</code> block, like <code>D{0000}</code> to draw a multi-signal timing with value <code>0000</code>.</p>
+<p>The other interesting option is including letters in the <code>D</code> timings.
+The way you do that is you add an argument in brackets following a <code>D</code> block, like <code>D{0000}</code> to draw a multi-signal timing with value <code>0000</code>.</p>
 <p>For invalid states I used <code>X</code> in the below example:</p>
 </section>
 <section id="pci-interrupt-acknowledge" class="level2">
 <h2>PCI Interrupt Acknowledge</h2>
-<p>When a PCI interrupt acknowledge starts, you have invalid values in the address/data line. They’re <em>knowable</em>, but it’s against the protocol to use them for anything. To show that I used an <code>X</code>, which draws a red line for an <em>undefined</em> don’t care. Or at least that’s how I interpreted it. Some people will just use shaded blocks for everything, and make no distinction between the two.</p>
+<p>When a PCI interrupt acknowledge starts, you have invalid values in the address/data line.
+They’re <em>knowable</em>, but it’s against the protocol to use them for anything.
+To show that I used an <code>X</code>, which draws a red line for an <em>undefined</em> don’t care. Or at least that’s how I interpreted it.
+Some people will just use shaded blocks for everything, and make no distinction between the two.</p>
 <figure>
-<img src="../files/latex/tikz-timing/pci-int-thumb.png" alt="PCI interrupt acknowledge. LaTeX source." /><figcaption aria-hidden="true">PCI interrupt acknowledge. <a href="../files/latex/tikz-timing/pci-int.tex">LaTeX source</a>.</figcaption>
+<img src="../files/latex/tikz-timing/pci-int-thumb.png" alt="PCI interrupt acknowledge. LaTeX source." />
+<figcaption aria-hidden="true">PCI interrupt acknowledge. <a href="../files/latex/tikz-timing/pci-int.tex">LaTeX source</a>.</figcaption>
 </figure>
 <div class="sourceCode" id="cb4"><pre class="sourceCode latex"><code class="sourceCode latex"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">\begin</span>{<span class="ex">tikztimingtable</span>}[<span class="co">%</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    timing/dslope=0.1,</span>
@@ -170,7 +186,8 @@
 <h2>Synchronous Serial Interface</h2>
 <p><a href="http://en.wikipedia.org/wiki/Synchronous_Serial_Interface">Synchronous Serial Interface</a> (SSI) is another protocol I studied. I drew a genuinely oversimplified diagram of it, just for fun.</p>
 <figure>
-<img src="../files/latex/tikz-timing/ssi-thumb.png" alt="SSI protocol basic timing. LaTeX source." /><figcaption aria-hidden="true">SSI protocol basic timing. <a href="../files/latex/tikz-timing/ssi.tex">LaTeX source</a>.</figcaption>
+<img src="../files/latex/tikz-timing/ssi-thumb.png" alt="SSI protocol basic timing. LaTeX source." />
+<figcaption aria-hidden="true">SSI protocol basic timing. <a href="../files/latex/tikz-timing/ssi.tex">LaTeX source</a>.</figcaption>
 </figure>
 <div class="sourceCode" id="cb5"><pre class="sourceCode latex"><code class="sourceCode latex"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">\begin</span>{<span class="ex">tikztimingtable</span>}[<span class="co">%</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    timing/dslope=0.4,</span>

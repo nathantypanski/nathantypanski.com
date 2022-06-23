@@ -78,15 +78,23 @@
 </ul></li>
 <li><a href="#conclusion">Conclusion</a></li>
 </ul> </div>
-<p>Python and Ruby always struck me as somewhat related. They’re both dynamic languages from the 1990s, still highly popular, and influenced a number of more modern dynamic programming languages like <a href="https://en.wikipedia.org/wiki/Julia_%28programming_language%29">Julia</a>. They’re similar enough in spirit that one can easily fall into the trap of thinking that if they know one of Python and Ruby, they don’t have to learn the other. I was primarily a Python programmer for my research work, and Python is popular in academia, so I am definitely guilty of having a closed mind toward Ruby.</p>
-<p>Today I made an effort to challenge my assumptions and give Ruby a serious shot. I finished the <a href="http://rubykoans.com/">Ruby koans</a>, which took me about <a href="https://github.com/nathantypanski/ruby-koans">five hours, and four hours of <q>real work</q></a>. I’d messed with <a href="http://tryruby.org/levels/1/challenges/0">Try Ruby</a> before that, but that didn’t take me very far, and <a href="https://rubymonk.com/">RubyMonk</a> felt too slow and clunky for my tastes when I tried the primer.</p>
-<p>So the natural thing to do for me is to compare Ruby with Python, and see what I like and don’t like about each of them. I’m not trying to <a href="http://c2.com/cgi/wiki?PythonVsRuby">start a flamewar</a>, it’s more like I’m just trying to translate some of my knowledge and highlight some of the differences that I saw so far.</p>
+<p>Python and Ruby always struck me as somewhat related.
+They’re both dynamic languages from the 1990s, still highly popular, and influenced a number of more modern dynamic programming languages like <a href="https://en.wikipedia.org/wiki/Julia_%28programming_language%29">Julia</a>.
+They’re similar enough in spirit that one can easily fall into the trap of thinking that if they know one of Python and Ruby, they don’t have to learn the other.
+I was primarily a Python programmer for my research work, and Python is popular in academia, so I am definitely guilty of having a closed mind toward Ruby.</p>
+<p>Today I made an effort to challenge my assumptions and give Ruby a serious shot.
+I finished the <a href="http://rubykoans.com/">Ruby koans</a>, which took me about <a href="https://github.com/nathantypanski/ruby-koans">five hours, and four hours of <q>real work</q></a>.
+I’d messed with <a href="http://tryruby.org/levels/1/challenges/0">Try Ruby</a> before that, but that didn’t take me very far, and <a href="https://rubymonk.com/">RubyMonk</a> felt too slow and clunky for my tastes when I tried the primer.</p>
+<p>So the natural thing to do for me is to compare Ruby with Python, and see what I like and don’t like about each of them.
+I’m not trying to <a href="http://c2.com/cgi/wiki?PythonVsRuby">start a flamewar</a>, it’s more like I’m just trying to translate some of my knowledge and highlight some of the differences that I saw so far.</p>
 <section id="toy-script-comparisons" class="level2">
 <h2>Toy script comparisons</h2>
-<p>I wrote some toy scripts to show the most jarring differences so far. Yeah, I’m sure I’ll dig further into the language and all of this code will look silly, but as a budding Rubyist this is about as advanced as I can muster.</p>
+<p>I wrote some toy scripts to show the most jarring differences so far.
+Yeah, I’m sure I’ll dig further into the language and all of this code will look silly, but as a budding Rubyist this is about as advanced as I can muster.</p>
 <section id="running-sum" class="level3">
 <h3>Running sum</h3>
-<p>In Ruby, the tendency is to iterate over a number of variables with the <code>#each</code> method, and then you pass in a block that gets called on each of the elements. What’s immediately noticeable here is that Ruby blocks are way more powerful than Python’s anonymous callalbles (<code>lambdas</code>).</p>
+<p>In Ruby, the tendency is to iterate over a number of variables with the <code>#each</code> method, and then you pass in a block that gets called on each of the elements.
+What’s immediately noticeable here is that Ruby blocks are way more powerful than Python’s anonymous callalbles (<code>lambdas</code>).</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode Ruby"><code class="sourceCode ruby"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="cf">#!/usr/bin/env ruby</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>running_sum <span class="kw">=</span> <span class="kw">[]</span></span>
@@ -119,8 +127,11 @@
 </section>
 <section id="oop" class="level3">
 <h3>OOP</h3>
-<p>Ruby classes seem to be both less verbose and syntactically simpler than Python classes. Both languages have a <q>message passing</q> way of calling instance methods: in Python, with <code>getattr(object, name)</code> and in Ruby via <code>#send()</code>. Mixins, via <code>modules</code>, are the coolest advantage Ruby seems to have over Python, where the closest equivalent is boring old implementation inheritance.</p>
-<p>Both languages have an equivalent for getters and setters. In Python, this is done via a decorator, but in Ruby it seems to be a language builtin.</p>
+<p>Ruby classes seem to be both less verbose and syntactically simpler than Python classes.
+Both languages have a <q>message passing</q> way of calling instance methods: in Python, with <code>getattr(object, name)</code> and in Ruby via <code>#send()</code>.
+Mixins, via <code>modules</code>, are the coolest advantage Ruby seems to have over Python, where the closest equivalent is boring old implementation inheritance.</p>
+<p>Both languages have an equivalent for getters and setters.
+In Python, this is done via a decorator, but in Ruby it seems to be a language builtin.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode Ruby"><code class="sourceCode ruby"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="cf">#!/usr/bin/env ruby</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="cf">module</span> <span class="dt">Nameable</span></span>
@@ -177,10 +188,13 @@
 <section id="hidden" class="level3">
 <h3>Hidden</h3>
 <p><em>Finally, a serious scripting task!</em></p>
-<p>I’ve been playing with <a href="https://github.com/venam/2bwm">2bwm</a> as my window manager lately. One of its major defects is that it lacks an easy way to list all hidden windows and show them. It comes with a tool, <code>hidden</code>, that will list hidden windows and print <code>xdotool</code> output for raising them, but the output looks like this:</p>
+<p>I’ve been playing with <a href="https://github.com/venam/2bwm">2bwm</a> as my window manager lately.
+One of its major defects is that it lacks an easy way to list all hidden windows and show them.
+It comes with a tool, <code>hidden</code>, that will list hidden windows and print <code>xdotool</code> output for raising them, but the output looks like this:</p>
 <pre class="sourceCode"><code>'hidden.rb':'xdotool windowactivate 0xc003ec windowraise 0xc003ec'
 '[nathan@dionysus][~/dotfiles]%':'xdotool windowactivate 0xc0085c windowraise 0xc0085c'</code></pre>
-<p>Which obviously isn’t sufficient for easily raising the windows. A potential fix to this is building a wrapper for <a href="http://tools.suckless.org/dmenu/">dmenu</a> that lets you easily raise hidden windows.</p>
+<p>Which obviously isn’t sufficient for easily raising the windows.
+A potential fix to this is building a wrapper for <a href="http://tools.suckless.org/dmenu/">dmenu</a> that lets you easily raise hidden windows.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode Ruby"><code class="sourceCode ruby"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="cf">#!/usr/bin/env ruby</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>hidden_windows <span class="kw">=</span> <span class="in">`hidden -c`</span><span class="at">.split</span>(<span class="ss">/\n/</span>)</span>
@@ -233,19 +247,27 @@
 <span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="va">__name__</span> <span class="op">==</span> <span class="st">'__main__'</span>:</span>
 <span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>    main()</span></code></pre></div>
-<p>The advantages Ruby has here are its simpler means of spawning and interacting with subprocesses, and the far prettier Regex syntax, both of which are inspired by Perl. Python, by contrast, has a clunkier regex engine that requires an import, a call to <code>re.compile</code>, and another call to <code>regex.match(...)</code> in order to use it.</p>
+<p>The advantages Ruby has here are its simpler means of spawning and interacting with subprocesses, and the far prettier Regex syntax, both of which are inspired by Perl.
+Python, by contrast, has a clunkier regex engine that requires an import, a call to <code>re.compile</code>, and another call to <code>regex.match(...)</code> in order to use it.</p>
 <p>The other thing you notice here is the <code>bytes</code> handling. Subprocess output returns <code>bytes</code> objects in Python, and they have to be decoded into <code>utf-8</code> before I can do much with them.</p>
 <p>This results in a far more verbose Python solution.</p>
 <p>It’s also worth mentioning that the subprocess interface in Ruby is handled through an RAII-style block. In Python’s case, it looks like <a href="https://bugs.python.org/issue10554"><code>Popen</code> objects can be used in <code>with</code> statements</a>:</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode Python"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> Popen([<span class="st">&quot;ifconfig&quot;</span>], stdout<span class="op">=</span>PIPE) <span class="im">as</span> proc:</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    log.write(proc.stdout.read())</span></code></pre></div>
-<p>but that leaves the clunky <code>Popen</code> interface to worry about. Personally I can never remember what <code>stdout=PIPE</code> actually does, or which of those given modes I should be using for my process. In Ruby, I get to use <a href="http://man7.org/linux/man-pages/man3/fopen.3.html"><code>fopen(3)</code> arguments</a> to describe how I’d like to handle fds on the subprocess. That’s an interface I’m already familiar with, and it’s intutitive.</p>
+<p>but that leaves the clunky <code>Popen</code> interface to worry about. Personally I can never remember what <code>stdout=PIPE</code> actually does, or which of those given modes I should be using for my process.
+In Ruby, I get to use <a href="http://man7.org/linux/man-pages/man3/fopen.3.html"><code>fopen(3)</code> arguments</a> to describe how I’d like to handle fds on the subprocess. That’s an interface I’m already familiar with, and it’s intutitive.</p>
 </section>
 </section>
 <section id="conclusion" class="level2">
 <h2>Conclusion</h2>
-<p>My initial impression of Ruby is quite positive. It’s a strong candidate for replacing my <q>one off Python scripts</q> that often felt a bit too verbose for the tasks they were achieving. While I’m not comfortable enough to do serious development in it yet, I do get the feeling that Ruby will be quite readable over the equivalent Bash/Awk/Sed mashup that I might otherwise use to avoid writing a wordy Python script that uses <code>subprocess</code>.</p>
-<p>There’s a distinct impression that Ruby is more <q>fun</q> than Python. There are many ways to achieve certain tasks, and the general goal is to find the most beautiful way. In Python, it seems like there’s a heavier focus on readability. I was skimming through some of the Rails codebase, and Rubyists seem to have no qualms about using the obscure <code>||=</code> operator, in spite of the fact that it <a href="https://stackoverflow.com/questions/995593/what-does-or-equals-mean-in-ruby">really doesn’t mean what you think it means</a>. I think the most obscure syntactic construct in Python is just the <a href="https://stackoverflow.com/questions/394809/does-python-have-a-ternary-conditional-operator">wacky ternary operator</a>.</p>
+<p>My initial impression of Ruby is quite positive.
+It’s a strong candidate for replacing my <q>one off Python scripts</q> that often felt a bit too verbose for the tasks they were achieving.
+While I’m not comfortable enough to do serious development in it yet, I do get the feeling that Ruby will be quite readable over the equivalent Bash/Awk/Sed mashup that I might otherwise use to avoid writing a wordy Python script that uses <code>subprocess</code>.</p>
+<p>There’s a distinct impression that Ruby is more <q>fun</q> than Python.
+There are many ways to achieve certain tasks, and the general goal is to find the most beautiful way.
+In Python, it seems like there’s a heavier focus on readability.
+I was skimming through some of the Rails codebase, and Rubyists seem to have no qualms about using the obscure <code>||=</code> operator, in spite of the fact that it <a href="https://stackoverflow.com/questions/995593/what-does-or-equals-mean-in-ruby">really doesn’t mean what you think it means</a>.
+I think the most obscure syntactic construct in Python is just the <a href="https://stackoverflow.com/questions/394809/does-python-have-a-ternary-conditional-operator">wacky ternary operator</a>.</p>
 <p>I do not believe that Python and Ruby are really playing in the same niche. While Python dominates in academia and scientific programming, Ruby seems to win in the Perl-ish systems scripting and web development areas (though <a href="https://www.djangoproject.com/">Django</a> and <a href="http://www.tornadoweb.org/en/stable/">Tornado</a> put out some serious competition with <a href="http://rubyonrails.org/">Rails</a> and <a href="http://www.sinatrarb.com/">Sinatra</a>, and Python’s <a href="http://blog.getpelican.com/">Pelican</a> looks like a fine alternative to <a href="http://jekyllrb.com/">Jekyll</a>).</p>
 </section>
 
