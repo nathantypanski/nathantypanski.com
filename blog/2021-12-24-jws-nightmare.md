@@ -4,7 +4,7 @@ tags: JWT, JWS, evil
 math: true
 ----
 
-JWS is the kind of thing where you could be forgiven for thinking "hey, everyone's using this, so it must be good!" JWTs are built on JWS, and lots of people use those. JWS is standardized by the IETF in [RFC7515](https://datatracker.ietf.org/doc/html/rfc7515). If you are investigating ways to sign REST API requests with JSON bodies, JWS is probably one of the first things you'll look at. I'm hoping that by the time you're done with this post, you'll do something else. If you just want to know what that "something else" is, skip to [the bottom][A better way to sign JSON].
+JWS is the kind of thing where you could be forgiven for thinking "hey, everyone's using this, so it must be good!" JWTs are built on JWS, and lots of people use those. JWS is standardized by the IETF in [RFC7515](https://datatracker.ietf.org/doc/html/rfc7515). I'm hoping that by the time you're done with this post, you'll do something else. If you just want to know what that "something else" is, skip to [the bottom][A better way to sign JSON].
 
 In this post, I will show how the JWS standard encourages implementations to structure their validation logic in an insecure manner. Thus JWTs, being built upon a rotten foundation, are themselves insecure---or at least very difficult to implement securely. Then I will provide suggestions on alternatives to JWS.
 
@@ -128,7 +128,7 @@ Modern tools are going the other way. [Minisign](https://jedisct1.github.io/mini
 
 Most mistakes in request signing protocols stem from serializing, parsing, and decoding the object [prior to verification](https://www.daemonology.net/blog/2008-12-18-AWS-signature-version-1-is-insecure.html). Don't do those steps. Most of the time it doesn't matter.
 
-If you need "deniability"---unforgeability of messages by the server, then use Ed25519. This is unnecessary for most web APIs, but it is important in some cases, like [AWS multi-region access points](https://shufflesharding.com/posts/aws-sigv4-and-sigv4a). If you trust the server, then use HMAC-SHA256, a symmetric authentication algorithm. **Do not support both of these at once**. Think long and hard about what is appropriate for your application.
+If you need unforgeability of messages by the server, then use Ed25519. This is unnecessary for most web APIs, but it is important in some cases, like [AWS multi-region access points](https://shufflesharding.com/posts/aws-sigv4-and-sigv4a). If you trust the server, then use HMAC-SHA256, a symmetric authentication algorithm. **Do not support both of these at once**. Think long and hard about what is appropriate for your application.
 
 Have clients serialize the JSON object they wish to sign into a bytestring `json_bytes`. Now your signature algorithm becomes just:
 
