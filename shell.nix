@@ -4,8 +4,12 @@
 pkgs.mkShell {
   buildInputs = with pkgs; [
     zlib
+    git
+    gcc
+    gmp
     stack
     cabal-install
-    ghc
+    pandoc
+    haskell.compiler.ghc902
   ];
 }
