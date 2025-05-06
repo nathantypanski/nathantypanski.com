@@ -11,5 +11,6 @@ pkgs.mkShell {
     cabal-install
     pandoc
     haskell.compiler.ghc902
+    sass
   ];
 }

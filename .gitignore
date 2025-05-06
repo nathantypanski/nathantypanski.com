@@ -13,3 +13,5 @@ wordir/*
 .virthualenv
 _cache/
 _site/
+.stack-work
+dist-newstyle
