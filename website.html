@@ -48,7 +48,7 @@
         <div id="metadata">
             <ul class="meta">
             
-                <li>tags: <em><a title="All pages tagged 'info'." href="./tags/info.html" rel="tag">info</a></em></li>
+                <li>tags: <em><a title="All pages tagged 'info'." href="./tags/info.html">info</a></em></li>
             
             
             
@@ -59,7 +59,7 @@
             <h1>About this site</h1>
             <div id="toc"><h2>Contents</h2>
 <ul>
-<li><a href="#compilation" id="toc-compilation">Compilation</a></li>
+<li><a href="#compilation">Compilation</a></li>
 </ul> </div>
 <p>The code for this site is <a href="https://github.com/nathantypanski/nathantypanski.com">on GitHub</a>. It’s written in <a href="http://jaspervdj.be/hakyll/">Hakyll</a>, a static site generator for Haskell.</p>
 <section id="compilation" class="level2">
@@ -71,7 +71,7 @@
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> push<span class="kw">&amp;&amp;</span><span class="dt">\</span></span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="ex">./site</span> clean <span class="kw">&amp;&amp;</span><span class="dt">\</span></span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="ex">./site</span> build <span class="kw">&amp;&amp;</span><span class="dt">\</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">rsync</span> <span class="at">--checksum</span> <span class="at">-ave</span> <span class="st">'ssh'</span> <span class="dt">\_</span>site/<span class="pp">*</span> <span class="pp">[</span><span class="ss">redacted</span><span class="pp">]</span>:/srv/http/nathantypanski.com</span></code></pre></div>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">rsync</span> <span class="at">--checksum</span> <span class="at">-ave</span> <span class="st">'ssh'</span> <span class="dt">\_</span>site/<span class="pp">*</span> [redacted]:/srv/http/nathantypanski.com</span></code></pre></div>
 <p>This makes the website really easy to maintain. It is just a bunch of markdown files that generate a bunch of HTML files that can be served as a static site. No backing database, no content management system, just a bunch of files on a computer.</p>
 </section>
 

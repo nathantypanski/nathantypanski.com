@@ -48,7 +48,7 @@
         <div id="metadata">
             <ul class="meta">
             
-                <li>tags: <em><a title="All pages tagged 'Linux'." href="../tags/Linux.html" rel="tag">Linux</a>, <a title="All pages tagged 'systemd'." href="../tags/systemd.html" rel="tag">systemd</a>, <a title="All pages tagged 'daemons'." href="../tags/daemons.html" rel="tag">daemons</a></em></li>
+                <li>tags: <em><a title="All pages tagged 'Linux'." href="../tags/Linux.html">Linux</a>, <a title="All pages tagged 'systemd'." href="../tags/systemd.html">systemd</a>, <a title="All pages tagged 'daemons'." href="../tags/daemons.html">daemons</a></em></li>
             
             
             <li>posted: <em> July 25, 2014 </em></li>
@@ -70,15 +70,15 @@
 </div>
 <div id="toc"><h2>Contents</h2>
 <ul>
-<li><a href="#why-go-back" id="toc-why-go-back">Why go back?</a>
+<li><a href="#why-go-back">Why go back?</a>
 <ul>
-<li><a href="#systemd" id="toc-systemd">systemd</a></li>
-<li><a href="#understanding" id="toc-understanding">Understanding</a></li>
-<li><a href="#arch-build-system" id="toc-arch-build-system">Arch Build System</a></li>
-<li><a href="#arch-wiki" id="toc-arch-wiki">Arch Wiki</a></li>
+<li><a href="#systemd">systemd</a></li>
+<li><a href="#understanding">Understanding</a></li>
+<li><a href="#arch-build-system">Arch Build System</a></li>
+<li><a href="#arch-wiki">Arch Wiki</a></li>
 </ul></li>
-<li><a href="#concerns" id="toc-concerns">Concerns</a></li>
-<li><a href="#conclusions" id="toc-conclusions">Conclusions</a></li>
+<li><a href="#concerns">Concerns</a></li>
+<li><a href="#conclusions">Conclusions</a></li>
 </ul> </div>
 <p>This January I <a href="2014-01-19-debian.html">switched from Arch to Debian</a>, and I was very happy with it. Now I’m back on Arch.</p>
 <section id="why-go-back" class="level2">
@@ -154,16 +154,16 @@ WantedBy=console.target</code></pre>
 <p>I think I’ll be happy with Arch. Everything I’ve seen so far has shown me that it’s thoroughly alive and better than ever.</p>
 <p>But I’m sure in a few months I’ll have more to say. Maybe one day I’ll put some real effort into Gentoo or one of the BSDs.</p>
 </section>
-<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<section class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr />
 <ol>
-<li id="fn1"><p>Using regular files as locks is a bad idea. The problem is that there is no way to build a <a href="http://en.wikipedia.org/wiki/Test-and-set">test and set</a> with regular files - on Unix-like systems, you can’t both <em>check if a file exists</em> and <em>create it if it doesn’t exist</em> in an atomic manner. The <code>mkdir</code> command, on the other hand, has all the properties we need to build this concurrency primitive:</p>
+<li id="fn1" role="doc-endnote"><p>Using regular files as locks is a bad idea. The problem is that there is no way to build a <a href="http://en.wikipedia.org/wiki/Test-and-set">test and set</a> with regular files - on Unix-like systems, you can’t both <em>check if a file exists</em> and <em>create it if it doesn’t exist</em> in an atomic manner. The <code>mkdir</code> command, on the other hand, has all the properties we need to build this concurrency primitive:</p>
 <ul>
 <li>Failing and returning an exit status if the directory exists,</li>
 <li>Creating the directory if it doesn’t exist.</li>
 </ul>
 <p>The problem you can run into with regular files is that if the file <em>does</em> exist, when you try to spawn a new process and create a lockfile in that place, another process could have spawned in the time between when you deleted the lockfile and when you’re writing the new one. This means your daemonizing system will eventually fail, and your system will be broken.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2"><p>Example output:</p>
+<li id="fn2" role="doc-endnote"><p>Example output:</p>
 <pre class="sourceCode"><code>$ userctl status gitit
 ● gitit.service - my personal wiki
    Loaded: loaded (/home/nathan/.config/systemd/user/gitit.service; enabled)
@@ -174,7 +174,7 @@ WantedBy=console.target</code></pre>
 
 Jul 25 21:21:16 dionysus systemd[388]: Started my personal wiki.</code></pre>
 <a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></li>
-<li id="fn3"><p>I made <a href="https://wiki.archlinux.org/index.php/Special:Contributions/Ndt">16 contributions</a> even during the 6 months I used Debian primarily. I still had Arch on a VPS of mine, but that system doesn’t see modification very often.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3" role="doc-endnote"><p>I made <a href="https://wiki.archlinux.org/index.php/Special:Contributions/Ndt">16 contributions</a> even during the 6 months I used Debian primarily. I still had Arch on a VPS of mine, but that system doesn’t see modification very often.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 

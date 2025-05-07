@@ -48,7 +48,7 @@
         <div id="metadata">
             <ul class="meta">
             
-                <li>tags: <em><a title="All pages tagged 'Emacs'." href="../tags/Emacs.html" rel="tag">Emacs</a>, <a title="All pages tagged 'software'." href="../tags/software.html" rel="tag">software</a>, <a title="All pages tagged 'Vim'." href="../tags/Vim.html" rel="tag">Vim</a></em></li>
+                <li>tags: <em><a title="All pages tagged 'Emacs'." href="../tags/Emacs.html">Emacs</a>, <a title="All pages tagged 'software'." href="../tags/software.html">software</a>, <a title="All pages tagged 'Vim'." href="../tags/Vim.html">Vim</a></em></li>
             
             
             <li>posted: <em> August  3, 2014 </em></li>
@@ -70,44 +70,44 @@
 </div>
 <div id="toc"><h2>Contents</h2>
 <ul>
-<li><a href="#first-some-terminology" id="toc-first-some-terminology">First, some terminology</a></li>
-<li><a href="#package-archives" id="toc-package-archives">Package archives</a>
+<li><a href="#first-some-terminology">First, some terminology</a></li>
+<li><a href="#package-archives">Package archives</a>
 <ul>
-<li><a href="#installing-evil" id="toc-installing-evil">Installing Evil</a></li>
+<li><a href="#installing-evil">Installing Evil</a></li>
 </ul></li>
-<li><a href="#modes" id="toc-modes">Modes</a></li>
-<li><a href="#binding-keys" id="toc-binding-keys">Binding keys</a>
+<li><a href="#modes">Modes</a></li>
+<li><a href="#binding-keys">Binding keys</a>
 <ul>
-<li><a href="#quoting" id="toc-quoting">Quoting</a></li>
-<li><a href="#maps-and-keys" id="toc-maps-and-keys">Maps and keys</a></li>
+<li><a href="#quoting">Quoting</a></li>
+<li><a href="#maps-and-keys">Maps and keys</a></li>
 </ul></li>
-<li><a href="#lisp-navigation" id="toc-lisp-navigation">Lisp navigation</a></li>
-<li><a href="#managing-buffers" id="toc-managing-buffers">Managing buffers</a>
+<li><a href="#lisp-navigation">Lisp navigation</a></li>
+<li><a href="#managing-buffers">Managing buffers</a>
 <ul>
-<li><a href="#stealing-ibuffers-keymap" id="toc-stealing-ibuffers-keymap">Stealing IBuffer’s keymap</a></li>
-<li><a href="#rebinding" id="toc-rebinding">Rebinding</a></li>
-<li><a href="#handling-lots-of-buffers" id="toc-handling-lots-of-buffers">Handling lots of buffers</a></li>
+<li><a href="#stealing-ibuffers-keymap">Stealing IBuffer’s keymap</a></li>
+<li><a href="#rebinding">Rebinding</a></li>
+<li><a href="#handling-lots-of-buffers">Handling lots of buffers</a></li>
 </ul></li>
-<li><a href="#separating-your-init-files" id="toc-separating-your-init-files">Separating your init files</a></li>
-<li><a href="#dired" id="toc-dired">Dired</a>
+<li><a href="#separating-your-init-files">Separating your init files</a></li>
+<li><a href="#dired">Dired</a>
 <ul>
-<li><a href="#dired-x" id="toc-dired-x">Dired-x</a></li>
+<li><a href="#dired-x">Dired-x</a></li>
 </ul></li>
-<li><a href="#evil-leader" id="toc-evil-leader">Evil-Leader</a></li>
-<li><a href="#use-package" id="toc-use-package">Use-package</a></li>
-<li><a href="#daemonizing-emacs" id="toc-daemonizing-emacs">Daemonizing Emacs</a></li>
-<li><a href="#magit" id="toc-magit">Magit</a></li>
-<li><a href="#tips-and-tricks" id="toc-tips-and-tricks">Tips and tricks</a>
+<li><a href="#evil-leader">Evil-Leader</a></li>
+<li><a href="#use-package">Use-package</a></li>
+<li><a href="#daemonizing-emacs">Daemonizing Emacs</a></li>
+<li><a href="#magit">Magit</a></li>
+<li><a href="#tips-and-tricks">Tips and tricks</a>
 <ul>
-<li><a href="#avoid-using-customize" id="toc-avoid-using-customize">Avoid using customize</a></li>
-<li><a href="#ditch-the-terminal" id="toc-ditch-the-terminal">Ditch the terminal</a></li>
-<li><a href="#hide-the-startup-messages" id="toc-hide-the-startup-messages">Hide the startup messages</a></li>
-<li><a href="#after" id="toc-after">After</a></li>
-<li><a href="#better-word-wrapping" id="toc-better-word-wrapping">Better word wrapping</a></li>
-<li><a href="#enforce-trailing-newlines" id="toc-enforce-trailing-newlines">Enforce trailing newlines</a></li>
-<li><a href="#hide-the-toolbar" id="toc-hide-the-toolbar">Hide the toolbar</a></li>
+<li><a href="#avoid-using-customize">Avoid using customize</a></li>
+<li><a href="#ditch-the-terminal">Ditch the terminal</a></li>
+<li><a href="#hide-the-startup-messages">Hide the startup messages</a></li>
+<li><a href="#after">After</a></li>
+<li><a href="#better-word-wrapping">Better word wrapping</a></li>
+<li><a href="#enforce-trailing-newlines">Enforce trailing newlines</a></li>
+<li><a href="#hide-the-toolbar">Hide the toolbar</a></li>
 </ul></li>
-<li><a href="#my-config" id="toc-my-config">My config</a></li>
+<li><a href="#my-config">My config</a></li>
 </ul> </div>
 <p>I’ve <a href="../blog/2014-07-02-switching-to-emacs.html">previously written</a> about my own process of transitioning from Vim to Emacs. It’s fairly high-level, however, and doesn’t cover the nitty-gritty: all those long, painful hours spent trying to smash Emacs into reasonable keybindings are lost.
 You get the retrospective, the analysis, but not the same benefit of hindsight I’ve gathered since I switched. Unfortunately, there aren’t many resources out there on how to do this <em>right</em>. People use Emacs. It’s a tool. Most of its users don’t write about it, and the percentage of Emacs users who try to emulate Vim and also write about it is even smaller.</p>
@@ -670,15 +670,15 @@ WantedBy=console.target</code></pre>
 <h2>My config</h2>
 <p>My config files are on <a href="https://github.com/nathantypanski/emacs.d">GitHub</a> if you want to explore where I’ve gone with this. Caution that they don’t follow this post exactly, and they may not work on everyone’s system or be broken due to versioning (I build Emacs from the latest upstream source every couple weeks).</p>
 </section>
-<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<section class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr />
 <ol>
-<li id="fn1"><p><code>evil-emacs-state</code> uses Emacs keybindings exclusively.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2"><p>Note that not everything in a given buffer is a <em>symbol</em>, even though everything in Elisp is an <em>object</em>. Since you were looking up a function definition, it <em>was</em> a symbol, but symbol refers exclusively to those objects that have names.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn3"><p>Often you’ll see people defining hooks using a <code>lambda</code> construct. This is counterproductive, since once you add a hook to a list it can be complicated to get it out. If you messed anything up with your lambda, you can have a hard time removing it.
+<li id="fn1" role="doc-endnote"><p><code>evil-emacs-state</code> uses Emacs keybindings exclusively.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2" role="doc-endnote"><p>Note that not everything in a given buffer is a <em>symbol</em>, even though everything in Elisp is an <em>object</em>. Since you were looking up a function definition, it <em>was</em> a symbol, but symbol refers exclusively to those objects that have names.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3" role="doc-endnote"><p>Often you’ll see people defining hooks using a <code>lambda</code> construct. This is counterproductive, since once you add a hook to a list it can be complicated to get it out. If you messed anything up with your lambda, you can have a hard time removing it.
 Giving all of your hooks explicit names lets you remove them easily with <code>remove-hook</code> without restarting your Emacs session.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn4"><p>As of Emacs 24.4, <code>turn-on-eldoc-mode</code> is a deprecated alias for <code>eldoc-mode</code>, which should be used instead.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn5"><p>One reader wrote to me, finding that the code I provide here did not work for him.</p>
+<li id="fn4" role="doc-endnote"><p>As of Emacs 24.4, <code>turn-on-eldoc-mode</code> is a deprecated alias for <code>eldoc-mode</code>, which should be used instead.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5" role="doc-endnote"><p>One reader wrote to me, finding that the code I provide here did not work for him.</p>
 <blockquote>
 <p>I can see the elisp-slime description appearing at the bottom section, but when I press K it seems like it’s running another function. I’ve also tried mapping it to <q>T</q>, but I’m not able to get it working (but by running elisp-slime-nav-describe-elisp-thing-at-point from the M-x, (or : when in evil-normal-mode) it works perfectly)</p>
 </blockquote>
@@ -686,10 +686,10 @@ Giving all of your hooks explicit names lets you remove them easily with <code>r
 <pre class="sourceCode"><code>(evil-define-key 'normal emacs-lisp-mode-map &quot;K&quot;
   'elisp-slime-nav-describe-elisp-thing-at-point)</code></pre>
 <p>So readers who have issue with my code might want to try binding to <code>K</code> per above.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn6"><p>A friend of mine pointed out that his version of Emacs (24.4, I believe) did not incldue a <a href="http://emacslife.com/how-to-read-emacs-lisp.html#sec-6-1">jump-to-source link</a> in his <code>describe-mode</code> help window. While this was <a href="http://lists.gnu.org/archive/html/emacs-bug-tracker/2011-03/msg00147.html">reported as a bug</a> back in 2011, I was fairly certain that it has since been resolved …</p>
+<li id="fn6" role="doc-endnote"><p>A friend of mine pointed out that his version of Emacs (24.4, I believe) did not incldue a <a href="http://emacslife.com/how-to-read-emacs-lisp.html#sec-6-1">jump-to-source link</a> in his <code>describe-mode</code> help window. While this was <a href="http://lists.gnu.org/archive/html/emacs-bug-tracker/2011-03/msg00147.html">reported as a bug</a> back in 2011, I was fairly certain that it has since been resolved …</p>
 <p>I tried this out and, indeed, the same was true for me: either the feature had been removed, or our Emacs’ packages were built incorrectly (e.g., without the source files). I think it’s possible to fix this by <a href="https://gist.github.com/nathantypanski/e006ff1b2240ecb4901a/revisions">modifying the package source</a> for whatever distro one is using to not strip the <code>.el.gz</code> files, but trying this on my own system has thus far not solved the issue.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn7"><p>I got errors about the <code>R</code> in <code>R E T</code> not being a valid prefix key when I was testing this. YMMV.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn8"><p>ibuffer does not refresh itself by default. You need to call <code>ibuffer-update</code> for new buffers to be shown.<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn7" role="doc-endnote"><p>I got errors about the <code>R</code> in <code>R E T</code> not being a valid prefix key when I was testing this. YMMV.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn8" role="doc-endnote"><p>ibuffer does not refresh itself by default. You need to call <code>ibuffer-update</code> for new buffers to be shown.<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 

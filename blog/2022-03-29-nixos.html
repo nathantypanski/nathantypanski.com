@@ -48,7 +48,7 @@
         <div id="metadata">
             <ul class="meta">
             
-                <li>tags: <em><a title="All pages tagged 'NixOS'." href="../tags/NixOS.html" rel="tag">NixOS</a>, <a title="All pages tagged 'Nix'." href="../tags/Nix.html" rel="tag">Nix</a>, <a title="All pages tagged 'functional programming'." href="../tags/functional%20programming.html" rel="tag">functional programming</a></em></li>
+                <li>tags: <em><a title="All pages tagged 'NixOS'." href="../tags/NixOS.html">NixOS</a>, <a title="All pages tagged 'Nix'." href="../tags/Nix.html">Nix</a>, <a title="All pages tagged 'functional programming'." href="../tags/functional%20programming.html">functional programming</a></em></li>
             
             
             <li>posted: <em> March 29, 2022 </em></li>
@@ -70,28 +70,28 @@
 </div>
 <div id="toc"><h2>Contents</h2>
 <ul>
-<li><a href="#what-is-nix" id="toc-what-is-nix">What is Nix?</a>
+<li><a href="#what-is-nix">What is Nix?</a>
 <ul>
-<li><a href="#expression-language" id="toc-expression-language">Expression language</a></li>
-<li><a href="#package-manager" id="toc-package-manager">Package manager</a></li>
-<li><a href="#operating-system" id="toc-operating-system">Operating system</a></li>
+<li><a href="#expression-language">Expression language</a></li>
+<li><a href="#package-manager">Package manager</a></li>
+<li><a href="#operating-system">Operating system</a></li>
 </ul></li>
-<li><a href="#installation" id="toc-installation">Installation</a></li>
-<li><a href="#opt-in-state" id="toc-opt-in-state">Opt-in state</a></li>
-<li><a href="#config-as-code" id="toc-config-as-code">Config-as-code</a></li>
-<li><a href="#home-directory-management" id="toc-home-directory-management">Home directory management</a>
+<li><a href="#installation">Installation</a></li>
+<li><a href="#opt-in-state">Opt-in state</a></li>
+<li><a href="#config-as-code">Config-as-code</a></li>
+<li><a href="#home-directory-management">Home directory management</a>
 <ul>
-<li><a href="#example" id="toc-example">Example</a></li>
-<li><a href="#why" id="toc-why">Why?</a></li>
+<li><a href="#example">Example</a></li>
+<li><a href="#why">Why?</a></li>
 </ul></li>
-<li><a href="#nixos-generations" id="toc-nixos-generations">NixOS generations</a></li>
-<li><a href="#shells" id="toc-shells">Shells</a></li>
-<li><a href="#downsides" id="toc-downsides">Downsides</a>
+<li><a href="#nixos-generations">NixOS generations</a></li>
+<li><a href="#shells">Shells</a></li>
+<li><a href="#downsides">Downsides</a>
 <ul>
-<li><a href="#documentation" id="toc-documentation">Documentation</a></li>
-<li><a href="#the-language" id="toc-the-language">The language</a></li>
+<li><a href="#documentation">Documentation</a></li>
+<li><a href="#the-language">The language</a></li>
 </ul></li>
-<li><a href="#conclusion" id="toc-conclusion">Conclusion</a></li>
+<li><a href="#conclusion">Conclusion</a></li>
 </ul> </div>
 <p>NixOS is a radical reimagining of what a Unix-like operating system can be like. It has a concept of <q>generations</q> that permit you to roll back (or forward) to previous instances of your operating system state. It’s defined entirely by code written in the <a href="https://nixos.wiki/wiki/Nix_Expression_Language">Nix expression language</a>, a functional programming language designed to make reproduicble builds easy. That’s right, NixOS is fully reproducible: if you have a NixOS machine definition, then you can reproduce not only the exact bytes of each package installed on that machine, but the entire state of the machine itself (besides ephemeral machine-specific bits).</p>
 <p>The only comparable project I am aware of is <a href="https://guix.gnu.org/">GNU Guix</a>, a relatively newer project that attempts similar goals using Scheme instead of a domain-specific programming language.</p>
