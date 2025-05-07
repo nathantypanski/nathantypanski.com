@@ -2,8 +2,7 @@
 title: Nathan Typanski
 ---
 
-Hey! I'm Nathan. I play with Linux systems and like solving really hard problems.
-Sometimes I write about what I'm doing, and that's why I have this website.
+Hey! I'm Nathan. You'll find my work and thoughts on Linux (lately NixOS), software development, and various technical rabbit holes here.
 
 ## Contents
 
