@@ -48,7 +48,7 @@
         <div id="metadata">
             <ul class="meta">
             
-                <li>tags: <em><a title="All pages tagged 'JWT'." href="../tags/JWT.html">JWT</a>, <a title="All pages tagged 'JWS'." href="../tags/JWS.html">JWS</a>, <a title="All pages tagged 'evil'." href="../tags/evil.html">evil</a></em></li>
+                <li>tags: <em><a title="All pages tagged 'JWT'." href="../tags/JWT.html" rel="tag">JWT</a>, <a title="All pages tagged 'JWS'." href="../tags/JWS.html" rel="tag">JWS</a>, <a title="All pages tagged 'evil'." href="../tags/evil.html" rel="tag">evil</a></em></li>
             
             
             <li>posted: <em> December 24, 2021 </em></li>
@@ -70,13 +70,13 @@
 </div>
 <div id="toc"><h2>Contents</h2>
 <ul>
-<li><a href="#cryptographic-doom">Cryptographic doom</a></li>
-<li><a href="#verifying-a-jws">Verifying a JWS</a>
+<li><a href="#cryptographic-doom" id="toc-cryptographic-doom">Cryptographic doom</a></li>
+<li><a href="#verifying-a-jws" id="toc-verifying-a-jws">Verifying a JWS</a>
 <ul>
-<li><a href="#attacker-controlled-algorithms">Attacker-controlled algorithms</a></li>
+<li><a href="#attacker-controlled-algorithms" id="toc-attacker-controlled-algorithms">Attacker-controlled algorithms</a></li>
 </ul></li>
-<li><a href="#protocols-should-be-defensive-against-implementations">Protocols should be defensive against implementations</a></li>
-<li><a href="#a-better-way-to-sign-json">A better way to sign JSON</a></li>
+<li><a href="#protocols-should-be-defensive-against-implementations" id="toc-protocols-should-be-defensive-against-implementations">Protocols should be defensive against implementations</a></li>
+<li><a href="#a-better-way-to-sign-json" id="toc-a-better-way-to-sign-json">A better way to sign JSON</a></li>
 </ul> </div>
 <p>JWS is the kind of thing where you could be forgiven for thinking <q>hey, everyone’s using this, so it must be good!</q> JWTs are built on JWS, and lots of people use those. JWS is standardized by the IETF in <a href="https://datatracker.ietf.org/doc/html/rfc7515">RFC7515</a>. I’m hoping that by the time you’re done with this post, you’ll do something else. If you just want to know what that <q>something else</q> is, skip to <a href="#a-better-way-to-sign-json">the bottom</a>.</p>
 <p>In this post, I will show how the JWS standard encourages implementations to structure their validation logic in an insecure manner. Thus JWTs, being built upon a rotten foundation, are themselves insecure—or at least very difficult to implement securely. Then I will provide suggestions on alternatives to JWS.</p>
@@ -176,10 +176,10 @@
 <p>Notice that verification does not require deserialization, nor character decoding! If the payload is a JSON object, we can safely deserialize it after verification. If you want, you can use <a href="https://www.openbsd.org/papers/bsdcan-signify.html">OpenBSD Signify</a> so that clients have readily available CLI and library tooling support.</p>
 <p>Now, this has the downside that two identical JSON objects may not result in identical signatures. Fortunately, this does not generally matter, and in any case it probably matters less than the correctness of your cryptographic system. If you need to check the equality of two requests, you can generally verify, deserialize, canonicalize and compare them inside your application server logic as necessary. Plus, this way when you find a bug in your canonicalization logic, you can fix it without forcing your clients to update.</p>
 </section>
-<section class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr />
 <ol>
-<li id="fn1" role="doc-endnote"><p>The following code has two major problems. The first is that we are returning <q>helpful</q> error messages related to the application <a href="#cryptographic-doom">prior to header verification</a>, potentially leaking bits of information an attacker can use to exploit our application. The second is that we allow the <q>algorithm</q> field to be attacker-controlled, leaving us open to <a href="#attacker-controlled-algorithms">algorithm selection attacks</a>.</p>
+<li id="fn1"><p>The following code has two major problems. The first is that we are returning <q>helpful</q> error messages related to the application <a href="#cryptographic-doom">prior to header verification</a>, potentially leaking bits of information an attacker can use to exploit our application. The second is that we allow the <q>algorithm</q> field to be attacker-controlled, leaving us open to <a href="#attacker-controlled-algorithms">algorithm selection attacks</a>.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> verify_jws(jws_string):</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    jws <span class="op">=</span> json.loads(string)</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -235,7 +235,7 @@
 <span id="cb5-53"><a href="#cb5-53" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Verify with the provided algorithm.</span></span>
 <span id="cb5-54"><a href="#cb5-54" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> verify_payload(algorithm, signature_payload)</span></code></pre></div>
 <a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></li>
-<li id="fn2" role="doc-endnote"><p>Unfortunately, this simplicity can be to a fault. The new <code>age</code> encryption tool does not support public key authentication, meaning constructs such as</p>
+<li id="fn2"><p>Unfortunately, this simplicity can be to a fault. The new <code>age</code> encryption tool does not support public key authentication, meaning constructs such as</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> curl <span class="st">&quot;</span><span class="va">${ENCRYPTED_TARBALL_URL}</span><span class="st">&quot;</span> age <span class="at">--decrypt</span> <span class="kw">|</span> <span class="fu">tar</span> xf</span></code></pre></div>
 <p>are <a href="https://www.imperialviolet.org/2014/06/27/streamingencryption.html">dangerous</a>. But this problem can be resolved by using <code>signify</code> to sign the encrypted blobs, and always verifying data before decrypting it.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>

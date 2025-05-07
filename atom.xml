@@ -6,7 +6,9 @@
     <id>http://www.nathantypanski.com/atom.xml</id>
     <author>
         <name>Nathan Typanski</name>
+        
         <email>ndt@nathantypanski.com</email>
+        
     </author>
     <updated>2025-05-01T00:00:00Z</updated>
     <entry>
@@ -27,25 +29,25 @@
 </div>
 <div id="toc"><h2>Contents</h2>
 <ul>
-<li><a href="#hardware">Hardware</a>
+<li><a href="#hardware" id="toc-hardware">Hardware</a>
 <ul>
-<li><a href="#processor-gpu">Processor &amp; GPU</a></li>
-<li><a href="#trackpad">Trackpad</a></li>
-<li><a href="#keyboard">Keyboard</a></li>
-<li><a href="#fingerprint-reader">Fingerprint reader</a></li>
+<li><a href="#processor-gpu" id="toc-processor-gpu">Processor &amp; GPU</a></li>
+<li><a href="#trackpad" id="toc-trackpad">Trackpad</a></li>
+<li><a href="#keyboard" id="toc-keyboard">Keyboard</a></li>
+<li><a href="#fingerprint-reader" id="toc-fingerprint-reader">Fingerprint reader</a></li>
 </ul></li>
-<li><a href="#nix-vs-arch">Nix vs Arch</a></li>
-<li><a href="#os-configuration">OS Configuration</a>
+<li><a href="#nix-vs-arch" id="toc-nix-vs-arch">Nix vs Arch</a></li>
+<li><a href="#os-configuration" id="toc-os-configuration">OS Configuration</a>
 <ul>
-<li><a href="#partitioning-and-encryption">Partitioning and Encryption</a></li>
-<li><a href="#secure-boot">Secure Boot</a></li>
-<li><a href="#tpm-decryption">TPM decryption</a></li>
-<li><a href="#fingerprint-unlock">Fingerprint Unlock</a></li>
+<li><a href="#partitioning-and-encryption" id="toc-partitioning-and-encryption">Partitioning and Encryption</a></li>
+<li><a href="#secure-boot" id="toc-secure-boot">Secure Boot</a></li>
+<li><a href="#tpm-decryption" id="toc-tpm-decryption">TPM decryption</a></li>
+<li><a href="#fingerprint-unlock" id="toc-fingerprint-unlock">Fingerprint Unlock</a></li>
 </ul></li>
-<li><a href="#home-configuration">Home Configuration</a>
+<li><a href="#home-configuration" id="toc-home-configuration">Home Configuration</a>
 <ul>
-<li><a href="#home-manager-entrypoint">home-manager entrypoint</a></li>
-<li><a href="#ollama">ollama</a></li>
+<li><a href="#home-manager-entrypoint" id="toc-home-manager-entrypoint">home-manager entrypoint</a></li>
+<li><a href="#ollama" id="toc-ollama">ollama</a></li>
 </ul></li>
 </ul> </div>
 <p>I have spent the last week installing and configuring a Framework 13 laptop. My first attempt was to use NixOS (since that’s my distro of choice) but the Framework keyboard wasn’t detected by either the minimal or graphical NixOS iso. So I went with Arch Linux and installed Nix + Home-Manager to manage <em>most</em> of my system.</p>
@@ -300,10 +302,10 @@ db  KEK  PK</code></pre>
 <p>If you get an error, like <code>msg=unsupported Radeon iGPU detected skipping" id=0 total="512.0 MiB"</code> then this means you need to reboot to your bootloader and change the iGPU settings to allocate static vRAM to your GPU. Sorry. I gave 8 GiB to mine, which is stolen permanently from RAM.</p>
 </section>
 </section>
-<section class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr />
 <ol>
-<li id="fn1" role="doc-endnote"><p><code>/usr/local/bin/update-signed-bootloader</code>:</p>
+<li id="fn1"><p><code>/usr/local/bin/update-signed-bootloader</code>:</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>#!/usr/bin/env bash</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>set -e</span>
@@ -335,7 +337,7 @@ db  KEK  PK</code></pre>
 <span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a>echo &quot;Bootloader update and signing process complete.&quot;</span></code></pre></div>
 <a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></li>
-<li id="fn2" role="doc-endnote"><p><code>/usr/local/bin/rebuild-ukis-for-sbctl.sh</code>:</p>
+<li id="fn2"><p><code>/usr/local/bin/rebuild-ukis-for-sbctl.sh</code>:</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>#!/bin/bash</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>set -e</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -401,28 +403,28 @@ db  KEK  PK</code></pre>
 </div>
 <div id="toc"><h2>Contents</h2>
 <ul>
-<li><a href="#what-is-nix">What is Nix?</a>
+<li><a href="#what-is-nix" id="toc-what-is-nix">What is Nix?</a>
 <ul>
-<li><a href="#expression-language">Expression language</a></li>
-<li><a href="#package-manager">Package manager</a></li>
-<li><a href="#operating-system">Operating system</a></li>
+<li><a href="#expression-language" id="toc-expression-language">Expression language</a></li>
+<li><a href="#package-manager" id="toc-package-manager">Package manager</a></li>
+<li><a href="#operating-system" id="toc-operating-system">Operating system</a></li>
 </ul></li>
-<li><a href="#installation">Installation</a></li>
-<li><a href="#opt-in-state">Opt-in state</a></li>
-<li><a href="#config-as-code">Config-as-code</a></li>
-<li><a href="#home-directory-management">Home directory management</a>
+<li><a href="#installation" id="toc-installation">Installation</a></li>
+<li><a href="#opt-in-state" id="toc-opt-in-state">Opt-in state</a></li>
+<li><a href="#config-as-code" id="toc-config-as-code">Config-as-code</a></li>
+<li><a href="#home-directory-management" id="toc-home-directory-management">Home directory management</a>
 <ul>
-<li><a href="#example">Example</a></li>
-<li><a href="#why">Why?</a></li>
+<li><a href="#example" id="toc-example">Example</a></li>
+<li><a href="#why" id="toc-why">Why?</a></li>
 </ul></li>
-<li><a href="#nixos-generations">NixOS generations</a></li>
-<li><a href="#shells">Shells</a></li>
-<li><a href="#downsides">Downsides</a>
+<li><a href="#nixos-generations" id="toc-nixos-generations">NixOS generations</a></li>
+<li><a href="#shells" id="toc-shells">Shells</a></li>
+<li><a href="#downsides" id="toc-downsides">Downsides</a>
 <ul>
-<li><a href="#documentation">Documentation</a></li>
-<li><a href="#the-language">The language</a></li>
+<li><a href="#documentation" id="toc-documentation">Documentation</a></li>
+<li><a href="#the-language" id="toc-the-language">The language</a></li>
 </ul></li>
-<li><a href="#conclusion">Conclusion</a></li>
+<li><a href="#conclusion" id="toc-conclusion">Conclusion</a></li>
 </ul> </div>
 <p>NixOS is a radical reimagining of what a Unix-like operating system can be like. It has a concept of <q>generations</q> that permit you to roll back (or forward) to previous instances of your operating system state. It’s defined entirely by code written in the <a href="https://nixos.wiki/wiki/Nix_Expression_Language">Nix expression language</a>, a functional programming language designed to make reproduicble builds easy. That’s right, NixOS is fully reproducible: if you have a NixOS machine definition, then you can reproduce not only the exact bytes of each package installed on that machine, but the entire state of the machine itself (besides ephemeral machine-specific bits).</p>
 <p>The only comparable project I am aware of is <a href="https://guix.gnu.org/">GNU Guix</a>, a relatively newer project that attempts similar goals using Scheme instead of a domain-specific programming language.</p>
@@ -706,13 +708,13 @@ db  KEK  PK</code></pre>
 </div>
 <div id="toc"><h2>Contents</h2>
 <ul>
-<li><a href="#cryptographic-doom">Cryptographic doom</a></li>
-<li><a href="#verifying-a-jws">Verifying a JWS</a>
+<li><a href="#cryptographic-doom" id="toc-cryptographic-doom">Cryptographic doom</a></li>
+<li><a href="#verifying-a-jws" id="toc-verifying-a-jws">Verifying a JWS</a>
 <ul>
-<li><a href="#attacker-controlled-algorithms">Attacker-controlled algorithms</a></li>
+<li><a href="#attacker-controlled-algorithms" id="toc-attacker-controlled-algorithms">Attacker-controlled algorithms</a></li>
 </ul></li>
-<li><a href="#protocols-should-be-defensive-against-implementations">Protocols should be defensive against implementations</a></li>
-<li><a href="#a-better-way-to-sign-json">A better way to sign JSON</a></li>
+<li><a href="#protocols-should-be-defensive-against-implementations" id="toc-protocols-should-be-defensive-against-implementations">Protocols should be defensive against implementations</a></li>
+<li><a href="#a-better-way-to-sign-json" id="toc-a-better-way-to-sign-json">A better way to sign JSON</a></li>
 </ul> </div>
 <p>JWS is the kind of thing where you could be forgiven for thinking <q>hey, everyone’s using this, so it must be good!</q> JWTs are built on JWS, and lots of people use those. JWS is standardized by the IETF in <a href="https://datatracker.ietf.org/doc/html/rfc7515">RFC7515</a>. I’m hoping that by the time you’re done with this post, you’ll do something else. If you just want to know what that <q>something else</q> is, skip to <a href="#a-better-way-to-sign-json">the bottom</a>.</p>
 <p>In this post, I will show how the JWS standard encourages implementations to structure their validation logic in an insecure manner. Thus JWTs, being built upon a rotten foundation, are themselves insecure—or at least very difficult to implement securely. Then I will provide suggestions on alternatives to JWS.</p>
@@ -812,10 +814,10 @@ db  KEK  PK</code></pre>
 <p>Notice that verification does not require deserialization, nor character decoding! If the payload is a JSON object, we can safely deserialize it after verification. If you want, you can use <a href="https://www.openbsd.org/papers/bsdcan-signify.html">OpenBSD Signify</a> so that clients have readily available CLI and library tooling support.</p>
 <p>Now, this has the downside that two identical JSON objects may not result in identical signatures. Fortunately, this does not generally matter, and in any case it probably matters less than the correctness of your cryptographic system. If you need to check the equality of two requests, you can generally verify, deserialize, canonicalize and compare them inside your application server logic as necessary. Plus, this way when you find a bug in your canonicalization logic, you can fix it without forcing your clients to update.</p>
 </section>
-<section class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr />
 <ol>
-<li id="fn1" role="doc-endnote"><p>The following code has two major problems. The first is that we are returning <q>helpful</q> error messages related to the application <a href="#cryptographic-doom">prior to header verification</a>, potentially leaking bits of information an attacker can use to exploit our application. The second is that we allow the <q>algorithm</q> field to be attacker-controlled, leaving us open to <a href="#attacker-controlled-algorithms">algorithm selection attacks</a>.</p>
+<li id="fn1"><p>The following code has two major problems. The first is that we are returning <q>helpful</q> error messages related to the application <a href="#cryptographic-doom">prior to header verification</a>, potentially leaking bits of information an attacker can use to exploit our application. The second is that we allow the <q>algorithm</q> field to be attacker-controlled, leaving us open to <a href="#attacker-controlled-algorithms">algorithm selection attacks</a>.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> verify_jws(jws_string):</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    jws <span class="op">=</span> json.loads(string)</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -871,7 +873,7 @@ db  KEK  PK</code></pre>
 <span id="cb5-53"><a href="#cb5-53" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Verify with the provided algorithm.</span></span>
 <span id="cb5-54"><a href="#cb5-54" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> verify_payload(algorithm, signature_payload)</span></code></pre></div>
 <a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></li>
-<li id="fn2" role="doc-endnote"><p>Unfortunately, this simplicity can be to a fault. The new <code>age</code> encryption tool does not support public key authentication, meaning constructs such as</p>
+<li id="fn2"><p>Unfortunately, this simplicity can be to a fault. The new <code>age</code> encryption tool does not support public key authentication, meaning constructs such as</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> curl <span class="st">&quot;</span><span class="va">${ENCRYPTED_TARBALL_URL}</span><span class="st">&quot;</span> age <span class="at">--decrypt</span> <span class="kw">|</span> <span class="fu">tar</span> xf</span></code></pre></div>
 <p>are <a href="https://www.imperialviolet.org/2014/06/27/streamingencryption.html">dangerous</a>. But this problem can be resolved by using <code>signify</code> to sign the encrypted blobs, and always verifying data before decrypting it.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
@@ -917,10 +919,10 @@ I’m not sure how much impact my work had in inspiring that project, or whether
 <img src="../images/website_2016-12-08_google_analytics_vimlike.png" alt="When Towards a Vim-like Emacs hit Hacker News, my website spiked to 13,423 hits in a week." />
 <figcaption aria-hidden="true">When <a href="2014-08-03-a-vim-like-emacs-config.html">Towards a Vim-like Emacs</a> <a href="https://news.ycombinator.com/item?id=8581530">hit Hacker News</a>, my website spiked to 13,423 hits in a week.</figcaption>
 </figure>
-<section class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr />
 <ol>
-<li id="fn1" role="doc-endnote"><p>I think I have a screenshot of this floating around somewhere, but I’m not sure where to find it.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn1"><p>I think I have a screenshot of this floating around somewhere, but I’m not sure where to find it.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 ]]></summary>
@@ -943,10 +945,10 @@ I’m not sure how much impact my work had in inspiring that project, or whether
 </div>
 <div id="toc"><h2>Contents</h2>
 <ul>
-<li><a href="#free-software-backoff">Free software backoff</a></li>
-<li><a href="#computer-brand">Computer brand</a></li>
-<li><a href="#programming-languages">Programming languages</a></li>
-<li><a href="#conclusion">Conclusion</a></li>
+<li><a href="#free-software-backoff" id="toc-free-software-backoff">Free software backoff</a></li>
+<li><a href="#computer-brand" id="toc-computer-brand">Computer brand</a></li>
+<li><a href="#programming-languages" id="toc-programming-languages">Programming languages</a></li>
+<li><a href="#conclusion" id="toc-conclusion">Conclusion</a></li>
 </ul> </div>
 <p>When I started computing, I was heavy into customization. I wrote <a href="/blog/2012-06-03-powerusers.html">Powerusers</a>, which was about the intense customizations I had done to personalize my Arch Linux distribution. It felt sort of juvenile to spend that much time <a href="https://fun.irq.dk/funroll-loops.org/">ricing</a> my Linux distro. But it was fun. Linux and open-source were my hobbies; I did them in my free time and studied computer engineering as my main gig.</p>
 <p>At the time, I only really managed two Linux systems: my laptop and this webserver. So it was easy to get away with hacking the hell out of my own system, since I knew it well, and refusing to automate tasks like my webserver configuration because I ran it in more of a fire-and-forget style. Put <a href="https://www.nginx.com/resources/wiki/">nginx</a> in a <a href="https://wiki.archlinux.org/index.php/change_root">chroot</a> once and you’re done.</p>
@@ -981,11 +983,11 @@ I’m not sure how much impact my work had in inspiring that project, or whether
 <p>The other bit is that I’ve moved more seriously into the private industry. When you’re just a student and researcher, it’s easy to be dogmatic about Linux and weird programming languages - especially when you’re broke and can’t afford to pay for computer programs. And when your day-to-day activities are math and electronics classes, it’s easy to go home and hack code in Haskell in your free time. But when you’re hacking code all day and working hard with complex Linux systems, sometimes nothing beats just being able to go home at the end of it, chill out, and watch Netflix on a MacBook.</p>
 <p>This isn’t some giant announcement that everything I believed in college was wrong and proprietary software has no ethical issues. It’s more of just an acknowledgement that life is fluid, and reality is dynamic and difficult. Sometimes this means making concessions. I am willing to do that, now, just as long as I learn some new things and can get the job done.</p>
 </section>
-<section class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr />
 <ol>
-<li id="fn1" role="doc-endnote"><p>If you’re really hardcore, you could argue that <a href="https://en.wikipedia.org/wiki/Bourne_shell">Bourne Shell</a> is the most ubiquitous, and therefore I should use that.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2" role="doc-endnote"><p>Something I’m not too happy about, but it’s the case.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn1"><p>If you’re really hardcore, you could argue that <a href="https://en.wikipedia.org/wiki/Bourne_shell">Bourne Shell</a> is the most ubiquitous, and therefore I should use that.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>Something I’m not too happy about, but it’s the case.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 ]]></summary>
@@ -1008,13 +1010,13 @@ I’m not sure how much impact my work had in inspiring that project, or whether
 </div>
 <div id="toc"><h2>Contents</h2>
 <ul>
-<li><a href="#toy-script-comparisons">Toy script comparisons</a>
+<li><a href="#toy-script-comparisons" id="toc-toy-script-comparisons">Toy script comparisons</a>
 <ul>
-<li><a href="#running-sum">Running sum</a></li>
-<li><a href="#oop">OOP</a></li>
-<li><a href="#hidden">Hidden</a></li>
+<li><a href="#running-sum" id="toc-running-sum">Running sum</a></li>
+<li><a href="#oop" id="toc-oop">OOP</a></li>
+<li><a href="#hidden" id="toc-hidden">Hidden</a></li>
 </ul></li>
-<li><a href="#conclusion">Conclusion</a></li>
+<li><a href="#conclusion" id="toc-conclusion">Conclusion</a></li>
 </ul> </div>
 <p>Python and Ruby always struck me as somewhat related.
 They’re both dynamic languages from the 1990s, still highly popular, and influenced a number of more modern dynamic programming languages like <a href="https://en.wikipedia.org/wiki/Julia_%28programming_language%29">Julia</a>.
@@ -1228,11 +1230,11 @@ I think the most obscure syntactic construct in Python is just the <a href="http
 </div>
 <div id="toc"><h2>Contents</h2>
 <ul>
-<li><a href="#red-hat">Red Hat</a></li>
-<li><a href="#pcse-coding-challenge">PCSE Coding Challenge</a></li>
-<li><a href="#mike-bland-cnu-research-google-and-the-us-government">Mike Bland, CNU research, Google, and the US Government</a></li>
-<li><a href="#microcontrollers-are-fun">Microcontrollers are fun</a></li>
-<li><a href="#leaving-college-joining-palantir">Leaving college, joining Palantir</a></li>
+<li><a href="#red-hat" id="toc-red-hat">Red Hat</a></li>
+<li><a href="#pcse-coding-challenge" id="toc-pcse-coding-challenge">PCSE Coding Challenge</a></li>
+<li><a href="#mike-bland-cnu-research-google-and-the-us-government" id="toc-mike-bland-cnu-research-google-and-the-us-government">Mike Bland, CNU research, Google, and the US Government</a></li>
+<li><a href="#microcontrollers-are-fun" id="toc-microcontrollers-are-fun">Microcontrollers are fun</a></li>
+<li><a href="#leaving-college-joining-palantir" id="toc-leaving-college-joining-palantir">Leaving college, joining Palantir</a></li>
 </ul> </div>
 <p>I haven’t blogged since January, and I really wish I had a better reason for it but the truth is I simply have not applied my characteristic productive laziness to writing.</p>
 <p>I’ve been reading a lot of jwz lately.
@@ -1392,32 +1394,32 @@ And that kind of attitude is what makes me fall in love with a company.</p>
 <p>We tend to massively underestimate the compounding returns of intelligence. As humans, we need to solve big problems. If you graduate Stanford at 22 and Google recruits you, you’ll work a 9-to-5. It’s probably more like an 11-to-3 in terms of hard work. They’ll pay well. It’s relaxing. But what they are actually doing is paying you to accept a much lower intellectual growth rate. When you recognize that intelligence is compounding, the cost of that missing long-term compounding is enormous. They’re not giving you the best opportunity of your life. Then a scary thing can happen: You might realize one day that you’ve lost your competitive edge. You won’t be the best anymore. You won’t be able to fall in love with new stuff. Things are cushy where you are. You get complacent and stall. So, run your prospective engineering hires through that narrative. Then show them the alternative: working at your startup.</p>
 </blockquote>
 </section>
-<section class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr />
 <ol>
-<li id="fn1" role="doc-endnote"><p>Physics, computer science, and engineering.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2" role="doc-endnote"><p>To be fair, the C solution isn’t much worse:</p>
+<li id="fn1"><p>Physics, computer science, and engineering.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>To be fair, the C solution isn’t much worse:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode C"><code class="sourceCode c"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;string.h&gt;</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;stdlib.h&gt;</span></span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="pp">#define MAX_LINE 512</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="pp">#define MAX_LINE </span><span class="dv">512</span></span>
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
 <span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>        <span class="dt">char</span> <span class="op">*</span>line <span class="op">=</span> malloc<span class="op">(</span><span class="kw">sizeof</span><span class="op">(</span><span class="dt">char</span><span class="op">)</span> <span class="op">*</span> MAX_LINE<span class="op">);</span></span>
 <span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>        <span class="dt">int</span> count <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">do</span> <span class="op">{</span></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>                scanf<span class="op">(</span><span class="st">&quot;%d</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">,</span> <span class="op">&amp;</span>count<span class="op">);</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>                scanf<span class="op">(</span><span class="st">&quot;</span><span class="sc">%d\n</span><span class="st">&quot;</span><span class="op">,</span> <span class="op">&amp;</span>count<span class="op">);</span></span>
 <span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>                <span class="dt">char</span> <span class="op">*</span>pt <span class="op">=</span> malloc<span class="op">(</span><span class="kw">sizeof</span><span class="op">(</span><span class="dt">char</span><span class="op">)</span> <span class="op">*</span> count <span class="op">+</span> <span class="dv">1</span><span class="op">);</span></span>
 <span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>                <span class="dt">char</span> <span class="op">*</span>ct <span class="op">=</span> malloc<span class="op">(</span><span class="kw">sizeof</span><span class="op">(</span><span class="dt">char</span><span class="op">)</span> <span class="op">*</span> count <span class="op">+</span> <span class="dv">1</span><span class="op">);</span></span>
 <span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>                <span class="dt">int</span> i<span class="op">;</span></span>
 <span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>                <span class="cf">for</span><span class="op">(</span>i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> count<span class="op">;</span> i<span class="op">++)</span></span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>                        scanf<span class="op">(</span><span class="st">&quot;%c &quot;</span><span class="op">,</span> pt <span class="op">+</span> i<span class="op">);</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>                        scanf<span class="op">(</span><span class="st">&quot;</span><span class="sc">%c</span><span class="st"> &quot;</span><span class="op">,</span> pt <span class="op">+</span> i<span class="op">);</span></span>
 <span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>                <span class="cf">for</span><span class="op">(</span>i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> count<span class="op">;</span> i<span class="op">++)</span></span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>                        scanf<span class="op">(</span><span class="st">&quot;%c &quot;</span><span class="op">,</span> ct <span class="op">+</span> i<span class="op">);</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>                        scanf<span class="op">(</span><span class="st">&quot;</span><span class="sc">%c</span><span class="st"> &quot;</span><span class="op">,</span> ct <span class="op">+</span> i<span class="op">);</span></span>
 <span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>                scanf<span class="op">(</span><span class="st">&quot;%d &quot;</span><span class="op">,</span> <span class="op">&amp;</span>count<span class="op">);</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>                scanf<span class="op">(</span><span class="st">&quot;</span><span class="sc">%d</span><span class="st"> &quot;</span><span class="op">,</span> <span class="op">&amp;</span>count<span class="op">);</span></span>
 <span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>                <span class="cf">for</span><span class="op">(</span>i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> count<span class="op">;</span> i<span class="op">++)</span> <span class="op">{</span></span>
 <span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>                        <span class="dt">char</span> <span class="op">*</span>left<span class="op">;</span></span>
@@ -1433,10 +1435,10 @@ And that kind of attitude is what makes me fall in love with a company.</p>
 <span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>                                printf<span class="op">(</span><span class="st">&quot;PT: &quot;</span><span class="op">);</span></span>
 <span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>                        <span class="op">}</span></span>
 <span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>                        <span class="dt">int</span> j<span class="op">;</span></span>
-<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>                        <span class="cf">for</span><span class="op">(</span>j <span class="op">=</span> <span class="dv">4</span><span class="op">;</span> line<span class="op">[</span>j<span class="op">]</span> <span class="op">!=</span> <span class="ch">&#39;\n&#39;</span><span class="op">;</span> j<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>                        <span class="cf">for</span><span class="op">(</span>j <span class="op">=</span> <span class="dv">4</span><span class="op">;</span> line<span class="op">[</span>j<span class="op">]</span> <span class="op">!=</span> <span class="ch">&#39;</span><span class="sc">\n</span><span class="ch">&#39;</span><span class="op">;</span> j<span class="op">++)</span> <span class="op">{</span></span>
 <span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a>                                <span class="dt">int</span> k<span class="op">;</span></span>
 <span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a>                                <span class="cf">for</span><span class="op">(</span>k <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> left<span class="op">[</span>k<span class="op">]</span> <span class="op">!=</span> line<span class="op">[</span>j<span class="op">];</span> k<span class="op">++);</span></span>
-<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a>                                printf<span class="op">(</span><span class="st">&quot;%c&quot;</span><span class="op">,</span> right<span class="op">[</span>k<span class="op">]);</span></span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a>                                printf<span class="op">(</span><span class="st">&quot;</span><span class="sc">%c</span><span class="st">&quot;</span><span class="op">,</span> right<span class="op">[</span>k<span class="op">]);</span></span>
 <span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a>                        <span class="op">}</span></span>
 <span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a>                        printf<span class="op">(</span><span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">);</span></span>
 <span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a>                <span class="op">}</span></span>
@@ -1479,10 +1481,10 @@ the following is fixed:</p>
 <p>One of the factors that holds me back is the feeling that I don’t have any great new ideas. Why bother using some API I’ve written, when there are dozens (or even perhaps one or two) out there that do the job already? I can’t supply anything new on the ideas front, so where’s the room for my work?</p>
 <p>Let’s draw some parallels to real-life products. Google didn’t invent search; they simply did it better than anyone else. <a href="http://www.soylent.me/">Soylent</a> didn’t invent liquid food, they just made it more nutritious than <a href="https://en.wikipedia.org/wiki/Feeding_tube">the crap they feed you in hospitals</a>. <a href="https://pypi.python.org/pypi/blessings/">Blessings</a> was far from the first terminal GUI library, but it made things significantly easier to use.</p>
 <p>Usually, when I’m working with a sub-par piece of software, API, or <q>real-world</q> product, I’m not bothered by the concept of it. I usually like the concept. It’s the implementations that <a href="http://www.paulgraham.com/organic.html">are broken</a>, and that’s where you find room for improvement.</p>
-<section class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr />
 <ol>
-<li id="fn1" role="doc-endnote"><p>This isn’t my <em>only</em> goal, or even necessarily one of my <em>main</em> ones, but it’s something I feel will be a milestone in my career as a dev. It’s an important stepping-stone in the transitional period from <q>someone who writes code</q> to <q>someone who builds solutions.</q><a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn1"><p>This isn’t my <em>only</em> goal, or even necessarily one of my <em>main</em> ones, but it’s something I feel will be a milestone in my career as a dev. It’s an important stepping-stone in the transitional period from <q>someone who writes code</q> to <q>someone who builds solutions.</q><a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 ]]></summary>
@@ -1505,14 +1507,14 @@ the following is fixed:</p>
 </div>
 <div id="toc"><h2>Contents</h2>
 <ul>
-<li><a href="#picking-a-rebase-target">Picking a rebase target</a></li>
-<li><a href="#cleaning-your-worktree">Cleaning your worktree</a></li>
-<li><a href="#blasting-apart-history">Blasting apart history</a>
+<li><a href="#picking-a-rebase-target" id="toc-picking-a-rebase-target">Picking a rebase target</a></li>
+<li><a href="#cleaning-your-worktree" id="toc-cleaning-your-worktree">Cleaning your worktree</a></li>
+<li><a href="#blasting-apart-history" id="toc-blasting-apart-history">Blasting apart history</a>
 <ul>
-<li><a href="#removing-unrelated-files">Removing unrelated files</a></li>
-<li><a href="#making-new-commits">Making new commits</a></li>
+<li><a href="#removing-unrelated-files" id="toc-removing-unrelated-files">Removing unrelated files</a></li>
+<li><a href="#making-new-commits" id="toc-making-new-commits">Making new commits</a></li>
 </ul></li>
-<li><a href="#conclusion">Conclusion</a></li>
+<li><a href="#conclusion" id="toc-conclusion">Conclusion</a></li>
 </ul> </div>
 <p>I always appreciate it when people share some of the quirks of their development workflow,
 particularly with Git, since the version control monster is so powerful that it can be
@@ -1681,18 +1683,18 @@ Git usage is a <a href="https://en.wikipedia.org/wiki/State_function">state func
 we went from our initial state to our desired result state, and nobody cares
 how we got there. That’s the whole point.</p>
 </section>
-<section class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr />
 <ol>
-<li id="fn1" role="doc-endnote"><p>Or I might not tolerate it in a few weeks. Ho, ho.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2" role="doc-endnote"><p>If I have to hack apart a tree in Git, the easiest way for me to do it is
+<li id="fn1"><p>Or I might not tolerate it in a few weeks. Ho, ho.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>If I have to hack apart a tree in Git, the easiest way for me to do it is
 usually inside of an interactive rebase. Unlike memorizing a bunch of esoteric
 one-liners, this lets me work on a repository like I’m always <q>at its tip</q> -
 which is the normal state of a Git repo when you’re working on new changes.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn3" role="doc-endnote"><p>You can get away with rewriting commits that are on a remote, but then you’re
+<li id="fn3"><p>You can get away with rewriting commits that are on a remote, but then you’re
 doomed to <code>git push -f</code>’ing all over said remote. Without good reason, this is a
 pretty bad idea. If you have coworkers, it’s a really bad idea.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn4" role="doc-endnote"><p>From the man page for <code>git rebase</code>:</p>
+<li id="fn4"><p>From the man page for <code>git rebase</code>:</p>
 <pre class="sourceCode"><code>CONFIGURATION
        rebase.autostash
                   If set to true enable --autostash option by default.</code></pre>
@@ -1720,10 +1722,10 @@ pretty bad idea. If you have coworkers, it’s a really bad idea.<a href="#fnref
 <p>In an effort to help out one of my readers, I made a quick Asciicast demo of the first few steps in my <a href="/blog/2014-08-03-a-vim-like-emacs-config.html">Towards a Vim-like Emacs</a> blog post.
 Since I figure at least a few others might be interested, I’ve reproduced it here:<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
 <script type="text/javascript" src="https://asciinema.org/a/14201.js" id="asciicast-14201" async></script>
-<section class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr />
 <ol>
-<li id="fn1" role="doc-endnote"><p>Does anyone know how to download from Asciinema? If so, <a href="/contact.html">drop me a line</a>. I’d love to keep a backup copy of the stuff I upload there.</p>
+<li id="fn1"><p>Does anyone know how to download from Asciinema? If so, <a href="/contact.html">drop me a line</a>. I’d love to keep a backup copy of the stuff I upload there.</p>
 <p><strong>Update 2014/01/13:</strong> reader Gabriel Lazar informed me that the data is <a href="https://asciinema-bb-eu.s3.amazonaws.com/uploads/asciicast/stdout_frames/14201/stdout.json">available in JSON format</a> and playable, in theory, using a portion of the open-source <a href="https://github.com/asciinema/asciinema.org">asciinema.org code</a>. As an alternate backup solution, he suggests recording the playback of a screencast as a video. Thanks, Gabriel!<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>

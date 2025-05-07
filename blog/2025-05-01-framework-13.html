@@ -48,7 +48,7 @@
         <div id="metadata">
             <ul class="meta">
             
-                <li>tags: <em><a title="All pages tagged 'nix'." href="../tags/nix.html">nix</a>, <a title="All pages tagged 'Arch Linux'." href="../tags/Arch%20Linux.html">Arch Linux</a>, <a title="All pages tagged 'Framework'." href="../tags/Framework.html">Framework</a>, <a title="All pages tagged 'home-manager'." href="../tags/home-manager.html">home-manager</a>, <a title="All pages tagged 'secure boot'." href="../tags/secure%20boot.html">secure boot</a></em></li>
+                <li>tags: <em><a title="All pages tagged 'nix'." href="../tags/nix.html" rel="tag">nix</a>, <a title="All pages tagged 'Arch Linux'." href="../tags/Arch%20Linux.html" rel="tag">Arch Linux</a>, <a title="All pages tagged 'Framework'." href="../tags/Framework.html" rel="tag">Framework</a>, <a title="All pages tagged 'home-manager'." href="../tags/home-manager.html" rel="tag">home-manager</a>, <a title="All pages tagged 'secure boot'." href="../tags/secure%20boot.html" rel="tag">secure boot</a></em></li>
             
             <li>status: <em> wip </em></li>
             <li>posted: <em> May  1, 2025 </em></li>
@@ -70,25 +70,25 @@
 </div>
 <div id="toc"><h2>Contents</h2>
 <ul>
-<li><a href="#hardware">Hardware</a>
+<li><a href="#hardware" id="toc-hardware">Hardware</a>
 <ul>
-<li><a href="#processor-gpu">Processor &amp; GPU</a></li>
-<li><a href="#trackpad">Trackpad</a></li>
-<li><a href="#keyboard">Keyboard</a></li>
-<li><a href="#fingerprint-reader">Fingerprint reader</a></li>
+<li><a href="#processor-gpu" id="toc-processor-gpu">Processor &amp; GPU</a></li>
+<li><a href="#trackpad" id="toc-trackpad">Trackpad</a></li>
+<li><a href="#keyboard" id="toc-keyboard">Keyboard</a></li>
+<li><a href="#fingerprint-reader" id="toc-fingerprint-reader">Fingerprint reader</a></li>
 </ul></li>
-<li><a href="#nix-vs-arch">Nix vs Arch</a></li>
-<li><a href="#os-configuration">OS Configuration</a>
+<li><a href="#nix-vs-arch" id="toc-nix-vs-arch">Nix vs Arch</a></li>
+<li><a href="#os-configuration" id="toc-os-configuration">OS Configuration</a>
 <ul>
-<li><a href="#partitioning-and-encryption">Partitioning and Encryption</a></li>
-<li><a href="#secure-boot">Secure Boot</a></li>
-<li><a href="#tpm-decryption">TPM decryption</a></li>
-<li><a href="#fingerprint-unlock">Fingerprint Unlock</a></li>
+<li><a href="#partitioning-and-encryption" id="toc-partitioning-and-encryption">Partitioning and Encryption</a></li>
+<li><a href="#secure-boot" id="toc-secure-boot">Secure Boot</a></li>
+<li><a href="#tpm-decryption" id="toc-tpm-decryption">TPM decryption</a></li>
+<li><a href="#fingerprint-unlock" id="toc-fingerprint-unlock">Fingerprint Unlock</a></li>
 </ul></li>
-<li><a href="#home-configuration">Home Configuration</a>
+<li><a href="#home-configuration" id="toc-home-configuration">Home Configuration</a>
 <ul>
-<li><a href="#home-manager-entrypoint">home-manager entrypoint</a></li>
-<li><a href="#ollama">ollama</a></li>
+<li><a href="#home-manager-entrypoint" id="toc-home-manager-entrypoint">home-manager entrypoint</a></li>
+<li><a href="#ollama" id="toc-ollama">ollama</a></li>
 </ul></li>
 </ul> </div>
 <p>I have spent the last week installing and configuring a Framework 13 laptop. My first attempt was to use NixOS (since that’s my distro of choice) but the Framework keyboard wasn’t detected by either the minimal or graphical NixOS iso. So I went with Arch Linux and installed Nix + Home-Manager to manage <em>most</em> of my system.</p>
@@ -343,10 +343,10 @@ db  KEK  PK</code></pre>
 <p>If you get an error, like <code>msg=unsupported Radeon iGPU detected skipping" id=0 total="512.0 MiB"</code> then this means you need to reboot to your bootloader and change the iGPU settings to allocate static vRAM to your GPU. Sorry. I gave 8 GiB to mine, which is stolen permanently from RAM.</p>
 </section>
 </section>
-<section class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr />
 <ol>
-<li id="fn1" role="doc-endnote"><p><code>/usr/local/bin/update-signed-bootloader</code>:</p>
+<li id="fn1"><p><code>/usr/local/bin/update-signed-bootloader</code>:</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>#!/usr/bin/env bash</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>set -e</span>
@@ -378,7 +378,7 @@ db  KEK  PK</code></pre>
 <span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a>echo &quot;Bootloader update and signing process complete.&quot;</span></code></pre></div>
 <a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></li>
-<li id="fn2" role="doc-endnote"><p><code>/usr/local/bin/rebuild-ukis-for-sbctl.sh</code>:</p>
+<li id="fn2"><p><code>/usr/local/bin/rebuild-ukis-for-sbctl.sh</code>:</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>#!/bin/bash</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>set -e</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
