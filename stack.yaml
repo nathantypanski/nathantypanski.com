@@ -1,49 +1,40 @@
-# stack.yaml
-# system-ghc: true
+# We MUST use the system GHC from nix-shell because 'nix: enable: true' is active below.
+system-ghc: true
 
-compiler: ghc-9.0.2
+# This MUST exactly match the GHC version provided by your shell.nix.
+# You confirmed your nix-shell provides GHC 9.6.5.
+compiler: ghc-9.6.5
+
+# Choose a single, modern LTS resolver that uses GHC 9.6.5.
+# lts-22.27 is a good recent choice. (lts-22.10 and lts-22.25 also use GHC 9.6.5).
+# Having duplicate 'resolver' keys is invalid; only the last one is used.
+resolver: lts-22.27 # For GHC 9.6.5
 
 packages:
   - .
 
-# Dependencies:
-# If your modernized ndt.cabal correctly specifies modern dependencies
-# (e.g., hakyll ~4.16) compatible with your new GHC, Stack should
-# ideally pick them up.
-#
-# However, you might use a Stackage resolver to get a consistent set of
-# package versions known to work with your GHC.
-# Choose an LTS or nightly snapshot that uses the *same GHC version*
-# as your `compiler:` field above.
-# For example, if your GHC is 9.6.5, look for an lts-22.x (or newer)
-# or a nightly that specifies ghc-9.6.5. Check https://www.stackage.org/.
-# If you use a resolver, Stack will primarily use package versions from it.
-resolver: lts-19.12 # Example for GHC 9.6.5 - **ADJUST THIS** to match your GHC and desired LTS
-
-# If you need packages not in the resolver, or specific versions:
 extra-deps:
-  # - some-package-1.2.3
-  # - another-package@git:... # You can also specify git repositories
-  # If your modernized ndt.cabal lists everything, this might be minimal or empty.
-  # Example, if you updated to Hakyll 4.16.6.0 and it's in your chosen resolver:
-  # - hakyll-4.16.6.0 # Often not needed if resolver provides it.
-
-# Allow Stack to build packages that might be slightly newer than what the resolver specifies,
-# if necessary to satisfy your .cabal file's constraints. Use with caution.
-# allow-newer: true
-ghc-options:
-  "$locals": -O0 #
+  # Your ndt.cabal wants hakyll >= 4.15.1.1 (or >= 4.16.0.0 if you updated it further).
+  # lts-22.27 includes hakyll-4.16.6.0.
+  # If your ndt.cabal allows this version (e.g., "hakyll >= 4.16.0.0"),
+  # then hakyll does not need to be in extra-deps.
+  # Keep this section empty unless you need packages/versions NOT in lts-22.27.
 
 nix:
   enable: true
-  packages: [
-    pkg-config
-    zlib
-    zlib.dev
-    haskell.compiler.ghc902
-    git
-    gcc
-    gmp
-    git
-    sass
-  ]
+  # System C libraries and tools needed by Haskell packages or build process.
+  # These will be sourced from your shell.nix's nixpkgs (nixos-23.11).
+  # Removed duplicate 'git' and the redundant 'haskell.compiler.ghc902'.
+  # 'zlib.dev' is usually just 'zlib' in nixpkgs for the necessary files.
+  packages:
+    - pkg-config
+    - zlib
+    - gmp
+    - git
+    - gcc
+    - sass
+
+ghc-options:
+  # Apply -O0 only to your local package(s) for faster development iteration.
+  # Dependencies from the resolver will use their precompiled optimization levels.
+  "$locals": -O0

@@ -1,4 +1,4 @@
-{ pkgs ? import (fetchTarball "https://github.com/NixOS/nixpkgs/archive/refs/heads/nixos-23.11.tar.gz") {}
+{ pkgs ? import (fetchTarball "https://github.com/NixOS/nixpkgs/archive/refs/heads/nixos-24.05.tar.gz") {}
   # Or use a specific commit:
   # { pkgs ? import (fetchTarball {
   #     url = "https://github.com/NixOS/nixpkgs/archive/YOUR_CHOSEN_COMMIT_HASH.tar.gz";
@@ -17,7 +17,7 @@ pkgs.mkShell {
     stack
     cabal-install
     pandoc
-    haskell.compiler.ghc902
+    haskell.compiler.ghc965
     sass
   ];
 }
