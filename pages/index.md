@@ -4,12 +4,6 @@ title: Nathan Typanski
 
 Hey! I'm Nathan. You'll find my work and thoughts on Linux (lately NixOS), software development, and various technical rabbit holes here.
 
-## Contents
-
-- My [blog](blog.html) is about Linux and software development.
-- I do [miscellaneous notes and writing](/pages.html) about math, code, and productivity.
-- I log my online contributions over at my [worklog](worklog.html).
-
 ## Profiles
 
 * [Google+](https://plus.google.com/+NathanTypanski/about)
