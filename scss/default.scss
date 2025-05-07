@@ -22,6 +22,9 @@ $quote_background: #f0f0f0;
 $normal_font_size: 1.2rem;
 $toc_edge_distance: 2rem;
 
+$source_block_overhang: 1.5rem;
+$source_block_font_size: 1.2rem;
+
 $h2_color: #101010;
 $h3_color: #808080;
 $header_offset: -1rem;
@@ -49,7 +52,7 @@ $body_family: 'Lora', serif;
 $monospace_family: 'Lucida Console', 'Droid Sans Mono', monospace;
 $rss_color: #ff6600;
 $rss_hover_color: #ee5500;
-$sidebar_width: 10rem;
+$sidebar_width: 12rem;
 $header_top_pad: 1.2rem;
 
 $codebg: #F7F5FF;
@@ -128,8 +131,8 @@ body {
 
 h1 {
     @extend %heading-base;
-    width: 90%;
-    font-size: $normal_font_size * 1.8;
+    width: 100%;
+    font-size: $normal_font_size * 1.6;
     font-weight: bold;
     border-bottom: 1px solid $toc_border;
     padding-right: $header_offset;
@@ -137,6 +140,7 @@ h1 {
     margin: {
         top: $title_top_margin;
         left: 0;
+        right: 0;
         bottom: $title_bottom_margin;
     }
 }
@@ -345,18 +349,20 @@ div#logo {
         }
     }
     @include tablet {
-        width: 100%
+        width: 100%;
     }
     @include desktop {
+        h2 {
+            text-align: center;
+        }
         width: $sidebar_width;
         position: absolute;
-        top: $title_top_margin + $title_bottom_margin + 3rem;
+        top: $title_top_margin + $title_bottom_margin + 4rem;
         right: $toc_edge_distance;
         float: none;
-        padding: 0.5em;
+        padding: 1.0em;
         margin: {
             top: 5rem;
-            left: $body-width;
         }
     }
 }
@@ -396,15 +402,28 @@ div#navigation {
     }
     i {
         color: $icon_color;
-        margin-right: 0.1rem;
+        margin-right: 0.5rem;
+    }
+    li, dd {
+        margin-right: 0.0rem;
     }
     @include phone {
-        text-align: right;
+        text-align: center;
+        li {
+            list-style: none;
+        }
+    }
+    @include tablet {
+        text-align: center;
         li {
             list-style: none;
         }
     }
     @include desktop {
+        width: $sidebar_width;
+        text-align: left;
+        margin: 0;
+        padding: 0;
         li {
             margin-bottom: $toc_edge_distance / 2.5;
         }
@@ -412,14 +431,13 @@ div#navigation {
 }
 
 div#metadata {
-    //width: 10%;
+    word-wrap: break;
     color: $icon_color;
     font: {
         family: $body_family;
         size: #{$normal_font_size * 0.8};
         weight: normal;
     }
-    text-align: right;
     @include phone {
         text-align: center;
         position: relative;
@@ -437,6 +455,8 @@ div#metadata {
         }
     }
     @include desktop {
+        text-align: right;
+        width: 20rem;
         top: $title_bottom_margin;
         right: $toc_edge_distance;
         position: absolute;
@@ -534,7 +554,6 @@ div {
 }
 
 .sourceCode {
-    font-size: 0.8rem;
     padding: {
         top:    0rem;
         bottom: 0rem;
@@ -595,7 +614,7 @@ td.sourceCode {
 pre.sourceCode
 {
     overflow-x: auto;
-    font-size: 1.0rem;
+    font-size: $source_block_font_size;
     font-family: $monospace_family;
     line-height: 12pt;
     width: 100%;
@@ -610,9 +629,10 @@ pre.sourceCode
     margin: {
         top:    1rem;
         bottom: 1rem;
-        left:   -1.5rem;
-        right:  -1.5rem;
+        left:   -$source_block_overhang;
+        right:  -$source_block_overhang;
     }
+
     border: {
         top:    0;
         bottom: 0;
