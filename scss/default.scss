@@ -111,7 +111,7 @@ body {
         width: 90%;
     }
     @include desktop {
-        width: $body_width;
+        width: 55rem;
     }
 }
 
@@ -138,6 +138,9 @@ h1 {
         top: $title_top_margin;
         left: 0;
         bottom: $title_bottom_margin;
+    }
+    padding: {
+        right: 20%;
     }
 }
 
@@ -347,9 +350,10 @@ div#logo {
     @include desktop {
         width: $sidebar_width;
         position: absolute;
-        top: $title_top_margin + $title_bottom_margin;
+        top: $title_top_margin + $title_bottom_margin + 3rem;
         right: $toc_edge_distance;
         float: none;
+        padding: 0.5em;
         margin: {
             top: 5rem;
             left: $body-width;
@@ -407,15 +411,15 @@ div#navigation {
     }
 }
 
-div#metadata
-{
+div#metadata {
+    //width: 10%;
     color: $icon_color;
     font: {
         family: $body_family;
         size: #{$normal_font_size * 0.8};
         weight: normal;
     }
-        text-align: center;
+    text-align: right;
     @include phone {
         text-align: center;
         position: relative;
@@ -437,7 +441,7 @@ div#metadata
         right: $toc_edge_distance;
         position: absolute;
         margin {
-            bottom: -1rem;
+            bottom: 0rem;
         }
     }
 }
@@ -590,6 +594,7 @@ td.sourceCode {
 
 pre.sourceCode
 {
+    overflow-x: auto;
     font-size: 1.0rem;
     font-family: $monospace_family;
     line-height: 12pt;
