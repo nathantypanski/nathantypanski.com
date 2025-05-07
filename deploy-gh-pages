@@ -5,6 +5,7 @@ set -euo pipefail
 shopt -s extglob
 
 REBUILD="${REBUILD:-yes}"
+GIT_PUSH="${GIT_PUSH:-yes}"
 DEPLOY_BRANCH="${DEPLOY_BRANCH:-master}"
 
 SCRIPT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
@@ -40,5 +41,5 @@ fi
     rsync -ah "${GIT_ROOT}/_site/" "${GH_PAGES_DIR}"
     git add *
     git commit -m "add latest files from ${COMMIT}"
-    git push origin gh-pages
+    [[ "${GIT_PUSH}" == "yes" ]] && git push origin gh-pages
 )
