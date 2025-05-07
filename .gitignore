@@ -15,3 +15,4 @@ _cache/
 _site/
 .stack-work
 dist-newstyle
+./gh-pages

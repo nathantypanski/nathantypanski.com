@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+shopt -s extglob
+
+REBUILD="${REBUILD:-yes}"
+
+SCRIPT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+GIT_ROOT="$(git rev-parse --show-toplevel)"
+GH_PAGES_DIR="$GIT_ROOT/gh-pages"
+
+cd "${GIT_ROOT}"
+
+git checkout master
+git status
+
+if ! [[ "${REBUILD}" == 'no' ]]; then
+    nix-shell --command 'cabal run -- site clean; cabal run -- site build'
+fi
+
+git fetch origin gh-pages
+
+if ! [[ -d "${GH_PAGES_DIR}" ]]; then
+    git worktree add gh-pages "${GH_PAGES_DIR}"
+fi
+
+cd "${GH_PAGES_DIR}"
+git checkout gh-pages
+
+git status
+
+rm -rf -- !(CNAME)
+rsync -ah "${GIT_ROOT}/_site/" "${GH_PAGES_DIR}"
+
+git add *
+
+git commit -m "add latest files from ${COMMIT}"
