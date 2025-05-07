@@ -116,7 +116,7 @@ body {
 }
 
 %heading-base {
-    margin: 0 0 0 0;
+    //margin: 0 0 0 0;
     font-family: $title_family;
     font-weight: normal;
     color: #303030;
@@ -128,19 +128,16 @@ body {
 
 h1 {
     @extend %heading-base;
-    font-size: $normal_font_size * 2.0;
+    width: 90%;
+    font-size: $normal_font_size * 1.8;
     font-weight: bold;
     border-bottom: 1px solid $toc_border;
     padding-right: $header_offset;
-    width: 100%;
     color: #111;
     margin: {
         top: $title_top_margin;
         left: 0;
         bottom: $title_bottom_margin;
-    }
-    padding: {
-        right: 20%;
     }
 }
 
@@ -153,7 +150,7 @@ h2 {
 
 h3 {
     @extend %heading-base;
-    font-size: #{$normal_font_size * 1.0};
+    font-size: #{$normal_font_size * 1.1};
     color: $h3_color;
     font-weight: bold;
 }
@@ -304,6 +301,9 @@ div#logo {
 }
 
 #toc {
+    h2 {
+        margin-left: 0rem;
+    }
     text-align: left;
     line-height: $toc_line_height;
     background: $toc_background;
