@@ -5,15 +5,17 @@ set -euo pipefail
 shopt -s extglob
 
 REBUILD="${REBUILD:-yes}"
+DEPLOY_BRANCH="${DEPLOY_BRANCH:-master}"
 
 SCRIPT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 GIT_ROOT="$(git rev-parse --show-toplevel)"
-GH_PAGES_DIR="$GIT_ROOT/gh-pages"
+GH_PAGES_DIR="${GH_PAGES_DIR:-$GIT_ROOT/gh-pages}"
 
 cd "${GIT_ROOT}"
 
-git checkout master
+git checkout "${DEPLOY_BRANCH}"
 git status
+COMMIT="$(git rev-parse HEAD)"
 
 if ! [[ "${REBUILD}" == 'no' ]]; then
     nix-shell --command 'cabal run -- site clean; cabal run -- site build'
