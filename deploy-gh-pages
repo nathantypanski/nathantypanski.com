@@ -14,27 +14,31 @@ GH_PAGES_DIR="${GH_PAGES_DIR:-$GIT_ROOT/gh-pages}"
 cd "${GIT_ROOT}"
 
 git checkout "${DEPLOY_BRANCH}"
-git status
+git status --porcelain
 COMMIT="$(git rev-parse HEAD)"
 
 if ! [[ "${REBUILD}" == 'no' ]]; then
-    nix-shell --command 'cabal run -- site clean; cabal run -- site build'
+    nix-shell --command 'stack run -- site clean; stack run -- site build'
 fi
 
 git fetch origin gh-pages
 
+cleanup() {
+    git worktree remove "${GH_PAGES_DIR}"
+}
+
+trap cleanup EXIT INT KILL
 if ! [[ -d "${GH_PAGES_DIR}" ]]; then
-    git worktree add gh-pages "${GH_PAGES_DIR}"
+    git worktree add "${GH_PAGES_DIR}" gh-pages
 fi
 
-cd "${GH_PAGES_DIR}"
-git checkout gh-pages
-
-git status
-
-rm -rf -- !(CNAME)
-rsync -ah "${GIT_ROOT}/_site/" "${GH_PAGES_DIR}"
-
-git add *
-
-git commit -m "add latest files from ${COMMIT}"
+( 
+    cd "${GH_PAGES_DIR}"
+    git checkout gh-pages
+    git status --porcelain
+    rm -rf -- !(CNAME)
+    rsync -ah "${GIT_ROOT}/_site/" "${GH_PAGES_DIR}"
+    git add *
+    git commit -m "add latest files from ${COMMIT}"
+    git push origin gh-pages
+)
