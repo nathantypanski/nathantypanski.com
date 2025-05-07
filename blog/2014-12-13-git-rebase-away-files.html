@@ -48,7 +48,7 @@
         <div id="metadata">
             <ul class="meta">
             
-                <li>tags: <em><a title="All pages tagged 'Git'." href="../tags/Git.html">Git</a>, <a title="All pages tagged 'workflow'." href="../tags/workflow.html">workflow</a></em></li>
+                <li>tags: <em><a title="All pages tagged 'Git'." href="../tags/Git.html" rel="tag">Git</a>, <a title="All pages tagged 'workflow'." href="../tags/workflow.html" rel="tag">workflow</a></em></li>
             
             
             <li>posted: <em> December 13, 2014 </em></li>
@@ -70,14 +70,14 @@
 </div>
 <div id="toc"><h2>Contents</h2>
 <ul>
-<li><a href="#picking-a-rebase-target">Picking a rebase target</a></li>
-<li><a href="#cleaning-your-worktree">Cleaning your worktree</a></li>
-<li><a href="#blasting-apart-history">Blasting apart history</a>
+<li><a href="#picking-a-rebase-target" id="toc-picking-a-rebase-target">Picking a rebase target</a></li>
+<li><a href="#cleaning-your-worktree" id="toc-cleaning-your-worktree">Cleaning your worktree</a></li>
+<li><a href="#blasting-apart-history" id="toc-blasting-apart-history">Blasting apart history</a>
 <ul>
-<li><a href="#removing-unrelated-files">Removing unrelated files</a></li>
-<li><a href="#making-new-commits">Making new commits</a></li>
+<li><a href="#removing-unrelated-files" id="toc-removing-unrelated-files">Removing unrelated files</a></li>
+<li><a href="#making-new-commits" id="toc-making-new-commits">Making new commits</a></li>
 </ul></li>
-<li><a href="#conclusion">Conclusion</a></li>
+<li><a href="#conclusion" id="toc-conclusion">Conclusion</a></li>
 </ul> </div>
 <p>I always appreciate it when people share some of the quirks of their development workflow,
 particularly with Git, since the version control monster is so powerful that it can be
@@ -246,18 +246,18 @@ Git usage is a <a href="https://en.wikipedia.org/wiki/State_function">state func
 we went from our initial state to our desired result state, and nobody cares
 how we got there. That’s the whole point.</p>
 </section>
-<section class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr />
 <ol>
-<li id="fn1" role="doc-endnote"><p>Or I might not tolerate it in a few weeks. Ho, ho.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2" role="doc-endnote"><p>If I have to hack apart a tree in Git, the easiest way for me to do it is
+<li id="fn1"><p>Or I might not tolerate it in a few weeks. Ho, ho.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>If I have to hack apart a tree in Git, the easiest way for me to do it is
 usually inside of an interactive rebase. Unlike memorizing a bunch of esoteric
 one-liners, this lets me work on a repository like I’m always <q>at its tip</q> -
 which is the normal state of a Git repo when you’re working on new changes.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn3" role="doc-endnote"><p>You can get away with rewriting commits that are on a remote, but then you’re
+<li id="fn3"><p>You can get away with rewriting commits that are on a remote, but then you’re
 doomed to <code>git push -f</code>’ing all over said remote. Without good reason, this is a
 pretty bad idea. If you have coworkers, it’s a really bad idea.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn4" role="doc-endnote"><p>From the man page for <code>git rebase</code>:</p>
+<li id="fn4"><p>From the man page for <code>git rebase</code>:</p>
 <pre class="sourceCode"><code>CONFIGURATION
        rebase.autostash
                   If set to true enable --autostash option by default.</code></pre>

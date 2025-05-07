@@ -48,7 +48,7 @@
         <div id="metadata">
             <ul class="meta">
             
-                <li>tags: <em><a title="All pages tagged 'Ruby'." href="../tags/Ruby.html">Ruby</a>, <a title="All pages tagged 'Python'." href="../tags/Python.html">Python</a></em></li>
+                <li>tags: <em><a title="All pages tagged 'Ruby'." href="../tags/Ruby.html" rel="tag">Ruby</a>, <a title="All pages tagged 'Python'." href="../tags/Python.html" rel="tag">Python</a></em></li>
             
             
             <li>posted: <em> May 17, 2015 </em></li>
@@ -70,13 +70,13 @@
 </div>
 <div id="toc"><h2>Contents</h2>
 <ul>
-<li><a href="#toy-script-comparisons">Toy script comparisons</a>
+<li><a href="#toy-script-comparisons" id="toc-toy-script-comparisons">Toy script comparisons</a>
 <ul>
-<li><a href="#running-sum">Running sum</a></li>
-<li><a href="#oop">OOP</a></li>
-<li><a href="#hidden">Hidden</a></li>
+<li><a href="#running-sum" id="toc-running-sum">Running sum</a></li>
+<li><a href="#oop" id="toc-oop">OOP</a></li>
+<li><a href="#hidden" id="toc-hidden">Hidden</a></li>
 </ul></li>
-<li><a href="#conclusion">Conclusion</a></li>
+<li><a href="#conclusion" id="toc-conclusion">Conclusion</a></li>
 </ul> </div>
 <p>Python and Ruby always struck me as somewhat related.
 They’re both dynamic languages from the 1990s, still highly popular, and influenced a number of more modern dynamic programming languages like <a href="https://en.wikipedia.org/wiki/Julia_%28programming_language%29">Julia</a>.
@@ -97,15 +97,15 @@ Yeah, I’m sure I’ll dig further into the language and all of this code will 
 What’s immediately noticeable here is that Ruby blocks are way more powerful than Python’s anonymous callalbles (<code>lambdas</code>).</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode Ruby"><code class="sourceCode ruby"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="cf">#!/usr/bin/env ruby</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>running_sum <span class="kw">=</span> <span class="kw">[]</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>args <span class="kw">=</span> <span class="kw">[]</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>running_sum <span class="op">=</span> <span class="kw">[]</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>args <span class="op">=</span> <span class="kw">[]</span></span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="kw">[</span><span class="dv">1</span>,<span class="dv">5</span>,<span class="dv">7</span><span class="kw">]</span><span class="at">.each</span> <span class="cf">do</span> <span class="kw">|</span>x<span class="kw">|</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  args <span class="kw">&lt;&lt;</span> x</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> running_sum<span class="at">.size</span> <span class="kw">&gt;</span> <span class="dv">0</span> <span class="cf">then</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    running_sum <span class="kw">&lt;&lt;</span> running_sum<span class="at">.last</span> <span class="kw">+</span> x</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="kw">[</span><span class="dv">1</span>,<span class="dv">5</span>,<span class="dv">7</span><span class="kw">]</span><span class="at">.each</span> <span class="cf">do</span> <span class="op">|</span>x<span class="op">|</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  args <span class="op">&lt;&lt;</span> x</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> running_sum<span class="at">.size</span> <span class="op">&gt;</span> <span class="dv">0</span> <span class="cf">then</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    running_sum <span class="op">&lt;&lt;</span> running_sum<span class="at">.last</span> <span class="op">+</span> x</span>
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="cf">else</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    running_sum <span class="kw">&lt;&lt;</span> x</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    running_sum <span class="op">&lt;&lt;</span> x</span>
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="cf">end</span></span>
 <span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="cf">end</span></span>
 <span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
@@ -135,9 +135,9 @@ In Python, this is done via a decorator, but in Ruby it seems to be a language b
 <div class="sourceCode" id="cb3"><pre class="sourceCode Ruby"><code class="sourceCode ruby"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="cf">#!/usr/bin/env ruby</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="cf">module</span> <span class="dt">Nameable</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">def</span> name<span class="kw">=</span>(name)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">def</span> name<span class="op">=</span>(name)</span>
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">puts</span> <span class="st">&quot;changed name to </span><span class="sc">#{</span>name<span class="sc">}</span><span class="st">&quot;</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="ot">@name</span> <span class="kw">=</span> name</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="ot">@name</span> <span class="op">=</span> name</span>
 <span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="cf">end</span></span>
 <span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  <span class="cf">def</span> name</span>
@@ -149,7 +149,7 @@ In Python, this is done via a decorator, but in Ruby it seems to be a language b
 <span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">include</span> <span class="dt">Nameable</span></span>
 <span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>  <span class="cf">def</span> initialize(name)</span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>    <span class="ot">@name</span> <span class="kw">=</span> name</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>    <span class="ot">@name</span> <span class="op">=</span> name</span>
 <span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>  <span class="cf">end</span></span>
 <span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>  <span class="cf">def</span> bark</span>
@@ -157,9 +157,9 @@ In Python, this is done via a decorator, but in Ruby it seems to be a language b
 <span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>  <span class="cf">end</span></span>
 <span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a><span class="cf">end</span></span>
 <span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>fido <span class="kw">=</span> <span class="dt">Dog</span><span class="at">.new</span>(<span class="vs">'Fido'</span>)</span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>fido <span class="op">=</span> <span class="dt">Dog</span><span class="at">.new</span>(<span class="vs">'Fido'</span>)</span>
 <span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>fido<span class="at">.send</span>(<span class="vs">'bark'</span>)</span>
-<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>fido<span class="at">.name</span> <span class="kw">=</span> <span class="vs">'Cheese'</span></span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>fido<span class="at">.name</span> <span class="op">=</span> <span class="vs">'Cheese'</span></span>
 <span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a><span class="fu">puts</span> fido<span class="at">.name</span></span></code></pre></div>
 <div class="sourceCode" id="cb4"><pre class="sourceCode Python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/usr/bin/env python3</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -197,28 +197,28 @@ It comes with a tool, <code>hidden</code>, that will list hidden windows and pri
 A potential fix to this is building a wrapper for <a href="http://tools.suckless.org/dmenu/">dmenu</a> that lets you easily raise hidden windows.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode Ruby"><code class="sourceCode ruby"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="cf">#!/usr/bin/env ruby</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>hidden_windows <span class="kw">=</span> <span class="in">`hidden -c`</span><span class="at">.split</span>(<span class="ss">/\n/</span>)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>hidden_windows <span class="op">=</span> <span class="in">`hidden -c`</span><span class="at">.split</span>(<span class="ss">/</span><span class="sc">\n</span><span class="ss">/</span>)</span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>map <span class="kw">=</span> <span class="kw">{}</span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>hidden_windows<span class="at">.each</span> <span class="cf">do</span> <span class="kw">|</span>line<span class="kw">|</span></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    match <span class="kw">=</span> <span class="ss">/'(.*)':'(.*)'/</span><span class="at">.match</span>(line)</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    key <span class="kw">=</span> match<span class="kw">[</span><span class="dv">1</span><span class="kw">]</span></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    val <span class="kw">=</span> match<span class="kw">[</span><span class="dv">2</span><span class="kw">]</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>map <span class="op">=</span> <span class="op">{}</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>hidden_windows<span class="at">.each</span> <span class="cf">do</span> <span class="op">|</span>line<span class="op">|</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    match <span class="op">=</span> <span class="ss">/'(.*)':'(.*)'/</span><span class="at">.match</span>(line)</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    key <span class="op">=</span> match<span class="kw">[</span><span class="dv">1</span><span class="kw">]</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    val <span class="op">=</span> match<span class="kw">[</span><span class="dv">2</span><span class="kw">]</span></span>
 <span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span> map<span class="at">.has_key?</span> key</span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>        key <span class="kw">=</span> key <span class="kw">+</span> <span class="ch">'*'</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>        key <span class="op">=</span> key <span class="op">+</span> <span class="ch">'*'</span></span>
 <span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>    map<span class="kw">[</span>key<span class="kw">]</span> <span class="kw">=</span> val</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>    map<span class="kw">[</span>key<span class="kw">]</span> <span class="op">=</span> val</span>
 <span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="cf">end</span></span>
 <span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>choice <span class="kw">=</span> <span class="dv">nil</span></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>choice <span class="op">=</span> <span class="dv">nil</span></span>
 <span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a><span class="cn">IO</span><span class="at">.popen</span>(<span class="vs">'dmenu'</span>, <span class="vs">'r+'</span>) <span class="cf">do</span> <span class="kw">|</span>dmenu<span class="kw">|</span></span>
-<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>    map<span class="at">.keys.each</span> <span class="cf">do</span> <span class="kw">|</span>name<span class="kw">|</span></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a><span class="cn">IO</span><span class="at">.popen</span>(<span class="vs">'dmenu'</span>, <span class="vs">'r+'</span>) <span class="cf">do</span> <span class="op">|</span>dmenu<span class="op">|</span></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>    map<span class="at">.keys.each</span> <span class="cf">do</span> <span class="op">|</span>name<span class="op">|</span></span>
 <span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>        dmenu<span class="at">.write</span>(name)</span>
-<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>        dmenu<span class="at">.write</span>(<span class="st">&quot;\n&quot;</span>)</span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>        dmenu<span class="at">.write</span>(<span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
 <span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
 <span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>    dmenu<span class="at">.close_write</span></span>
-<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>    choice <span class="kw">=</span> dmenu<span class="at">.gets.rstrip</span></span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>    choice <span class="op">=</span> dmenu<span class="at">.gets.rstrip</span></span>
 <span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a><span class="cf">end</span></span>
 <span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a><span class="cn">IO</span><span class="at">.popen</span>(map<span class="kw">[</span>choice<span class="kw">]</span>)</span></code></pre></div>

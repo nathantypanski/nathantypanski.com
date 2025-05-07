@@ -48,7 +48,7 @@
         <div id="metadata">
             <ul class="meta">
             
-                <li>tags: <em><a title="All pages tagged 'math'." href="../tags/math.html">math</a>, <a title="All pages tagged 'Python'." href="../tags/Python.html">Python</a>, <a title="All pages tagged 'numpy'." href="../tags/numpy.html">numpy</a>, <a title="All pages tagged 'scipy'." href="../tags/scipy.html">scipy</a></em></li>
+                <li>tags: <em><a title="All pages tagged 'math'." href="../tags/math.html" rel="tag">math</a>, <a title="All pages tagged 'Python'." href="../tags/Python.html" rel="tag">Python</a>, <a title="All pages tagged 'numpy'." href="../tags/numpy.html" rel="tag">numpy</a>, <a title="All pages tagged 'scipy'." href="../tags/scipy.html" rel="tag">scipy</a></em></li>
             
             
             <li>posted: <em> August 23, 2014 </em></li>
@@ -70,9 +70,9 @@
 </div>
 <div id="toc"><h2>Contents</h2>
 <ul>
-<li><a href="#problem">Problem</a></li>
-<li><a href="#analytic-solution">Analytic solution</a></li>
-<li><a href="#python">Python</a></li>
+<li><a href="#problem" id="toc-problem">Problem</a></li>
+<li><a href="#analytic-solution" id="toc-analytic-solution">Analytic solution</a></li>
+<li><a href="#python" id="toc-python">Python</a></li>
 </ul> </div>
 <p>I was going through my ODE notes the other day and wondered if I could solve any of them with Python. I gave it a shot for one of the simpler equations, and here are my results (with analytic solution included for comparison).</p>
 <section id="problem" class="level2">
@@ -168,11 +168,11 @@ If we wanted a more exact solution, we could do this in smaller increments and g
 <p>I’ll add that the Python solution here is <em>not</em> just a mere plot of the analytic method. We could have done this for an equation even if we don’t remember how to solve it ourselves, as long as we’re able to reduce it to a first-order ODE system like here. SciPy has more advanced numeric solvers available, including the more generic <a href="http://docs.scipy.org/doc/scipy-0.13.0/reference/generated/scipy.integrate.ode.html"><code>scipy.integrate.ode</code></a> for dealing with more complicated equations.</p>
 <p>But overall, considering I had never used Python to solve this sort of thing before, I’m pretty impressed by how easy it was to work through this solution. I’m looking forward to pushing Python’s numeric/mathematical capabilities further in the future.</p>
 </section>
-<section class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr />
 <ol>
-<li id="fn1" role="doc-endnote"><p>This equation might look duanting, but it is literally just straight-from-a-textbook material on these things. If you go look up <q>second-order homogeneous linear ODE with constant coefficients</q> you will find that for characteristic equations where both roots are complex, that is the general form of your solution. So when actually solving these analytically, you don’t think about it much more once you know whether the c.e. roots are complex.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2" role="doc-endnote"><p>I know all the <q>cool kids</q> on the Python block are using <a href="http://matplotlib.org/">matplotlib</a>. I simply prefer R. I’ve used it more, and I find it easier to work with whenever there’s an actual <em>dataset</em> that I’m shifting around, not just pure numeric values.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn1"><p>This equation might look duanting, but it is literally just straight-from-a-textbook material on these things. If you go look up <q>second-order homogeneous linear ODE with constant coefficients</q> you will find that for characteristic equations where both roots are complex, that is the general form of your solution. So when actually solving these analytically, you don’t think about it much more once you know whether the c.e. roots are complex.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>I know all the <q>cool kids</q> on the Python block are using <a href="http://matplotlib.org/">matplotlib</a>. I simply prefer R. I’ve used it more, and I find it easier to work with whenever there’s an actual <em>dataset</em> that I’m shifting around, not just pure numeric values.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 

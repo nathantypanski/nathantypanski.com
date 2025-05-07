@@ -48,7 +48,7 @@
         <div id="metadata">
             <ul class="meta">
             
-                <li>tags: <em><a title="All pages tagged 'LaTeX'." href="../tags/LaTeX.html">LaTeX</a>, <a title="All pages tagged 'engineering'." href="../tags/engineering.html">engineering</a>, <a title="All pages tagged 'hardware'." href="../tags/hardware.html">hardware</a></em></li>
+                <li>tags: <em><a title="All pages tagged 'LaTeX'." href="../tags/LaTeX.html" rel="tag">LaTeX</a>, <a title="All pages tagged 'engineering'." href="../tags/engineering.html" rel="tag">engineering</a>, <a title="All pages tagged 'hardware'." href="../tags/hardware.html" rel="tag">hardware</a></em></li>
             
             
             <li>posted: <em> October 29, 2014 </em></li>
@@ -70,9 +70,9 @@
 </div>
 <div id="toc"><h2>Contents</h2>
 <ul>
-<li><a href="#pci-read">PCI Read</a></li>
-<li><a href="#pci-interrupt-acknowledge">PCI Interrupt Acknowledge</a></li>
-<li><a href="#synchronous-serial-interface">Synchronous Serial Interface</a></li>
+<li><a href="#pci-read" id="toc-pci-read">PCI Read</a></li>
+<li><a href="#pci-interrupt-acknowledge" id="toc-pci-interrupt-acknowledge">PCI Interrupt Acknowledge</a></li>
+<li><a href="#synchronous-serial-interface" id="toc-synchronous-serial-interface">Synchronous Serial Interface</a></li>
 </ul> </div>
 <p>Today, for one of my engineering courses, I had to create some <a href="http://en.wikipedia.org/wiki/Digital_timing_diagram">timing diagrams</a> to show certain parts of the PCI standard.
 If you’ve never had to draw your own timing diagrams before, then you probably haven’t realized that there is no obvious to quickly, easily draw waveforms for a bunch of signals.</p>
@@ -202,11 +202,11 @@ Some people will just use shaded blocks for everything, and make no distinction 
 <span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="kw">\end</span>{<span class="ex">tikztimingtable</span>}</span></code></pre></div>
 <p>The images you saw on this page were compiled with <a href="http://www.tug.org/applications/pdftex/">pdfTeX</a> version <code>3.14159265-2.6-1.40.15 (TeX Live 2014/Arch Linux)</code> and converted from PDF to PNG with <a href="http://www.imagemagick.org/script/convert.php">ImageMagick convert</a>.</p>
 </section>
-<section class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr />
 <ol>
-<li id="fn1" role="doc-endnote"><p>Defining commands for patterns of input is one of those tricks you pick up once you’ve used LaTeX for more than a handful of documents. The advantage of doing it this way is that if I want to change the convention used to represent the <a href="http://en.wikipedia.org/wiki/Logic_level">logic level</a> of my signals, I can just change it in one place and it gets updated in the rest of the document.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2" role="doc-endnote"><p>So it might be wrong—go read the spec if you <em>really</em> care.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn1"><p>Defining commands for patterns of input is one of those tricks you pick up once you’ve used LaTeX for more than a handful of documents. The advantage of doing it this way is that if I want to change the convention used to represent the <a href="http://en.wikipedia.org/wiki/Logic_level">logic level</a> of my signals, I can just change it in one place and it gets updated in the rest of the document.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>So it might be wrong—go read the spec if you <em>really</em> care.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 

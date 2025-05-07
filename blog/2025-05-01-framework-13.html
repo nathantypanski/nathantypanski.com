@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html>
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <meta charset="UTF-8">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>Framework 13 with Nix, Secure Boot, & home-manager</title>
+        <link rel="stylesheet" type="text/css" href="../css/default.css" />
+        
+    </head>
+    <body>
+        <div id="header">
+          <div id="logo">
+      <a href="../">
+        <img class="img" src="../images/log0.png" />
+      </a>
+</div>
+<div id="navigation">
+  <ul>
+    <li>
+      <a href="../blog.html">
+        Blog
+        <i class="fa fa-pencil"></i>
+      </a>
+    </li>
+    <li>
+      <a href="../pages.html">
+        Writing
+        <i class="fa fa-globe"></i>
+      </a>
+    </li>
+    <li>
+      <a href="../worklog.html">
+        Worklog
+        <i class="fa fa-bar-chart"></i>
+      </a>
+    </li>
+    <li>
+      <a href="../contact.html">
+        Contact
+        <i class="fa fa-envelope"></i>
+      </a>
+    </li>
+  </ul>
+</div>
+
+        </div>
+        <div id="metadata">
+            <ul class="meta">
+            
+                <li>tags: <em><a title="All pages tagged 'nix'." href="../tags/nix.html" rel="tag">nix</a>, <a title="All pages tagged 'Arch Linux'." href="../tags/Arch%20Linux.html" rel="tag">Arch Linux</a>, <a title="All pages tagged 'Framework'." href="../tags/Framework.html" rel="tag">Framework</a>, <a title="All pages tagged 'home-manager'." href="../tags/home-manager.html" rel="tag">home-manager</a>, <a title="All pages tagged 'secure boot'." href="../tags/secure%20boot.html" rel="tag">secure boot</a></em></li>
+            
+            <li>status: <em> wip </em></li>
+            <li>posted: <em> May  1, 2025 </em></li>
+            <li>modified: <em> May 07, 2025
+ </em></li>
+            </ul>
+        </div>
+        <div id="content">
+            <h1>Framework 13 with Nix, Secure Boot, & home-manager</h1>
+            <div class="info">
+    <!--
+    <div class="snippets">
+        <i class="fa fa-calendar"></i> May  1, 2025 <i class="fa fa-cut" May 07, 2025
+></i> May 07, 2025
+
+    </div>
+    -->
+    
+</div>
+<div id="toc"><h2>Contents</h2>
+<ul>
+<li><a href="#hardware" id="toc-hardware">Hardware</a>
+<ul>
+<li><a href="#processor-gpu" id="toc-processor-gpu">Processor &amp; GPU</a></li>
+<li><a href="#trackpad" id="toc-trackpad">Trackpad</a></li>
+<li><a href="#keyboard" id="toc-keyboard">Keyboard</a></li>
+<li><a href="#fingerprint-reader" id="toc-fingerprint-reader">Fingerprint reader</a></li>
+</ul></li>
+<li><a href="#nix-vs-arch" id="toc-nix-vs-arch">Nix vs Arch</a></li>
+<li><a href="#os-configuration" id="toc-os-configuration">OS Configuration</a>
+<ul>
+<li><a href="#partitioning-and-encryption" id="toc-partitioning-and-encryption">Partitioning and Encryption</a></li>
+<li><a href="#secure-boot" id="toc-secure-boot">Secure Boot</a></li>
+<li><a href="#tpm-decryption" id="toc-tpm-decryption">TPM decryption</a></li>
+<li><a href="#fingerprint-unlock" id="toc-fingerprint-unlock">Fingerprint Unlock</a></li>
+</ul></li>
+<li><a href="#home-configuration" id="toc-home-configuration">Home Configuration</a>
+<ul>
+<li><a href="#home-manager-entrypoint" id="toc-home-manager-entrypoint">home-manager entrypoint</a></li>
+<li><a href="#ollama" id="toc-ollama">ollama</a></li>
+</ul></li>
+</ul> </div>
+<p>I have spent the last week installing and configuring a Framework 13 laptop. My first attempt was to use NixOS (since that’s my distro of choice) but the Framework keyboard wasn’t detected by either the minimal or graphical NixOS iso. So I went with Arch Linux and installed Nix + Home-Manager to manage <em>most</em> of my system.</p>
+<section id="hardware" class="level2">
+<h2>Hardware</h2>
+<p>I <q>built</q> the hardware, meaning my Framework 13 had last-mile assembly conducted by the end-user. This gives a better sense of control &amp; repairability and lets you customize the machine a little more, and it only takes a few minutes to assemble.</p>
+<p>I read complaints online about build quality but I am happy to report that I haven’t personally noticed anything bothersome besides wishing the bezel were aluminum (a very minor thing).</p>
+<section id="processor-gpu" class="level3">
+<h3>Processor &amp; GPU</h3>
+<p>The processor and GPU are AMD. I prefer AMD. Also the Radeon 860M can be used with ollama.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>$ cat /proc/cpuinfo | grep '^model name' | head -n1</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>model name      : AMD Ryzen AI 7 350 w/ Radeon 860M</span></code></pre></div>
+<p>This means that I have the AMD <a href="https://storage.googleapis.com/gweb-uniblog-publish-prod/documents/AMD_GPZ-Technical_Report_FINAL_05_2022.pdf">Pod Security Processor</a>, AMD’s parallel to the Intel Management Enginge. The downside is, obviously, these secondary processors are often vulnerable and have privileged access to system hardware. The upside is this provides functionality such as Secure Boot.</p>
+<p>As far as I know, it is not currently possible to use CoreBoot on the latest AMD Framework 13, but <a href="https://www.phoronix.com/news/Framework-13-AMD-Coreboot-WIP">experimental support</a> is in progress for the previous gen of AMD CPUs, leaving me hopeful that we will see it here eventually.</p>
+<p>However, the default firmware supports Secure Boot with custom keys, which is good enough for me at the moment.</p>
+</section>
+<section id="trackpad" class="level3">
+<h3>Trackpad</h3>
+<p>The trackpad impressed me. From what I hear, Apple has a patent on trackpads where the full tactile buttonpress can happen over the full Trackpad surface. So this trackpad lets you tap anywhere but the top half-centimeter or so. Not a bad compromise.</p>
+<p>In my home-manager config for sway, I used this to get closer to Apple’s trackpad settings.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a># framework laptop touchpad</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>&quot;2362:628:PIXA3854:00_093A:0274_Touchpad&quot; = {</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  scroll_factor = &quot;0.5&quot;;</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  accel_profile = &quot;adaptive&quot;;</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  pointer_accel = &quot;-0.1&quot;;</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  dwt = &quot;enabled&quot;;</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  click_method = &quot;clickfinger&quot;;</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>};</span></code></pre></div>
+</section>
+<section id="keyboard" class="level3">
+<h3>Keyboard</h3>
+<p>The keyboard is good quality. I went with the blank keycaps for style points and to encourage memorizing my keyboard layout, which I’m happy with after some initial hurdles learning how the F-keys function.</p>
+</section>
+<section id="fingerprint-reader" class="level3">
+<h3>Fingerprint reader</h3>
+<p>The power button is also a fingerprint reader! It works with out-of-box drivers and seldom fails to register my fingerprint. That’s all I could ask for, really.</p>
+</section>
+</section>
+<section id="nix-vs-arch" class="level2">
+<h2>Nix vs Arch</h2>
+<p>As mentioned earlier, NixOS doesn’t work on this machine—the keyboard drivers fail to load. I went with Arch Linux and all hardware functions out of the box. I’m happy with this. Then I install Nix (<code>pacman -S nix</code>) and wrote a Flake for my home-manager configuration, reusing and improving configs from my NixOS desktop.</p>
+<p>I had to come up with a <q>dividing line</q> between Nix and Arch, since in many cases they can replace components of one another. I ended up with <code>home-manager</code> managing <em>nearly</em> all of my homedir and <code>pacman</code> or interactive configuration for the remainder.</p>
+</section>
+<section id="os-configuration" class="level2">
+<h2>OS Configuration</h2>
+<section id="partitioning-and-encryption" class="level3">
+<h3>Partitioning and Encryption</h3>
+<p>The system has a TPM so I’ve been able to do some interesting things, like configure the TPM to store my dm-crypt keys.</p>
+<p>I use a configuration where <code>/boot</code> and <code>/boot/efi</code> are on separate physical partitions and then there’s a giant <code>/dev/nvme0n1p2</code> partition housing LUKS. Within LUKS is LVM, with the first vg housing (encrypted) swap and the second divided into <code>/home</code>, <code>/var/</code> and <code>/</code> btrfs subvolumes.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>$ lsblk</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>NAME          MAJ:MIN RM  SIZE RO TYPE  MOUNTPOINTS</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>nvme0n1       259:0    0  1.8T  0 disk</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>├─nvme0n1p1   259:1    0    2G  0 part  /boot</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>├─nvme0n1p2   259:2    0  1.8T  0 part</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>│ └─cryptroot 253:0    0  1.8T  0 crypt</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>│   ├─vg-swap 253:1    0   32G  0 lvm   [SWAP]</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>│   └─vg-main 253:2    0  1.8T  0 lvm   /home</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>│                                       /var</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>│                                       /</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>└─nvme0n1p3   259:3    0    2G  0 part  /boot/efi</span></code></pre></div>
+</section>
+<section id="secure-boot" class="level3">
+<h3>Secure Boot</h3>
+<p>For Secure Boot I am using <code>systemd-ukify</code>, <code>sbsign</code>, and pacman hooks.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a># sbctl status</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>Installed:      ✓ sbctl is installed</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>Owner GUID:     9df5ea07-e33e-4361-9c03-51d46b0dd9ed</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>Setup Mode:     ✓ Disabled</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>Secure Boot:    ✓ Enabled</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>Vendor Keys:    none</span></code></pre></div>
+<p>To get here you need to generate keys:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a># sbctl create-keys</span></code></pre></div>
+<p>This creates keys in <code>/var/lib/sbctl/keys/</code>:</p>
+<pre><code># ls /var/lib/sbctl/keys
+db  KEK  PK</code></pre>
+<p>Then you reboot, put the secure-boot in setup mode (which allows writing keys), and enroll your keys with <code>sbctl enroll-keys</code>.</p>
+<section id="sbctl-and-signing" class="level4">
+<h4>sbctl and signing</h4>
+<p>When you enable secure boot, your bootloader and kernel images will require signing. I ensure this with a pacman hook:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a># cat /etc/pacman.d/hooks/90-secureboot-systemd-update.hook</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>[Trigger]</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>Operation = Upgrade</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>Type = Package</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>Target = systemd # systemd-boot is part of the systemd package</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>[Action]</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>Description = Updating and signing systemd-boot on ESP for Secure Boot...</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>When = PostTransaction</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>Exec = /usr/local/bin/update-signed-bootloader</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>NeedsTargets</span></code></pre></div>
+<p>Which calls a script <code>/update-signed/bootloader</code><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>.</p>
+<p>The <code>sbctl sign-all</code> signs the files enumerated in <code>/var/lib/sbctl/files.json</code>:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a># cat /var/lib/sbctl/files.json</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    &quot;/boot/efi/EFI/BOOT/BOOTX64.EFI&quot;: {</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>        &quot;file&quot;: &quot;/boot/efi/EFI/BOOT/BOOTX64.EFI&quot;,</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>        &quot;output_file&quot;: &quot;/boot/efi/EFI/BOOT/BOOTX64.EFI&quot;</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    },</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    &quot;/boot/efi/EFI/Linux/arch-secure.efi&quot;: {</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>        &quot;file&quot;: &quot;/boot/efi/EFI/Linux/arch-secure.efi&quot;,</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>        &quot;output_file&quot;: &quot;/boot/efi/EFI/Linux/arch-secure.efi&quot;</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>    },</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>    &quot;/boot/efi/EFI/Linux/arch-troubleshoot.efi&quot;: {</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>        &quot;file&quot;: &quot;/boot/efi/EFI/Linux/arch-troubleshoot.efi&quot;,</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>        &quot;output_file&quot;: &quot;/boot/efi/EFI/Linux/arch-troubleshoot.efi&quot;</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>    },</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>    &quot;/boot/efi/EFI/systemd/systemd-bootx64.efi&quot;: {</span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>        &quot;file&quot;: &quot;/boot/efi/EFI/systemd/systemd-bootx64.efi&quot;,</span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>        &quot;output_file&quot;: &quot;/boot/efi/EFI/systemd/systemd-bootx64.efi&quot;</span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>Files will be added here if you sign them manually ever. So you can edit the <code>files.json</code> database with, for example, <code>sbctl sign -s /boot/efi/EFI/Linux/arch-troubleshoot.efi</code>.</p>
+</section>
+<section id="ukify" class="level4">
+<h4>ukify</h4>
+<p>I’m using <code>ukify</code> to generate unified kernel images with an embedded initramfs and kernel image. This is done via a file <code>/etc/pacman.d/hooks/95-sbctl-ukify</code>:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>[Trigger]</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>Operation = Upgrade</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>Type = Package</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>Target = linux</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>Target = amd-ucode # Add other relevant packages like 'systemd' if its updates affect initramfs build</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>[Action]</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>Description = Rebuilding UKIs and signing with sbctl...</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>When = PostTransaction</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>Exec = /usr/local/bin/rebuild-ukis-for-sbctl.sh</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>NeedsTargets</span></code></pre></div>
+<p>This calls a script <code>/usr/local/bin/rebuild-ukis-for-sbctl.sh</code><a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>.</p>
+</section>
+</section>
+<section id="tpm-decryption" class="level3">
+<h3>TPM decryption</h3>
+<p>Once you have a standard <code>dm-crypt/LUKS</code> configuration you can enroll it in the TPM. First ensure you have a TPM.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a># ls /dev/tpm*</span></code></pre></div>
+<p>Then you can enroll the device with:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a># systemd-cryptenroll --tpm2-device=auto --tpm2-pcrs=0,4,6,7 /dev/nvme0n1p2</span></code></pre></div>
+<p>You’ll note I specify <code>--tpm2-pcrs=0,4,6,7</code> there. I do that because I want to measure the <code>platform-code</code>, <code>boot-loader-code</code>, <code>host-platform</code>, and <code>secure-boot-policy</code> and only release keys from the TPM if all match. This is an agressive config; most people only pick <code>7</code>.</p>
+<p>You’ll see the TPM PCR unlock attached to our drive:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a># cryptsetup luksDump /dev/nvme0n1p2 | grep pcr | head</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  0: systemd-tpm2</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>        tpm2-hash-pcrs:   7</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>        tpm2-pcr-bank:    sha256</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>        tpm2-pubkey:</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>        tpm2-pubkey-pcrs:</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>        tpm2-primary-alg: ecc</span></code></pre></div>
+<p>For more on how to configure this, see <a href="https://wiki.archlinux.org/title/Dm-crypt/Encrypting_an_entire_system#LUKS_on_a_partition_with_TPM2_and_Secure_Boot">ArchWiki: Encrypting an entire System#Luks on a partition with TPM2 and Secure Boot</a>.</p>
+<p>Note that the TPM will only grant access to the decryption key if the Secure Boot chain does not show signs of tampering.</p>
+</section>
+<section id="fingerprint-unlock" class="level3">
+<h3>Fingerprint Unlock</h3>
+<p>First install <code>fprint</code> with pacman. Then add it to <code>/etc/pam.d/system-auth</code>:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode diff"><code class="sourceCode diff"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a># diff -c10 /etc/pam.d/system-auth.bk /etc/pam.d/system-auth</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="kw">*** /etc/pam.d/system-auth.bk   2025-05-01 04:34:54.821598714 -0400</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="kw">--- /etc/pam.d/system-auth      2025-04-29 23:22:27.302944835 -0400</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="dt">***************</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="dt">*** 1,16 ****</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="dt">--- 1,17 ----</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>  #%PAM-1.0</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>  auth       required                    pam_faillock.so      preauth</span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>  # Optionally use requisite above if you do not want to prompt for the password</span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>  # on locked accounts.</span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>  -auth      [success=2 default=ignore]  pam_systemd_home.so</span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a><span class="va">+ auth       sufficient                  pam_fprintd.so</span></span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>  auth       [success=1 default=bad]     pam_unix.so          try_first_pass nullok</span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>  auth       [default=die]               pam_faillock.so      authfail</span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>  auth       optional                    pam_permit.so</span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a>  auth       required                    pam_env.so</span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a>  auth       required                    pam_faillock.so      authsucc</span>
+<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a>  # If you drop the above call to pam_faillock.so the lock will be done also</span>
+<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a>  # on non-consecutive authentication failures.</span>
+<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-22"><a href="#cb15-22" aria-hidden="true" tabindex="-1"></a>  -account   [success=1 default=ignore]  pam_systemd_home.so</span>
+<span id="cb15-23"><a href="#cb15-23" aria-hidden="true" tabindex="-1"></a>  account    required                    pam_unix.so</span></code></pre></div>
+<p>Now use <code>fprintd-enroll</code> (optionally with <code>-f right-middle-finger</code> and so forth) to enroll your fingers, which are stored in <code>/var/lib/fprint</code>. You can now login and <code>sudo</code> with your fingerprint.</p>
+</section>
+</section>
+<section id="home-configuration" class="level2">
+<h2>Home Configuration</h2>
+<p>I now use <code>nix</code> with <code>home-manager</code> to manage my homedir, similar to my NixOS machine.</p>
+<section id="home-manager-entrypoint" class="level3">
+<h3>home-manager entrypoint</h3>
+<p>I have moved to Nix Flakes for my home-manager entrypoint. Flakes are still new to me, but they solve reproducibility issues present with regular Nix.</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  description = &quot;My full system config (Arch + Home Manager)&quot;;</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  inputs = {</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>    nixpkgs.url = &quot;github:NixOS/nixpkgs/nixpkgs-unstable&quot;;</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>    home-manager = {</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>      url = &quot;github:nix-community/home-manager&quot;;</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>      inputs.nixpkgs.follows = &quot;nixpkgs&quot;;</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>    };</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>  };</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>  outputs = { self, nixpkgs, home-manager, ... }: let</span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>    system = &quot;x86_64-linux&quot;;</span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>    username = builtins.getEnv &quot;USER&quot;;</span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>    homeDirectory = builtins.getEnv &quot;HOME&quot;;</span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>    secrets = {</span>
+<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a>      # ...</span>
+<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a>    };</span>
+<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a>  in {</span>
+<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a>    homeConfigurations.${username} = home-manager.lib.homeManagerConfiguration {</span>
+<span id="cb16-22"><a href="#cb16-22" aria-hidden="true" tabindex="-1"></a>      pkgs = import nixpkgs {</span>
+<span id="cb16-23"><a href="#cb16-23" aria-hidden="true" tabindex="-1"></a>        inherit system;</span>
+<span id="cb16-24"><a href="#cb16-24" aria-hidden="true" tabindex="-1"></a>      };</span>
+<span id="cb16-25"><a href="#cb16-25" aria-hidden="true" tabindex="-1"></a>      modules = [</span>
+<span id="cb16-26"><a href="#cb16-26" aria-hidden="true" tabindex="-1"></a>        ../home-manager/arch.nix</span>
+<span id="cb16-27"><a href="#cb16-27" aria-hidden="true" tabindex="-1"></a>        {</span>
+<span id="cb16-28"><a href="#cb16-28" aria-hidden="true" tabindex="-1"></a>          programs.home-manager.enable = true;</span>
+<span id="cb16-29"><a href="#cb16-29" aria-hidden="true" tabindex="-1"></a>          home.stateVersion = &quot;24.11&quot;;</span>
+<span id="cb16-30"><a href="#cb16-30" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb16-31"><a href="#cb16-31" aria-hidden="true" tabindex="-1"></a>      ];</span>
+<span id="cb16-32"><a href="#cb16-32" aria-hidden="true" tabindex="-1"></a>      extraSpecialArgs = {</span>
+<span id="cb16-33"><a href="#cb16-33" aria-hidden="true" tabindex="-1"></a>        inherit system;</span>
+<span id="cb16-34"><a href="#cb16-34" aria-hidden="true" tabindex="-1"></a>        secrets = secrets;</span>
+<span id="cb16-35"><a href="#cb16-35" aria-hidden="true" tabindex="-1"></a>        username = username;</span>
+<span id="cb16-36"><a href="#cb16-36" aria-hidden="true" tabindex="-1"></a>        homeDirectory = homeDirectory;</span>
+<span id="cb16-37"><a href="#cb16-37" aria-hidden="true" tabindex="-1"></a>      };</span>
+<span id="cb16-38"><a href="#cb16-38" aria-hidden="true" tabindex="-1"></a>    };</span>
+<span id="cb16-39"><a href="#cb16-39" aria-hidden="true" tabindex="-1"></a>  };</span>
+<span id="cb16-40"><a href="#cb16-40" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>I know that, in principle, I should have multiple entrypoints here and condition them based on the machine (so I use the same Flake for Darwin and Arch). I’m not there yet.</p>
+<p>I run my <code>home-manager</code> setup with this:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>#!/usr/bin/env bash</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>SCRIPT_DIR=$( cd -- &quot;$( dirname -- &quot;${BASH_SOURCE[0]}&quot; )&quot; &amp;&gt; /dev/null &amp;&amp; pwd )</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>. &quot;$SCRIPT_DIR/secrets.sh&quot;</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>export NIXPKGS_ALLOW_UNFREE=1</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>nix run github:nix-community/home-manager -- switch --impure --flake &quot;${SCRIPT_DIR}&quot;</span></code></pre></div>
+<p>It requires <code>--impure</code> because it takes env vars as inputs, such as <code>USER</code>, <code>HOME</code>, <code>USER_EMAIL</code>. I don’t want my user email cleartext in my dotfiles (though in practice, people can steal it from GitHub).</p>
+</section>
+<section id="ollama" class="level3">
+<h3>ollama</h3>
+<p>I’m currently using <code>nix-shell</code> to run ollama. I had a hell of a time getting this to work with the Radeon 860M so here are my steps.</p>
+<p>First, use <code>rocminfo</code> to get some magic variables:</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>$ nix-shell -p &quot;rocmPackages.rocminfo&quot; --run &quot;rocminfo&quot; | grep &quot;gfx&quot;</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  Name:                    gfx1152</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>        Name:                    amdgcn-amd-amdhsa--gfx1152</span></code></pre></div>
+<p>Now set the env vars with the magic <q>make rocm work</q> values, the first of which is taken from <code>rocminfo</code>:</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>#!/usr/bin/env bash</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>OLLAMA_PACKAGE=ollama-rocm</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>ENV_VARS='HCC_AMDGPU_DEVICES=gfx1152 HSA_OVERRIDE_GFX_VERSION=&quot;11.0.0&quot; ROCR_VISIBLE_DEVICES=0'</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>COMMAND=&quot;$ENV_VARS ollama serve&quot;</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>echo &quot;running '${COMMAND}'&quot;</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>echo nix-shell -p &quot;${OLLAMA_PACKAGE}&quot; --command &quot;${COMMAND}&quot;</span></code></pre></div>
+<p>If it works, you will see output lines like this, indicating <code>rocm</code> is working:</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>time=2025-05-06T23:21:04.985-04:00 level=INFO source=types.go:130 msg=&quot;inference compute&quot; id=0 library=rocm variant=&quot;&quot; compute=gfx1152 driver=0.0 name=1002:1114 total=&quot;8.0 GiB&quot; available=&quot;7.9 GiB&quot;</span></code></pre></div>
+<p>If you get an error, like <code>msg=unsupported Radeon iGPU detected skipping" id=0 total="512.0 MiB"</code> then this means you need to reboot to your bootloader and change the iGPU settings to allocate static vRAM to your GPU. Sorry. I gave 8 GiB to mine, which is stolen permanently from RAM.</p>
+</section>
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1"><p><code>/usr/local/bin/update-signed-bootloader</code>:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>#!/usr/bin/env bash</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>set -e</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>ESP_PATH=&quot;/boot/efi&quot;</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>SYSTEMD_BOOT_SRC=&quot;/usr/lib/systemd/boot/efi/systemd-bootx64.efi&quot;</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>SYSTEMD_BOOT_DEST_MAIN=&quot;${ESP_PATH}/EFI/systemd/systemd-bootx64.efi&quot;</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>SYSTEMD_BOOT_DEST_FALLBACK=&quot;${ESP_PATH}/EFI/BOOT/BOOTX64.EFI&quot;</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>echo &quot;Updating systemd-boot on ESP...&quot;</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a># Ensure destination directories exist</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>mkdir -p &quot;${ESP_PATH}/EFI/systemd&quot;</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>mkdir -p &quot;${ESP_PATH}/EFI/BOOT&quot;</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a># Copy the new bootloader files to the ESP</span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>cp &quot;${SYSTEMD_BOOT_SRC}&quot; &quot;${SYSTEMD_BOOT_DEST_MAIN}&quot;</span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>cp &quot;${SYSTEMD_BOOT_SRC}&quot; &quot;${SYSTEMD_BOOT_DEST_FALLBACK}&quot;</span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>echo &quot;Successfully copied systemd-boot to ESP.&quot;</span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>echo &quot;Running sbctl sign-all to update signatures for bootloader...&quot;</span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a># sbctl sign-all will detect that the files on the ESP have changed</span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a># (because their checksums are now different after the copy)</span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a># and re-sign them if they are tracked in its database.</span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>sbctl sign-all -g</span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a># Alternatively, for more explicit signing of just these files:</span>
+<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a># sbctl sign &quot;${SYSTEMD_BOOT_DEST_MAIN}&quot;</span>
+<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a># sbctl sign &quot;${SYSTEMD_BOOT_DEST_FALLBACK}&quot;</span>
+<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a>echo &quot;Bootloader update and signing process complete.&quot;</span></code></pre></div>
+<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></li>
+<li id="fn2"><p><code>/usr/local/bin/rebuild-ukis-for-sbctl.sh</code>:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>#!/bin/bash</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>set -e</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>LUKS_UUID_VALUE=$(sudo blkid -s UUID -o value /dev/nvme0n1p2) # Or hardcode</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>SECURE_UKI_PATH=&quot;/boot/efi/EFI/Linux/arch-secure.efi&quot;</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>TROUBLESHOOT_UKI_PATH=&quot;/boot/efi/EFI/Linux/arch-troubleshoot.efi&quot;</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>echo &quot;Rebuilding ${SECURE_UKI_PATH}...&quot;</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a># Ensure your ukify/systemd-ukify command is correct here</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>ukify build \</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>    --linux /boot/vmlinuz-linux \</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>    --initrd /boot/initramfs-linux.img \</span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>    --microcode /boot/amd-ucode.img \</span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>    --os-release /etc/os-release \</span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>    --cmdline &quot;${COMMON_CMDLINE} rd.luks.options=${LUKS_UUID_VALUE}=tpm2-device=auto&quot; \</span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>    --output &quot;${SECURE_UKI_PATH}&quot;</span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>echo &quot;Rebuilding ${TROUBLESHOOT_UKI_PATH}...&quot;</span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>ukify build \</span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a>    --linux /boot/vmlinuz-linux \</span>
+<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a>    --initrd /boot/initramfs-linux-fallback.img \</span>
+<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a>    --microcode /boot/amd-ucode.img \</span>
+<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a>    --os-release /etc/os-release \</span>
+<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a>    --cmdline &quot;${COMMON_CMDLINE}&quot; \</span>
+<span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a>    --output &quot;${TROUBLESHOOT_UKI_PATH}&quot;</span>
+<span id="cb11-26"><a href="#cb11-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-27"><a href="#cb11-27" aria-hidden="true" tabindex="-1"></a>echo &quot;Running sbctl sign-all to update signatures...&quot;</span>
+<span id="cb11-28"><a href="#cb11-28" aria-hidden="true" tabindex="-1"></a># This assumes SECURE_UKI_PATH and TROUBLESHOOT_UKI_PATH have been added to sbctl's database</span>
+<span id="cb11-29"><a href="#cb11-29" aria-hidden="true" tabindex="-1"></a># via `sbctl sign -s ...` at least once.</span>
+<span id="cb11-30"><a href="#cb11-30" aria-hidden="true" tabindex="-1"></a># If not, or for explicit control, use:</span>
+<span id="cb11-31"><a href="#cb11-31" aria-hidden="true" tabindex="-1"></a># sbctl sign &quot;${SECURE_UKI_PATH}&quot;</span>
+<span id="cb11-32"><a href="#cb11-32" aria-hidden="true" tabindex="-1"></a># sbctl sign &quot;${TROUBLESHOOT_UKI_PATH}&quot;</span>
+<span id="cb11-33"><a href="#cb11-33" aria-hidden="true" tabindex="-1"></a>sbctl sign-all</span>
+<span id="cb11-34"><a href="#cb11-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-35"><a href="#cb11-35" aria-hidden="true" tabindex="-1"></a>echo &quot;UKIs rebuilt and signed.&quot;</span>
+<span id="cb11-36"><a href="#cb11-36" aria-hidden="true" tabindex="-1"></a>echo &quot;------------------------------------------------------------------------------------&quot;</span>
+<span id="cb11-37"><a href="#cb11-37" aria-hidden="true" tabindex="-1"></a>echo &quot;IMPORTANT REMINDER:&quot;</span>
+<span id="cb11-38"><a href="#cb11-38" aria-hidden="true" tabindex="-1"></a>echo &quot;If the kernel or related files for '${SECURE_UKI_PATH}' changed,&quot;</span>
+<span id="cb11-39"><a href="#cb11-39" aria-hidden="true" tabindex="-1"></a>echo &quot;you MUST re-enroll the TPM key after the next reboot (enter password once manually):&quot;</span>
+<span id="cb11-40"><a href="#cb11-40" aria-hidden="true" tabindex="-1"></a>echo &quot;  sudo systemd-cryptenroll --wipe-slot=tpm2 /dev/nvme0n1p2&quot;</span>
+<span id="cb11-41"><a href="#cb11-41" aria-hidden="true" tabindex="-1"></a>echo &quot;  sudo systemd-cryptenroll --tpm2-device=auto --tpm2-pcrs=0,6,7 /dev/nvme0n1p2&quot;</span>
+<span id="cb11-42"><a href="#cb11-42" aria-hidden="true" tabindex="-1"></a>echo &quot;------------------------------------------------------------------------------------&quot;</span></code></pre></div>
+<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></li>
+</ol>
+</section>
+
+        </div>
+        <div id="footer">
+            <p>
+  Content © 2012-2021 Nathan Typanski
+  and licensed under a <br /><a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.
+  Opinions are my own and not the views of my employer.
+  <a href="../website.html">About this site.</a>
+<!-- p-->
+<p>
+  <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/80x15.png" /></a>
+</p>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-37825924-1', 'nathantypanski.com');
+  ga('send', 'pageview');
+
+</script>
+
+
+        </div>
+    </body>
+</html>
