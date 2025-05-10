@@ -56,6 +56,99 @@ arch-hardened-troubleshoot.efi: options root=/dev/mapper/vg-main rw rd.luks.name
 arch-troubleshoot.efi: options root=/dev/mapper/vg-main rw rd.luks.name=1b6944df-369f-474b-97b5-76375d6449kcc=cryptroot rootflags=subvol=@ log_level=7 rd.debug
 ```
 
+## tpm
+
+### view current tpm crypt status for partition
+
+For example, to see measured PCRs enforced for tpm device unlock:
+
+```default
+# cryptsetup luksDump /dev/nvme0n1p2 | grep hash-pcrs
+        tpm2-hash-pcrs:   0+6+7
+```
+
+### dump all PCR hashes
+
+To see all the measurements for the current boot:
+
+```default
+# tpm2_pcrread
+  sha1:
+  sha256:
+    0 : 0x6D29[        ...        ]37CA
+    1 : 0x37EC[        ...        ]55E6
+    2 : 0x3D45[        ...        ]7969
+    3 : 0x3D45[        ...        ]7969
+    4 : 0x9B4D[        ...        ]760A
+    5 : 0x8658[        ...        ]24AC
+    6 : 0x3D45[        ...        ]7969
+    7 : 0x9E96[        ...        ]8331
+```
+
+Or to see the relevant ones for a block device (e.g., `nvme0n1p2`):
+
+```default
+# cryptsetup luksDump /dev/nvme0n1p2 --dump-json-metadata \
+    | jq -r '.tokens[]|select(.type=="systemd-tpm2")|."tpm2-pcrs"|@csv' \
+    | tr ',' '\n' \
+    | xargs -I{} tpm2_pcrread -o pcrs 'sha256:{}'
+```
+
+### arbitrary key storage:w
+
+```default
+# pacman -S tpm2-tools tpm2-abrmd
+```
+
+#### session manager daemon
+
+Use this if you want your regular user to be able to acces the TPM. It's still enforcing based on PCRs, but we should be careful who we let call the TPM unseal functions.
+
+```default
+# systemctl enable --now tpm2-abrmd
+```
+
+Access is governed by membership in the `tss` group.
+As your regular user:
+
+```default
+$ usermod -aG "$(whoami)" tss
+```
+
+#### policy creation
+
+First start a session. The `session.ctx` file will be used to exit the session
+later.
+
+```default
+# tpm2_startauthsession --policy-session -S session.ctx
+```
+
+Now write a PCR policy to `pcr.policy`, matching that of `${DEVICE}`.
+
+```default
+# export DEVICE='/dev/nvme0n1p2'
+# export PCRS="$(cryptsetup luksDump "${DEVICE}" --dump-json-metadata \
+    | jq -r '.tokens[]|select(.type=="systemd-tpm2")|."tpm2-pcrs"|@csv')
+# tpm2_policypcr -S session.ctx \
+               -L pcr.policy \
+               -l "sha256:${PCRS}"
+```
+
+#### TODO create a parent key
+
+You need a top-level parent key to store objects.
+
+First, list available algos:
+
+```default
+# ...
+```
+
+```default
+# tpm2_flushcontext session.ctx
+```
+
 ## Laptop
 
 ### Battery health
@@ -76,7 +169,7 @@ To check for and (apparently) optimize battery, install `powertop`:[^cpufreq-sta
 
 [^cpufreq-stats]: `cpufreq_stats` is part of the kernel now and `modprobe` will fail.
 
-```
+```default
 # powertop --auto-tune
 modprobe cpufreq_stats failed
 Failed to mount debugfs!
