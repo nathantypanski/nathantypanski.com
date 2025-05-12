@@ -46,7 +46,7 @@ In `/etc/audit/auditd.conf`:
 log_group = audit
 ```
 
-### unified kernel image (uki) inspection
+### Unified Kernel Image (uki) inspection
 
 ```default
 # for f in *; do echo -n "$f: options "; objcopy -O binary --only-section=.cmdline "$f" /dev/stdout; echo; done
@@ -56,9 +56,15 @@ arch-hardened-troubleshoot.efi: options root=/dev/mapper/vg-main rw rd.luks.name
 arch-troubleshoot.efi: options root=/dev/mapper/vg-main rw rd.luks.name=1b6944df-369f-474b-97b5-76375d6449kcc=cryptroot rootflags=subvol=@ log_level=7 rd.debug
 ```
 
-## tpm
+## TPM
 
-### view current tpm crypt status for partition
+References:
+
+- [Protecting SSH authentication with TPM 2.0](https://www.sstic.org/media/SSTIC2021/SSTIC-actes/protecting_ssh_authentication_with_tpm_20/SSTIC2021-Article-protecting_ssh_authentication_with_tpm_20-iooss.pdf)[^protecting-ssh-tpm-archive]
+
+[^protecting-ssh-tpm-archive]: PDF [archived @ 2025-05-10](SSTIC2021-Article-protecting_ssh_authentication_with_tpm_20-iooss.pdf)
+
+### View current tpm crypt status for partition
 
 For example, to see measured PCRs enforced for tpm device unlock:
 
@@ -67,7 +73,7 @@ For example, to see measured PCRs enforced for tpm device unlock:
         tpm2-hash-pcrs:   0+6+7
 ```
 
-### dump all PCR hashes
+### Dump all PCR hashes
 
 To see all the measurements for the current boot:
 
@@ -94,13 +100,13 @@ Or to see the relevant ones for a block device (e.g., `nvme0n1p2`):
     | xargs -I{} tpm2_pcrread -o pcrs 'sha256:{}'
 ```
 
-### arbitrary key storage:w
+### Arbitrary key storage:w
 
 ```default
 # pacman -S tpm2-tools tpm2-abrmd
 ```
 
-#### session manager daemon
+#### Session manager daemon
 
 Use this if you want your regular user to be able to acces the TPM. It's still enforcing based on PCRs, but we should be careful who we let call the TPM unseal functions.
 
@@ -115,39 +121,138 @@ As your regular user:
 $ usermod -aG "$(whoami)" tss
 ```
 
-#### policy creation
+Now log back in and you can run many of these commands as a non-root user.
 
-First start a session. The `session.ctx` file will be used to exit the session
+#### Policy creation
+
+First, start a session. The `session.ctx` file will be used to exit the session
 later.
 
 ```default
-# tpm2_startauthsession --policy-session -S session.ctx
+$ tpm2_startauthsession --policy-session -S session.ctx
 ```
 
 Now write a PCR policy to `pcr.policy`, matching that of `${DEVICE}`.
 
 ```default
-# export DEVICE='/dev/nvme0n1p2'
-# export PCRS="$(cryptsetup luksDump "${DEVICE}" --dump-json-metadata \
-    | jq -r '.tokens[]|select(.type=="systemd-tpm2")|."tpm2-pcrs"|@csv')
-# tpm2_policypcr -S session.ctx \
-               -L pcr.policy \
-               -l "sha256:${PCRS}"
+$ export DEVICE='/dev/nvme0n1p2'
+$ export PCRS="$(cryptsetup luksDump "${DEVICE}" --dump-json-metadata \
+    | jq -r '.tokens[]|select(.type=="systemd-tpm2")|."tpm2-pcrs"|@csv')"
+$ echo "${PCRS}"
+0,6,7
 ```
 
-#### TODO create a parent key
+If we like those settings, we can match them. Otherwise, have a look at `tpm2_pcrread`'s output.
+
+```default
+$ tpm2_policypcr \
+    --session policy.session \
+    --policy pcr.policy \
+    --pcr-list "sha256:${PCRS}"
+```
+
+Now end your session.
+
+```default
+$ tpm2_flushcontext policy.session
+$ rm policy.session
+```
+
+#### create a parent key
 
 You need a top-level parent key to store objects.
 
 First, list available algos:
 
 ```default
-# ...
+$ tpm2_getcap algorithms | grep -E '^[a-z][a-z0-9\-_]+:' | sed 's|:||g'
+rsa
+sha1
+hmac
+aes
+keyedhash
+xor
+sha256
+sha384
+[ ... 14 lines omitted ]
+kdf2
+ecc
+symcipher
+ctr
+ofb
+cbc
+cfb
+ecb
 ```
 
+Create your primary key with algorithms of your selection. The defaults are bad,
+like RSA and AES CBC. I picked ecc384 with aes-256-ctr, which are the best
+available algorithms for my TPM.[^primary-algos]
+
 ```default
-# tpm2_flushcontext session.ctx
+$ tpm2_createprimary \
+    --hierarchy o \
+    -g sha384 \
+    -G ecc384:aes256ctr \
+    -o 'prim384-public.pem' \
+    -c prim384.ctx
+name-alg:
+  value: sha384
+  raw: 0xc
+attributes:
+  value: fixedtpm|fixedparent|sensitivedataorigin|userwithauth|restricted|decrypt
+  raw: 0x30072
+type:
+  value: ecc
+  raw: 0x23
+curve-id:
+  value: NIST p384
+  raw: 0x4
+
+[ ... 12 lines omitted ... ]
+
+sym-alg:
+  value: aes
+  raw: 0x6
+sym-mode:
+  value: ctr
+  raw: 0x40
+sym-keybits: 256
+x: [ redacted by author ]
+y: [ redacted by author ]
+
 ```
+
+Confirm the output matches your expectations.
+
+#### Seal a blob
+
+Let's say I have a secret that I would like to protect.
+We can protect that secret using the TPM. Note you may have to send `^D` (CTRL+D)
+
+```default
+$ tpm2_create \
+    --parent-context=prim384.ctx \
+    --sealing-input=- \
+    --policy=pcr.policy \
+    --public=blob-sealed-p384.pub \
+    --private=blob-sealed-p384.priv
+  value: sha256
+  raw: 0xb
+attributes:
+  value: fixedtpm|fixedparent
+  raw: 0x12
+type:
+  value: keyedhash
+  raw: 0x8
+algorithm:
+  value: null
+  raw: 0x10
+keyedhash: [ redacted by author ]
+authorization policy: [ redacted by author ]
+```
+
+It will read the secret via stdin. You can pipe the secret into it.
 
 ## Laptop
 
@@ -274,3 +379,6 @@ For drive health pulls, use `smartctl -a /dev/nvme0n1`[^smartctl].
     Self-test status: No self-test in progress
     No Self-tests Logged
     ```
+
+[^primary-algos]: [Avoid RSA](https://blog.trailofbits.com/2019/07/08/fuck-rsa/). [P-384](https://www.johndcook.com/blog/2019/05/11/elliptic-curve-p-384/) is the recommended elliptic curve until post-quantum cryptography.
+    [CFB](https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation#Cipher_feedback_(CFB)) is also the default algorithm for the symmetric side of the key. This is old; it's a good idea to move to [CTR](https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation#Counter_(CTR)).
