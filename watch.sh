@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-nix-shell --command 'cabal exec -- site watch'
+nix-shell --command 'stack run -- site watch'

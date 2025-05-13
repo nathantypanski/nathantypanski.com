@@ -35,8 +35,10 @@ nix:
     - sass
 
 ghc-options:
-  # don't optimize locally (faster builds) and use -threaded so we don't see crashes like the following:
+  # don't optimize (much) locally (faster builds) and use -threaded so we don't
+  # see crashes like the following:
+  #
   #   site: file descriptor 89391920 out of range for select (0--1024).
   #   Recompile with -threaded to work around this.
   #
-  "$locals": -O0 -threaded
+  "$locals": -O1 -threaded
