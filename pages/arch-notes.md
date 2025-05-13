@@ -1,7 +1,7 @@
 ---
 title: Arch Linux security notes
 status: scratchpad
-tags: notes
+tags: notes, 
 ---
 
 ## Security
@@ -78,17 +78,32 @@ For example, to see measured PCRs enforced for tpm device unlock:
 To see all the measurements for the current boot:
 
 ```default
-# tpm2_pcrread
-  sha1:
-  sha256:
-    0 : 0x6D29[        ...        ]37CA
-    1 : 0x37EC[        ...        ]55E6
-    2 : 0x3D45[        ...        ]7969
-    3 : 0x3D45[        ...        ]7969
-    4 : 0x9B4D[        ...        ]760A
-    5 : 0x8658[        ...        ]24AC
-    6 : 0x3D45[        ...        ]7969
-    7 : 0x9E96[        ...        ]8331
+# systemd-analyze pcrs
+NR NAME                SHA256
+ 0 platform-code       [                            sha256                            ]
+ 1 platform-config     [                            sha256                            ]
+ 2 external-code       [                            sha256                            ]
+ 3 external-config     [                   (same as external-code)                    ]
+ 4 boot-loader-code    [                            sha256                            ]
+ 5 boot-loader-config  [                            sha256                            ]
+ 6 host-platform       [                            sha256                            ]
+ 7 secure-boot-policy  [                            sha256                            ]
+ 8 -                   0000000000000000000000000000000000000000000000000000000000000000
+ 9 kernel-initrd       [                            sha256                            ]
+10 ima                 0000000000000000000000000000000000000000000000000000000000000000
+11 kernel-boot         [                            sha256                            ]
+12 kernel-config       0000000000000000000000000000000000000000000000000000000000000000
+13 sysexts             0000000000000000000000000000000000000000000000000000000000000000
+14 shim-policy         0000000000000000000000000000000000000000000000000000000000000000
+15 system-identity     [                            sha256                            ]
+16 debug               0000000000000000000000000000000000000000000000000000000000000000
+17 -                   ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+18 -                   ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+19 -                   ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+20 -                   ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+21 -                   ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+22 -                   ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+23 application-support 0000000000000000000000000000000000000000000000000000000000000000
 ```
 
 Or to see the relevant ones for a block device (e.g., `nvme0n1p2`):
