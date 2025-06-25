@@ -21,16 +21,26 @@ verbose=0
 usage() {
     echo "Usage: $0 -p <postname> -t <title> [-e]" 1>&2
     echo "Make a new blog post with <postname>" 1>&2
+    echo "" 1>&2
+    echo "options:" 1>&2
+    echo "" 1>&2
+    echo "-t | --title       user-facing page title (h1)" 1>&2
+    echo "-p | --postname    name for use in filesystem" 1>&2
+    echo "-e | --edit whether to automatically open the file for editing" 1>&2
+    echo "" 1>&2
 }
 
-while getopts "h?p:e?t:" opt; do
+while getopts "h?p:e?t:T:" opt; do
     case "$opt" in
     h|\?)
         usage
         exit 1
         ;;
-    t)
+    t|-title)
         title="${OPTARG}"
+        ;;
+    T|-tags)
+        tags="${OPTARG}"
         ;;
     e)
         edit_file=true
@@ -60,16 +70,16 @@ else
     touch "${post_path}"
     if [[ -n "${tags}" ]]; then
         cat <<EOF > "${post_path}"
-----
+---
 title: ${title}
 tags: ${tags}
-----
+---
 EOF
     else
         cat <<EOF > "${post_path}"
-----
+---
 title: ${title}
-----
+---
 EOF
     fi
     if [[ "${edit_file}" -eq 'true' ]]; then
