@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 set -euo pipefail
+set -x
 
 shopt -s extglob
 
@@ -19,21 +20,23 @@ git status --porcelain
 COMMIT="$(git rev-parse HEAD)"
 
 if ! [[ "${REBUILD}" == 'no' ]]; then
-    nix-shell --command 'stack run -- site clean; stack run -- site build'
+    nix-shell --command 'cabal run -- site clean; cabal run -- site build'
 fi
 
 git fetch origin gh-pages
 
 cleanup() {
-    git worktree remove "${GH_PAGES_DIR}"
+    git worktree remove -- "${GH_PAGES_DIR}"
 }
 
 trap cleanup EXIT INT KILL
 if ! [[ -d "${GH_PAGES_DIR}" ]]; then
     git worktree add "${GH_PAGES_DIR}" gh-pages
+else
+    >&2 "`${GH_PAGES_DIR}` exists! Clean it up before running."
 fi
 
-( 
+(
     cd "${GH_PAGES_DIR}"
     git checkout gh-pages
     git status --porcelain
