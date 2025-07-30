@@ -1275,7 +1275,11 @@ they are available to all subprocesses, regardless of whether or not they requir
 <p>If you have to perform any cryptographic operation before verifying the MAC on a message you’ve received, it will somehow inevitably lead to doom.</p>
 </blockquote>
 <p>An extraordinarily common example of cryptographic doom is to calculate MACs based on plaintext in an encrypted message payload. To check the authenticity of a message, recipients must necessarily decrypt the message. In Vaudenay’s attack, we exploit this construction to recover plaintext from encrypted messages, using only a single bit of information in servers’ responses (padding error or MAC error).</p>
-<p>In other words, when designing cryptographic protocols, we should <strong>strive to authenticate data as early as possible.</strong> Keep that in mind as you read the rest of this post.</p>
+<p>Although Moxie’s article pertains only to MACs and traditional cryptographic operations, the spirit of his principle extends beyond: <em>trusting data before verifying it is dangerous</em>.
+When designing cryptographic protocols, we should <strong>strive to
+authenticate data as early as possible.</strong> Don’t design a protocol that
+requires processing attacker-controlled metadata before cryptographic
+verification! Keep that in mind as you read the rest of this post.</p>
 </section>
 <section id="verifying-a-jws" class="level2">
 <h2>Verifying a JWS</h2>
