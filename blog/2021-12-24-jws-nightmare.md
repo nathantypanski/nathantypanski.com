@@ -44,7 +44,11 @@ Moxie Marlinspike coined the [_cryptographic doom principle_](https://moxie.org/
 
 An extraordinarily common example of cryptographic doom is to calculate MACs based on plaintext in an encrypted message payload. To check the authenticity of a message, recipients must necessarily decrypt the message. In Vaudenay's attack, we exploit this construction to recover plaintext from encrypted messages, using only a single bit of information in servers' responses (padding error or MAC error).
 
-In other words, when designing cryptographic protocols, we should **strive to authenticate data as early as possible.** Keep that in mind as you read the rest of this post.
+Although Moxie's article pertains only to MACs and traditional cryptographic operations, the spirit of his principle extends beyond: _trusting data before verifying it is dangerous_.
+When designing cryptographic protocols, we should **strive to
+authenticate data as early as possible.** Don't design a protocol that
+requires processing attacker-controlled metadata before cryptographic
+verification! Keep that in mind as you read the rest of this post.
 
 ## Verifying a JWS
 
