@@ -114,7 +114,7 @@ Unfortunately, the PASETO design invites [remarkably similar bugs to JWS](https:
 
 ## Protocols should be defensive against implementations
 
-I'm not a cryptographer, so when I'm forced to grapple with something involving cryptography, I like it to be so stupid simple that it's obviously correct. If I'm reviewing code that includes cryptography parts, I want it to be so obviously flawless that there's no debate---even among relative amateurs---about its correctness.
+When I'm forced to grapple with something involving cryptography, I like it to be so stupid simple that it's obviously correct. If I'm reviewing code that includes cryptography parts, I want it to be so obviously flawless that there's no debate---even among relative amateurs---about its correctness.
 
 Primitives should be outsourced to sound, well-regarded libraries where possible. In fact, as much as we can should build upon a battle-tested, fuzzed, expertly-developed implementation.
 
