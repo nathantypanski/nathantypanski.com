@@ -48,7 +48,7 @@
             
             
             <li>posted: <em> December 24, 2021 </em></li>
-            <li>modified: <em> June 23, 2022
+            <li>modified: <em> July 30, 2025
  </em></li>
             </ul>
         </div>
@@ -57,8 +57,8 @@
             <div class="info">
     <!--
     <div class="snippets">
-        <i class="fa fa-calendar"></i> December 24, 2021 <i class="fa fa-cut" June 23, 2022
-></i> June 23, 2022
+        <i class="fa fa-calendar"></i> December 24, 2021 <i class="fa fa-cut" July 30, 2025
+></i> July 30, 2025
 
     </div>
     -->
@@ -154,7 +154,7 @@
 </section>
 <section id="protocols-should-be-defensive-against-implementations" class="level2">
 <h2>Protocols should be defensive against implementations</h2>
-<p>I’m not a cryptographer, so when I’m forced to grapple with something involving cryptography, I like it to be so stupid simple that it’s obviously correct. If I’m reviewing code that includes cryptography parts, I want it to be so obviously flawless that there’s no debate—even among relative amateurs—about its correctness.</p>
+<p>When I’m forced to grapple with something involving cryptography, I like it to be so stupid simple that it’s obviously correct. If I’m reviewing code that includes cryptography parts, I want it to be so obviously flawless that there’s no debate—even among relative amateurs—about its correctness.</p>
 <p>Primitives should be outsourced to sound, well-regarded libraries where possible. In fact, as much as we can should build upon a battle-tested, fuzzed, expertly-developed implementation.</p>
 <p>When designing security protocols, we should be making this kind of dead-simple implementation as easy and obvious as possible for software. Now, I’m not talking about <em>primitives</em> here, although certain modern primitives are <a href="https://ed25519.cr.yp.to/python/ed25519.py">remarkably simple</a>. I mean that the composition of primitives into a functioning security protocol should, to the extent possible, by extremely obvious.</p>
 <p>A major mistake we see again and again in the first generation of internet security protocols is kitchen-sink design. SSL/TLS with its configurable ciphersuites, the Eldritch horror of PGP email signatures, and other early security standards are victims of this. SSL/TLS assumes that implementations can correctly handle things like ciphersuite negotiation. PGP is a <a href="https://blog.cryptographyengineering.com/2014/08/13/whats-matter-with-pgp/">graveyard</a> of this type of <a href="https://latacora.micro.blog/2019/07/16/the-pgp-problem.html">complexity</a>. JWS, despite its marketing as <q>just signed JSON objects,</q> is the polar opposite of obvious protocol. It exposes algorithm selection to the client, verification requires multiple steps of deserialization, encoding, and serialization, and it is far too extensible for its own good.</p>
