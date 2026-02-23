@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <meta charset="UTF-8">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>Crafting signal from noise</title>
+        <link rel="stylesheet" type="text/css" href="../css/default.css" />
+        
+    </head>
+    <body>
+        <div id="header">
+          <div id="logo">
+      <a href="../">
+        <img class="img" src="../images/log0.png" />
+      </a>
+</div>
+<div id="navigation">
+  <ul>
+    <li>
+      <a href="../blog.html">
+        <i class="fa fa-pencil"></i>Blog
+      </a>
+    </li>
+    <li>
+      <a href="../pages.html">
+        <i class="fa fa-globe"></i>Writing
+      </a>
+    </li>
+    <li>
+      <a href="../worklog.html">
+        <i class="fa fa-bar-chart"></i>Worklog
+      </a>
+    </li>
+    <li>
+      <a href="../contact.html">
+       <i class="fa fa-envelope"></i>Contact
+      </a>
+    </li>
+  </ul>
+</div>
+
+        </div>
+        <div id="metadata">
+            <ul class="meta">
+            
+                <li>tags: <em><a title="All pages tagged 'alerting'." href="../tags/alerting.html" rel="tag">alerting</a>, <a title="All pages tagged 'philosophy'." href="../tags/philosophy.html" rel="tag">philosophy</a></em></li>
+            
+            
+            <li>posted: <em> August 19, 2025 </em></li>
+            <li>modified: <em> August 29, 2025
+ </em></li>
+            </ul>
+        </div>
+        <div id="content">
+            <h1>Crafting signal from noise</h1>
+            <div class="info">
+    <!--
+    <div class="snippets">
+        <i class="fa fa-calendar"></i> August 19, 2025 <i class="fa fa-cut" August 29, 2025
+></i> August 29, 2025
+
+    </div>
+    -->
+    
+</div>
+<p>When I worked at NASA a decade ago, after a coffee chat one afternoon the security folk invited me to their War Room—you know, the one with the Big Board<em>—and the screens mounted on the wall lit up with alarms, which they told me captured all the bad things which were happening in the network.
+People were busy investigating those alarms, it seemed, so it sure </em>looked* like their tools were doing something useful.
+Investigating bad activity is of obvious value, while <em>not investigating bad activity</em> is obviously wrong.</p>
+<blockquote>
+<p>Nothing had been hacked, but the board remained red.
+A red board means people are busy.
+Idle teams don’t justify job openings.</p>
+</blockquote>
+<p><img src /></p>
+<p>Government incentive structures are often mirror market incentives, making good teams do crazy things: wasting money makes you broke in a free market, but in government wasting money <em>makes you more money</em>. Spend is use-it-or-lose-it, and unspent funds get reallocated next calendar year.</p>
+<p>In my sysadmin days,<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> we had just inherited a security alarm tool, which those in the industry call a <q>SIEM.</q>
+Security information and Event Management systems are a mainstay of classical defensive security, consuming logs and detecting malicious activity.
+<em>Detections</em> trigger <em>alerts</em> based on detected events.
+This company had just suffered a small but expensive security breach, so we came in to figure out how to improve things.
+Over the last several years, their SIEM fired <em>40,000</em> events <em>per day</em>.
+Even the <q>high priority</q> issues were impossible to realistically triage.</p>
+<p>As things worked out, the breach <em>had</em> alarmed on their platform, but because there was so much noise, their team disconnected the pagers.</p>
+<p>As it turns out, there are <em>two ways to be blind</em> in system alerting. One way to be blind is to not have the right detections. Maybe you alerted on Ceph, but the attacker went for S3. If you alert on the wrong events, you won’t see the baddies.
+The other way to be blind is to detect <em>too many events</em>.
+If the number of security issues detected by your system is infeasible to triage, you <em>also</em> can’t see.</p>
+<p>One reason teams keep noisy alarms comes from compliance requirements:
+Removing alarms causes compliance problems: even a noisy alarm <em>is an alarm</em>, and you are required to have alarms.
+Bad compliance frameworks overindex on satisfication of requirements, but this is only truly dangerous when it comes at the expense of system security.</p>
+<p>Compliance requirements are generic requirements from industry-standard frameworks or rules.
+Less charitably, <em>standard</em> means <em>unspecialized</em>, so those requirements are insufficient for security.</p>
+<p>Our aim in alerting, both for platform reliability and security alerting, is to focus on signal: alerts should be actionable.
+Alarming too often is *worse than</p>
+<p>Alerts should be <em>actionable</em>.</p>
+<p>You’re a sysadmin at a company in a field where security is important and you’re trying to detect malicious behavior.
+SIEM tools, EDR, XDR and ilk are are <em>excellent</em> at detecting misbehavior: they often detect hundreds or <em>thousands</em> of malicious events per day.
+The security event detections produces all noise today; you couldn’t come close to paging on the event stream.
+How do you go about approaching</p>
+<p><q>Data loss prevention</q> detection, in particular, notoriously produces <em>lots of noisy events</em>.
+That’s the problem, actually: the tools <em>detect too many things</em>.
+To concretize our landscape a bit, let’s say you happen to work on <em>Foo</em>.
+Your adversaries could reap lots of value if they exfiltrate <em>Foo</em> from your databases, and so one of the many alarms in your detection engine is a <em>FooDetector</em>.</p>
+<p>This satisfies the compliance team, since one of your requirements is to alert on DLP events pertaining to Foo.</p>
+<p>Were the screens <em>valuable</em>? Was the information rendered a <em>valid</em> rendering of their security posture?</p>
+<blockquote>
+<p>That team was full of competent staff, they had seen it all, and they were quick to respond and investigate problems. This isn’t a problem with <em>team</em>: misaligned incentives can turn even good people into bad outcomes, especially in government.</p>
+</blockquote>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1"><p>For all it’s worth, sysadmins could <em>always</em> write code; an average sysadmin is probably competent in several languages. Nowadays the term has lost its meaning and now we have articles about how <a href="https://cuddletech.com/2013/05/why-sysadmins-cant-code/index.html">sysadmins can’t code</a>, so we call them <q>reliability engineers</q> or <q>devops engineers</q> or <q>production engineers</q>. A good sysadmin can probably speak competently about Linux Kernel implementation details and has likely written <em>at least</em> 100k+ lines of code over the years. Unlike regular SWEs, however, sysadmins build, test, and code in service of <em>system management</em> rather than end-users. To grow the field, the industry lowered its skill bar for sysadmins, becoming something akin to <q>configuration manager,</q> i.e. <q>YAML engineer.</q><a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+
+        </div>
+        <div id="footer">
+            <p>
+  Content © 2012-2025 Nathan Typanski
+  and licensed under a <br /><a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.
+  Opinions are my own and not the views of my employer.
+  <a href="../website.html">About this site.</a>
+<!-- p-->
+<p>
+  <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/80x15.png" /></a>
+</p>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-37825924-1', 'nathantypanski.com');
+  ga('send', 'pageview');
+
+</script>
+
+
+        </div>
+    </body>
+</html>
